@@ -1,0 +1,38 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+
+
+# ドキュメントの無い public class を許可する
+Style/Documentation:
+  Enabled: false
+
+# 文字列リテラルをimmutableにするマジックコメントfrozen_string_literal: trueは使用しない
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# その他自動生成で発生する規約違反は無視するが、必要に応じて調整する
+
+Style/InverseMethods:
+  Exclude:
+    - 'bin/yarn'
+
+Style/StderrPuts:
+  Exclude:
+    - 'bin/yarn'
+
+Layout/MultilineMethodCallIndentation:
+  Exclude:
+    - 'bin/yarn'
+
+Style/RedundantFetchBlock:
+  Exclude:
+    - 'config/puma.rb'
+
+Rails/FilePath:
+  Exclude:
+    - 'config/environments/development.rb'
