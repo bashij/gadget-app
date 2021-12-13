@@ -15,6 +15,10 @@ Style/Documentation:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+# １行の空のメソッド定義を許可する（自動生成直後のファイルがoffenseとなってしまうため）
+Style/EmptyMethod:
+  Enabled: false
+
 # その他自動生成で発生する規約違反は無視するが、必要に応じて調整する
 
 Style/InverseMethods:
