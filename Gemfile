@@ -26,6 +26,9 @@ gem 'bcrypt', '~> 3.1.16'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
+gem 'carrierwave', '~> 2.2.2'
+gem 'mini_magick', '~> 4.11.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
