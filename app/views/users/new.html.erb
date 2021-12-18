@@ -14,6 +14,10 @@
           <%= f.email_field :email, class: "form-control" %>
       </div>
       <div class="mb-3">
+          <%= f.label :image, class: "form-label" %>
+          <%= f.file_field :image, class: "form-control" %>
+      </div>      
+      <div class="mb-3">
           <%= f.label :password, class: "form-label" %>
           <%= f.password_field :password, class: "form-control" %>
       </div>
