@@ -102,10 +102,6 @@ yarn-debug.log*
 !/storage/.keep
 /public/uploads
 
-# Ignore default images
-app/assets/images/default.jpeg
-app/assets/images/default_user_icon.jpeg
-
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
