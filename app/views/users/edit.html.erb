@@ -1,0 +1,31 @@
+<% provide(:title, 'Edit user') %>
+<h1>ユーザー情報編集</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(model: @user, local: true) do |f| %>
+    <%= render 'shared/error_messages' %>
+      <div class="mb-3">
+          <%= f.label :name, class: "form-label" %>
+          <%= f.text_field :name, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+          <%= f.label :email, class: "form-label" %>
+          <%= f.email_field :email, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+          <%= f.label :image, class: "form-label" %>
+          <%= f.file_field :image, class: "form-control" %>
+      </div>      
+      <div class="mb-3">
+          <%= f.label :password, class: "form-label" %>
+          <%= f.password_field :password, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+          <%= f.label :password_confirmation, "Confirmation" , class: "form-label"%>
+          <%= f.password_field :password_confirmation, class: "form-control" %>
+      </div>  
+      <%= f.submit "変更を保存する", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
