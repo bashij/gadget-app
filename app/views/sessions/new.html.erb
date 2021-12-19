@@ -12,6 +12,10 @@
           <%= f.label :password, class: "form-label" %>
           <%= f.password_field :password, class: "form-control" %>
       </div>
+       <div class="mb-3">
+          <%= f.check_box :remember_me %>
+          <span>次回から入力を省略</span>
+      </div>     
       <%= f.submit "ログイン", class: "btn btn-primary" %>
     <% end %>
     <p>ご登録はこちら→ <%= link_to "新規登録", signup_path %></p>    
