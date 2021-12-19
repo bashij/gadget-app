@@ -41,6 +41,7 @@ Rails/FilePath:
   Exclude:
     - 'config/environments/development.rb'
 
+# User関連
 # usersコントローラのprivateメソッド可読性向上のため許可
 Layout/IndentationConsistency:
   Exclude:
@@ -50,11 +51,28 @@ Layout/IndentationWidth:
   Exclude:
     - 'app/controllers/users_controller.rb'
 
-# session関連 可読性・汎用性を重視し許可
+# ユーザーパスワードとパスワード確認のバリデーションをスキップする必要があるため、update_attributeの使用を許可
+Rails/SkipsModelValidations:
+  Exclude:
+    - 'app/models/user.rb'
+
+# 可読性を重視し、複数行の三項演算子を許可
+Style/MultilineTernaryOperator:
+  Exclude:
+    - 'app/models/user.rb'
+
+# Session関連
+# 可読性・汎用性を重視し許可
 Style/SafeNavigation:
   Exclude:
     - 'app/controllers/sessions_controller.rb'    
+    - 'app/helpers/sessions_helper.rb'
     
 Rails/HelperInstanceVariable:
   Exclude:
     - 'app/helpers/sessions_helper.rb'
+
+# Abc Size:20のsessions_controller.rbを例外として許可（デフォルトAbc Size:15）
+Metrics/AbcSize:
+  Exclude:
+    - 'app/controllers/sessions_controller.rb'
