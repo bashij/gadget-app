@@ -4,6 +4,7 @@
     <li class="nav-item"><%= link_to "ホーム",root_path,{class: "nav-link active"} %></li>
     <li class="nav-item"><%= link_to "使い方",about_path,{class: "nav-link"} %></li>
     <% if logged_in? %>
+      <li class="nav-item"><%= link_to "ユーザー一覧",users_path,{class: "nav-link"} %></li>
       <li class="nav-item"><%= link_to "マイページ",current_user,{class: "nav-link"} %></li>
       <li class="nav-item"><%= link_to "設定",edit_user_path(current_user),{class: "nav-link"} %></li>
       <li class="nav-item"><%= link_to "ログアウト",logout_path,{class: "nav-link",method: :delete}%></li>
