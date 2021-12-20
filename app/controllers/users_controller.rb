@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: %i[index edit update]
-  before_action :correct_user,   only: %i[edit update]
+  before_action :logged_in_user, only: %i[index edit update destroy]
+  before_action :correct_user,   only: %i[edit update destroy]
 
   def index
     @users = User.all
@@ -35,6 +35,12 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = '退会処理が完了しました。ご利用ありがとうございました。'
+    redirect_to root_url
   end
 
   private
