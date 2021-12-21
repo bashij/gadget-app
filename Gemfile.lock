@@ -84,6 +84,8 @@ GEM
       dotenv (= 2.7.6)
       railties (>= 3.2)
     erubi (1.10.0)
+    faker (2.19.0)
+      i18n (>= 1.6, < 2)
     ffi (1.15.4)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -239,6 +241,7 @@ DEPENDENCIES
   byebug
   carrierwave (~> 2.2.2)
   dotenv-rails
+  faker (~> 2.19.0)
   jbuilder (~> 2.7)
   listen (~> 3.3)
   mini_magick (~> 4.11.0)
