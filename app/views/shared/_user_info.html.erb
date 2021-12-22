@@ -1,0 +1,4 @@
+<%= image_tag current_user.image.url, size: '100x100' %>
+<h1><%= current_user.name %></h1>
+<span><%= link_to "プロフィールを見る", current_user %></span>
+<span><%= pluralize(current_user.tweets.count, 'tweet') %></span>

@@ -1,0 +1,10 @@
+<li id="tweet-<%= tweet.id %>">
+  <%= image_tag tweet.user.image.url, size: '100x100' %>
+  <span class="user"><%= link_to tweet.user.name, tweet.user %></span>
+  <span class="content"><%= tweet.content %></span>
+  <span class="timestamp">
+    posted <%= time_ago_in_words(tweet.created_at) %> ago.
+    <% if current_user?(tweet.user) %>
+      <%= link_to 'delete', tweet, method: :delete, data: {confirm: '投稿を削除してよろしいですか？'} %>
+    <% end %>
+</li>

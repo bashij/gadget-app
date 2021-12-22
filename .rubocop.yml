@@ -41,15 +41,19 @@ Rails/FilePath:
   Exclude:
     - 'config/environments/development.rb'
 
-# User関連
-# usersコントローラのprivateメソッド可読性向上のため許可
-Layout/IndentationConsistency:
-  Exclude:
-    - 'app/controllers/users_controller.rb'
-
+# コントローラ
+# privateメソッド可読性向上のため許可
 Layout/IndentationWidth:
   Exclude:
+    - 'app/controllers/application_controller.rb'
     - 'app/controllers/users_controller.rb'
+    - 'app/controllers/tweets_controller.rb'
+
+Layout/IndentationConsistency:
+  Exclude:
+    - 'app/controllers/application_controller.rb'    
+    - 'app/controllers/users_controller.rb'
+    - 'app/controllers/tweets_controller.rb'    
 
 # ユーザーパスワードとパスワード確認のバリデーションをスキップする必要があるため、update_attributeの使用を許可
 Rails/SkipsModelValidations:
