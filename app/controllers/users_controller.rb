@@ -9,6 +9,8 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @tweets = @user.tweets
+    @replies = Tweet.where(reply_id: @tweets)
+    @tweet = current_user.tweets.build
   end
 
   def new

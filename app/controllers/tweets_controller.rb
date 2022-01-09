@@ -6,9 +6,10 @@ class TweetsController < ApplicationController
     @tweet = current_user.tweets.build(tweets_params)
     if @tweet.save
       flash[:success] = '投稿が完了しました'
-      redirect_to root_url
+      redirect_to request.referer || root_url
     else
       @feed_items = current_user.feed
+      @replies = Tweet.where(reply_id: @feed_items)
       render 'static_pages/home'
     end
   end
@@ -22,7 +23,7 @@ class TweetsController < ApplicationController
   private
 
     def tweets_params
-      params.require(:tweet).permit(:content)
+      params.require(:tweet).permit(:content, :reply_id)
     end
 
     def correct_user
