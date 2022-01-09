@@ -4,6 +4,7 @@ class StaticPagesController < ApplicationController
 
     @tweet = current_user.tweets.build
     @feed_items = current_user.feed
+    @replies = Tweet.where(reply_id: @feed_items)
   end
 
   def about

@@ -1,10 +1,38 @@
-<li id="tweet-<%= tweet.id %>">
-  <%= image_tag tweet.user.image.url, size: '100x100' %>
-  <span class="user"><%= link_to tweet.user.name, tweet.user %></span>
-  <span class="content"><%= tweet.content %></span>
-  <span class="timestamp">
+<% if tweet.reply_id.nil? %>
+  <li id="tweet-<%= tweet.id %>">
+    <%= image_tag tweet.user.image.url, size: '100x100' %>
+    <span class="user"><%= link_to tweet.user.name, tweet.user %></span>
+    <span class="content"><%= tweet.content %></span>
+    <span class="timestamp">
     posted <%= time_ago_in_words(tweet.created_at) %> ago.
     <% if current_user?(tweet.user) %>
       <%= link_to 'delete', tweet, method: :delete, data: {confirm: '投稿を削除してよろしいですか？'} %>
     <% end %>
-</li>
+      <section class="tweet_form">
+        <%= form_with(model: @tweet, local: true) do |f| %>
+          <%= render 'shared/error_messages', object: f.object %>
+          <div class="mb-3">
+            <%= f.text_area :content, placeholder: '返信内容を入力' %>
+            <%= f.hidden_field :reply_id, value: tweet.id %>
+          </div>
+          <%= f.submit '投稿する', class: 'btn btn-primary' %>
+        <% end %>
+      </section>
+    <% if @replies.find_by(reply_id: tweet.id).present?%>
+      <ol class="tweets">
+        <% @replies.where(reply_id: tweet.id).each do |reply| %>
+          <li>
+            <%= image_tag reply.user.image.url, size: '80x80' %>
+              <span class="user"><%= link_to reply.user.name, reply.user %></span>
+              <span class="content"><%= reply.content %></span>
+              <span class="timestamp">
+              posted <%= time_ago_in_words(reply.created_at) %> ago.
+              <% if current_user?(reply.user) %>
+                <%= link_to 'delete', reply, method: :delete, data: {confirm: '投稿を削除してよろしいですか？'} %>
+              <% end %>
+          </li>
+        <% end %>
+      </ol>
+    <% end %>
+  </li>
+<% end %>
