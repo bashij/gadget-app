@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'tweet_likes/create'
+  get 'tweet_likes/destroy'
   root   'static_pages#home'
   get    '/about',   to: 'static_pages#about'
   get    '/signup',  to: 'users#new'

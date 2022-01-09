@@ -1,0 +1,2 @@
+class TweetLike < ApplicationRecord
+end
