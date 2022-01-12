@@ -1,0 +1,2 @@
+class TweetBookmark < ApplicationRecord
+end

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'tweet_bookmarks/create'
+  get 'tweet_bookmarks/destroy'
   get 'tweet_likes/create'
   get 'tweet_likes/destroy'
   root   'static_pages#home'
