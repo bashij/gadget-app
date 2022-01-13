@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  get 'tweet_bookmarks/create'
-  get 'tweet_bookmarks/destroy'
-  get 'tweet_likes/create'
-  get 'tweet_likes/destroy'
   root   'static_pages#home'
   get    '/about',   to: 'static_pages#about'
   get    '/signup',  to: 'users#new'
@@ -16,6 +12,7 @@ Rails.application.routes.draw do
   end
   resources :tweets, only: %i[create destroy] do
     resource :tweet_likes, only: %i[create destroy]
+    resource :tweet_bookmarks, only: %i[create destroy]
   end
   resources :relationships, only: %i[create destroy]
 end

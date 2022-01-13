@@ -13,6 +13,11 @@
     <% else %>
       <p><%=link_to 'いいねする', tweet_tweet_likes_path(tweet.id), method: :post %>いいね数:<%= tweet.tweet_likes.count %></p>
     <% end %>
+    <% if tweet.bookmarked_by?(current_user) %>
+      <p><%=link_to 'ブックマークから削除', tweet_tweet_bookmarks_path(tweet.id), method: :delete %>ブックマーク数:<%= tweet.tweet_bookmarks.count %></p>
+    <% else %>
+      <p><%=link_to 'ブックマークに追加', tweet_tweet_bookmarks_path(tweet.id), method: :post %>ブックマーク数:<%= tweet.tweet_bookmarks.count %></p>
+    <% end %>    
       <section class="tweet_form">
         <%= form_with(model: @tweet, local: true) do |f| %>
           <%= render 'shared/error_messages', object: f.object %>
