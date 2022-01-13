@@ -1,6 +1,6 @@
 <% provide(:title, @user.name) %>
 <div class="row">
-  <aside class="col-md-4">
+  <aside class="col-md-12">
     <section class="user_info">
       <%= image_tag @user.image.url %>
       <h1>
@@ -11,13 +11,23 @@
       <%= render 'shared/stats' %>
     </section>    
   </aside>
-  <div class="col-md-8">
-    <%= render 'follow_form' if logged_in? %>  
-    <% if @user.tweets.any? %>
-      <h3>ツイート (<%= @user.tweets.count %>) </h3>
-      <ol class="tweets">
-        <%= render @tweets %>
-      </ol>
-    <% end %>
+  <%= render 'follow_form' if logged_in? %>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <h3>ツイート (<%= @user.tweets.count %>) </h3>
+      <% if @user.tweets.any? %>
+        <ol class="tweets">
+          <%= render @tweets %>
+        </ol>
+      <% end %>
+  </div>
+  <div class="col-md-6">
+    <h3>ブックマーク (<%= @user.bookmarked_tweets.count %>) </h3>
+      <% if @user.bookmarked_tweets.any? %>
+        <ol class="tweets">
+          <%= render @bookmarks %>
+        </ol>
+      <% end %>
   </div>
 </div>
