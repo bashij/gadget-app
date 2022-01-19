@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_12_112824) do
+ActiveRecord::Schema.define(version: 2022_01_19_115229) do
+
+  create_table "gadgets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name"
+    t.string "category"
+    t.string "model_number"
+    t.string "manufacturer"
+    t.decimal "price", precision: 8, scale: 2
+    t.string "other_info"
+    t.string "image"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_gadgets_on_user_id"
+  end
 
   create_table "relationships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "follower_id"
@@ -57,5 +71,6 @@ ActiveRecord::Schema.define(version: 2022_01_12_112824) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "gadgets", "users"
   add_foreign_key "tweets", "users"
 end
