@@ -80,3 +80,8 @@ Rails/HelperInstanceVariable:
 Metrics/AbcSize:
   Exclude:
     - 'app/controllers/sessions_controller.rb'
+
+# migrationファイルはメソッド行数が11行以上でも許可する
+MethodLength:
+  Exclude:
+    - 'db/migrate/*'
