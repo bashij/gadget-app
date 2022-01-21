@@ -8,11 +8,11 @@ class Tweet < ApplicationRecord
 
   # ユーザーが既にいいねしているか？
   def liked_by?(user)
-    tweet_likes.exists?(user_id: user.id)
+    tweet_likes.pluck(:user_id).include?(user.id)
   end
 
   # ユーザーが既にブックマークしているか？
   def bookmarked_by?(user)
-    tweet_bookmarks.exists?(user_id: user.id)
+    tweet_bookmarks.pluck(:user_id).include?(user.id)
   end
 end
