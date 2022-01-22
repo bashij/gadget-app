@@ -81,7 +81,13 @@ Metrics/AbcSize:
   Exclude:
     - 'app/controllers/sessions_controller.rb'
 
+# bullet設定のため行数制限の対象外とする（デフォルト制限行数：25行/ブロック）
+Metrics/BlockLength:
+  Exclude:
+    - 'config/environments/development.rb'
+
 # migrationファイルはメソッド行数が11行以上でも許可する
 MethodLength:
   Exclude:
     - 'db/migrate/*'
+

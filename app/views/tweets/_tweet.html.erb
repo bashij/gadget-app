@@ -9,14 +9,14 @@
       <%= link_to 'delete', tweet, method: :delete, data: {confirm: '投稿を削除してよろしいですか？'} %>
     <% end %>
     <% if tweet.liked_by?(current_user) %>
-      <p><%=link_to 'いいね解除', tweet_tweet_likes_path(tweet.id), method: :delete %>いいね数:<%= tweet.tweet_likes.count %></p>
+      <p><%=link_to 'いいね解除', tweet_tweet_likes_path(tweet.id), method: :delete %>いいね数:<%= tweet.tweet_likes.size %></p>
     <% else %>
-      <p><%=link_to 'いいねする', tweet_tweet_likes_path(tweet.id), method: :post %>いいね数:<%= tweet.tweet_likes.count %></p>
+      <p><%=link_to 'いいねする', tweet_tweet_likes_path(tweet.id), method: :post %>いいね数:<%= tweet.tweet_likes.size %></p>
     <% end %>
     <% if tweet.bookmarked_by?(current_user) %>
-      <p><%=link_to 'ブックマークから削除', tweet_tweet_bookmarks_path(tweet.id), method: :delete %>ブックマーク数:<%= tweet.tweet_bookmarks.count %></p>
+      <p><%=link_to 'ブックマークから削除', tweet_tweet_bookmarks_path(tweet.id), method: :delete %>ブックマーク数:<%= tweet.tweet_bookmarks.size %></p>
     <% else %>
-      <p><%=link_to 'ブックマークに追加', tweet_tweet_bookmarks_path(tweet.id), method: :post %>ブックマーク数:<%= tweet.tweet_bookmarks.count %></p>
+      <p><%=link_to 'ブックマークに追加', tweet_tweet_bookmarks_path(tweet.id), method: :post %>ブックマーク数:<%= tweet.tweet_bookmarks.size %></p>
     <% end %>    
       <section class="tweet_form">
         <%= form_with(model: @tweet, local: true) do |f| %>
@@ -28,21 +28,21 @@
           <%= f.submit '投稿する', class: 'btn btn-primary' %>
         <% end %>
       </section>
-    <% if @replies.find_by(reply_id: tweet.id).present?%>
       <ol class="tweets">
-        <% @replies.where(reply_id: tweet.id).each do |reply| %>
-          <li>
-            <%= image_tag reply.user.image.url, size: '80x80' %>
-              <span class="user"><%= link_to reply.user.name, reply.user %></span>
-              <span class="content"><%= reply.content %></span>
-              <span class="timestamp">
-              posted <%= time_ago_in_words(reply.created_at) %> ago.
-              <% if current_user?(reply.user) %>
-                <%= link_to 'delete', reply, method: :delete, data: {confirm: '投稿を削除してよろしいですか？'} %>
-              <% end %>
-          </li>
+        <% @replies.each do |reply| %>
+          <% if tweet.id == reply.reply_id %>
+            <li>
+              <%= image_tag reply.user.image.url, size: '80x80' %>
+                <span class="user"><%= link_to reply.user.name, reply.user %></span>
+                <span class="content"><%= reply.content %></span>
+                <span class="timestamp">
+                posted <%= time_ago_in_words(reply.created_at) %> ago.
+                <% if current_user?(reply.user) %>
+                  <%= link_to 'delete', reply, method: :delete, data: {confirm: '投稿を削除してよろしいですか？'} %>
+                <% end %>
+            </li>
+          <% end %>
         <% end %>
       </ol>
-    <% end %>
   </li>
 <% end %>
