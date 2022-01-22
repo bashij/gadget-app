@@ -1,0 +1,2 @@
+class GadgetsController < ApplicationController
+end
