@@ -15,11 +15,26 @@ User.create!(name: 'bashi',
                password_confirmation: password)
 end
 
-# ユーザーの一部を対象にサンプルツイートを作成
+# ユーザーの一部を対象に、サンプルツイート/リプライ/いいね/ブックマークを作成
 users = User.order(:created_at).take(6)
+# User.first.tweets.order(created_at: :desc).limit(1).ids[0]では取得できないため、一時的に最新ツイートのidを直接指定
+cnt = 301
+
+# ツイート
 50.times do
   content = Faker::Lorem.paragraph_by_chars(number: 100)
   users.each { |user| user.tweets.create!(content: content) }
+end
+
+# リプライ/いいね/ブックマーク
+20.times do
+  content = "リプライ: #{Faker::Lorem.paragraph_by_chars(number: 100)}"
+  users.each do |user|
+    user.tweets.create!(content: content, reply_id: cnt)
+    user.tweet_likes.create!(tweet_id: cnt)
+    user.tweet_bookmarks.create!(tweet_id: cnt)
+  end
+  cnt -= 1
 end
 
 # 以下のリレーションシップを作成する
