@@ -7,5 +7,6 @@ class Gadget < ApplicationRecord
   validates :manufacturer, length: { maximum: 50 }
   validates :price, numericality: { allow_nil: true }
   validates :other_info, length: { maximum: 100 }
+  validates :review, length: { maximum: 5000 }
   mount_uploader :image, GadgetImageUploader
 end

@@ -43,7 +43,8 @@ class GadgetsController < ApplicationController
   private
 
     def gadgets_params
-      params.require(:gadget).permit(:name, :category, :model_number, :manufacturer, :price, :other_info, :image)
+      params.require(:gadget)
+            .permit(:name, :category, :model_number, :manufacturer, :price, :other_info, :image, :review)
     end
 
     def correct_user

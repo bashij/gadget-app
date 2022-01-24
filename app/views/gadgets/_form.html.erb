@@ -27,6 +27,10 @@
       <div class="mb-3">
           <%= f.label :ガジェット画像, class: "form-label" %>
           <%= f.file_field :image, class: "form-control" %>
+      </div> 
+      <div class="mb-3">
+          <%= f.label :レビュー, class: "form-label" %>
+          <%= f.text_field :review, class: "form-control" %>
       </div>      
       <%= f.submit yield(:button_text), class: "btn btn-primary" %>
     <% end %>
