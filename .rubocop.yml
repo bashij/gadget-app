@@ -48,12 +48,14 @@ Layout/IndentationWidth:
     - 'app/controllers/application_controller.rb'
     - 'app/controllers/users_controller.rb'
     - 'app/controllers/tweets_controller.rb'
+    - 'app/controllers/gadgets_controller.rb'
 
 Layout/IndentationConsistency:
   Exclude:
     - 'app/controllers/application_controller.rb'    
     - 'app/controllers/users_controller.rb'
-    - 'app/controllers/tweets_controller.rb'    
+    - 'app/controllers/tweets_controller.rb'
+    - 'app/controllers/gadgets_controller.rb'
 
 # ユーザーパスワードとパスワード確認のバリデーションをスキップする必要があるため、update_attributeの使用を許可
 Rails/SkipsModelValidations:
@@ -85,3 +87,9 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   Exclude:
     - 'config/environments/development.rb'
+
+# migrationファイルはメソッド行数が11行以上でも許可する
+MethodLength:
+  Exclude:
+    - 'db/migrate/*'
+
