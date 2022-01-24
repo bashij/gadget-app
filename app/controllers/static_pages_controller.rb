@@ -3,8 +3,9 @@ class StaticPagesController < ApplicationController
     return unless logged_in?
 
     @tweet = current_user.tweets.build
-    @feed_items = current_user.feed.includes(:user, :tweet_likes, :tweet_bookmarks)
-    @replies = Tweet.where(reply_id: @feed_items)
+    @feed_tweets = current_user.tweet_feed.includes(:user, :tweet_likes, :tweet_bookmarks)
+    @replies = Tweet.where(reply_id: @feed_tweets)
+    @feed_gadgets = current_user.gadget_feed.includes(:user)
   end
 
   def about
