@@ -14,6 +14,7 @@ class UsersController < ApplicationController
                       .reorder('tweet_bookmarks.created_at DESC')
     @replies = Tweet.where(reply_id: @tweets)
     @tweet = current_user.tweets.build
+    @gadgets = @user.gadgets
   end
 
   def new

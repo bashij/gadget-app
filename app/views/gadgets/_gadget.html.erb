@@ -1,0 +1,13 @@
+<li id="gadget-<%= gadget.id %>">
+  <%= image_tag gadget.image.url, size: '80x80' %>
+  <span class="name"><%= link_to gadget.name, gadget_path(gadget) %></span>  
+  <span class="category"><%= gadget.category %></span>
+  <span class="model_number"><%= gadget.model_number %></span>
+  <span class="manufacturer"><%= gadget.manufacturer %></span>
+  <span class="price"><%= gadget.price %></span>
+  <span class="other_info"><%= gadget.other_info %></span>
+  <% if current_user?(gadget.user) %>
+    <%= link_to '削除', gadget, method: :delete, data: {confirm: 'ガジェットを削除してよろしいですか？'} %>
+    <%= link_to '編集/レビューを書く', edit_gadget_path(gadget) %>
+  <% end %>
+</li>

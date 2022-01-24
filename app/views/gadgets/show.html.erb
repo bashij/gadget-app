@@ -1,0 +1,35 @@
+<% provide(:title, @gadget.name) %>
+<div class="row">
+  <div class="col-md-4">
+    <%= image_tag @gadget.image.url %>
+  </div>
+  <div class="col-md-8">
+    <%= @gadget.name %>
+    <%= @gadget.category %>
+    <%= @gadget.model_number %>
+    <%= @gadget.manufacturer %>
+    <%= @gadget.price %>
+    <%= @gadget.other_info %>
+    最終更新日時：<%= @gadget.updated_at %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-2">
+  </div>
+  <div class="col-md-8">
+    <h1>レビュー</h1>
+    レビュー本文
+  </div>
+  <div class="col-md-2">
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-2">
+  </div>
+  <div class="col-md-8">
+    <h2>コメント</h2>
+    コメント
+  </div>
+  <div class="col-md-2">
+  </div>
+</div>

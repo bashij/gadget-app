@@ -1,6 +1,9 @@
 <% provide(:title, @user.name) %>
 <div class="row">
-  <aside class="col-md-12">
+  <%= render 'follow_form' if logged_in? %>
+</div>
+<div class="row">
+  <aside class="col-md-4">
     <section class="user_info">
       <%= image_tag @user.image.url %>
       <h1>
@@ -11,7 +14,14 @@
       <%= render 'shared/stats' %>
     </section>    
   </aside>
-  <%= render 'follow_form' if logged_in? %>
+  <div class="col-md-8">
+    <ul class="gadgets">
+      <%= render @gadgets %>
+      <li>
+        <%=link_to '新しいガジェットを登録する', new_gadget_path %>
+      </li>
+    </ul>
+  </div>
 </div>
 <div class="row">
   <div class="col-md-6">
