@@ -1,0 +1,36 @@
+<% if comment.reply_id.nil? %>
+  <li id="comment-<%= comment.id %>">
+    <%= image_tag comment.user.image.url, size: '100x100' %>
+    <span class="user"><%= link_to comment.user.name, comment.user %></span>
+    <span class="content"><%= comment.content %></span>
+    <span class="timestamp">
+    posted <%= time_ago_in_words(comment.created_at) %> ago.
+    <% if current_user?(comment.user) %>
+      <%= link_to 'delete', gadget_comment_path(@gadget,comment), method: :delete, data: {confirm: 'コメントを削除してよろしいですか？'} %>
+    <% end %>
+    <section class="comment_form">
+      <%= form_with(model: [@gadget, @comment], local: true) do |f| %>
+        <%= f.text_area :content, placeholder: '返信内容を入力' %> 
+        <%= f.hidden_field :gadget_id, value: @gadget %>
+        <%= f.hidden_field :reply_id, value: comment.id %>
+        <%= f.submit "リプライする", class: "btn btn-primary" %>
+      <% end %>
+    </section>
+    <ol class="reply_comments">
+      <% @replies.each do |reply| %>
+        <% if comment.id == reply.reply_id %>
+          <li>
+            <%= image_tag reply.user.image.url, size: '80x80' %>
+            <span class="user"><%= link_to reply.user.name, reply.user %></span>
+            <span class="content"><%= reply.content %></span>
+            <span class="timestamp">
+            posted <%= time_ago_in_words(reply.created_at) %> ago.
+            <% if current_user?(reply.user) %>
+              <%= link_to 'delete', gadget_comment_path(@gadget,reply), method: :delete, data: {confirm: 'コメントを削除してよろしいですか？'} %>
+            <% end %>
+          </li>
+        <% end %>
+      <% end %>
+    </ol>
+  </li>
+<% end %>  

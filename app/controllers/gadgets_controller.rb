@@ -5,7 +5,9 @@ class GadgetsController < ApplicationController
   def show
     @gadget = Gadget.find(params[:id])
     @user = @gadget.user
-    # @comment = Gadget.comments(予定)
+    @comments = @gadget.comments.includes(:user)
+    @comment = current_user.comments.build
+    @replies = Comment.where(reply_id: @comments)
   end
 
   def new
