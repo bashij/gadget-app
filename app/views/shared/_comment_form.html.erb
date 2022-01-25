@@ -1,0 +1,5 @@
+<%= form_with(model: [@gadget, @comment], local: true) do |f| %>
+  <%= f.text_area :content, placeholder: '新しいコメントを入力' %> 
+  <%= hidden_field_tag :gadget_id, @gadget %>
+  <%= f.submit "コメントする", class: "btn btn-primary" %>
+<% end %>

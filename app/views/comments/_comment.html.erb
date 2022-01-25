@@ -1,0 +1,9 @@
+<li id="comment-<%= comment.id %>">
+  <%= image_tag comment.user.image.url, size: '100x100' %>
+  <span class="user"><%= link_to comment.user.name, comment.user %></span>
+  <span class="content"><%= comment.content %></span>
+  <span class="timestamp">
+  posted <%= time_ago_in_words(comment.created_at) %> ago.
+  <% if current_user?(comment.user) %>
+    <%= link_to 'delete', gadget_comment_path(@gadget,comment), method: :delete, data: {confirm: 'コメントを削除してよろしいですか？'} %>
+  <% end %>

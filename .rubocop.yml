@@ -49,6 +49,7 @@ Layout/IndentationWidth:
     - 'app/controllers/users_controller.rb'
     - 'app/controllers/tweets_controller.rb'
     - 'app/controllers/gadgets_controller.rb'
+    - 'app/controllers/comments_controller.rb'
 
 Layout/IndentationConsistency:
   Exclude:
@@ -56,6 +57,7 @@ Layout/IndentationConsistency:
     - 'app/controllers/users_controller.rb'
     - 'app/controllers/tweets_controller.rb'
     - 'app/controllers/gadgets_controller.rb'
+    - 'app/controllers/comments_controller.rb'
 
 # ユーザーパスワードとパスワード確認のバリデーションをスキップする必要があるため、update_attributeの使用を許可
 Rails/SkipsModelValidations:
@@ -78,10 +80,11 @@ Rails/HelperInstanceVariable:
   Exclude:
     - 'app/helpers/sessions_helper.rb'
 
-# Abc Size:20のsessions_controller.rbを例外として許可（デフォルトAbc Size:15）
+# Abc Sizeがデフォルト値以上のcontrollerを例外として許可（デフォルトAbc Size:15）
 Metrics/AbcSize:
   Exclude:
     - 'app/controllers/sessions_controller.rb'
+    - 'app/controllers/comments_controller.rb'
 
 # bullet設定のため行数制限の対象外とする（デフォルト制限行数：25行/ブロック）
 Metrics/BlockLength:

@@ -28,7 +28,12 @@
   </div>
   <div class="col-md-8">
     <h2>コメント</h2>
-    コメント
+      <% if @user.comments.any? %>
+        <ol class="comments">
+          <%= render @comments %>
+        </ol>
+      <% end %>
+    <%= render 'shared/comment_form' if logged_in? %>      
   </div>
   <div class="col-md-2">
   </div>
