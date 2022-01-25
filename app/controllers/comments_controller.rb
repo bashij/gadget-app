@@ -3,7 +3,9 @@ class CommentsController < ApplicationController
   before_action :correct_user, only: :destroy
 
   def create
-    @comment = current_user.comments.build(gadget_id: params[:gadget_id], content: params[:comment][:content])
+    @comment = current_user.comments.build(gadget_id: params[:gadget_id],
+                                           content: params[:comment][:content],
+                                           reply_id: params[:comment][:reply_id])
     if @comment.save
       flash[:success] = 'コメントが完了しました'
       redirect_to request.referer || gadget_path(params[:gadget_id])
@@ -21,7 +23,7 @@ class CommentsController < ApplicationController
   private
 
     def comments_params
-      params.require(:comment).permit(:content)
+      params.require(:comment).permit(:content, :reply_id)
     end
 
     def correct_user

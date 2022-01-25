@@ -7,6 +7,7 @@ class GadgetsController < ApplicationController
     @user = @gadget.user
     @comments = @gadget.comments.includes(:user)
     @comment = current_user.comments.build
+    @replies = Comment.where(reply_id: @comments)
   end
 
   def new
