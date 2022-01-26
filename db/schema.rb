@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_26_111215) do
+ActiveRecord::Schema.define(version: 2022_01_26_113659) do
 
   create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -21,6 +21,15 @@ ActiveRecord::Schema.define(version: 2022_01_26_111215) do
     t.integer "reply_id"
     t.index ["gadget_id"], name: "index_comments_on_gadget_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "gadget_bookmarks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "gadget_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["gadget_id"], name: "index_gadget_bookmarks_on_gadget_id"
+    t.index ["user_id"], name: "index_gadget_bookmarks_on_user_id"
   end
 
   create_table "gadget_likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -94,6 +103,8 @@ ActiveRecord::Schema.define(version: 2022_01_26_111215) do
 
   add_foreign_key "comments", "gadgets"
   add_foreign_key "comments", "users"
+  add_foreign_key "gadget_bookmarks", "gadgets"
+  add_foreign_key "gadget_bookmarks", "users"
   add_foreign_key "gadget_likes", "gadgets"
   add_foreign_key "gadget_likes", "users"
   add_foreign_key "gadgets", "users"
