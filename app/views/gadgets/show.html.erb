@@ -2,6 +2,16 @@
 <div class="row">
   <div class="col-md-4">
     <%= image_tag @gadget.image.url %>
+    <% if @gadget.liked_by?(current_user) %>
+      <p><%=link_to 'いいね解除', gadget_gadget_likes_path(@gadget.id), method: :delete %>いいね数:<%= @gadget.gadget_likes.size %></p>
+    <% else %>
+      <p><%=link_to 'いいねする', gadget_gadget_likes_path(@gadget.id), method: :post %>いいね数:<%= @gadget.gadget_likes.size %></p>
+    <% end %>
+    <% if @gadget.bookmarked_by?(current_user) %>
+      <p><%=link_to 'ブックマークから削除', gadget_gadget_bookmarks_path(@gadget.id), method: :delete %>ブックマーク数:<%= @gadget.gadget_bookmarks.size %></p>
+    <% else %>
+      <p><%=link_to 'ブックマークに追加', gadget_gadget_bookmarks_path(@gadget.id), method: :post %>ブックマーク数:<%= @gadget.gadget_bookmarks.size %></p>
+    <% end %>      
   </div>
   <div class="col-md-8">
     <%= @gadget.name %>

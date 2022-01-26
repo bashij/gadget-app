@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     resource :tweet_bookmarks, only: %i[create destroy]
   end
   resources :gadgets do
+    resource :gadget_likes, only: %i[create destroy]
+    resource :gadget_bookmarks, only: %i[create destroy]
     resources :comments, only: %i[create destroy]
   end
   resources :relationships, only: %i[create destroy]

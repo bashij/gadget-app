@@ -9,12 +9,15 @@ class UsersController < ApplicationController
   def show
     @user = User.includes(:tweets).find(params[:id])
     @tweets = Tweet.includes(:tweet_likes, :tweet_bookmarks).where(user_id: @user)
-    @bookmarks = @user.bookmarked_tweets
-                      .includes(:tweet_likes, :tweet_bookmarks)
-                      .reorder('tweet_bookmarks.created_at DESC')
+    @tweet_bookmarks = @user.bookmarked_tweets
+                            .includes(:tweet_likes, :tweet_bookmarks)
+                            .reorder('tweet_bookmarks.created_at DESC')
     @replies = Tweet.where(reply_id: @tweets)
     @tweet = current_user.tweets.build
-    @gadgets = @user.gadgets
+    @gadgets = Gadget.includes(:user, :gadget_likes, :gadget_bookmarks).where(user_id: @user)
+    @gadget_bookmarks = @user.bookmarked_gadgets
+                             .includes(:user, :gadget_likes, :gadget_bookmarks)
+                             .reorder('gadget_bookmarks.created_at DESC')
   end
 
   def new
