@@ -1,6 +1,7 @@
 class Gadget < ApplicationRecord
   belongs_to :user
   has_many :comments, dependent: :destroy
+  has_many :gadget_likes, dependent: :destroy
   validates :user_id, presence: true
   validates :name, presence: true, length: { maximum: 50 }
   validates :category, presence: true, length: { maximum: 50 }
@@ -10,4 +11,9 @@ class Gadget < ApplicationRecord
   validates :other_info, length: { maximum: 100 }
   validates :review, length: { maximum: 5000 }
   mount_uploader :image, GadgetImageUploader
+
+  # ユーザーが既にいいねしているか？
+  def liked_by?(user)
+    gadget_likes.pluck(:user_id).include?(user.id)
+  end
 end

@@ -10,4 +10,9 @@
     <%= link_to '削除', gadget, method: :delete, data: {confirm: 'ガジェットを削除してよろしいですか？'} %>
     <%= link_to '編集/レビューを書く', edit_gadget_path(gadget) %>
   <% end %>
+  <% if gadget.liked_by?(current_user) %>
+    <p><%=link_to 'いいね解除', gadget_gadget_likes_path(gadget.id), method: :delete %>いいね数:<%= gadget.gadget_likes.size %></p>
+  <% else %>
+    <p><%=link_to 'いいねする', gadget_gadget_likes_path(gadget.id), method: :post %>いいね数:<%= gadget.gadget_likes.size %></p>
+  <% end %>  
 </li>

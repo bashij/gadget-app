@@ -16,6 +16,8 @@ class User < ApplicationRecord
   has_many :tweet_bookmarks, dependent: :destroy
   has_many :bookmarked_tweets, through: :tweet_bookmarks, source: :tweet
   has_many :comments, dependent: :destroy
+  has_many :gadget_likes, dependent: :destroy
+  has_many :liked_gadgets, through: :gadget_likes, source: :gadget
   attr_accessor :remember_token
 
   before_save { self.email = email.downcase }
