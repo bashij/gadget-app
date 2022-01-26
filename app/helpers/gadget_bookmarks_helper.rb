@@ -1,0 +1,2 @@
+module GadgetBookmarksHelper
+end
