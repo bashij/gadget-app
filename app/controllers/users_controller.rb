@@ -14,9 +14,9 @@ class UsersController < ApplicationController
                             .reorder('tweet_bookmarks.created_at DESC')
     @replies = Tweet.where(reply_id: @tweets)
     @tweet = current_user.tweets.build
-    @gadgets = Gadget.includes(:user, :gadget_likes, :gadget_bookmarks).where(user_id: @user)
+    @gadgets = Gadget.includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests).where(user_id: @user)
     @gadget_bookmarks = @user.bookmarked_gadgets
-                             .includes(:user, :gadget_likes, :gadget_bookmarks)
+                             .includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests)
                              .reorder('gadget_bookmarks.created_at DESC')
   end
 

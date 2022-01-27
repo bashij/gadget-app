@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_26_113659) do
+ActiveRecord::Schema.define(version: 2022_01_27_111936) do
 
   create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -66,6 +66,15 @@ ActiveRecord::Schema.define(version: 2022_01_26_113659) do
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
+  create_table "review_requests", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "gadget_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["gadget_id"], name: "index_review_requests_on_gadget_id"
+    t.index ["user_id"], name: "index_review_requests_on_user_id"
+  end
+
   create_table "tweet_bookmarks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
     t.integer "tweet_id"
@@ -108,5 +117,7 @@ ActiveRecord::Schema.define(version: 2022_01_26_113659) do
   add_foreign_key "gadget_likes", "gadgets"
   add_foreign_key "gadget_likes", "users"
   add_foreign_key "gadgets", "users"
+  add_foreign_key "review_requests", "gadgets"
+  add_foreign_key "review_requests", "users"
   add_foreign_key "tweets", "users"
 end
