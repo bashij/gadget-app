@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'review_requests/create'
+  get 'review_requests/destroy'
   root   'static_pages#home'
   get    '/about',   to: 'static_pages#about'
   get    '/signup',  to: 'users#new'
