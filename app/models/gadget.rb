@@ -3,6 +3,8 @@ class Gadget < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :gadget_likes, dependent: :destroy
   has_many :gadget_bookmarks, dependent: :destroy
+  has_many :review_requests, dependent: :destroy
+  has_many :requesting_users, through: :review_requests, source: :user
   validates :user_id, presence: true
   validates :name, presence: true, length: { maximum: 50 }
   validates :category, presence: true, length: { maximum: 50 }
@@ -21,5 +23,10 @@ class Gadget < ApplicationRecord
   # ユーザーが既にブックマークしているか？
   def bookmarked_by?(user)
     gadget_bookmarks.pluck(:user_id).include?(user.id)
+  end
+
+  # ユーザーが既にレビューリクエストしているか？
+  def requested_by?(user)
+    review_requests.pluck(:user_id).include?(user.id)
   end
 end

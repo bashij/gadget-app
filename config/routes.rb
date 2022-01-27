@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'review_requests/create'
-  get 'review_requests/destroy'
   root   'static_pages#home'
   get    '/about',   to: 'static_pages#about'
   get    '/signup',  to: 'users#new'
@@ -20,6 +18,7 @@ Rails.application.routes.draw do
     resource :gadget_likes, only: %i[create destroy]
     resource :gadget_bookmarks, only: %i[create destroy]
     resources :comments, only: %i[create destroy]
+    resource :review_requests, only: %i[create destroy show]
   end
   resources :relationships, only: %i[create destroy]
 end
