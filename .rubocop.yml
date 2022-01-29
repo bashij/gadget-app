@@ -50,6 +50,7 @@ Layout/IndentationWidth:
     - 'app/controllers/tweets_controller.rb'
     - 'app/controllers/gadgets_controller.rb'
     - 'app/controllers/comments_controller.rb'
+    - 'app/controllers/communities_controller.rb'
 
 Layout/IndentationConsistency:
   Exclude:
@@ -58,6 +59,7 @@ Layout/IndentationConsistency:
     - 'app/controllers/tweets_controller.rb'
     - 'app/controllers/gadgets_controller.rb'
     - 'app/controllers/comments_controller.rb'
+    - 'app/controllers/communities_controller.rb'
 
 # ユーザーパスワードとパスワード確認のバリデーションをスキップする必要があるため、update_attributeの使用を許可
 Rails/SkipsModelValidations:
