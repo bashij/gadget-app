@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_29_051527) do
+ActiveRecord::Schema.define(version: 2022_01_30_043707) do
 
   create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -63,6 +63,15 @@ ActiveRecord::Schema.define(version: 2022_01_29_051527) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "review"
     t.index ["user_id"], name: "index_gadgets_on_user_id"
+  end
+
+  create_table "memberships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "community_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["community_id"], name: "index_memberships_on_community_id"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
   create_table "relationships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -127,6 +136,8 @@ ActiveRecord::Schema.define(version: 2022_01_29_051527) do
   add_foreign_key "gadget_likes", "gadgets"
   add_foreign_key "gadget_likes", "users"
   add_foreign_key "gadgets", "users"
+  add_foreign_key "memberships", "communities"
+  add_foreign_key "memberships", "users"
   add_foreign_key "review_requests", "gadgets"
   add_foreign_key "review_requests", "users"
   add_foreign_key "tweets", "users"
