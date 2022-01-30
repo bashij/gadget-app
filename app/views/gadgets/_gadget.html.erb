@@ -20,10 +20,13 @@
   <% else %>
     <p><%=link_to 'ブックマークに追加', gadget_gadget_bookmarks_path(gadget.id), method: :post %>ブックマーク数:<%= gadget.gadget_bookmarks.size %></p>
   <% end %>
-  <% if gadget.requested_by?(current_user) %>
-    <p><%=link_to 'リクエストを解除する', gadget_review_requests_path(gadget.id), method: :delete %>リクエスト数:<%= gadget.review_requests.size %></p>
-  <% else %>
-    <p><%=link_to 'レビューをリクエストする', gadget_review_requests_path(gadget.id), method: :post %>リクエスト数:<%= gadget.review_requests.size %></p>
+  <% unless gadget.user_id == current_user.id %>
+    <% if gadget.requested_by?(current_user) %>
+      <p><%=link_to 'リクエストを解除する', gadget_review_requests_path(gadget.id), method: :delete %></p>
+    <% else %>
+      <p><%=link_to 'レビューをリクエストする', gadget_review_requests_path(gadget.id), method: :post %></p>
+    <% end %>
   <% end %>
+  <p>リクエスト数:<%= gadget.review_requests.size %></p>
   <p><%= link_to "リクエストユーザー一覧",gadget_review_requests_path(gadget.id) %></p>
 </li>
