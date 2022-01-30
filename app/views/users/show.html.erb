@@ -26,7 +26,15 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-3">
+    <h3>参加中のコミュニティ (<%= @user.joining_communities.count %>) </h3>
+      <% if @user.joining_communities.any? %>
+        <ol class="communities">
+          <%= render @communities %>
+        </ol>
+      <% end %>
+  </div>
+  <div class="col-md-3">
     <h3>ツイート (<%= @user.tweets.count %>) </h3>
       <% if @user.tweets.any? %>
         <ol class="tweets">

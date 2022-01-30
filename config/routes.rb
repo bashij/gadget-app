@@ -20,5 +20,8 @@ Rails.application.routes.draw do
     resources :comments, only: %i[create destroy]
     resource :review_requests, only: %i[create destroy show]
   end
+  resources :communities do
+    resource :memberships, only: %i[create destroy]
+  end
   resources :relationships, only: %i[create destroy]
 end
