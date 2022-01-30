@@ -2,6 +2,10 @@ class CommunitiesController < ApplicationController
   before_action :logged_in_user, only: %i[new create edit update destroy]
   before_action :correct_user,   only: %i[edit update destroy]
 
+  def show
+    @community = Community.find(params[:id])
+  end
+
   def new
     @community = current_user.communities.build
   end

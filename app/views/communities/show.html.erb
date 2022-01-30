@@ -1,0 +1,10 @@
+<% provide(:title, @community.name) %>
+<div class="row">
+  <div class="col-md-10">
+    <h1> <%= @community.name %> </h1>
+    <%= image_tag @community.image.url, size: '300x300' %>
+  </div>
+  <div class="col-md-10">
+    <h2>参加者一覧</h2>
+  </div>
+</div>
