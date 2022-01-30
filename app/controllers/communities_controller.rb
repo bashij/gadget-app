@@ -4,6 +4,7 @@ class CommunitiesController < ApplicationController
 
   def show
     @community = Community.find(params[:id])
+    @members = @community.joined_members
   end
 
   def new

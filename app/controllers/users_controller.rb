@@ -18,6 +18,7 @@ class UsersController < ApplicationController
     @gadget_bookmarks = @user.bookmarked_gadgets
                              .includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests)
                              .reorder('gadget_bookmarks.created_at DESC')
+    @communities = @user.joining_communities.includes(:user, :memberships)
   end
 
   def new

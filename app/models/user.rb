@@ -23,6 +23,8 @@ class User < ApplicationRecord
   has_many :review_requests, dependent: :destroy
   has_many :requested_reviews, through: :review_requests, source: :gadget
   has_many :communities, dependent: :destroy
+  has_many :memberships, dependent: :destroy
+  has_many :joining_communities, through: :memberships, source: :community
   attr_accessor :remember_token
 
   before_save { self.email = email.downcase }
