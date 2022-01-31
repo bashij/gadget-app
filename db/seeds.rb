@@ -15,26 +15,70 @@ User.create!(name: 'bashi',
                password_confirmation: password)
 end
 
-# ユーザーの一部を対象に、サンプルツイート/リプライ/いいね/ブックマークを作成
+# ユーザーの一部を対象に、サンプルツイート/ガジェット/リプライ/いいね/ブックマーク/コミュニティを作成
 users = User.order(:created_at).take(6)
 # User.first.tweets.order(created_at: :desc).limit(1).ids[0]では取得できないため、一時的に最新ツイートのidを直接指定
 cnt = 301
 
-# ツイート
+# ツイート 新規作成
 50.times do
   content = Faker::Lorem.paragraph_by_chars(number: 100)
-  users.each { |user| user.tweets.create!(content: content) }
+  users.each do |user|
+    # ツイート
+    user.tweets.create!(content: content)
+  end
 end
 
-# リプライ/いいね/ブックマーク
-20.times do
-  content = "リプライ: #{Faker::Lorem.paragraph_by_chars(number: 100)}"
+# ガジェット・コミュニティ 新規作成
+5.times do
   users.each do |user|
-    user.tweets.create!(content: content, reply_id: cnt)
+    # ガジェット
+    name = "MacBook Pro #{user.id}"
+    category = "PC本体 #{user.id}"
+    model_number = "modelNo #{user.id}"
+    manufacturer = "Apple #{user.id}"
+    price = 200_000
+    other_info = "メモリ:16GB #{user.id}"
+    review = "#{user.name} #{Faker::Lorem.paragraph_by_chars(number: 2000)}"
+    user.gadgets.create!(name: name,
+                         category: category,
+                         model_number: model_number,
+                         manufacturer: manufacturer,
+                         price: price,
+                         other_info: other_info,
+                         review: review)
+    # コミュニティ
+    name = "#{user.name} コミュニティ"
+    user.communities.create!(name: name)
+  end
+end
+
+# ツイート：リプライ/いいね/ブックマーク
+20.times do
+  tweet_content = "リプライ: #{Faker::Lorem.paragraph_by_chars(number: 100)}"
+  users.each do |user|
+    # ツイート
+    user.tweets.create!(content: tweet_content, reply_id: cnt)
     user.tweet_likes.create!(tweet_id: cnt)
     user.tweet_bookmarks.create!(tweet_id: cnt)
   end
   cnt -= 1
+end
+
+# ガジェット：コメント/リプライ/いいね/ブックマーク/リクエスト コミュニティ：新規加入
+5.times do
+  community_sample = Community.all.ids
+  gadget_sample = Gadget.all.ids
+  comment_content = "コメント: #{Faker::Lorem.paragraph_by_chars(number: 100)}"
+  users.each do |user|
+    # ガジェット
+    user.comments.create!(gadget_id: gadget_sample.sample, content: comment_content)
+    user.gadget_likes.create!(gadget_id: gadget_sample.sample)
+    user.gadget_bookmarks.create!(gadget_id: gadget_sample.sample)
+    user.review_requests.create!(gadget_id: gadget_sample.sample)
+    # コミュニティ
+    user.memberships.create!(community_id: community_sample.sample)
+  end
 end
 
 # 以下のリレーションシップを作成する
