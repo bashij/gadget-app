@@ -1,6 +1,7 @@
 # メインのサンプルユーザーを作成
 User.create!(name: 'bashi',
              email: 'bashi@gmail.com',
+             job: 'IT系',
              password: 'foobar',
              password_confirmation: 'foobar')
 
@@ -9,8 +10,10 @@ User.create!(name: 'bashi',
   name  = Faker::Name.name
   email = "example-#{n + 1}@gmail.com"
   password = 'password'
+  jobs = ['IT系', '非IT系', 'YouTuber/ブロガー', '学生', 'その他']
   User.create!(name: name,
                email: email,
+               job: jobs.sample,
                password: password,
                password_confirmation: password)
 end
