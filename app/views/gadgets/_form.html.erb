@@ -1,35 +1,35 @@
 <%= form_with(model: @gadget, local: true) do |f| %>
 <%= render 'shared/error_messages', object: f.object %>
     <div class="mb-3">
-        <%= f.label :ガジェット名, class: "form-label" %>
+        <%= f.label :name, class: "form-label" %>
         <%= f.text_field :name, class: "form-control" %>
     </div>
     <div class="mb-3">
-        <%= f.label :カテゴリ, class: "form-label" %>
+        <%= f.label :category, class: "form-label" %>
         <%= f.text_field :category, class: "form-control" %>
     </div>
     <div class="mb-3">
-        <%= f.label :型番, class: "form-label" %>
+        <%= f.label :model_number, class: "form-label" %>
         <%= f.text_field :model_number, class: "form-control" %>
     </div>
     <div class="mb-3">
-        <%= f.label :メーカー, class: "form-label" %>
+        <%= f.label :manufacturer, class: "form-label" %>
         <%= f.text_field :manufacturer, class: "form-control" %>
     </div>
     <div class="mb-3">
-        <%= f.label :価格, class: "form-label" %>
+        <%= f.label :price, class: "form-label" %>
         <%= f.text_field :price, class: "form-control" %>
     </div>
     <div class="mb-3">
-        <%= f.label :その他情報, class: "form-label" %>
+        <%= f.label :other_info, class: "form-label" %>
         <%= f.text_field :other_info, class: "form-control" %>
     </div>                        
     <div class="mb-3">
-        <%= f.label :ガジェット画像, class: "form-label" %>
+        <%= f.label :image, class: "form-label" %>
         <%= f.file_field :image, class: "form-control" %>
     </div> 
     <div class="mb-3">
-        <%= f.label :レビュー, class: "form-label" %>
+        <%= f.label :review, class: "form-label" %>
         <%= f.text_field :review, class: "form-control" %>
     </div>      
     <%= f.submit yield(:button_text), class: "btn btn-primary" %>

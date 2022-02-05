@@ -1,11 +1,11 @@
 <%= form_with(model: @community, local: true) do |f| %>
 <%= render 'shared/error_messages', object: f.object %>
     <div class="mb-3">
-        <%= f.label :コミュニティ名, class: "form-label" %>
+        <%= f.label :name, class: "form-label" %>
         <%= f.text_field :name, class: "form-control" %>
     </div>           
     <div class="mb-3">
-        <%= f.label :イメージ画像, class: "form-label" %>
+        <%= f.label :image, class: "form-label" %>
         <%= f.file_field :image, class: "form-control" %>
     </div> 
     <%= f.submit yield(:button_text), class: "btn btn-primary" %>
