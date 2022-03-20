@@ -1,0 +1,11 @@
+<div id="tweets" class="posts">
+  <% if @tweet_bookmarks.any? %>
+    <% @tweet_bookmarks.each do |tweet| %>
+      <%= render partial: 'tweets/bookmark_tweet', locals: {tweet: tweet} %>
+    <% end %> 
+    <%= paginate @tweet_bookmarks, remote: true, theme: 'bootstrap-5', :param_name => 'bookmark_tweets_page' %>  
+  <% else %>
+    <div class="post">
+    </div>
+  <% end %>
+</div>

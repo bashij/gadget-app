@@ -4,20 +4,32 @@ class TweetsController < ApplicationController
 
   def create
     @tweet = current_user.tweets.build(tweets_params)
-    if @tweet.save
-      flash[:success] = '投稿が完了しました'
-      redirect_to request.referer || root_url
+    @tweet.save
+    @reply_count = Tweet.group(:reply_id).reorder(nil).count
+    if @tweet.reply_id.nil?
+      @replies = []
+      @parent_tweet = []
     else
-      @feed_items = current_user.feed
-      @replies = Tweet.where(reply_id: @feed_items)
-      render 'static_pages/home'
+      @replies = Tweet.where(reply_id: tweets_params[:reply_id])
+      @parent_tweet = Tweet.find(@tweet.reply_id)
     end
+
+    @tweet_reply_form = current_user.tweets.build
   end
 
   def destroy
+    # ツイートに対するリプライを全て削除
+    @replies = Tweet.where(reply_id: @tweet.id)
+    @replies.each(&:destroy)
+    # ツイートを削除
     @tweet.destroy
-    flash[:success] = '投稿が削除されました'
-    redirect_to request.referer || root_url
+
+    @parent_tweet = if @tweet.reply_id.nil?
+                      []
+                    else
+                      Tweet.find(@tweet.reply_id)
+                    end
+    @reply_count = Tweet.group(:reply_id).reorder(nil).count
   end
 
   private

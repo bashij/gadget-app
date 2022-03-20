@@ -1,4 +1,4 @@
-<div class="post" id="tweet-<%= tweet.id %>">
+<div class="post" id="bookmark-tweet-<%= tweet.id %>">
   <div class="tweet-section-left">
     <div class="user_info">
       <%= image_tag tweet.user.image.url %>
@@ -10,10 +10,10 @@
       <span>
         <%= time_ago_in_words(tweet.created_at) %>前
       </span>    
-      <span class="tweet-icons" id="like_section-<%= tweet.id %>">
+      <span class="tweet-icons" id="bookmark_like_section-<%= tweet.id %>">
         <%= render "tweets/like_section", tweet: tweet %>
       </span>
-      <span class="tweet-icons" id="bookmark_section-<%= tweet.id %>">
+      <span class="tweet-icons" id="bookmark_bookmark_section-<%= tweet.id %>">
         <%= render "tweets/bookmark_section", tweet: tweet %>
       </span>
       <span class="tweet-icons">
@@ -35,11 +35,11 @@
     </div>    
     <section class="collapse" id="collapse-reply-<%= tweet.id %>">
       <%= form_with(model: @tweet_reply_form, local: false) do |f| %>
-        <div id="error_explanation-<%= tweet.id %>" class="text-center">
+        <div id="bookmark_error_explanation-<%= tweet.id %>" class="text-center">
           <%= render 'shared/error_messages_reply', object: f.object %>
         </div>        
         <div class="mb-3 field message_box">
-          <%= f.text_area :content, placeholder: '返信内容を入力', class: 'form-control', id: "reply_form_text_#{tweet.id}" %>
+          <%= f.text_area :content, placeholder: '返信内容を入力', class: 'form-control', id: "bookmark_reply_form_text_#{tweet.id}" %>
           <%= f.hidden_field :reply_id, value: tweet.id %>
         </div>       
         <div class="text-center m-4">
@@ -50,14 +50,14 @@
       <% end %>
     </section>
     <div class="reply-count">
-      <span id="reply_count-<%= tweet.id %>">
+      <span id="bookmark_reply_count-<%= tweet.id %>">
         <%= render "tweets/reply_count", tweet: tweet %>
       </span>
     </div>
     <div class="collapse" id="collapse-<%= tweet.id %>">    
       <div class="accordion-body">
-        <div id="replies-<%= tweet.id %>" class="replies">
-          <%= render "tweets/reply", tweet: tweet %>
+        <div id="bookmark-replies-<%= tweet.id %>" class="replies">
+          <%= render "tweets/bookmark_tweet_reply", tweet: tweet %>
         </div>
       </div>
     </div> 
