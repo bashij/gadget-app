@@ -1,48 +1,84 @@
 <% provide(:title, "home") %>
-<% if logged_in? %>
-  <div class="row">
-    <aside class="col-md-12">
-      <section class="user_info">
-        <%= render 'shared/user_info' %>
-      </section>
-      <section class="stats">
-        <%= render 'shared/stats' %>
-      </section>      
-      <section class="tweet_form">
-        <%= render 'shared/tweet_form' %>
-      </section>
-    </aside>
-  </div>
-  <div class="row">
-    <div class="col-md-10">
-    <h3>コミュニティ</h3>
-      <div class="community">
-        <% if @communities.any? %>
-          <%= render @communities %>
-        <% end %>
-      </div>
-      <div>
-        <%= link_to "コミュニティを作成する", new_community_path, class: "btn btn-lg btn-primary" %>
+
+<% unless logged_in? %>
+  <div class="col-md-12">
+    <div class="bg-image">
+      <div class="top-content">
+        <h1 class="app-name">GadgetLink</h1>
+        <div class="content-explanation">
+          <p class="lead">ガジェットで繋がるSNS</p>
+          <div class="explanation-detail">
+            <h2>こだわりのガジェットをシェア</h2>
+            <p><i class="fa-solid fa-check"></i>独自の活用法やカスタマイズ情報を交換</p>
+            <p><i class="fa-solid fa-check"></i>同じガジェットのファンと交流</p>
+          </div>
+          <div class="explanation-detail">
+            <h2>気になるガジェット情報を収集</h2>
+            <p><i class="fa-solid fa-check"></i>自分と似たユーザーのガジェットを参考に</p>
+            <p><i class="fa-solid fa-check"></i>リアルなユーザーの声をチェック</p>            
+          </div>
+        </div>        
+        <div class="btn-area">
+          <%= link_to "ログイン", login_path, class: "btn btn-lg btn-create" %>
+          <%= link_to "新規登録", signup_path, class: "btn btn-lg btn-create" %>
+        </div>
+        <div class="guest-link">
+          <%= link_to "ゲストログイン", signup_path, class: "" %>
+        </div>          
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <h3>ツイートのフィード</h3>
-      <%= render 'shared/feed_tweet' %>
-    </div>
-    <div class="col-md-6">
-      <h3>レビューのフィード</h3>
-      <%= render 'shared/feed_gadget' %>
-    </div>      
-  </div>
-<% else %>
-  <div class="bg-light p-4 p-sm-5 my-4 rounded">
-    <h1 class="display-4">Gadget-app</h1>
-    <p class="lead">アプリの簡単な説明</p>
-    <hr class="my-4">
-    <p>ログイン・新規登録はこちら</p>
-    <%= link_to "ログイン", login_path, class: "btn btn-lg btn-primary" %>
-    <%= link_to "新規登録", signup_path, class: "btn btn-lg btn-primary" %>
   </div>
 <% end %>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="content-header">
+      <h3>コミュニティ</h3>
+    </div>    
+    <div id="feed_community" class="row justify-content-center">
+      <%= render 'shared/feed_community', communities: @communities %>
+    </div>
+    <div class="p-3 mb-4 text-center h5">
+      <%=link_to new_community_path do %>
+        <i class="fa-solid fa-circle-plus pe-2"></i><span class="plus-link">新しいコミュニティを登録する</span>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-center">   
+  <div class="col-12 col-lg-10 col-xl-6">
+    <div class="content-header">
+      <h3>最近のツイート</h3>
+    </div>
+    <div class="switch-area">
+      <%=link_to '全てのユーザーを表示', root_path(displayed_feed: "all_tweet"), remote: true, class: "switch-item active" %>
+      <% if logged_in? %>
+        <%=link_to 'フォロー中のみ表示', root_path(displayed_feed: "following_tweet"), remote: true, class: "switch-item" %>
+      <% else %>
+        <%=link_to 'フォロー中のみ表示', login_path, class: "switch-item" %>
+      <% end %>                  
+    </div>
+    <div id="tweet-form">
+      <%= render 'shared/tweet_form', tweet: @tweet %>
+    </div>
+    <div id="feed_tweet">
+      <%= render 'shared/feed_tweet', feed_tweet: @feed_tweet %>
+    </div>
+  </div>    
+  <div class="col-12 col-lg-10 col-xl-6">
+    <div class="content-header">
+      <h3>新着レビュー</h3>
+    </div> 
+    <div class="switch-area">
+      <%=link_to '全てのユーザーを表示', root_path(displayed_feed: "all_gadget"), remote: true, class: "switch-item active" %>
+      <% if logged_in? %>
+        <%=link_to 'フォロー中のみ表示', root_path(displayed_feed: "following_gadget"), remote: true, class: "switch-item" %>
+      <% else %>
+        <%=link_to 'フォロー中のみ表示', login_path, class: "switch-item" %>
+      <% end %>      
+    </div>  
+  <div id="feed_gadget">
+    <%= render "shared/feed_gadget", feed_gadget: @feed_gadget %>
+  </div>
+  </div>    
+</div>
