@@ -2,15 +2,18 @@
 <%= render 'shared/error_messages', object: f.object %>
     <div class="mb-3">
         <%= f.label :name, class: "form-label" %>
-        <%= f.text_field :name, class: "form-control" %>
+        <span class="required-item">必須</span>
+        <%= f.text_field :name, class: "form-control", required: true %>
     </div>
     <div class="mb-3">
         <%= f.label :email, class: "form-label" %>
-        <%= f.email_field :email, class: "form-control" %>
+        <span class="required-item">必須</span>
+        <%= f.email_field :email, class: "form-control", required: true %>
     </div>
     <div class="mb-3">
         <%= f.label :job, class: "form-label" %>
-        <%= f.text_field :job, class: "form-control" %>
+        <span class="required-item">必須</span>
+        <%= f.select :job, [["IT系","IT系"],["非IT系","非IT系"],["学生","学生"],["YouTuber/ブロガー","YouTuber/ブロガー"],["その他","その他"]], {include_blank: "選択してください"}, {class: "form-control", required: true }%>
     </div>    
     <div class="mb-3">
         <%= f.label :image, class: "form-label" %>
@@ -18,11 +21,25 @@
     </div>      
     <div class="mb-3">
         <%= f.label :password, class: "form-label" %>
-        <%= f.password_field :password, class: "form-control" %>
+        <% if yield(:title) == 'ユーザー登録' %>
+            <span class="required-item">必須</span>
+            <%= f.password_field :password, class: "form-control", required: true %>
+        <% else %>
+            <%= f.password_field :password, class: "form-control" %>
+        <% end %>
     </div>
     <div class="mb-3">
         <%= f.label :password_confirmation, class: "form-label"%>
-        <%= f.password_field :password_confirmation, class: "form-control" %>
-    </div>  
-    <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+        <% if yield(:title) == 'ユーザー登録' %>
+            <span class="required-item">必須</span>
+            <%= f.password_field :password_confirmation, class: "form-control", required: true %>
+        <% else %>
+            <%= f.password_field :password_confirmation, class: "form-control" %>
+        <% end %>
+    </div>      
+    <div class="text-center m-4">
+      <p>        
+        <%= f.submit yield(:button_text), class: "btn btn-create" %>
+      </p>
+    </div>
 <% end %>

@@ -1,5 +1,8 @@
-<li>
-  <%= image_tag user.image.url, size: '100x100' %>
-  <%= link_to user.name, user %>
-  <%= user.job %>
-</li>
+<div class="user-feed p-3 m-1">
+  <div class="user_info text-center me-2">
+    <%= image_tag user.image.url, size: '150x150', class: "mb-1"%>
+    <div class="user mt-2">
+      <%= link_to user.name, user %>
+    </div>
+  </div>
+</div>

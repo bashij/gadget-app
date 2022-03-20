@@ -1,22 +1,17 @@
 <% provide(:title, @title) %>
-<div class="row">
-  <aside class="col-md-4">
-    <section class="user_info">
-      <%= image_tag @user.image.url %>
-      <h1><%= @user.name %></h1>
-      <span><%= link_to 'プロフィールを見る', @user %></span>
-      <span><b>ツイート:</b> <%= @user.tweets.count %></span>
-    </section>
-    <section class="stats">
-      <%= render 'shared/stats' %>
-    </section>
-  </aside>
-  <div class="col-md-8">
-    <h3><%= @title %></h3>
+<div class="row justify-content-center">
+  <div class="col-md-12">
+    <div class="content-header">
+      <h3><%= @title %></h3>
+    </div>    
     <% if @users.any? %>
-      <ul class="users follow">
-        <%= render @users %>
-      </ul>
+      <div id="feed_user">
+        <%= render 'shared/feed_user', users: @users %>
+      </div>
+      <div id="users_page">
+        <%= render 'shared/users_page', users: @users %>
+      </div>
     <% end %>
   </div>
 </div>
+
