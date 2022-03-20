@@ -1,5 +1,5 @@
 <div class="gadget" id="gadget-<%= gadget.id %>">
-  <div class="gadget-image">
+  <div class="gadget-image-detail">
     <div>
       <%= image_tag gadget.image.url %>
     </div>
@@ -19,23 +19,9 @@
         </span>
       </span>
     </div>
-    <div class="review-link">  
-      <% if gadget.review.blank? %>
-        <span id="review_request_section-<%= gadget.id %>">
-          <%= render "gadgets/review_request_section", gadget: gadget %>
-        </span>
-      <% else %>
-        <%= link_to "レビューを見る", gadget_path(gadget) %>
-      <% end %>
-    </div>    
-    <% if current_user?(gadget.user) %>
-      <div class="review-link">  
-        <%= link_to 'レビュー編集', edit_gadget_path(gadget) %>
-      </div>
-    <% end %>           
   </div>
   <div class="gadget-content">
-    <table class="table table-sm">
+    <table class="table table-sm gadget-table-detail">
       <tbody>
         <tr>
           <th>ガジェット名</th>
@@ -70,6 +56,19 @@
         </tr>                
       </tbody>
     </table>
+    <div class="edit-links">
+      <% if current_user?(gadget.user) %>      
+        <div class="link-section">
+          <%= link_to edit_gadget_path(gadget), id: "gadget_review_edit" do%>
+            <p class="plus-link"><i class="fa-solid fa-pen-to-square"></i>ガジェットとレビューを編集</p>
+          <% end %>
+        </div>
+        <div class="link-section">
+          <%= link_to gadget_path(gadget.id), class: "icon_delete", method: :delete, data: {confirm: 'ガジェットとレビューを削除してよろしいですか？'} do %>
+            <p><i class="fa-solid fa-trash"></i>ガジェットとレビューを削除</p>
+          <% end %>
+        </div>     
+      <% end %>      
+    </div>     
   </div>
 </div>
-

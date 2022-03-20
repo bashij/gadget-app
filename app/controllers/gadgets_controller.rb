@@ -3,11 +3,27 @@ class GadgetsController < ApplicationController
   before_action :correct_user,   only: %i[edit update destroy]
 
   def show
+    @comment = if logged_in?
+                 current_user.comments.build
+               else
+                 User.new.comments.build
+               end
+
     @gadget = Gadget.find(params[:id])
     @user = @gadget.user
-    @comments = @gadget.comments.includes(:user)
-    @comment = current_user.comments.build
+    comments = @gadget.comments.where(reply_id: nil).includes(:user)
+    @comments = Kaminari.paginate_array(comments).page(params[:comments_page]).per(5)
+    @comment_reply_form = @comment
     @replies = Comment.where(reply_id: @comments)
+    @reply_count = Comment.group(:reply_id).reorder(nil).count
+
+    # ページネーション
+    @comments_page_params = params[:comments_page]
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new
@@ -18,7 +34,7 @@ class GadgetsController < ApplicationController
     @gadget = current_user.gadgets.build(gadgets_params)
     if @gadget.save
       flash[:success] = '登録が完了しました'
-      redirect_to user_path(current_user)
+      redirect_to gadget_path(@gadget)
     else
       render 'new'
     end
@@ -30,16 +46,17 @@ class GadgetsController < ApplicationController
   def update
     if @gadget.update(gadgets_params)
       flash[:success] = '更新されました'
-      redirect_to user_path(current_user) # showに返す場合：@gadget
+      redirect_to gadget_path(@gadget)
     else
       render 'edit'
     end
   end
 
   def destroy
+    @user = @gadget.user
     @gadget.destroy
     flash[:success] = 'ガジェットが削除されました'
-    redirect_to request.referer || root_url
+    redirect_to user_path(@user)
   end
 
   private

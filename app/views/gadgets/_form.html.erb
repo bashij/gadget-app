@@ -2,11 +2,13 @@
 <%= render 'shared/error_messages', object: f.object %>
     <div class="mb-3">
         <%= f.label :name, class: "form-label" %>
-        <%= f.text_field :name, class: "form-control" %>
+        <span class="required-item">必須</span>
+        <%= f.text_field :name, class: "form-control", required: true %>
     </div>
     <div class="mb-3">
         <%= f.label :category, class: "form-label" %>
-        <%= f.text_field :category, class: "form-control" %>
+        <span class="required-item">必須</span>
+        <%= f.select :category, [["PC本体","PC本体"],["モニター","モニター"],["キーボード","キーボード"],["マウス","マウス"],["オーディオ","オーディオ"],["デスク","デスク"],["チェア","チェア"],["その他","その他"]], {include_blank: "選択してください"}, {class: "form-control", required: true} %>
     </div>
     <div class="mb-3">
         <%= f.label :model_number, class: "form-label" %>
@@ -18,7 +20,7 @@
     </div>
     <div class="mb-3">
         <%= f.label :price, class: "form-label" %>
-        <%= f.text_field :price, class: "form-control" %>
+        <%= f.number_field :price, class: "form-control" %>
     </div>
     <div class="mb-3">
         <%= f.label :other_info, class: "form-label" %>
@@ -28,9 +30,14 @@
         <%= f.label :image, class: "form-label" %>
         <%= f.file_field :image, class: "form-control" %>
     </div> 
-    <div class="mb-3">
-        <%= f.label :review, class: "form-label" %>
-        <%= f.text_field :review, class: "form-control" %>
-    </div>      
-    <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+    <div class="mb-3 field">
+        <%= f.label :review, class: "form-label" %>        
+        <span id="rich_text_template"><i class="fa-solid fa-circle-plus"></i>テンプレートを使用する</span>        
+        <%= f.rich_text_area :review, class: "form-control rich-text-area" %>
+    </div>         
+    <div class="text-center m-4">
+      <p>        
+        <%= f.submit yield(:button_text), class: "btn btn-create" %>
+      </p>
+    </div>
 <% end %>

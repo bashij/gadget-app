@@ -1,5 +1,6 @@
 <% if @feed_gadgets.any? %>
-  <ol class="gadgets">
+  <div class="gadgets">
     <%= render @feed_gadgets %>
-  </ol>
+  </div>
+  <%= paginate @feed_gadgets, params: {page_type: "gadget"}, remote: true, theme: 'bootstrap-5', :param_name => 'gadgets_page' %>
 <% end %>
