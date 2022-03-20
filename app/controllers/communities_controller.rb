@@ -4,7 +4,11 @@ class CommunitiesController < ApplicationController
 
   def show
     @community = Community.find(params[:id])
-    @members = @community.joined_members
+    @users = @community.joined_members.page(params[:users_page]).per(10)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new
@@ -14,7 +18,7 @@ class CommunitiesController < ApplicationController
   def create
     @community = current_user.communities.build(communities_params)
     if @community.save
-      flash[:success] = '作成が完了しました'
+      flash[:success] = '新しいコミュニティが登録されました'
       redirect_to root_url
     else
       render 'new'
@@ -36,7 +40,7 @@ class CommunitiesController < ApplicationController
   def destroy
     @community.destroy
     flash[:success] = 'コミュニティが削除されました'
-    redirect_to request.referer || root_url
+    redirect_to root_url
   end
 
   private

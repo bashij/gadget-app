@@ -1,32 +1,75 @@
-<li id="gadget-<%= gadget.id %>">
-  <%= image_tag gadget.image.url, size: '80x80' %>
-  <span class="name"><%= link_to gadget.name, gadget_path(gadget) %></span>  
-  <span class="category"><%= gadget.category %></span>
-  <span class="model_number"><%= gadget.model_number %></span>
-  <span class="manufacturer"><%= gadget.manufacturer %></span>
-  <span class="price"><%= gadget.price %></span>
-  <span class="other_info"><%= gadget.other_info %></span>
-  <% if current_user?(gadget.user) %>
-    <%= link_to '削除', gadget, method: :delete, data: {confirm: 'ガジェットを削除してよろしいですか？'} %>
-    <%= link_to '編集/レビューを書く', edit_gadget_path(gadget) %>
-  <% end %>
-  <% if gadget.liked_by?(current_user) %>
-    <p><%=link_to 'いいね解除', gadget_gadget_likes_path(gadget.id), method: :delete %>いいね数:<%= gadget.gadget_likes.size %></p>
-  <% else %>
-    <p><%=link_to 'いいねする', gadget_gadget_likes_path(gadget.id), method: :post %>いいね数:<%= gadget.gadget_likes.size %></p>
-  <% end %>  
-  <% if gadget.bookmarked_by?(current_user) %>
-    <p><%=link_to 'ブックマークから削除', gadget_gadget_bookmarks_path(gadget.id), method: :delete %>ブックマーク数:<%= gadget.gadget_bookmarks.size %></p>
-  <% else %>
-    <p><%=link_to 'ブックマークに追加', gadget_gadget_bookmarks_path(gadget.id), method: :post %>ブックマーク数:<%= gadget.gadget_bookmarks.size %></p>
-  <% end %>
-  <% unless gadget.user_id == current_user.id %>
-    <% if gadget.requested_by?(current_user) %>
-      <p><%=link_to 'リクエストを解除する', gadget_review_requests_path(gadget.id), method: :delete %></p>
-    <% else %>
-      <p><%=link_to 'レビューをリクエストする', gadget_review_requests_path(gadget.id), method: :post %></p>
-    <% end %>
-  <% end %>
-  <p>リクエスト数:<%= gadget.review_requests.size %></p>
-  <p><%= link_to "リクエストユーザー一覧",gadget_review_requests_path(gadget.id) %></p>
-</li>
+<div class="gadget" id="gadget-<%= gadget.id %>">
+  <div class="gadget-image">
+    <div>
+      <%= image_tag gadget.image.url %>
+    </div>
+    <div class="review-icons">
+      <span id="like_section-<%= gadget.id %>">
+        <%= render "gadgets/like_section", gadget: gadget %>
+      </span>
+      <span id="bookmark_section-<%= gadget.id %>">
+        <%= render "gadgets/bookmark_section", gadget: gadget %>
+      </span>
+      <span>
+        <%= link_to gadget_review_requests_path(gadget.id), class: "icon_post", method: :get, 'data-bs-toggle': :tooltip, 'data-bs-placement': :top, 'title': :'レビューリクエストしている人を見る' do %>
+          <i class="fa-solid fa-users"></i>
+        <% end %>
+        <span id="review_request_number_section-<%= gadget.id %>">
+          <%= render "gadgets/review_request_number_section", gadget: gadget %>          
+        </span>
+      </span>
+    </div>
+    <div class="review-link">  
+      <% if gadget.review.blank? %>
+        <span id="review_request_section-<%= gadget.id %>">
+          <%= render "gadgets/review_request_section", gadget: gadget %>
+        </span>
+      <% else %>
+        <%= link_to "レビューを見る", gadget_path(gadget) %>
+      <% end %>
+    </div>    
+    <% if current_user?(gadget.user) %>
+      <div class="review-link">  
+        <%= link_to 'レビュー編集', edit_gadget_path(gadget) %>
+      </div>
+    <% end %>           
+  </div>
+  <div class="gadget-content">
+    <table class="table table-sm">
+      <tbody>
+        <tr>
+          <th>ガジェット名</th>
+          <td><p class="overflow"><%= link_to gadget.name, gadget_path(gadget) %></p></td>
+        </tr>
+        <tr>
+          <th>カテゴリ</th>
+          <td><p class="overflow"><%= gadget.category %></p></td>
+        </tr>
+        <tr>
+          <th>型番</th>
+          <td><p class="overflow"><%= gadget.model_number %></p></td>
+        </tr>
+        <tr>
+          <th>メーカー</th>
+          <td><p class="overflow"><%= gadget.manufacturer %></p></td>
+        </tr>
+        <tr>
+          <th>価格</th>
+          <td><p class="overflow"><%= gadget.price %></p></td>
+        </tr>
+        <tr>
+          <th>その他情報</th>
+          <td><p class="overflow"><%= gadget.other_info %></p></td>
+        </tr>
+        <tr>
+          <th>投稿者</th>
+          <td><p class="overflow"><%= image_tag gadget.user.image.url %><%= link_to gadget.user.name, gadget.user %></p></td>
+        </tr>
+          <th>最終更新</th>
+          <td><p class="overflow"><%= l(gadget.updated_at, format: :long) %></p></td>
+        </tr>                
+      </tbody>
+    </table>
+  </div>
+</div>
+

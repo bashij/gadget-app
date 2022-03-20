@@ -1,24 +1,57 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: %i[index edit update destroy following followers]
+  before_action :logged_in_user, only: %i[index edit update destroy]
   before_action :correct_user,   only: %i[edit update destroy]
 
   def index
-    @users = User.all
+    @users = User.all.page(params[:users_page]).per(10)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def show
+    # ユーザー
     @user = User.includes(:tweets).find(params[:id])
-    @tweets = Tweet.includes(:tweet_likes, :tweet_bookmarks).where(user_id: @user)
+    # ツイート
+    @tweets = Tweet
+              .includes(:tweet_likes, :tweet_bookmarks)
+              .where(user_id: @user, reply_id: nil)
+              .page(params[:own_tweets_page])
+              .per(5)
     @tweet_bookmarks = @user.bookmarked_tweets
                             .includes(:tweet_likes, :tweet_bookmarks)
                             .reorder('tweet_bookmarks.created_at DESC')
-    @replies = Tweet.where(reply_id: @tweets)
-    @tweet = current_user.tweets.build
-    @gadgets = Gadget.includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests).where(user_id: @user)
+                            .page(params[:bookmark_tweets_page]).per(5)
+    # ツイートフォーム
+    @tweet = if logged_in?
+               current_user.tweets.build
+             else
+               User.new.tweets.build
+             end
+    @tweet_reply_form = @tweet # リプライフォーム作成用
+    # リプライ
+    parent_ids = @tweets.ids + @tweet_bookmarks.ids
+    @replies = Tweet.includes(:tweet_likes, :tweet_bookmarks).where(reply_id: parent_ids)
+    @reply_count = Tweet.group(:reply_id).reorder(nil).count
+    # ガジェット
+    @feed_gadgets = Gadget
+                    .includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests)
+                    .where(user_id: @user)
+                    .page(params[:gadgets_page])
+                    .per(5)
     @gadget_bookmarks = @user.bookmarked_gadgets
                              .includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests)
                              .reorder('gadget_bookmarks.created_at DESC')
-    @communities = @user.joining_communities.includes(:user, :memberships)
+                             .page(params[:bookmark_gadgets_page]).per(5)
+    # コミュニティ
+    @communities = @user.joining_communities.includes(:user, :memberships).page(params[:communities_page]).per(5)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new
@@ -30,7 +63,7 @@ class UsersController < ApplicationController
     if @user.save
       log_in @user
       flash[:success] = 'Gadget-appへようこそ！'
-      redirect_to @user
+      redirect_to root_url
     else
       render 'new'
     end
@@ -57,15 +90,21 @@ class UsersController < ApplicationController
   def following
     @title = 'フォロー'
     @user  = User.find(params[:id])
-    @users = @user.following
-    render 'show_follow'
+    @users = @user.following.page(params[:users_page]).per(10)
+    respond_to do |format|
+      format.html { render 'show_follow' }
+      format.js
+    end
   end
 
   def followers
     @title = 'フォロワー'
     @user  = User.find(params[:id])
-    @users = @user.followers
-    render 'show_follow'
+    @users = @user.followers.page(params[:users_page]).per(10)
+    respond_to do |format|
+      format.html { render 'show_follow' }
+      format.js
+    end
   end
 
   private

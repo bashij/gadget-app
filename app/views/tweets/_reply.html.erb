@@ -1,0 +1,50 @@
+<% if @replies.any? %>
+  <% @replies.each do |reply| %>
+    <% if tweet.id == reply.reply_id %>
+      <div class="reply" id="reply-<%= reply.id %>">
+        <div class="reply-section-left">
+          <div class="reply-user-info-lg">
+            <%= image_tag reply.user.image.url %>
+            <span class="user"><%= link_to reply.user.name, reply.user %></span>
+          </div>
+        </div>
+        <div class="post-content reply-section-right">
+          <div class="reply-header">
+            <div class="reply-user-info-sm">
+              <%= image_tag reply.user.image.url %>
+              <span class="user"><%= link_to reply.user.name, reply.user %></span>
+            </div>   
+          </div>
+          <div class="reply-icon-lg">
+            <span>
+              <%= time_ago_in_words(reply.created_at) %>前
+            </span>
+            <span>
+              <% if current_user?(reply.user) %>
+                <%= link_to tweet_path(reply.id), class: "icon_delete", method: :delete, remote: true, data: {confirm: '投稿を削除してよろしいですか？'} do %>
+                  <i class="fa-solid fa-trash"></i>
+                <% end %>
+              <% end %>
+            </span>
+          </div>             
+          <hr>
+          <div>
+            <span class="content text-break"><%= reply.content %></span>
+          </div>     
+          <div class="reply-icon-sm">
+            <span>
+              <%= time_ago_in_words(reply.created_at) %>前
+            </span>
+            <span>
+              <% if current_user?(reply.user) %>
+                <%= link_to tweet_path(reply.id), class: "icon_delete", method: :delete, remote: true, data: {confirm: '投稿を削除してよろしいですか？'} do %>
+                  <i class="fa-solid fa-trash"></i>
+                <% end %>
+              <% end %>
+            </span>
+          </div>                           
+        </div>  
+      </div>  
+    <% end %>
+  <% end %>
+<% end %>

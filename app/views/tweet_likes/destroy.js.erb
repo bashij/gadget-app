@@ -1,0 +1,16 @@
+// いいねを更新する
+// home
+var home = document.getElementById("like_section-<%= @tweet.id %>")
+if (typeof home !== 'undefined' && home !== null) {
+  home.innerHTML = "<%= j(render "tweets/like_section", tweet: @tweet) %>";
+} else {
+// user詳細
+  var own_tweet = document.getElementById("own_like_section-<%= @tweet.id %>")
+  if (typeof own_tweet !== 'undefined' && own_tweet !== null) {
+    own_tweet.innerHTML = "<%= j(render "tweets/like_section", tweet: @tweet) %>";
+  }
+  var bookmark_tweet = document.getElementById("bookmark_like_section-<%= @tweet.id %>")
+  if (typeof bookmark_tweet !== 'undefined' && bookmark_tweet !== null) {
+    bookmark_tweet.innerHTML = "<%= j(render "tweets/like_section", tweet: @tweet) %>";
+  }       
+}

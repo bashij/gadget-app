@@ -1,0 +1,10 @@
+<% if tweet.liked_by?(current_user) %>
+  <%= link_to tweet_tweet_likes_path(tweet.id), class: "icon_delete", method: :delete, remote: true, 'data-bs-toggle': :tooltip, 'data-bs-placement': :top, 'title': :'いいねをやめる' do %>
+    <i class="fas fa-heart"></i>
+  <% end %>
+<% else %>
+  <%= link_to tweet_tweet_likes_path(tweet.id), class: "icon_post", method: :post, remote: true, 'data-bs-toggle': :tooltip, 'data-bs-placement': :top, 'title': :'いいねする' do %>
+    <i class="fas fa-heart"></i>
+  <% end %>
+<% end %>    
+<%= tweet.tweet_likes.size %>

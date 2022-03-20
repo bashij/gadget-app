@@ -1,48 +1,65 @@
-<% if tweet.reply_id.nil? %>
-  <li id="tweet-<%= tweet.id %>">
-    <%= image_tag tweet.user.image.url, size: '100x100' %>
-    <span class="user"><%= link_to tweet.user.name, tweet.user %></span>
-    <span class="content"><%= tweet.content %></span>
-    <span class="timestamp">
-    posted <%= time_ago_in_words(tweet.created_at) %> ago.
-    <% if current_user?(tweet.user) %>
-      <%= link_to 'delete', tweet, method: :delete, data: {confirm: '投稿を削除してよろしいですか？'} %>
-    <% end %>
-    <% if tweet.liked_by?(current_user) %>
-      <p><%=link_to 'いいね解除', tweet_tweet_likes_path(tweet.id), method: :delete %>いいね数:<%= tweet.tweet_likes.size %></p>
-    <% else %>
-      <p><%=link_to 'いいねする', tweet_tweet_likes_path(tweet.id), method: :post %>いいね数:<%= tweet.tweet_likes.size %></p>
-    <% end %>
-    <% if tweet.bookmarked_by?(current_user) %>
-      <p><%=link_to 'ブックマークから削除', tweet_tweet_bookmarks_path(tweet.id), method: :delete %>ブックマーク数:<%= tweet.tweet_bookmarks.size %></p>
-    <% else %>
-      <p><%=link_to 'ブックマークに追加', tweet_tweet_bookmarks_path(tweet.id), method: :post %>ブックマーク数:<%= tweet.tweet_bookmarks.size %></p>
-    <% end %>    
-      <section class="tweet_form">
-        <%= form_with(model: @tweet, local: true) do |f| %>
-          <%= render 'shared/error_messages', object: f.object %>
-          <div class="mb-3">
-            <%= f.text_area :content, placeholder: '返信内容を入力' %>
-            <%= f.hidden_field :reply_id, value: tweet.id %>
-          </div>
-          <%= f.submit '投稿する', class: 'btn btn-primary' %>
-        <% end %>
-      </section>
-      <ol class="tweets">
-        <% @replies.each do |reply| %>
-          <% if tweet.id == reply.reply_id %>
-            <li>
-              <%= image_tag reply.user.image.url, size: '80x80' %>
-                <span class="user"><%= link_to reply.user.name, reply.user %></span>
-                <span class="content"><%= reply.content %></span>
-                <span class="timestamp">
-                posted <%= time_ago_in_words(reply.created_at) %> ago.
-                <% if current_user?(reply.user) %>
-                  <%= link_to 'delete', reply, method: :delete, data: {confirm: '投稿を削除してよろしいですか？'} %>
-                <% end %>
-            </li>
+<div class="post" id="tweet-<%= tweet.id %>">
+  <div class="tweet-section-left">
+    <div class="user_info">
+      <%= image_tag tweet.user.image.url %>
+      <span class="user"><%= link_to tweet.user.name, tweet.user %></span>
+    </div> 
+  </div>
+  <div class="post-content tweet-section-right">
+    <div class="tweet-icon">
+      <span>
+        <%= time_ago_in_words(tweet.created_at) %>前
+      </span>    
+      <span class="tweet-icons" id="like_section-<%= tweet.id %>">
+        <%= render "tweets/like_section", tweet: tweet %>
+      </span>
+      <span class="tweet-icons" id="bookmark_section-<%= tweet.id %>">
+        <%= render "tweets/bookmark_section", tweet: tweet %>
+      </span>
+      <span class="tweet-icons">
+        <a class="" data-bs-toggle="collapse" href="#collapse-reply-<%= tweet.id %>" aria-expanded="false" aria-controls="collapse-reply-<%= tweet.id %> data-bs-toggle="tooltip" data-bs-placement="top" title="返信フォームを開く"">
+          <i class="fa-solid fa-reply"></i>
+        </a>
+      </span>
+      <span class="tweet-icons">
+        <% if current_user?(tweet.user) %>
+          <%= link_to tweet_path(tweet.id), class: "icon_delete", method: :delete, remote: true, data: {confirm: '投稿を削除してよろしいですか？'} do %>
+            <i class="fa-solid fa-trash"></i>
           <% end %>
-        <% end %>
-      </ol>
-  </li>
-<% end %>
+        <% end %>        
+      </span>      
+    </div>     
+    <hr>
+    <div class="p-2">          
+      <span class="content text-break"><%= tweet.content %></span>
+    </div>    
+    <section class="collapse" id="collapse-reply-<%= tweet.id %>">
+      <%= form_with(model: @tweet_reply_form, local: false) do |f| %>
+        <div id="error_explanation-<%= tweet.id %>" class="text-center">
+          <%= render 'shared/error_messages_reply', object: f.object %>
+        </div>        
+        <div class="mb-3 field message_box">
+          <%= f.text_area :content, placeholder: '返信内容を入力', class: 'form-control', id: "reply_form_text_#{tweet.id}" %>
+          <%= f.hidden_field :reply_id, value: tweet.id %>
+        </div>       
+        <div class="text-center m-4">
+          <p>
+            <%= f.submit '投稿する', class: 'btn btn-create' %>
+          </p>
+        </div>        
+      <% end %>
+    </section>
+    <div class="reply-count">
+      <span id="reply_count-<%= tweet.id %>">
+        <%= render "tweets/reply_count", tweet: tweet %>
+      </span>
+    </div>
+    <div class="collapse" id="collapse-<%= tweet.id %>">    
+      <div class="accordion-body">
+        <div id="replies-<%= tweet.id %>" class="replies">
+          <%= render "tweets/reply", tweet: tweet %>
+        </div>
+      </div>
+    </div> 
+  </div>
+</div>

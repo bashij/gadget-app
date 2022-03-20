@@ -5,7 +5,11 @@ require:
 
 AllCops:
   NewCops: enable
-
+  Exclude: # 自動生成されるファイルは基本的に除外
+    - 'vendor/**/*'
+    - 'db/**/*'
+    - 'bin/yarn'
+    - "config/**/*"
 
 # ドキュメントの無い public class を許可する
 Style/Documentation:
@@ -19,47 +23,15 @@ Style/FrozenStringLiteralComment:
 Style/EmptyMethod:
   Enabled: false
 
-# その他自動生成で発生する規約違反は無視するが、必要に応じて調整する
-
-Style/InverseMethods:
-  Exclude:
-    - 'bin/yarn'
-
-Style/StderrPuts:
-  Exclude:
-    - 'bin/yarn'
-
-Layout/MultilineMethodCallIndentation:
-  Exclude:
-    - 'bin/yarn'
-
-Style/RedundantFetchBlock:
-  Exclude:
-    - 'config/puma.rb'
-
-Rails/FilePath:
-  Exclude:
-    - 'config/environments/development.rb'
-
 # コントローラ
 # privateメソッド可読性向上のため許可
 Layout/IndentationWidth:
   Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/users_controller.rb'
-    - 'app/controllers/tweets_controller.rb'
-    - 'app/controllers/gadgets_controller.rb'
-    - 'app/controllers/comments_controller.rb'
-    - 'app/controllers/communities_controller.rb'
+    - 'app/controllers/*'
 
 Layout/IndentationConsistency:
   Exclude:
-    - 'app/controllers/application_controller.rb'    
-    - 'app/controllers/users_controller.rb'
-    - 'app/controllers/tweets_controller.rb'
-    - 'app/controllers/gadgets_controller.rb'
-    - 'app/controllers/comments_controller.rb'
-    - 'app/controllers/communities_controller.rb'
+    - 'app/controllers/*'
 
 # ユーザーパスワードとパスワード確認のバリデーションをスキップする必要があるため、update_attributeの使用を許可
 Rails/SkipsModelValidations:
@@ -85,18 +57,22 @@ Rails/HelperInstanceVariable:
 # Abc Sizeがデフォルト値以上のcontrollerを例外として許可（デフォルトAbc Size:15）
 Metrics/AbcSize:
   Exclude:
-    - 'app/controllers/sessions_controller.rb'
-    - 'app/controllers/comments_controller.rb'
-    - 'app/controllers/users_controller.rb'
+    - 'app/controllers/*'
 
 # bullet設定のため行数制限の対象外とする（デフォルト制限行数：25行/ブロック）
 Metrics/BlockLength:
   Exclude:
     - 'config/environments/development.rb'
 
-# migrationファイルと一部コントローラはメソッド行数が11行以上でも許可する
-MethodLength:
+# コントローラはメソッド行数が11行以上でも許可する
+Metrics/MethodLength:
   Exclude:
-    - 'db/migrate/*'
-    - 'app/controllers/users_controller.rb'
+    - 'app/controllers/*'
 
+# 一部コントローラは規定値以上の複雑さを許容する
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'app/controllers/static_pages_controller.rb'
+Metrics/PerceivedComplexity:
+  Exclude:
+    - 'app/controllers/static_pages_controller.rb'

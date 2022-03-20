@@ -1,0 +1,8 @@
+<div class="community row justify-content-center mt-3 mb-3">
+  <% if @communities.any? %>
+    <%= render @communities %>
+  <% end %>
+</div>
+<div class="col-md-8 ">
+  <%= paginate @communities, params: {page_type: "community"}, remote: true, theme: 'bootstrap-5', :param_name => 'communities_page' %>        
+</div>

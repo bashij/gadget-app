@@ -1,0 +1,11 @@
+// ブックマークを更新する
+// home
+var home = document.getElementById("bookmark_section-<%= @gadget.id %>")
+if (typeof home !== 'undefined' && home !== null) {
+  home.innerHTML = "<%= j(render "gadgets/bookmark_section", gadget: @gadget) %>";
+}
+// user詳細
+var bookmark_gadget = document.getElementById("bookmark_bookmark_section-<%= @gadget.id %>")
+if (typeof bookmark_gadget !== 'undefined' && bookmark_gadget !== null) {
+  bookmark_gadget.innerHTML = "<%= j(render "gadgets/bookmark_section", gadget: @gadget) %>";
+}       

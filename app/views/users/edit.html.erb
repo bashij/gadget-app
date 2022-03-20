@@ -1,14 +1,19 @@
-<% provide(:title, 'Edit user') %>
+<% provide(:title, 'ユーザー情報編集') %>
 <% provide(:button_text, '変更を保存する') %>
-<h1>ユーザー情報編集</h1>
-
-<div class="row">
+<div class="content-header">
+  <h3>ユーザー情報編集</h3>
+</div>
+<div class="row justify-content-center">
   <div class="col-md-6 col-md-offset-3">
     <%= render 'form' %>
-    <% if current_user?(@user) %>
-      <%= link_to '退会する', @user, method: :delete, 
-                                    class: 'btn btn-danger', 
-                                    data: { confirm: '本当に退会してよろしいですか？' } %>
-    <% end %>
+    <div class="text-center m-4">
+      <p>        
+        <% if current_user?(@user) %>
+          <%= link_to '退会する', @user, method: :delete, 
+                                        class: 'btn btn-destroy', 
+                                        data: { confirm: '本当に退会してよろしいですか？' } %>
+        <% end %>
+      </p>
+    </div>    
   </div>
 </div>

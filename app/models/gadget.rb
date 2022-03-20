@@ -14,19 +14,26 @@ class Gadget < ApplicationRecord
   validates :other_info, length: { maximum: 100 }
   validates :review, length: { maximum: 5000 }
   mount_uploader :image, GadgetImageUploader
+  has_rich_text :review
 
   # ユーザーが既にいいねしているか？
   def liked_by?(user)
+    return false if user.nil?
+
     gadget_likes.pluck(:user_id).include?(user.id)
   end
 
   # ユーザーが既にブックマークしているか？
   def bookmarked_by?(user)
+    return false if user.nil?
+
     gadget_bookmarks.pluck(:user_id).include?(user.id)
   end
 
   # ユーザーが既にレビューリクエストしているか？
   def requested_by?(user)
+    return false if user.nil?
+
     review_requests.pluck(:user_id).include?(user.id)
   end
 end

@@ -7,8 +7,14 @@ import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
-import "bootstrap"
-import "../stylesheets/application"
+import "bootstrap";
+import '@fortawesome/fontawesome-free/js/all'
+import "../src/my_component.js";
+import "../stylesheets/application.scss";
+
+import "trix"
+import "@rails/actiontext"
 
 Rails.start()
 ActiveStorage.start()
+

@@ -1,59 +1,51 @@
 <% provide(:title, @gadget.name) %>
-<div class="row">
-  <div class="col-md-4">
-    <%= image_tag @gadget.image.url %>
-    <% if @gadget.liked_by?(current_user) %>
-      <p><%=link_to 'いいね解除', gadget_gadget_likes_path(@gadget.id), method: :delete %>いいね数:<%= @gadget.gadget_likes.size %></p>
-    <% else %>
-      <p><%=link_to 'いいねする', gadget_gadget_likes_path(@gadget.id), method: :post %>いいね数:<%= @gadget.gadget_likes.size %></p>
-    <% end %>
-    <% if @gadget.bookmarked_by?(current_user) %>
-      <p><%=link_to 'ブックマークから削除', gadget_gadget_bookmarks_path(@gadget.id), method: :delete %>ブックマーク数:<%= @gadget.gadget_bookmarks.size %></p>
-    <% else %>
-      <p><%=link_to 'ブックマークに追加', gadget_gadget_bookmarks_path(@gadget.id), method: :post %>ブックマーク数:<%= @gadget.gadget_bookmarks.size %></p>
-    <% end %>
-    <% unless @gadget.user_id == current_user.id %>
-      <% if @gadget.requested_by?(current_user) %>
-        <p><%=link_to 'リクエストを解除する', gadget_review_requests_path(@gadget.id), method: :delete %></p>
+<div class="row justify-content-center">
+  <div class="col-10">
+    <div class="gadgets-detail">
+      <%= render 'gadgets/gadget_detail', gadget: @gadget %>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-10 col-xl-8">
+    <div class="content-header">
+      <h3>レビュー</h3>
+    </div>
+    <div class="review">
+    <% if @gadget.review.blank? %>
+      <h3 class="mt-2">レビューがまだありません。</h2>
+      <% if current_user?(@gadget.user) %>
+        <% if @gadget.review_requests.size > 0 %>
+          <div class="mt-4">
+            <span class="request-message">レビューを待っている人が<%= @gadget.review_requests.size %>人います！</span>
+          </div>
+        <% end %>  
+          <div class="mt-4">
+            <%= link_to edit_gadget_path(@gadget), id: "gadget_review_edit" do%>
+              <p class="plus-link"><i class="fa-solid fa-pen-to-square"></i>ガジェットとレビューを編集</p>
+            <% end %>
+          </div>
       <% else %>
-        <p><%=link_to 'レビューをリクエストする', gadget_review_requests_path(@gadget.id), method: :post %></p>
-      <% end %>
-    <% end %>
-    <p>リクエスト数:<%= @gadget.review_requests.size %></p>
-    <p><%= link_to "リクエストユーザー一覧",gadget_review_requests_path(@gadget.id) %></p>      
-  </div>
-  <div class="col-md-8">
-    <%= @gadget.name %>
-    <%= @gadget.category %>
-    <%= @gadget.model_number %>
-    <%= @gadget.manufacturer %>
-    <%= @gadget.price %>
-    <%= @gadget.other_info %>
-    最終更新日時：<%= @gadget.updated_at %>
+        <span id="detail_review_request_section-<%= @gadget.id %>">
+          <%= render "gadgets/detail_review_request_section", gadget: @gadget %>
+        </span>        
+      <% end %>    
+    <% else %>
+      <%= @gadget.review %>
+    <% end %>    
+    </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-md-2">
-  </div>
-  <div class="col-md-8">
-    <h1>レビュー</h1>
-    <%= @gadget.review %>
-  </div>
-  <div class="col-md-2">
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-2">
-  </div>
-  <div class="col-md-8">
-    <h2>コメント</h2>
-      <% if @user.comments.any? %>
-        <ol class="comments">
-          <%= render @comments %>
-        </ol>
-      <% end %>
-    <%= render 'shared/comment_form' if logged_in? %>      
-  </div>
-  <div class="col-md-2">
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-10 col-xl-8">
+    <div class="content-header">
+      <h3>コメント</h3>
+    </div> 
+    <div id="comment_form">
+      <%= render 'shared/comment_form', comment: @comment %>
+    </div>
+    <span id="feed_comment">
+      <%= render "shared/feed_comment", comments: @comments %>
+    </span>    
   </div>
 </div>

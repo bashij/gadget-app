@@ -56,6 +56,12 @@ module SessionsHelper
 
   # アクセスしようとしたURLを覚えておく
   def store_location
-    session[:forwarding_url] = request.original_url if request.get?
+    session[:forwarding_url] = if request.get?
+                                 request.original_url
+                               elsif request.post?
+                                 request.referer
+                               else
+                                 '/'
+                               end
   end
 end

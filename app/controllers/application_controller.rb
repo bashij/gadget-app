@@ -9,6 +9,9 @@ class ApplicationController < ActionController::Base
 
       store_location
       flash[:danger] = 'ログインしてください'
-      redirect_to login_url
+      respond_to do |format|
+        format.html { redirect_to login_path }
+        format.js { render js: "window.location = #{login_path.to_json}" }
+      end
     end
 end
