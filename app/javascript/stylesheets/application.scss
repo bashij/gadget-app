@@ -1,1 +1,799 @@
 @import "~bootstrap/scss/bootstrap";
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import 'trix/dist/trix';
+
+// カラー
+$color_theme1: #fff;
+$color_theme2: #f0f0f0;
+$color_theme3: #eee;
+$color_theme4: #ddd;
+$color_theme5: #777;
+$color_theme6: #666;
+$color_theme7: #3f3f3f;
+$color_theme8: #333;
+$color_theme9: #30291b;
+$color_accent1: #f15f7a;
+$color_accent2: #ee4060;
+
+// 全体
+body {
+  font-family: "Avenir","Helvetica Neue","Helvetica","Arial","Hiragino Sans","ヒラギノ角ゴシック",YuGothic,"Yu Gothic","メイリオ", Meiryo,"ＭＳ Ｐゴシック","MS PGothic", sans-serif;
+  color:$color_theme8;
+  line-height: 1.5;
+  text-align: justify;
+  background-color: $color_theme2;
+  li {
+    list-style: none;
+  }
+  a {
+    text-decoration: none;
+    color: $color_theme7;
+    &:hover {
+      text-decoration: underline;
+      color: $color_theme9;
+    }
+  }
+  tr {
+    text-align: center;
+    vertical-align: middle;
+  }  
+  th {
+    font-weight: normal;
+    vertical-align: middle;
+  }
+  img {
+    border-radius: 10px;
+  }
+}
+
+// 共通
+.pagination {
+  justify-content: center;
+  margin: 10px;
+  a {
+    text-decoration: none;
+  }
+  .page-link {
+    color: $color_theme8;
+    @media screen and (max-width: 480px) {
+      padding: 0.3rem 0.3rem;
+      font-size: 0.8rem;
+    }
+  }
+  .page-item.active {
+    .page-link {
+      border: none;
+      background-color: $color_theme9;            
+    }     
+  }
+}
+
+.bg-image {
+  width:100%;
+  height:800px;  
+  background: linear-gradient(-10deg, rgba(215, 210, 204, .8), rgba(48, 67, 82, .8)) fixed, 
+              url('top.jpg') fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.top-content {
+  color: $color_theme1;
+  font-size: 1.5rem;
+  padding: 50px;
+  text-align: center;
+  border-radius: 10px;
+  height: 100%;
+  .app-name {
+    font-family: "Avenir Next Condensed Bold","Avenir Next Condensed Heavy";
+  }
+  h1 {
+    font-size: 4.5rem;
+    @media screen and (max-width: 480px) {
+      font-size: 2.6rem;
+    }
+  }
+  .content-explanation {
+    margin-top: 30px;
+    font-size: 1.5rem; 
+    height: 450px;
+    .lead {
+      margin: 50px 0 50px 0;
+      font-size: 1.3rem;
+      letter-spacing: 1.4rem;
+      @media screen and (max-width: 480px) {
+        margin: 30px 0 30px 0;
+        font-size: 0.9rem;
+        letter-spacing: 0.8rem;
+      }
+    }
+    .explanation-detail {
+      margin-top: 60px;
+      h2 {
+        font-size: 1.8rem;
+        letter-spacing: 1.2rem;
+        position: relative;
+        @media screen and (max-width: 959px) {
+          font-size: 1.4rem;
+        }
+        @media screen and (max-width: 480px) {
+          font-size: 1rem;
+        }
+      }
+      h2::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -10px;/*線の上下位置*/
+        display: inline-block;
+        width: 45%;/*線の長さ*/
+        height: 4px;/*線の太さ*/
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        background-color: $color_theme4;
+        @media screen and (max-width: 959px) {
+          width: 60%;
+        }
+      }
+      p {
+        padding-top: 20px;
+        margin-bottom: 0px;
+        font-size: 1.3rem;
+        letter-spacing: 0.3rem;
+        @media screen and (max-width: 959px) {
+          font-size: 1.1rem;
+        }
+        @media screen and (max-width: 480px) {
+          font-size: 0.9rem;
+        }        
+        .fa-check {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+  .btn-area {
+    margin-top: 40px;    
+    margin-bottom: 15px; 
+    @media screen and (max-width: 480px) {
+      margin-top: 100px;    
+      margin-bottom: 5px; 
+    }            
+    .btn {
+      border-radius: 30px;
+      @media screen and (max-width: 480px) {
+        font-size: 0.8rem;
+      }                  
+    }
+  }
+  .guest-link {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 1.2rem;
+    @media screen and (max-width: 480px) {
+      font-size: 0.8rem;
+    }         
+  }
+}
+
+
+
+.header {
+  background-color: $color_theme7;  
+  font-family: "Avenir Next Condensed Bold","Avenir Next Condensed Heavy";
+  .logo {
+    a {
+      color: $color_theme1;
+      text-decoration: none;      
+    }
+  }
+  .menu {
+    a {
+      color: $color_theme1;
+    }
+  }
+  .menu_btn {
+    a {
+      color: $color_theme1;
+    }
+  }
+  .collapse {
+    a {
+      color: $color_theme1;
+    }
+  }
+}
+
+.content-header {  
+  color: $color_theme8;
+  letter-spacing: 0.7em;
+  text-align: center;
+  padding: 1.2rem 1.2rem 0.2rem 1.2rem;
+  margin: 0.5rem 0 1.2rem 0;  
+  h3 {
+    position: relative;
+    font-weight: 600;
+  }
+  h3::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;/*線の上下位置*/
+    display: inline-block;
+    width: 60%;/*線の長さ*/
+    height: 4px;/*線の太さ*/
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    background-color: $color_theme5;
+  }
+}
+.wf-mplus1p { font-family: "M PLUS 1p"; }
+
+
+// ボタン
+.btn {
+  border-radius: 20px;
+  border: $color_theme8 solid 2px;  
+  background-color: $color_theme1;
+  color: $color_theme8;
+  &.btn-create {
+    background-color: $color_theme1;
+    color: $color_theme8;  
+  }
+  &.btn-destroy {    
+    color: $color_accent2;
+    border: $color_accent2 solid 2px;
+  }
+  &:hover {
+    text-decoration: none;
+    background-color: $color_theme3;
+  }
+}
+
+
+
+
+// コミュニティ
+.community_items {
+  background-color: $color_theme1;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+  width: 240px;
+  .card-title {
+    height: 20px;
+  }
+  img {
+    margin: auto;
+    height: 200px;
+    width: 200px;
+  }
+  .btn {
+    margin: 10px 0 10px 0;
+  }
+}
+
+.community-detail {
+  display: flex;
+  background-color: $color_theme1;
+  border-radius: 10px;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+  padding: 0.75rem;
+  margin: 0.75rem;
+  @media screen and (max-width: 959px) {
+    display: block;
+  }      
+  .community-image-detail {
+    flex-basis: 100px;
+    margin-right: 0.5rem;
+    text-align: center;
+    img {
+      margin: auto;
+      height: 300px;
+      width: 300px;    
+      @media screen and (max-width: 959px) {
+        height: 180px;
+        width: 180px;
+      }     
+    }
+  }
+  .community-content {
+    flex-basis: auto;
+    width: 100%;
+    margin-top: 0.5rem;
+    table tbody tr th {    
+      padding: 15px;
+      @media screen and (max-width: 959px) {
+        padding: 0;
+      }  
+    }
+    img {
+      margin: auto;
+      height: 60px;
+      width: 60px;
+    }
+    th {
+      width: 250px;
+      @media screen and (max-width: 959px) {
+        width: 300px;
+      }        
+      @media screen and (max-width: 480px) {
+        width: 150px;
+      }      
+    }
+    .community-table-detail {
+      th {
+        width: 350px;
+        @media screen and (max-width: 959px) {
+          width: 300px;
+        }        
+        @media screen and (max-width: 480px) {
+          width: 150px;
+        } 
+      }           
+    }
+    .overflow {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width:200px;
+      margin-bottom: 0.25rem;
+      margin: auto;      
+      @media screen and (max-width: 959px) {
+        width: 250px;
+      }            
+      @media screen and (max-width: 480px) {
+        width: 120px;
+      }      
+    }
+    .edit-links {
+      width: 100%;
+      text-align: center;
+      display: flex;
+      padding-top: 0.75rem;
+      margin-top: 0.75rem;
+      font-size: 0.92rem;
+      .link-section {
+        width: 50%;
+      }
+    }
+  }
+}
+
+
+// ツイート
+.post {
+  display: flex;
+  background-color: $color_theme1;
+  border-radius: 10px;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+  margin: 0.75rem;
+  img {
+    height: 150px;
+    width: 150px;
+    margin-right: 5px;
+    @media screen and (max-width: 480px) {
+      height: 70px;
+      width: 70px;
+      margin-right: 0px;
+    }           
+  }
+}
+
+.reply {
+  display: flex;
+  background-color: $color_theme2;
+  border-radius: 10px;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  @media screen and (max-width: 480px) {
+    font-size: 0.9rem;
+  }             
+  img {
+    height: 100px;
+    width: 100px;
+    display: block;
+    @media screen and (max-width: 959px) {
+      height: 50px;
+      width: 50px;
+      font-size: 0.8rem;
+      display: inline-block;
+    }           
+  }
+  .reply-user-info-lg {
+    text-align: center;
+    display: block;
+    @media screen and (max-width: 959px) {
+      display: none;
+    }             
+  }
+  .reply-user-info-sm {
+    text-align: center;
+    display: none;
+    @media screen and (max-width: 959px) {
+      display: inline-block;
+    }
+  }  
+  .reply-icon-lg {
+    text-align: right;
+    display: block;
+    @media screen and (max-width: 959px) {
+      display: none;
+    }      
+  }
+  .reply-icon-sm {
+    text-align: right;
+    display: none;
+    @media screen and (max-width: 959px) {
+      display: block;
+    }    
+  }  
+  .reply-header {
+    text-align: center;        
+  }
+}
+
+.tweet-section-left {
+  margin: 0.75rem 0 0.75rem 0.75rem;
+  .user_info {
+    flex-basis: 100px;
+    border-radius: 10px;
+    text-align: center;
+    margin-right: 10px;
+    @media screen and (max-width: 480px) {
+      display: inline-block;
+      height: 70px;
+    }             
+
+  }
+}
+
+.post-content { //全ページ直したらけす
+  flex-basis: auto;
+  width: 100%;
+}
+
+.tweet-section-right {
+  margin: 0.75rem 0.75rem 0.75rem 0;
+  flex-basis: auto;
+  width: 100%;
+  .tweet-icon {
+    text-align: right;  
+    margin: 0.25rem;
+    @media screen and (max-width: 480px) {
+      margin-right: 0.5rem;
+    }      
+  }  
+  .reply-count {
+    margin-top: 5px;
+    text-align: center;
+  }
+}
+
+.deleted-post {
+  display: flex;
+  background-color: $color_accent2; 
+  border-radius: 10px;
+  color: $color_theme1;
+}
+
+.completed_section {
+  display: flex;
+  background-color: $color_accent2; 
+  border-radius: 10px;
+  color: $color_theme1;  
+}
+
+.completed_section_own {
+  display: flex;
+  background-color: $color_accent2; 
+  border-radius: 10px;
+  color: $color_theme1;  
+}
+
+.completed_section_book {
+  display: flex;
+  background-color: $color_accent2; 
+  border-radius: 10px;
+  color: $color_theme1;  
+}
+
+.post-error {
+  color: $color_accent2;
+  border-radius: 10px;
+}
+
+
+.message_box{
+  flex-grow: 1;
+}
+
+// ツイートアイコン
+.icon_post {
+  color: $color_theme8;
+  &:hover {
+    text-decoration: none;
+    color: $color_theme6;
+  }
+}
+
+.icon_delete {
+  color: $color_accent2;  
+  &:hover {
+    text-decoration: none;
+    color: $color_accent1;
+  }
+}
+
+.fa-circle-plus {
+  color: $color_theme5;
+}
+
+// ガジェット
+.gadget {
+  display: flex;
+  background-color: $color_theme1;
+  border-radius: 10px;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+  padding: 0.75rem;
+  margin: 0.75rem;
+  @media screen and (max-width: 959px) {
+    display: block;
+  }      
+  .gadget-image {
+    flex-basis: 100px;
+    margin-right: 0.5rem;
+    text-align: center;
+    img {
+      margin: auto;
+      height: 180px;
+      width: 180px;
+    }
+    .review-icons {
+      margin-top: 1rem;
+    }
+    .review-link {
+      margin: 1rem 1rem;
+    }
+  } 
+  .gadget-image-detail {
+    flex-basis: 100px;
+    margin-right: 0.5rem;
+    text-align: center;
+    img {
+      margin: auto;
+      height: 300px;
+      width: 300px;    
+      @media screen and (max-width: 959px) {
+        height: 180px;
+        width: 180px;
+      }     
+    }
+    .review-icons {
+      margin: 1.5rem 1.5rem;
+    }
+  }
+  .gadget-content {
+    flex-basis: auto;
+    width: 100%;
+    img {
+      margin: auto;
+      height: 60px;
+      width: 60px;
+    }
+    th {
+      width: 250px;
+      @media screen and (max-width: 959px) {
+        width: 300px;
+      }        
+      @media screen and (max-width: 480px) {
+        width: 150px;
+      }      
+    }
+    .gadget-table-detail {
+      th {
+        width: 350px;
+        @media screen and (max-width: 959px) {
+          width: 300px;
+        }        
+        @media screen and (max-width: 480px) {
+          width: 150px;
+        } 
+      }           
+    }
+    .overflow {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width:200px;
+      margin-bottom: 0.25rem;
+      margin: auto;      
+      @media screen and (max-width: 959px) {
+        width: 250px;
+      }            
+      @media screen and (max-width: 480px) {
+        width: 120px;
+      }      
+    }
+    .edit-links {
+      width: 100%;
+      text-align: center;
+      display: flex;
+      padding-top: 0.75rem;
+      margin-top: 0.75rem;
+      font-size: 0.92rem;
+      .link-section {
+        width: 50%;
+      }
+    }
+  }
+}
+
+
+
+.nav-link {
+  color: $color_theme8;
+  &:hover {
+    color: $color_theme9;
+  }
+}
+
+.request-message {
+  color: $color_accent2;
+}
+
+// ユーザー
+.user-feed {
+  display: inline-block;
+  background-color: $color_theme1;
+  border-radius: 10px;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+}
+
+.user-profile {
+  width: 360px;
+  background-color: $color_theme1;
+  border-radius: 10px;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+  text-align: center;
+  padding: 0.75rem;
+  margin: auto;
+  margin-bottom: 1rem;
+  img {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+.user-tab {
+  border-bottom: none;
+  text-align: center;
+  padding: 0;
+  .nav-link {
+    margin-bottom: 0.25rem;
+    width: 99%;
+    background-color: $color_theme1;  
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+    border-radius: 10px;
+    &.active {
+      background-color: $color_theme8;
+      color: $color_theme1;
+      pointer-events: none;
+    }
+    &:hover {
+      text-decoration: none;
+      color: $color_theme9;
+      background-color: $color_theme3;
+    }
+  }
+}
+
+.switch-area {
+  width: 100%;
+  text-align: center;
+  margin: 1rem 0 1rem 0;
+  height: 2.5rem;  
+}
+
+.switch-item {
+  background-color: $color_theme1;  
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+  border-radius: 10px;
+  display: inline-block;
+  vertical-align: middle;
+  width: 49%;
+  text-decoration: none;  
+  line-height: 2.5rem;
+  &.active {
+    background-color: $color_theme8;
+    color: $color_theme1;
+    pointer-events: none;
+  }
+  &:hover {
+    text-decoration: none;
+    color: $color_theme9;
+    background-color: $color_theme3;
+  }
+}
+
+
+.rich-text-area {
+  min-height: 500px;
+  background-color: $color_theme1;
+  border-radius: 10px;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+  padding: 2rem;
+  @media screen and (max-width: 480px) {
+    font-size: 0.8rem;
+  }   
+}
+
+.alert-success {
+  background-color: $color_accent2; 
+  color: $color_theme1;  
+  margin-bottom: 10px;
+  text-align: center;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+}
+
+#rich_text_template {
+  cursor: pointer;
+  text-align: center;
+  margin-left: 10px;  
+  color: $color_accent2;
+  .fa-circle-plus {
+    color: $color_accent2;
+    margin-right: 5px;
+  }
+}
+
+.review {
+  background-color: $color_theme1;
+  border-radius: 10px;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+  padding: 2rem;
+  margin: 0.75rem;
+  @media screen and (max-width: 480px) {
+    font-size: 0.8rem;
+  }   
+}
+
+.required-item {
+  background-color: $color_accent2;
+  color: $color_theme1;  
+  border-radius: 10px;
+  font-size: 0.8rem;
+  padding: 0.1rem 0.3rem 0.1rem 0.3rem;
+  margin-left: 0.2rem;
+}
+
+// home
+.switch-area {
+  width: 100%;
+  text-align: center;
+  margin: 1rem 0 1rem 0;
+  height: 2.5rem;  
+}
+
+.switch-item {
+  background-color: $color_theme1;  
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+  border-radius: 10px;
+  display: inline-block;
+  vertical-align: middle;
+  width: 49%;
+  text-decoration: none;  
+  line-height: 2.5rem;
+  &.active {
+    background-color: $color_theme8;
+    color: $color_theme1;
+    pointer-events: none;
+  }
+  &:hover {
+    text-decoration: none;
+    color: $color_theme9;
+    background-color: $color_theme3;
+  }
+}
+
