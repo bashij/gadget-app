@@ -1,5 +1,10 @@
 <% provide(:title, 'レビューリクエスト') %>
-<h1>レビューをリクエストしているユーザー</h1>
-<ul class="users">
-  <%= render @users %>
-</ul>
+<div class="content-header">
+  <h3>レビューをリクエストしているユーザー</h3>
+</div>
+<div id="feed_user">
+  <%= render 'shared/feed_user', users: @users %>
+</div>
+<div id="users_page">
+  <%= render 'shared/users_page', users: @users %>
+</div>
