@@ -10,7 +10,7 @@ import "channels"
 import "bootstrap";
 import '@fortawesome/fontawesome-free/js/all'
 import "../src/my_component.js";
-import "../stylesheets/application.scss";
+import "../stylesheets/application";
 
 import "trix"
 import "@rails/actiontext"
