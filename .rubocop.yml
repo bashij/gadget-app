@@ -76,3 +76,16 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Exclude:
     - 'app/controllers/static_pages_controller.rb'
+
+# テスト用自動生成ファイルを除外
+Style/ExpandPathArguments:
+  Exclude:
+    - 'bin/rspec'
+
+Style/StringLiterals:
+  Exclude:
+    - 'spec/rails_helper.rb'
+
+Style/BlockComments:
+  Exclude:
+    - 'spec/spec_helper.rb'
