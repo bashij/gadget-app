@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: %i[index edit update destroy]
+  before_action :logged_in_user, only: %i[edit update destroy]
   before_action :correct_user,   only: %i[edit update destroy]
 
   def index
@@ -62,7 +62,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in @user
-      flash[:success] = 'Gadget-appへようこそ！'
+      flash[:success] = 'GadgetLinkへようこそ！'
       redirect_to root_url
     else
       render 'new'

@@ -19,7 +19,7 @@ class CommunitiesController < ApplicationController
     @community = current_user.communities.build(communities_params)
     if @community.save
       flash[:success] = '新しいコミュニティが登録されました'
-      redirect_to root_url
+      redirect_to community_path(@community)
     else
       render 'new'
     end
@@ -31,7 +31,7 @@ class CommunitiesController < ApplicationController
   def update
     if @community.update(communities_params)
       flash[:success] = '更新されました'
-      redirect_to root_url
+      redirect_to community_url(params[:id])
     else
       render 'edit'
     end
