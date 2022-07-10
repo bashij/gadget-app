@@ -12,7 +12,7 @@
       </span>
       <span>
         <%= link_to gadget_review_requests_path(gadget.id), class: "icon_post", method: :get, 'data-bs-toggle': :tooltip, 'data-bs-placement': :top, 'title': :'レビューリクエストしている人を見る' do %>
-          <i class="fa-solid fa-users"></i>
+          <i id="review_request_show_button-<%= gadget.id %>" class="fa-solid fa-users"></i>
         <% end %>
         <span id="review_request_number_section-<%= gadget.id %>">
           <%= render "gadgets/review_request_number_section", gadget: gadget %>          
@@ -55,7 +55,7 @@
         </tr>
         <tr>
           <th>価格</th>
-          <td><p class="overflow"><%= gadget.price %></p></td>
+          <td><p class="overflow"><%= number_to_currency(gadget.price, unit: " 円") %></p></td>
         </tr>
         <tr>
           <th>その他情報</th>

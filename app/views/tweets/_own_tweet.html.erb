@@ -17,7 +17,7 @@
         <%= render "tweets/bookmark_section", tweet: tweet %>
       </span>
       <span class="tweet-icons">
-        <a class="" data-bs-toggle="collapse" href="#collapse-reply-<%= tweet.id %>" aria-expanded="false" aria-controls="collapse-reply-<%= tweet.id %> data-bs-toggle="tooltip" data-bs-placement="top" title="返信フォームを開く"">
+        <a id="collapse-reply-icon-<%= tweet.id %>" class="" data-bs-toggle="collapse" href="#collapse-reply-<%= tweet.id %>" aria-expanded="false" aria-controls="collapse-reply-<%= tweet.id %> data-bs-toggle="tooltip" data-bs-placement="top" title="返信フォームを開く"">
           <i class="fa-solid fa-reply"></i>
         </a>
       </span>
@@ -44,7 +44,7 @@
         </div>       
         <div class="text-center m-4">
           <p>
-            <%= f.submit '投稿する', class: 'btn btn-create' %>
+            <%= f.submit '投稿する', class: 'btn btn-create', id: "reply_submit_#{tweet.id}" %>
           </p>
         </div>        
       <% end %>
