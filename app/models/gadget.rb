@@ -7,10 +7,11 @@ class Gadget < ApplicationRecord
   has_many :requesting_users, through: :review_requests, source: :user
   validates :user_id, presence: true
   validates :name, presence: true, length: { maximum: 50 }
-  validates :category, presence: true, length: { maximum: 50 }
+  validates :category, presence: true, length: { maximum: 50 },
+                       inclusion: { in: %w[PC本体 モニター キーボード マウス オーディオ デスク チェア その他] }
   validates :model_number, length: { maximum: 100 }
   validates :manufacturer, length: { maximum: 50 }
-  validates :price, numericality: { allow_nil: true }
+  validates :price, numericality: { allow_nil: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 9_999_999 }
   validates :other_info, length: { maximum: 100 }
   validates :review, length: { maximum: 5000 }
   mount_uploader :image, GadgetImageUploader

@@ -33,7 +33,8 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-  validates :job, presence: true, length: { maximum: 50 }
+  validates :job, presence: true, length: { maximum: 50 },
+                  inclusion: { in: %w[IT系 非IT系 学生 YouTuber/ブロガー その他] }
   mount_uploader :image, UserImageUploader
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
