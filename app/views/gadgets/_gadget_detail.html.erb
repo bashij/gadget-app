@@ -41,7 +41,7 @@
         </tr>
         <tr>
           <th>価格</th>
-          <td><p class="overflow"><%= gadget.price %></p></td>
+          <td><p class="overflow"><%= number_to_currency(gadget.price, unit: " 円") %></p></td>
         </tr>
         <tr>
           <th>その他情報</th>

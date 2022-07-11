@@ -1,5 +1,6 @@
 class ReviewRequestsController < ApplicationController
   before_action :logged_in_user, only: %i[create destroy]
+  before_action :correct_user,   only: :destroy
 
   def show
     @users = Gadget.find(params[:gadget_id]).requesting_users.page(params[:users_page]).per(10)
@@ -17,8 +18,14 @@ class ReviewRequestsController < ApplicationController
   end
 
   def destroy
-    review_request = ReviewRequest.find_by(gadget_id: params[:gadget_id], user_id: current_user.id)
-    review_request.destroy
+    @review_request.destroy
     @gadget = Gadget.find(params[:gadget_id])
   end
+
+  private
+
+    def correct_user
+      @review_request = current_user.review_requests.find_by(gadget_id: params[:gadget_id])
+      redirect_to root_url if @review_request.nil?
+    end
 end

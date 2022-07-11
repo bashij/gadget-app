@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_27_015029) do
+ActiveRecord::Schema.define(version: 2022_03_31_142636) do
 
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2022_02_27_015029) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["gadget_id"], name: "index_gadget_bookmarks_on_gadget_id"
+    t.index ["user_id", "gadget_id"], name: "index_gadget_bookmarks_on_user_id_and_gadget_id", unique: true
     t.index ["user_id"], name: "index_gadget_bookmarks_on_user_id"
   end
 
@@ -85,6 +86,7 @@ ActiveRecord::Schema.define(version: 2022_02_27_015029) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["gadget_id"], name: "index_gadget_likes_on_gadget_id"
+    t.index ["user_id", "gadget_id"], name: "index_gadget_likes_on_user_id_and_gadget_id", unique: true
     t.index ["user_id"], name: "index_gadget_likes_on_user_id"
   end
 
@@ -94,7 +96,7 @@ ActiveRecord::Schema.define(version: 2022_02_27_015029) do
     t.string "category"
     t.string "model_number"
     t.string "manufacturer"
-    t.decimal "price", precision: 8, scale: 2
+    t.integer "price"
     t.string "other_info"
     t.string "image"
     t.datetime "created_at", precision: 6, null: false
@@ -109,6 +111,7 @@ ActiveRecord::Schema.define(version: 2022_02_27_015029) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["community_id"], name: "index_memberships_on_community_id"
+    t.index ["user_id", "community_id"], name: "index_memberships_on_user_id_and_community_id", unique: true
     t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
@@ -128,6 +131,7 @@ ActiveRecord::Schema.define(version: 2022_02_27_015029) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["gadget_id"], name: "index_review_requests_on_gadget_id"
+    t.index ["user_id", "gadget_id"], name: "index_review_requests_on_user_id_and_gadget_id", unique: true
     t.index ["user_id"], name: "index_review_requests_on_user_id"
   end
 
@@ -136,6 +140,7 @@ ActiveRecord::Schema.define(version: 2022_02_27_015029) do
     t.integer "tweet_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "tweet_id"], name: "index_tweet_bookmarks_on_user_id_and_tweet_id", unique: true
   end
 
   create_table "tweet_likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -143,6 +148,7 @@ ActiveRecord::Schema.define(version: 2022_02_27_015029) do
     t.integer "tweet_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "tweet_id"], name: "index_tweet_likes_on_user_id_and_tweet_id", unique: true
   end
 
   create_table "tweets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

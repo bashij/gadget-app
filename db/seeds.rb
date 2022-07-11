@@ -10,10 +10,10 @@ User.create!(name: 'bashi',
   name  = Faker::Name.name
   email = "example-#{n + 1}@gmail.com"
   password = 'password'
-  jobs = ['IT系', '非IT系', 'YouTuber/ブロガー', '学生', 'その他']
+  job = %w[IT系 非IT系 YouTuber/ブロガー 学生 その他].sample
   User.create!(name: name,
                email: email,
-               job: jobs.sample,
+               job: job,
                password: password,
                password_confirmation: password)
 end
@@ -37,7 +37,7 @@ end
   users.each do |user|
     # ガジェット
     name = "MacBook Pro #{user.id}"
-    category = "PC本体 #{user.id}"
+    category = %w[PC本体 モニター キーボード マウス オーディオ デスク チェア その他].sample
     model_number = "modelNo #{user.id}"
     manufacturer = "Apple #{user.id}"
     price = 200_000

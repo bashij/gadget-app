@@ -21,7 +21,7 @@
             </span>
             <span>
               <% if current_user?(reply.user) %>
-                <%= link_to tweet_path(reply.id), class: "icon_delete", method: :delete, remote: true, data: {confirm: '投稿を削除してよろしいですか？'} do %>
+                <%= link_to tweet_path(reply.id), class: "icon_delete", method: :delete, remote: true, data: {confirm: '投稿を削除してよろしいですか？'}, id: "reply_delete_lg_#{reply.id}" do %>
                   <i class="fa-solid fa-trash"></i>
                 <% end %>
               <% end %>

@@ -39,7 +39,15 @@ gem 'kaminari', '~> 1.2.2'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'capybara'
   gem 'dotenv-rails'
+  gem 'factory_bot_rails'
+  gem 'pry-byebug', '>= 3.9.0'
+  gem 'pry-doc', '>= 1.3.0'
+  gem 'pry-rails', '>= 0.3.9'
+  gem 'rspec-rails', '~> 5.1.0'
+  gem 'spring-commands-rspec'
+  gem 'webdrivers'
 end
 
 group :development do
@@ -61,10 +69,6 @@ group :development do
   gem 'pre-commit', require: false
 
   gem 'bullet', '>= 7.0.1'
-
-  gem 'pry-byebug', '>= 3.9.0'
-  gem 'pry-doc', '>= 1.3.0'
-  gem 'pry-rails', '>= 0.3.9'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
