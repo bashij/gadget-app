@@ -6,6 +6,7 @@ RSpec.describe 'Tweets', type: :system, js: true do
   let!(:other_user_tweet1) { create(:tweet, user_id: other_user.id, content: 'テストツイート2') }
   let!(:other_user_tweet2) { create(:tweet, user_id: other_user.id, content: 'テストツイート3') }
 
+  # controller: tweets(create/destroy), users(show), static_pages(home)
   scenario 'ツイートの新規作成、画面への表示、削除を行う', js: true do
     # userでログイン
     visit root_path
@@ -48,6 +49,7 @@ RSpec.describe 'Tweets', type: :system, js: true do
     expect(page).not_to have_content 'テストツイート1'
   end
 
+  # controller: tweets(create/destroy), users(show), static_pages(home)
   scenario 'ツイートへのリプライ新規作成、削除を行う・', js: true do
     # userでログイン
     visit root_path
@@ -117,6 +119,7 @@ RSpec.describe 'Tweets', type: :system, js: true do
     end.to change(Tweet.all, :count).by(-1)
   end
 
+  # controller: tweet_likes(create/destroy), tweet_bookmarks(create/destroy), users(show), static_pages(home)
   scenario 'ツイートへのいいね・ブックマークの追加と解除、ブックマークの表示を行う・', js: true do
     # userでログイン
     visit root_path
