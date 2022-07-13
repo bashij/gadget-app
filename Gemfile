@@ -46,7 +46,6 @@ group :development, :test do
   gem 'pry-doc', '>= 1.3.0'
   gem 'pry-rails', '>= 0.3.9'
   gem 'rspec-rails', '~> 5.1.0'
-  gem 'spring-commands-rspec'
   gem 'webdrivers'
 end
 
@@ -58,7 +57,7 @@ group :development do
   gem 'listen', '~> 3.3'
   gem 'rack-mini-profiler', '~> 2.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  # gem 'spring'
 
   gem 'rubocop', require: false
   gem 'rubocop-discourse', require: false
