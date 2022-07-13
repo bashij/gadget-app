@@ -4,6 +4,7 @@ RSpec.describe 'Users', type: :system, js: true do
   let!(:user) { create(:user, name: 'テストユーザー', email: 'example1@gmail.com', password: 'password') }
   let!(:other_user) { create(:user, name: 'サブユーザー', email: 'example2@gmail.com', password: 'password') }
 
+  # controller: users(new/create)
   scenario 'ユーザーの新規作成を行う' do
     visit root_path
     click_on '新規登録'
@@ -20,6 +21,7 @@ RSpec.describe 'Users', type: :system, js: true do
     end.to change(User.all, :count).by(1)
   end
 
+  # controller: users(destroy)
   scenario 'ユーザーの削除を行う' do
     # userでログイン
     visit root_path
@@ -46,6 +48,7 @@ RSpec.describe 'Users', type: :system, js: true do
     expect(page).to have_content '無効なメールアドレスまたはパスワードです'
   end
 
+  # controller: users(edit/update)
   scenario 'ユーザーの編集を行う' do
     # ログイン
     visit root_path
@@ -73,6 +76,7 @@ RSpec.describe 'Users', type: :system, js: true do
     expect(page).to have_content 'その他'
   end
 
+  # controller: users(index/show/following/followers), relationships(create/destroy)
   scenario '全ユーザー、フォロー、フォロワー一覧を表示する', js: true do
     # other_userでログイン
     visit root_path
