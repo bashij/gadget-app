@@ -3,7 +3,13 @@
   <h3>レビューをリクエストしているユーザー</h3>
 </div>
 <div id="feed_user">
-  <%= render 'shared/feed_user', users: @users %>
+  <% if @users.empty? %>
+    <div class="text-center">
+      <p>レビューをリクエストしているユーザーはまだいません。</p>
+    </div>
+  <% else %>
+    <%= render 'shared/feed_user', users: @users %>
+  <% end %>
 </div>
 <div id="users_page">
   <%= render 'shared/users_page', users: @users %>

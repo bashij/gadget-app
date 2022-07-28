@@ -10,6 +10,8 @@ AllCops:
     - 'db/**/*'
     # - 'bin/*'
     - 'bin/yarn'
+    - 'bin/webpack'
+    - 'bin/webpack-dev-server'
     - "config/**/*"
     - 'public/**/*'
     - 'log/**/*'
