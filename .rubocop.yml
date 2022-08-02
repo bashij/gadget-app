@@ -45,6 +45,10 @@ Rails/SkipsModelValidations:
   Exclude:
     - 'app/models/user.rb'
 
+# 可読性を優先し、presence: trueの明示を許可
+Rails/RedundantPresenceValidationOnBelongsTo:
+  Enabled: false
+
 # 可読性を重視し、複数行の三項演算子を許可
 Style/MultilineTernaryOperator:
   Exclude:
