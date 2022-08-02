@@ -20,8 +20,6 @@ end
 
 # ユーザーの一部を対象に、サンプルツイート/ガジェット/リプライ/いいね/ブックマーク/コミュニティを作成
 users = User.order(:created_at).take(6)
-# User.first.tweets.order(created_at: :desc).limit(1).ids[0]では取得できないため、一時的に最新ツイートのidを直接指定
-cnt = 301
 
 # ツイート 新規作成
 50.times do
@@ -56,32 +54,41 @@ end
   end
 end
 
+# ユーザーの一部が作成したツイートの最新IDを取得
+tweet_reply_target_id = users.last.tweets.ids[0]
+
 # ツイート：リプライ/いいね/ブックマーク
 20.times do
   tweet_content = "リプライ: #{Faker::Lorem.paragraph_by_chars(number: 100)}"
   users.each do |user|
     # ツイート
-    user.tweets.create!(content: tweet_content, reply_id: cnt)
-    user.tweet_likes.create!(tweet_id: cnt)
-    user.tweet_bookmarks.create!(tweet_id: cnt)
+    user.tweets.create!(content: tweet_content, reply_id: tweet_reply_target_id)
+    user.tweet_likes.create!(tweet_id: tweet_reply_target_id)
+    user.tweet_bookmarks.create!(tweet_id: tweet_reply_target_id)
   end
-  cnt -= 1
+  tweet_reply_target_id -= 1
 end
+
+# ユーザーの一部が作成したガジェット/コミュニティの最新IDを取得
+gadget_reply_target_id = users.last.gadgets.ids[0]
+community_join_target_id = users.last.communities.ids[0]
 
 # ガジェット：コメント/リプライ/いいね/ブックマーク/リクエスト コミュニティ：新規加入
 5.times do
-  community_sample = Community.all.ids
-  gadget_sample = Gadget.all.ids
+  # community_sample = Community.all.ids
+  # gadget_sample = Gadget.all.ids
   comment_content = "コメント: #{Faker::Lorem.paragraph_by_chars(number: 100)}"
   users.each do |user|
     # ガジェット
-    user.comments.create!(gadget_id: gadget_sample.sample, content: comment_content)
-    user.gadget_likes.create!(gadget_id: gadget_sample.sample)
-    user.gadget_bookmarks.create!(gadget_id: gadget_sample.sample)
-    user.review_requests.create!(gadget_id: gadget_sample.sample)
+    user.comments.create!(gadget_id: gadget_reply_target_id, content: comment_content)
+    user.gadget_likes.create!(gadget_id: gadget_reply_target_id)
+    user.gadget_bookmarks.create!(gadget_id: gadget_reply_target_id)
+    user.review_requests.create!(gadget_id: gadget_reply_target_id)
     # コミュニティ
-    user.memberships.create!(community_id: community_sample.sample)
+    user.memberships.create!(community_id: community_join_target_id)
   end
+  gadget_reply_target_id -= 1
+  community_join_target_id -= 1
 end
 
 # 以下のリレーションシップを作成する
