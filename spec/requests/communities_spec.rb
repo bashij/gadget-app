@@ -112,7 +112,7 @@ RSpec.describe 'Communities', type: :request do
         specify 'コミュニティ数が増減しない' do
           expect do
             post communities_path, params: { community: { user_id: user.id, name: '' } }
-          end.to change(Community.all, :count).by(0)
+          end.not_to change(Community.all, :count)
         end
 
         specify 'バリデーションメッセージが画面に表示される' do

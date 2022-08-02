@@ -112,7 +112,7 @@ RSpec.describe 'Gadgets', type: :request do
         specify 'ガジェット数が増減しない' do
           expect do
             post gadgets_path, params: { gadget: { user_id: user.id, name: '', category: 'PC本体' } }
-          end.to change(Gadget.all, :count).by(0)
+          end.not_to change(Gadget.all, :count)
         end
 
         specify 'バリデーションメッセージが画面に表示される' do
