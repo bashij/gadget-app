@@ -56,7 +56,40 @@ ja:
         record_invalid: 'バリデーションに失敗しました: %{errors}'
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
-          has_many: "%{record}が存在しているので削除できません"      
+          has_many: "%{record}が存在しているので削除できません" 
+  sessions:
+    flash:
+      danger: "ログインしてください"
+  communities:
+    create:
+      flash: 
+        success: "新しいコミュニティが登録されました"
+    update:
+      flash:
+        success: "更新されました"
+    destroy:
+      flash:
+        success: "コミュニティが削除されました"
+  gadgets:
+    create:
+      flash: 
+        success: "登録が完了しました"
+    update:
+      flash:
+        success: "更新されました"
+    destroy:
+      flash:
+        success: "ガジェットが削除されました"
+  users:
+    create:
+      flash: 
+        success: "GadgetLinkへようこそ！"
+    update:
+      flash:
+        success: "更新されました"
+    destroy:
+      flash:
+        success: "退会処理が完了しました。ご利用ありがとうございました。"
   date:
     abbr_day_names:
     - 日

@@ -18,7 +18,7 @@ class CommunitiesController < ApplicationController
   def create
     @community = current_user.communities.build(communities_params)
     if @community.save
-      flash[:success] = '新しいコミュニティが登録されました'
+      flash[:success] = t 'communities.create.flash.success'
       redirect_to community_path(@community)
     else
       render 'new'
@@ -30,7 +30,7 @@ class CommunitiesController < ApplicationController
 
   def update
     if @community.update(communities_params)
-      flash[:success] = '更新されました'
+      flash[:success] = t 'communities.update.flash.success'
       redirect_to community_url(params[:id])
     else
       render 'edit'
@@ -39,7 +39,7 @@ class CommunitiesController < ApplicationController
 
   def destroy
     @community.destroy
-    flash[:success] = 'コミュニティが削除されました'
+    flash[:success] = t 'communities.destroy.flash.success'
     redirect_to root_url
   end
 

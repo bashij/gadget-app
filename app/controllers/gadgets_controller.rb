@@ -33,7 +33,7 @@ class GadgetsController < ApplicationController
   def create
     @gadget = current_user.gadgets.build(gadgets_params)
     if @gadget.save
-      flash[:success] = '登録が完了しました'
+      flash[:success] = t 'gadgets.create.flash.success'
       redirect_to gadget_path(@gadget)
     else
       render 'new'
@@ -45,7 +45,7 @@ class GadgetsController < ApplicationController
 
   def update
     if @gadget.update(gadgets_params)
-      flash[:success] = '更新されました'
+      flash[:success] = t 'gadgets.update.flash.success'
       redirect_to gadget_path(@gadget)
     else
       render 'edit'
@@ -55,7 +55,7 @@ class GadgetsController < ApplicationController
   def destroy
     @user = @gadget.user
     @gadget.destroy
-    flash[:success] = 'ガジェットが削除されました'
+    flash[:success] = t 'gadgets.destroy.flash.success'
     redirect_to user_path(@user)
   end
 
