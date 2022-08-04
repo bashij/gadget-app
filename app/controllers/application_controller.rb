@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
       return if logged_in?
 
       store_location
-      flash[:danger] = 'ログインしてください'
+      flash[:danger] = t 'sessions.flash.danger'
       respond_to do |format|
         format.html { redirect_to login_path }
         format.js { render js: "window.location = #{login_path.to_json}" }

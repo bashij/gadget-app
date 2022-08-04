@@ -40,7 +40,7 @@ RSpec.describe 'Tweets', type: :request do
         specify 'ツイート数が増減しない' do
           expect do
             post tweets_path, params: { tweet: { user_id: user.id, content: '' } }, xhr: true
-          end.to change(Tweet.all, :count).by(0)
+          end.not_to change(Tweet.all, :count)
         end
 
         specify 'バリデーションメッセージが画面に表示される' do

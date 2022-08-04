@@ -62,7 +62,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in @user
-      flash[:welcome] = 'GadgetLinkへようこそ！'
+      flash[:welcome] = t 'users.create.flash.success'
       redirect_to root_url
     else
       render 'new'
@@ -74,7 +74,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      flash[:success] = '更新されました'
+      flash[:success] = t 'users.update.flash.success'
       redirect_to @user
     else
       render 'edit'
@@ -83,7 +83,7 @@ class UsersController < ApplicationController
 
   def destroy
     User.find(params[:id]).destroy
-    flash[:success] = '退会処理が完了しました。ご利用ありがとうございました。'
+    flash[:success] = t 'users.destroy.flash.success'
     redirect_to root_url
   end
 
