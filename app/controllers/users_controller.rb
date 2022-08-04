@@ -62,7 +62,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in @user
-      flash[:success] = t 'users.create.flash.success'
+      flash[:welcome] = t 'users.create.flash.success'
       redirect_to root_url
     else
       render 'new'
