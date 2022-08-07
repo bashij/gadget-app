@@ -1,6 +1,6 @@
-<% provide(:title, 'レビューリクエスト') %>
+<% provide(:title, @title) %>
 <div class="content-header">
-  <h3>レビューをリクエストしているユーザー</h3>
+  <h3><%= @title %></h3>
 </div>
 <div id="feed_user">
   <% if @users.empty? %>

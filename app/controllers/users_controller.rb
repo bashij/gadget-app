@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: %i[edit update destroy]
 
   def index
+    @title = 'ユーザー一覧'
     @users = User.all.page(params[:users_page]).per(10)
 
     respond_to do |format|
@@ -55,6 +56,7 @@ class UsersController < ApplicationController
   end
 
   def new
+    @title = 'ユーザー登録'
     @user = User.new
   end
 
@@ -65,11 +67,13 @@ class UsersController < ApplicationController
       flash[:welcome] = t 'users.create.flash.success'
       redirect_to root_url
     else
+      @title = 'ユーザー登録'
       render 'new'
     end
   end
 
   def edit
+    @title = 'ユーザー情報編集'
   end
 
   def update
@@ -77,6 +81,7 @@ class UsersController < ApplicationController
       flash[:success] = t 'users.update.flash.success'
       redirect_to @user
     else
+      @title = 'ユーザー情報編集'
       render 'edit'
     end
   end
@@ -112,8 +117,6 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :email, :job, :image, :password, :password_confirmation)
     end
-
-    # beforeアクション
 
     # 正しいユーザーかどうか確認
     def correct_user

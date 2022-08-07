@@ -1,6 +1,6 @@
-<% provide(:title, 'All users') %>
+<% provide(:title, @title) %>
 <div class="content-header">
-  <h3>ユーザー一覧</h3>
+  <h3><%= @title %></h3>
 </div>    
 <div id="feed_user">
   <%= render 'shared/feed_user', users: @users %>

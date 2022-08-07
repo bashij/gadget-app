@@ -1,6 +1,8 @@
 class StaticPagesController < ApplicationController
   def home
+    @title = 'HOME'
     @displayed_feed = ''
+
     # ログイン状態に応じてフォームを切り替える
     @tweet = if logged_in?
                current_user.tweets.build
@@ -47,5 +49,6 @@ class StaticPagesController < ApplicationController
   end
 
   def about
+    @title = 'HELP'
   end
 end

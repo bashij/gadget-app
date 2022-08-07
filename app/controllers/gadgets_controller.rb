@@ -27,6 +27,7 @@ class GadgetsController < ApplicationController
   end
 
   def new
+    @title = 'ガジェット登録'
     @gadget = current_user.gadgets.build
   end
 
@@ -36,11 +37,13 @@ class GadgetsController < ApplicationController
       flash[:success] = t 'gadgets.create.flash.success'
       redirect_to gadget_path(@gadget)
     else
+      @title = 'ガジェット登録'
       render 'new'
     end
   end
 
   def edit
+    @title = 'ガジェット編集'
   end
 
   def update
@@ -48,6 +51,7 @@ class GadgetsController < ApplicationController
       flash[:success] = t 'gadgets.update.flash.success'
       redirect_to gadget_path(@gadget)
     else
+      @title = 'ガジェット編集'
       render 'edit'
     end
   end
