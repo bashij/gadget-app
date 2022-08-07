@@ -3,6 +3,7 @@ class ReviewRequestsController < ApplicationController
   before_action :correct_user,   only: :destroy
 
   def show
+    @title = 'レビューをリクエストしているユーザー'
     @users = Gadget.find(params[:gadget_id]).requesting_users.page(params[:users_page]).per(10)
 
     respond_to do |format|

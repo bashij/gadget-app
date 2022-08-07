@@ -88,6 +88,11 @@ Metrics/MethodLength:
     - 'app/controllers/*'
     - 'spec/spec_helper.rb'
 
+# 一部コントローラは規定値以上の行数を許可する（デフォルト制限行数：100行）
+Metrics/ClassLength:
+  Exclude:
+    - 'app/controllers/users_controller.rb'
+
 # 一部コントローラは規定値以上の複雑さを許容する
 Metrics/CyclomaticComplexity:
   Exclude:

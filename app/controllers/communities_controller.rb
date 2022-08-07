@@ -12,6 +12,7 @@ class CommunitiesController < ApplicationController
   end
 
   def new
+    @title = 'コミュニティ登録'
     @community = current_user.communities.build
   end
 
@@ -21,11 +22,13 @@ class CommunitiesController < ApplicationController
       flash[:success] = t 'communities.create.flash.success'
       redirect_to community_path(@community)
     else
+      @title = 'コミュニティ登録'
       render 'new'
     end
   end
 
   def edit
+    @title = 'コミュニティ編集'
   end
 
   def update
@@ -33,6 +36,7 @@ class CommunitiesController < ApplicationController
       flash[:success] = t 'communities.update.flash.success'
       redirect_to community_url(params[:id])
     else
+      @title = 'コミュニティ編集'
       render 'edit'
     end
   end
