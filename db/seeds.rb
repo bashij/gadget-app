@@ -31,6 +31,7 @@ users = User.order(:created_at).take(6)
 end
 
 # ガジェット・コミュニティ 新規作成
+count = 1
 5.times do
   users.each do |user|
     # ガジェット
@@ -48,10 +49,11 @@ end
                          price: price,
                          other_info: other_info,
                          review: review)
-    # コミュニティ
-    name = "#{user.name} コミュニティ"
-    user.communities.create!(name: name)
+    # コミュニティ    
+    name = "#{user.name} コミュニティ #{count}"
+    user.communities.create!(name: name)    
   end
+  count += 1
 end
 
 # ユーザーの一部が作成したツイートの最新IDを取得
