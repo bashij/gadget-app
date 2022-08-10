@@ -1,4 +1,4 @@
-<a class="" data-bs-toggle="collapse" href="#collapse-<%= tweet.id %>" aria-expanded="false" aria-controls="collapse-<%= tweet.id %>">
+<a class="" data-bs-toggle="collapse" href="#collapse_<%= tweet.id %>" aria-expanded="false" aria-controls="collapse_<%= tweet.id %>">
   <% unless @reply_count[tweet.id].nil? %>
     <%= @reply_count[tweet.id] %>件のリプライ
   <% end %>

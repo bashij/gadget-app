@@ -1,27 +1,27 @@
-<div class="gadget" id="gadget-<%= gadget.id %>">
+<div class="gadget" id="gadget_<%= gadget.id %>">
   <div class="gadget-image">
     <div>
       <%= image_tag gadget.image.url %>
     </div>
     <div class="review-icons">
-      <span id="like_section-<%= gadget.id %>">
+      <span id="like_section_<%= gadget.id %>">
         <%= render "gadgets/like_section", gadget: gadget %>
       </span>
-      <span id="bookmark_section-<%= gadget.id %>">
+      <span id="bookmark_section_<%= gadget.id %>">
         <%= render "gadgets/bookmark_section", gadget: gadget %>
       </span>
       <span>
-        <%= link_to gadget_review_requests_path(gadget.id), class: "icon_post", method: :get, 'data-bs-toggle': :tooltip, 'data-bs-placement': :top, 'title': :'レビューリクエストしている人を見る' do %>
-          <i id="review_request_show_button-<%= gadget.id %>" class="fa-solid fa-users"></i>
+        <%= link_to gadget_review_requests_path(gadget.id), class: "icon-post", method: :get, 'data-bs-toggle': :tooltip, 'data-bs-placement': :top, 'title': :'レビューリクエストしている人を見る' do %>
+          <i id="review_request_show_button_<%= gadget.id %>" class="fa-solid fa-users"></i>
         <% end %>
-        <span id="review_request_number_section-<%= gadget.id %>">
+        <span id="review_request_number_section_<%= gadget.id %>">
           <%= render "gadgets/review_request_number_section", gadget: gadget %>          
         </span>
       </span>
     </div>
     <div class="review-link">  
       <% if gadget.review.blank? %>
-        <span id="review_request_section-<%= gadget.id %>">
+        <span id="review_request_section_<%= gadget.id %>">
           <%= render "gadgets/review_request_section", gadget: gadget %>
         </span>
       <% else %>

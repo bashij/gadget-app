@@ -1,6 +1,6 @@
-<div class="post" id="own-tweet-<%= tweet.id %>">
+<div class="post" id="own_tweet_<%= tweet.id %>">
   <div class="tweet-section-left">
-    <div class="user_info">
+    <div class="user-info">
       <%= image_tag tweet.user.image.url %>
       <span class="user"><%= link_to tweet.user.name, tweet.user %></span>
     </div> 
@@ -10,20 +10,20 @@
       <span>
         <%= time_ago_in_words(tweet.created_at) %>前
       </span>    
-      <span class="tweet-icons" id="own_like_section-<%= tweet.id %>">
+      <span class="tweet-icons" id="own_like_section_<%= tweet.id %>">
         <%= render "tweets/like_section", tweet: tweet %>
       </span>
-      <span class="tweet-icons" id="own_bookmark_section-<%= tweet.id %>">
+      <span class="tweet-icons" id="own_bookmark_section_<%= tweet.id %>">
         <%= render "tweets/bookmark_section", tweet: tweet %>
       </span>
       <span class="tweet-icons">
-        <a id="collapse-reply-icon-<%= tweet.id %>" class="" data-bs-toggle="collapse" href="#collapse-reply-<%= tweet.id %>" aria-expanded="false" aria-controls="collapse-reply-<%= tweet.id %> data-bs-toggle="tooltip" data-bs-placement="top" title="返信フォームを開く"">
+        <a id="collapse_reply_icon_<%= tweet.id %>" class="" data-bs-toggle="collapse" href="#collapse_reply_<%= tweet.id %>" aria-expanded="false" aria-controls="collapse_reply_<%= tweet.id %> data-bs-toggle="tooltip" data-bs-placement="top" title="返信フォームを開く"">
           <i class="fa-solid fa-reply"></i>
         </a>
       </span>
       <span class="tweet-icons">
         <% if current_user?(tweet.user) %>
-          <%= link_to tweet_path(tweet.id), class: "icon_delete", method: :delete, remote: true, data: {confirm: '投稿を削除してよろしいですか？'} do %>
+          <%= link_to tweet_path(tweet.id), class: "icon-delete", method: :delete, remote: true, data: {confirm: '投稿を削除してよろしいですか？'} do %>
             <i class="fa-solid fa-trash"></i>
           <% end %>
         <% end %>        
@@ -33,12 +33,12 @@
     <div class="p-2">          
       <span class="content text-break"><%= tweet.content %></span>
     </div>    
-    <section class="collapse" id="collapse-reply-<%= tweet.id %>">
+    <section class="collapse" id="collapse_reply_<%= tweet.id %>">
       <%= form_with(model: @tweet_reply_form, local: false) do |f| %>
-        <div id="own_error_explanation-<%= tweet.id %>" class="text-center">
+        <div id="own_error_explanation_<%= tweet.id %>" class="text-center">
           <%= render 'shared/error_messages_reply', object: f.object %>
         </div>        
-        <div class="mb-3 field message_box">
+        <div class="mb-3 field message-box">
           <%= f.text_area :content, placeholder: '返信内容を入力', class: 'form-control', id: "own_reply_form_text_#{tweet.id}" %>
           <%= f.hidden_field :reply_id, value: tweet.id %>
         </div>       
@@ -50,13 +50,13 @@
       <% end %>
     </section>
     <div class="reply-count">
-      <span id="own_reply_count-<%= tweet.id %>">
+      <span id="own_reply_count_<%= tweet.id %>">
         <%= render "tweets/reply_count", tweet: tweet %>
       </span>
     </div>
-    <div class="collapse" id="collapse-<%= tweet.id %>">    
+    <div class="collapse" id="collapse_<%= tweet.id %>">    
       <div class="accordion-body">
-        <div id="own-replies-<%= tweet.id %>" class="replies">
+        <div id="own_replies_<%= tweet.id %>" class="replies">
           <%= render "tweets/own_tweet_reply", tweet: tweet %>
         </div>
       </div>

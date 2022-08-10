@@ -1,6 +1,6 @@
-<div class="post" id="comment-<%= comment.id %>">
+<div class="post" id="comment_<%= comment.id %>">
   <div class="tweet-section-left">
-    <div class="user_info">
+    <div class="user-info">
       <%= image_tag comment.user.image.url %>
       <span class="user"><%= link_to comment.user.name, comment.user %></span>
     </div> 
@@ -11,13 +11,13 @@
         <%= time_ago_in_words(comment.created_at) %>前
       </span>    
       <span class="tweet-icons">
-        <a id="collapse-reply-icon-<%= comment.id %>" class="" data-bs-toggle="collapse" href="#collapse-reply-<%= comment.id %>" aria-expanded="false" aria-controls="collapse-reply-<%= comment.id %>" data-bs-toggle="tooltip" data-bs-placement="top" title="返信フォームを開く">
+        <a id="collapse_reply_icon_<%= comment.id %>" class="" data-bs-toggle="collapse" href="#collapse_reply_<%= comment.id %>" aria-expanded="false" aria-controls="collapse_reply_<%= comment.id %>" data-bs-toggle="tooltip" data-bs-placement="top" title="返信フォームを開く">
           <i class="fa-solid fa-reply"></i>
         </a>
       </span>
       <span class="tweet-icons">
         <% if current_user?(comment.user) %>
-          <%= link_to gadget_comment_path(@gadget, comment), class: "icon_delete", method: :delete, remote: true, data: {confirm: '投稿を削除してよろしいですか？'} do %>
+          <%= link_to gadget_comment_path(@gadget, comment), class: "icon-delete", method: :delete, remote: true, data: {confirm: '投稿を削除してよろしいですか？'} do %>
             <i class="fa-solid fa-trash"></i>
           <% end %>
         <% end %>        
@@ -27,12 +27,12 @@
     <div class="p-2">          
       <span class="content text-break"><%= comment.content %></span>
     </div>    
-    <section class="collapse" id="collapse-reply-<%= comment.id %>">
+    <section class="collapse" id="collapse_reply_<%= comment.id %>">
       <%= form_with(model: [@gadget, @comment_reply_form], local: false) do |f| %>
-        <div id="error_explanation-<%= comment.id %>" class="text-center">
+        <div id="error_explanation_<%= comment.id %>" class="text-center">
           <%= render 'shared/error_messages_reply', object: f.object %>
         </div>        
-        <div class="mb-3 field message_box">
+        <div class="mb-3 field message-box">
           <%= f.text_area :content, placeholder: '返信内容を入力', class: 'form-control', id: "reply_form_text_#{comment.id}" %>
           <%= f.hidden_field :gadget_id, value: @gadget %>
           <%= f.hidden_field :reply_id, value: comment.id %>          
@@ -45,13 +45,13 @@
       <% end %>
     </section>
     <div class="reply-count">
-      <span id="reply_count-<%= comment.id %>">
+      <span id="reply_count_<%= comment.id %>">
         <%= render "comments/reply_count", comment: comment %>
       </span>
     </div>
-    <div class="collapse" id="collapse-<%= comment.id %>">    
+    <div class="collapse" id="collapse_<%= comment.id %>">    
       <div class="accordion-body">
-        <div id="replies-<%= comment.id %>" class="replies">
+        <div id="replies_<%= comment.id %>" class="replies">
           <%= render "comments/reply", comment: comment %>
         </div>
       </div>

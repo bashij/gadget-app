@@ -1,7 +1,7 @@
 <div class="form">
   <%= form_with(model: @tweet, local: false) do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
-    <div class="mb-3 field message_box">
+    <div class="mb-3 field message-box">
       <%= f.text_area :content, style: "width:100%", placeholder: '新しいツイート', class: 'form-control', id: "tweet_form_text"%>
     </div>
     <div class="text-center m-4">

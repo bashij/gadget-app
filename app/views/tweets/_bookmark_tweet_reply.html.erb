@@ -1,7 +1,7 @@
 <% if @replies.any? %>
   <% @replies.each do |reply| %>
     <% if tweet.id == reply.reply_id %>
-      <div class="reply" id="bookmark-reply-<%= reply.id %>">
+      <div class="reply" id="bookmark_reply_<%= reply.id %>">
         <div class="reply-section-left">
           <div class="reply-user-info-lg">
             <%= image_tag reply.user.image.url %>
@@ -21,7 +21,7 @@
             </span>
             <span>
               <% if current_user?(reply.user) %>
-                <%= link_to tweet_path(reply.id), class: "icon_delete", method: :delete, remote: true, data: {confirm: '投稿を削除してよろしいですか？'} do %>
+                <%= link_to tweet_path(reply.id), class: "icon-delete", method: :delete, remote: true, data: {confirm: '投稿を削除してよろしいですか？'} do %>
                   <i class="fa-solid fa-trash"></i>
                 <% end %>
               <% end %>
@@ -37,7 +37,7 @@
             </span>
             <span>
               <% if current_user?(reply.user) %>
-                <%= link_to tweet_path(reply.id), class: "icon_delete", method: :delete, remote: true, data: {confirm: '投稿を削除してよろしいですか？'} do %>
+                <%= link_to tweet_path(reply.id), class: "icon-delete", method: :delete, remote: true, data: {confirm: '投稿を削除してよろしいですか？'} do %>
                   <i class="fa-solid fa-trash"></i>
                 <% end %>
               <% end %>

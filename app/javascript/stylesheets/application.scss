@@ -135,7 +135,7 @@ body {
       color: $color_theme1;
     }
   }
-  .menu_btn {
+  .menu-btn {
     a {
       color: $color_theme1;
     }
@@ -281,7 +281,7 @@ body {
 }
 
 // コミュニティ
-.community_items {
+.community-items {
   background-color: $color_theme1;
   border-radius: 10px;
   border: none;
@@ -462,7 +462,7 @@ body {
 
 .tweet-section-left {
   margin: 0.75rem 0 0.75rem 0.75rem;
-  .user_info {
+  .user-info {
     flex-basis: 100px;
     border-radius: 10px;
     text-align: center;
@@ -504,21 +504,21 @@ body {
   color: $color_theme1;
 }
 
-.completed_section {
+.completed-section {
   display: flex;
   background-color: $color_accent2; 
   border-radius: 10px;
   color: $color_theme1;  
 }
 
-.completed_section_own {
+.completed-section-own {
   display: flex;
   background-color: $color_accent2; 
   border-radius: 10px;
   color: $color_theme1;  
 }
 
-.completed_section_book {
+.completed-section-book {
   display: flex;
   background-color: $color_accent2; 
   border-radius: 10px;
@@ -530,12 +530,12 @@ body {
   border-radius: 10px;
 }
 
-.message_box{
+.message-box{
   flex-grow: 1;
 }
 
 // ツイートアイコン
-.icon_post {
+.icon-post {
   color: $color_theme8;
   &:hover {
     text-decoration: none;
@@ -543,7 +543,7 @@ body {
   }
 }
 
-.icon_delete {
+.icon-delete {
   color: $color_accent2;  
   &:hover {
     text-decoration: none;
