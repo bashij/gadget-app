@@ -1,7 +1,7 @@
 <% provide(:title, @community.name) %>
 <div class="row justify-content-center">
   <div class="col-12 col-xl-10">
-    <div id="community-<%= @community.id %>">
+    <div id="community_<%= @community.id %>">
       <div class="community-detail">
         <div class="community-image-detail">
           <div>
@@ -17,7 +17,7 @@
               </tr>
               <tr>
                 <th>参加人数</th>
-                <td><p class="overflow"><span id="membership_count-<%= @community.id %>"><%= render "communities/membership_count", community: @community %> </span></p></td>
+                <td><p class="overflow"><span id="membership_count_<%= @community.id %>"><%= render "communities/membership_count", community: @community %> </span></p></td>
               </tr>
               <tr>
                 <th>作成者</th>
@@ -37,7 +37,7 @@
                 <% end %>
               </div>
               <div class="link-section">
-                <%= link_to @community, class: "icon_delete", method: :delete, data: {confirm: 'コミュニティを削除してよろしいですか？'} do %>
+                <%= link_to @community, class: "icon-delete", method: :delete, data: {confirm: 'コミュニティを削除してよろしいですか？'} do %>
                   <p><i class="fa-solid fa-trash"></i>コミュニティを削除</p>
                 <% end %>
               </div>     
@@ -48,7 +48,7 @@
     </div>
   </div>
   <div class="text-center p-2 m-3 mt-1">
-    <div id="membership_section-<%= @community.id %>">
+    <div id="membership_section_<%= @community.id %>">
       <%= render "communities/membership_section", community: @community %>
     </div>
   </div>     

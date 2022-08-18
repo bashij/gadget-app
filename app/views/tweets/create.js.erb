@@ -11,7 +11,7 @@
     if (typeof deleted_post !== 'undefined') {
       deleted_post.remove();
     }
-    var completed_msg = document.getElementsByClassName("completed_section")[0]
+    var completed_msg = document.getElementsByClassName("completed-section")[0]
     if (typeof completed_msg !== 'undefined') {
       completed_msg.remove();
     }
@@ -42,7 +42,7 @@
   if (typeof deleted_post !== 'undefined') {
     deleted_post.remove();
   }
-  var completed_msg = document.getElementsByClassName("completed_section")[0]
+  var completed_msg = document.getElementsByClassName("completed-section")[0]
   if (typeof completed_msg !== 'undefined') {
     completed_msg.remove();
   }
@@ -50,7 +50,7 @@
   
   // 投稿完了メッセージを表示
   var completed_section = document.createElement('div');
-  completed_section.className = 'completed_section post p-3 m-3';
+  completed_section.className = 'completed-section post p-3 m-3';
   var completed_msg = document.createElement('div');
   completed_msg.className = 'w-100 text-center';
   completed_msg.innerText = '投稿が完了しました。';
@@ -67,18 +67,18 @@
   <% if @tweet.errors.any? %>
   // エラーメッセージを表示  
   // home
-  var home = document.getElementById("error_explanation-<%= @tweet.reply_id %>")
+  var home = document.getElementById("error_explanation_<%= @tweet.reply_id %>")
   if (typeof home !== 'undefined' && home !== null) {
     home.innerHTML = "<%= j(render "shared/error_messages_reply", object: @tweet) %>";
     home.className = "post-error" 
   } else {
   // user詳細
-    var own_tweet = document.getElementById("own_error_explanation-<%= @tweet.reply_id %>")
+    var own_tweet = document.getElementById("own_error_explanation_<%= @tweet.reply_id %>")
     if (typeof own_tweet !== 'undefined' && own_tweet !== null) {
       own_tweet.innerHTML = "<%= j(render "shared/error_messages_reply", object: @tweet) %>";
       own_tweet.className = "post-error" 
     }
-    var bookmark_tweet = document.getElementById("bookmark_error_explanation-<%= @tweet.reply_id %>")
+    var bookmark_tweet = document.getElementById("bookmark_error_explanation_<%= @tweet.reply_id %>")
     if (typeof bookmark_tweet !== 'undefined' && bookmark_tweet !== null) {
       bookmark_tweet.innerHTML = "<%= j(render "shared/error_messages_reply", object: @tweet) %>";
       bookmark_tweet.className = "post-error" 
@@ -97,15 +97,15 @@
       deleted_post.remove();
     }
   }
-  var completed_msg = document.getElementsByClassName("completed_section")[0]
+  var completed_msg = document.getElementsByClassName("completed-section")[0]
   if (typeof completed_msg !== 'undefined') {
     completed_msg.remove();
   }
-  var completed_msg = document.getElementsByClassName("completed_section_own")[0]
+  var completed_msg = document.getElementsByClassName("completed-section-own")[0]
   if (typeof completed_msg !== 'undefined') {
     completed_msg.remove();
   }    
-  var completed_msg = document.getElementsByClassName("completed_section_book")[0]
+  var completed_msg = document.getElementsByClassName("completed-section-book")[0]
   if (typeof completed_msg !== 'undefined') {
     completed_msg.remove();
   }    
@@ -134,22 +134,22 @@
   if (typeof deleted_post !== 'undefined') {
     deleted_post.remove();
   }
-  var completed_msg = document.getElementsByClassName("completed_section")[0]
+  var completed_msg = document.getElementsByClassName("completed-section")[0]
   if (typeof completed_msg !== 'undefined') {
     completed_msg.remove();
   }
-  var completed_msg = document.getElementsByClassName("completed_section_own")[0]
+  var completed_msg = document.getElementsByClassName("completed-section-own")[0]
   if (typeof completed_msg !== 'undefined') {
     completed_msg.remove();
   }
-  var completed_msg = document.getElementsByClassName("completed_section_book")[0]
+  var completed_msg = document.getElementsByClassName("completed-section-book")[0]
   if (typeof completed_msg !== 'undefined') {
     completed_msg.remove();
   }    
 
   // 投稿完了メッセージを用意
   var completed_section = document.createElement('div');
-  completed_section.className = 'completed_section reply p-3 m-3';
+  completed_section.className = 'completed-section reply p-3 m-3';
   var completed_msg = document.createElement('div');
   completed_msg.className = 'w-100 text-center';
   completed_msg.innerText = '投稿が完了しました。';
@@ -157,11 +157,11 @@
 
   // リプライを追加
   // home
-  var home = document.getElementById("replies-<%= @tweet.reply_id %>");
+  var home = document.getElementById("replies_<%= @tweet.reply_id %>");
   if (typeof home !== 'undefined' && home !== null) {
     // 最初のreplyの前に空のテンプレを入れる
     var new_reply = document.createElement('div');
-    var parent = document.getElementById("replies-<%= @tweet.reply_id %>");
+    var parent = document.getElementById("replies_<%= @tweet.reply_id %>");
     var reference = parent.getElementsByClassName("reply")[0];
 
     // 空のテンプレの子要素として、新しいリプライを含むrepliesを追加
@@ -173,31 +173,31 @@
     parent.insertBefore(new_reply[1], reference);
 
     // リプライ件数を更新
-    document.getElementById("reply_count-<%= @tweet.reply_id %>").innerHTML = "<%= j(render 'tweets/reply_count', tweet: @parent_tweet) %>";
+    document.getElementById("reply_count_<%= @tweet.reply_id %>").innerHTML = "<%= j(render 'tweets/reply_count', tweet: @parent_tweet) %>";
 
     // 投稿完了メッセージを投稿したリプライの上に挿入
     var reference = parent.getElementsByClassName("reply")[0];
     parent.insertBefore(completed_section, reference);    
 
     // エラーメッセージを削除
-    document.getElementById("error_explanation-<%= @tweet.reply_id %>").innerHTML = "<%= j(render "shared/error_messages_reply", object: @tweet) %>";
+    document.getElementById("error_explanation_<%= @tweet.reply_id %>").innerHTML = "<%= j(render "shared/error_messages_reply", object: @tweet) %>";
   } else {
   // user詳細
     // ユーザーのツイート
 
     // 投稿完了メッセージを用意
     var completed_section_own = document.createElement('div');
-    completed_section_own.className = 'completed_section_own reply p-3 m-3';
+    completed_section_own.className = 'completed-section-own reply p-3 m-3';
     var completed_msg = document.createElement('div');
     completed_msg.className = 'w-100 text-center';
     completed_msg.innerText = '投稿が完了しました。';
     completed_section_own.appendChild(completed_msg);    
 
-    var own_tweet = document.getElementById("own-replies-<%= @tweet.reply_id %>");
+    var own_tweet = document.getElementById("own_replies_<%= @tweet.reply_id %>");
     if (typeof own_tweet !== 'undefined' && own_tweet !== null) {
       // 最初のreplyの前に空のテンプレを入れる
       var new_reply = document.createElement('div');
-      var parent = document.getElementById("own-replies-<%= @tweet.reply_id %>");
+      var parent = document.getElementById("own_replies_<%= @tweet.reply_id %>");
       var reference = parent.getElementsByClassName("reply")[0];
 
       // 空のテンプレの子要素として、新しいリプライを含むrepliesを追加
@@ -209,30 +209,30 @@
       parent.insertBefore(new_reply[1], reference);
 
       // リプライ件数を更新
-      document.getElementById("own_reply_count-<%= @tweet.reply_id %>").innerHTML = "<%= j(render 'tweets/reply_count', tweet: @parent_tweet) %>";   
+      document.getElementById("own_reply_count_<%= @tweet.reply_id %>").innerHTML = "<%= j(render 'tweets/reply_count', tweet: @parent_tweet) %>";   
     
       // 投稿完了メッセージを投稿したリプライの上に挿入
       var reference = parent.getElementsByClassName("reply")[0];
       parent.insertBefore(completed_section_own, reference);          
 
       // エラーメッセージを削除
-      document.getElementById("own_error_explanation-<%= @tweet.reply_id %>").innerHTML = "<%= j(render "shared/error_messages_reply", object: @tweet) %>";
+      document.getElementById("own_error_explanation_<%= @tweet.reply_id %>").innerHTML = "<%= j(render "shared/error_messages_reply", object: @tweet) %>";
     }
     // ブックマークツイート
 
     // 投稿完了メッセージを用意
     var completed_section_book = document.createElement('div');
-    completed_section_book.className = 'completed_section_book reply p-3 m-3';
+    completed_section_book.className = 'completed-section-book reply p-3 m-3';
     var completed_msg = document.createElement('div');
     completed_msg.className = 'w-100 text-center';
     completed_msg.innerText = '投稿が完了しました。';
     completed_section_book.appendChild(completed_msg);    
     
-    var bookmark_tweet = document.getElementById("bookmark-replies-<%= @tweet.reply_id %>");
+    var bookmark_tweet = document.getElementById("bookmark_replies_<%= @tweet.reply_id %>");
     if (typeof bookmark_tweet !== 'undefined' && bookmark_tweet !== null) {
       // 最初のreplyの前に空のテンプレを入れる
       var new_reply = document.createElement('div');
-      var parent = document.getElementById("bookmark-replies-<%= @tweet.reply_id %>");
+      var parent = document.getElementById("bookmark_replies_<%= @tweet.reply_id %>");
       var reference = parent.getElementsByClassName("reply")[0];
 
       // 空のテンプレの子要素として、新しいリプライを含むrepliesを追加
@@ -244,14 +244,14 @@
       parent.insertBefore(new_reply[1], reference);
 
       // リプライ件数を更新
-      document.getElementById("bookmark_reply_count-<%= @tweet.reply_id %>").innerHTML = "<%= j(render 'tweets/reply_count', tweet: @parent_tweet) %>";
+      document.getElementById("bookmark_reply_count_<%= @tweet.reply_id %>").innerHTML = "<%= j(render 'tweets/reply_count', tweet: @parent_tweet) %>";
 
       // 投稿完了メッセージを投稿したリプライの上に挿入
       var reference = parent.getElementsByClassName("reply")[0];
       parent.insertBefore(completed_section_book, reference);          
 
       // エラーメッセージを削除
-      document.getElementById("bookmark_error_explanation-<%= @tweet.reply_id %>").innerHTML = "<%= j(render "shared/error_messages_reply", object: @tweet) %>";      
+      document.getElementById("bookmark_error_explanation_<%= @tweet.reply_id %>").innerHTML = "<%= j(render "shared/error_messages_reply", object: @tweet) %>";      
     }
   }  
 

@@ -1,9 +1,9 @@
 <% if gadget.liked_by?(current_user) %>
-  <%= link_to gadget_gadget_likes_path(gadget.id), class: "icon_delete", method: :delete, remote: true, 'data-bs-toggle': :tooltip, 'data-bs-placement': :top, 'title': :'いいねをやめる' do %>
+  <%= link_to gadget_gadget_likes_path(gadget.id), class: "icon-delete", method: :delete, remote: true, 'data-bs-toggle': :tooltip, 'data-bs-placement': :top, 'title': :'いいねをやめる' do %>
     <i class="fas fa-heart"></i>
   <% end %>
 <% else %>
-  <%= link_to gadget_gadget_likes_path(gadget.id), class: "icon_post", method: :post, remote: true, 'data-bs-toggle': :tooltip, 'data-bs-placement': :top, 'title': :'いいねする' do %>
+  <%= link_to gadget_gadget_likes_path(gadget.id), class: "icon-post", method: :post, remote: true, 'data-bs-toggle': :tooltip, 'data-bs-placement': :top, 'title': :'いいねする' do %>
     <i class="fas fa-heart"></i>
   <% end %>
 <% end %>  

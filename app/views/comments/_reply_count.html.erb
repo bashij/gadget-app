@@ -1,4 +1,4 @@
-<a class="" data-bs-toggle="collapse" href="#collapse-<%= comment.id %>" aria-expanded="false" aria-controls="collapse-<%= comment.id %>">
+<a class="" data-bs-toggle="collapse" href="#collapse_<%= comment.id %>" aria-expanded="false" aria-controls="collapse_<%= comment.id %>">
   <% unless @reply_count[comment.id].nil? %>
     <p><%= @reply_count[comment.id] %>件のリプライ</p>
   <% end %>

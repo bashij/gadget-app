@@ -4,7 +4,7 @@ if (typeof deleted_post !== 'undefined') {
   // '削除されました。'があればremove
   deleted_post.remove();
 }
-var completed_msg = document.getElementsByClassName("completed_section")[0]
+var completed_msg = document.getElementsByClassName("completed-section")[0]
 if (typeof completed_msg !== 'undefined') {
   completed_msg.remove();
 }
@@ -16,7 +16,7 @@ if (typeof error_msg !== 'undefined' && error_msg !== null) {
 <% if @comment.reply_id.nil? %>
   // 削除完了メッセージを表示
 
-  var delete_post = document.getElementById("comment-<%= @comment.id %>")
+  var delete_post = document.getElementById("comment_<%= @comment.id %>")
   if (typeof delete_post !== 'undefined' && delete_post !== null) {
     delete_post.innerHTML = "<%= j(render "comments/deleted_comment", comment: @comment) %>";
     delete_post.classList.add('deleted-post')
@@ -25,12 +25,12 @@ if (typeof error_msg !== 'undefined' && error_msg !== null) {
 <% else %>
   // 削除完了メッセージを表示
 
-  var delete_reply = document.getElementById("reply-<%= @comment.id %>")
+  var delete_reply = document.getElementById("reply_<%= @comment.id %>")
   if (typeof delete_reply !== 'undefined' && delete_reply !== null) {
     delete_reply.innerHTML = "<%= j(render "comments/deleted_comment", comment: @comment) %>";
     delete_reply.classList.add('deleted-post')
   }
 
   // リプライ件数を更新  
-  document.getElementById("reply_count-<%= @comment.reply_id %>").innerHTML = "<%= j(render 'comments/reply_count', comment: @parent_comment) %>";
+  document.getElementById("reply_count_<%= @comment.reply_id %>").innerHTML = "<%= j(render 'comments/reply_count', comment: @parent_comment) %>";
 <% end %>

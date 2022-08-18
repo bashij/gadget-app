@@ -35,7 +35,7 @@ RSpec.describe 'Tweets', type: :system, js: true do
     # 新規ツイートを削除
     expect do
       accept_alert do
-        find('.icon_delete').click
+        find('.icon-delete').click
       end
       expect(page).to have_content '削除されました'
     end.to change(Tweet.all, :count).by(-1)
@@ -69,7 +69,7 @@ RSpec.describe 'Tweets', type: :system, js: true do
     expect(page).to have_content 'テストツイート2'
     reply_tgt_tweet = Tweet.last
     # replyボタンを押下し、リプライフォームを表示
-    find("#collapse-reply-icon-#{reply_tgt_tweet.id}").click
+    find("#collapse_reply_icon_#{reply_tgt_tweet.id}").click
     # リプライを送信
     expect do
       fill_in "reply_form_text_#{reply_tgt_tweet.id}", with: 'テストリプライ1'
@@ -97,7 +97,7 @@ RSpec.describe 'Tweets', type: :system, js: true do
     expect(page).to have_content 'テストツイート2'
     expect(page).not_to have_content 'リプライ'
     # replyボタンを押下し、リプライフォームを表示
-    find("#collapse-reply-icon-#{reply_tgt_tweet.id}").click
+    find("#collapse_reply_icon_#{reply_tgt_tweet.id}").click
     # リプライを送信
     expect do
       fill_in "own_reply_form_text_#{reply_tgt_tweet.id}", with: 'テストリプライ2'
@@ -132,27 +132,27 @@ RSpec.describe 'Tweets', type: :system, js: true do
     # home画面にあるother_userのツイートをいいね/いいね解除
     expect(page).to have_content 'テストツイート2'
     like_tgt_tweet = Tweet.last
-    expect(page).to have_selector "#like_section-#{like_tgt_tweet.id}", text: '0'
-    find("#like_section-#{like_tgt_tweet.id}").click
-    find("#like_section-#{like_tgt_tweet.id}").click
-    expect(page).to have_selector "#like_section-#{like_tgt_tweet.id}", text: '1'
-    find("#like_section-#{like_tgt_tweet.id}").click
-    expect(page).to have_selector "#like_section-#{like_tgt_tweet.id}", text: '0'
+    expect(page).to have_selector "#like_section_#{like_tgt_tweet.id}", text: '0'
+    find("#like_section_#{like_tgt_tweet.id}").click
+    find("#like_section_#{like_tgt_tweet.id}").click
+    expect(page).to have_selector "#like_section_#{like_tgt_tweet.id}", text: '1'
+    find("#like_section_#{like_tgt_tweet.id}").click
+    expect(page).to have_selector "#like_section_#{like_tgt_tweet.id}", text: '0'
     # 最終的にはいいね
-    find("#like_section-#{like_tgt_tweet.id}").click
-    expect(page).to have_selector "#like_section-#{like_tgt_tweet.id}", text: '1'
+    find("#like_section_#{like_tgt_tweet.id}").click
+    expect(page).to have_selector "#like_section_#{like_tgt_tweet.id}", text: '1'
 
     # home画面にあるother_userのツイートをブックマーク/ブックマーク解除
     expect(page).to have_content 'テストツイート3'
     bookmark_tgt_tweet = Tweet.first
-    expect(page).to have_selector "#bookmark_section-#{bookmark_tgt_tweet.id}", text: '0'
-    find("#bookmark_section-#{bookmark_tgt_tweet.id}").click
-    expect(page).to have_selector "#bookmark_section-#{bookmark_tgt_tweet.id}", text: '1'
-    find("#bookmark_section-#{bookmark_tgt_tweet.id}").click
-    expect(page).to have_selector "#bookmark_section-#{bookmark_tgt_tweet.id}", text: '0'
+    expect(page).to have_selector "#bookmark_section_#{bookmark_tgt_tweet.id}", text: '0'
+    find("#bookmark_section_#{bookmark_tgt_tweet.id}").click
+    expect(page).to have_selector "#bookmark_section_#{bookmark_tgt_tweet.id}", text: '1'
+    find("#bookmark_section_#{bookmark_tgt_tweet.id}").click
+    expect(page).to have_selector "#bookmark_section_#{bookmark_tgt_tweet.id}", text: '0'
     # 最終的にはブックマーク
-    find("#bookmark_section-#{bookmark_tgt_tweet.id}").click
-    expect(page).to have_selector "#bookmark_section-#{bookmark_tgt_tweet.id}", text: '1'
+    find("#bookmark_section_#{bookmark_tgt_tweet.id}").click
+    expect(page).to have_selector "#bookmark_section_#{bookmark_tgt_tweet.id}", text: '1'
 
     # mypage画面にブックマークしたツイートがあることを確認
     find('#mypage_large').click
@@ -166,7 +166,7 @@ RSpec.describe 'Tweets', type: :system, js: true do
 
     # いいねしたツイートがあることを確認
     click_on 'ツイート', match: :first
-    expect(page).to have_selector "#own_like_section-#{like_tgt_tweet.id}", text: '1'
-    expect(page).to have_selector "#own_bookmark_section-#{bookmark_tgt_tweet.id}", text: '1'
+    expect(page).to have_selector "#own_like_section_#{like_tgt_tweet.id}", text: '1'
+    expect(page).to have_selector "#own_bookmark_section_#{bookmark_tgt_tweet.id}", text: '1'
   end
 end

@@ -1,9 +1,9 @@
 <% if @displayed_feed == 'all_tweet' || @displayed_feed == 'following_tweet' %>
 document.getElementById("feed_tweet").innerHTML = "<%= j(render "shared/feed_tweet", feed_tweet: @feed_tweet) %>";
   <% if @tweets_page_params.nil? %>
-    document.getElementById("tweet-form").innerHTML = "<%= j(render "shared/tweet_form", tweet: @tweet) %>";
+    document.getElementById("tweet_form").innerHTML = "<%= j(render "shared/tweet_form", tweet: @tweet) %>";
   <% else %>  
-    document.getElementById("tweet-form").innerHTML = "";
+    document.getElementById("tweet_form").innerHTML = "";
   <% end %>  
 <% elsif @displayed_feed == 'all_gadget' || @displayed_feed == 'following_gadget' %>
 document.getElementById("feed_gadget").innerHTML = "<%= j(render "shared/feed_gadget", feed_gadget: @feed_gadget) %>";
@@ -13,9 +13,9 @@ document.getElementById("feed_gadget").innerHTML = "<%= j(render "shared/feed_ga
   <% elsif @page_type == 'tweet' %>
   document.getElementById("feed_tweet").innerHTML = "<%= j(render "shared/feed_tweet", feed_tweet: @feed_tweet) %>";
     <% if @tweets_page_params.nil? %>
-      document.getElementById("tweet-form").innerHTML = "<%= j(render "shared/tweet_form", tweet: @tweet) %>";
+      document.getElementById("tweet_form").innerHTML = "<%= j(render "shared/tweet_form", tweet: @tweet) %>";
     <% else %>  
-      document.getElementById("tweet-form").innerHTML = "";
+      document.getElementById("tweet_form").innerHTML = "";
     <% end %>  
   <% elsif @page_type == 'gadget' %>
   document.getElementById("feed_gadget").innerHTML = "<%= j(render "shared/feed_gadget", feed_gadget: @feed_gadget) %>";

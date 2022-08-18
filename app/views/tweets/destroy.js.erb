@@ -10,15 +10,15 @@ if (typeof deleted_post !== 'undefined') {
     deleted_post.remove();
   }
 }
-var completed_msg = document.getElementsByClassName("completed_section")[0]
+var completed_msg = document.getElementsByClassName("completed-section")[0]
 if (typeof completed_msg !== 'undefined') {
   completed_msg.remove();
 }
-var completed_msg = document.getElementsByClassName("completed_section_own")[0]
+var completed_msg = document.getElementsByClassName("completed-section-own")[0]
 if (typeof completed_msg !== 'undefined') {
   completed_msg.remove();
 }
-var completed_msg = document.getElementsByClassName("completed_section_book")[0]
+var completed_msg = document.getElementsByClassName("completed-section-book")[0]
 if (typeof completed_msg !== 'undefined') {
   completed_msg.remove();
 }    
@@ -30,18 +30,18 @@ if (typeof error_msg !== 'undefined' && error_msg !== null) {
 <% if @tweet.reply_id.nil? %>
   // 削除完了メッセージを表示
   // homeのツイートを削除した場合
-  var delete_home_tweet = document.getElementById("tweet-<%= @tweet.id %>")
+  var delete_home_tweet = document.getElementById("tweet_<%= @tweet.id %>")
   if (typeof delete_home_tweet !== 'undefined' && delete_home_tweet !== null) {
     delete_home_tweet.innerHTML = "<%= j(render "tweets/deleted_tweet", tweet: @tweet) %>";
     delete_home_tweet.classList.add('deleted-post')
   } else {
   // user詳細のツイートを削除した場合
-    var delete_own_tweet = document.getElementById("own-tweet-<%= @tweet.id %>")
+    var delete_own_tweet = document.getElementById("own_tweet_<%= @tweet.id %>")
     if (typeof delete_own_tweet !== 'undefined' && delete_own_tweet !== null) {
       delete_own_tweet.innerHTML = "<%= j(render "tweets/deleted_tweet", tweet: @tweet) %>";
       delete_own_tweet.classList.add('deleted-post')
     }
-    var delete_bookmark_tweet = document.getElementById("bookmark-tweet-<%= @tweet.id %>")
+    var delete_bookmark_tweet = document.getElementById("bookmark_tweet_<%= @tweet.id %>")
     if (typeof delete_bookmark_tweet !== 'undefined' && delete_bookmark_tweet !== null) {
       delete_bookmark_tweet.innerHTML = "<%= j(render "tweets/deleted_tweet", tweet: @tweet) %>";
       delete_bookmark_tweet.classList.add('deleted-post')
@@ -51,18 +51,18 @@ if (typeof error_msg !== 'undefined' && error_msg !== null) {
 <% else %>
   // 削除完了メッセージを表示
   // homeのツイートを削除した場合
-  var delete_home_reply = document.getElementById("reply-<%= @tweet.id %>")
+  var delete_home_reply = document.getElementById("reply_<%= @tweet.id %>")
   if (typeof delete_home_reply !== 'undefined' && delete_home_reply !== null) {
     delete_home_reply.innerHTML = "<%= j(render "tweets/deleted_tweet", tweet: @tweet) %>";
     delete_home_reply.classList.add('deleted-post')
   } else {
   // user詳細のツイートを削除した場合
-    var delete_own_reply = document.getElementById("own-reply-<%= @tweet.id %>")
+    var delete_own_reply = document.getElementById("own_reply_<%= @tweet.id %>")
     if (typeof delete_own_reply !== 'undefined' && delete_own_reply !== null) {
       delete_own_reply.innerHTML = "<%= j(render "tweets/deleted_tweet", tweet: @tweet) %>";
       delete_own_reply.classList.add('deleted-post')
     }
-    var delete_bookmark_reply = document.getElementById("bookmark-reply-<%= @tweet.id %>")
+    var delete_bookmark_reply = document.getElementById("bookmark_reply_<%= @tweet.id %>")
     if (typeof delete_bookmark_reply !== 'undefined' && delete_bookmark_reply !== null) {
       delete_bookmark_reply.innerHTML = "<%= j(render "tweets/deleted_tweet", tweet: @tweet) %>";
       delete_bookmark_reply.classList.add('deleted-post')
@@ -70,5 +70,5 @@ if (typeof error_msg !== 'undefined' && error_msg !== null) {
   }
 
   // リプライ件数を更新  
-  document.getElementById("reply_count-<%= @tweet.reply_id %>").innerHTML = "<%= j(render 'tweets/reply_count', tweet: @parent_tweet) %>";
+  document.getElementById("reply_count_<%= @tweet.reply_id %>").innerHTML = "<%= j(render 'tweets/reply_count', tweet: @parent_tweet) %>";
 <% end %>

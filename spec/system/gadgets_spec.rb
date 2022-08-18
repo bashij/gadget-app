@@ -147,26 +147,26 @@ RSpec.describe 'Gadgets', type: :system, js: true do
     # home画面にあるother_userのガジェットをいいね/いいね解除
     expect(page).to have_content 'テストガジェット2'
     like_tgt_gadget = Gadget.first
-    expect(page).to have_selector "#like_section-#{like_tgt_gadget.id}", text: '0'
-    find("#like_section-#{like_tgt_gadget.id}").click
-    expect(page).to have_selector "#like_section-#{like_tgt_gadget.id}", text: '1'
-    find("#like_section-#{like_tgt_gadget.id}").click
-    expect(page).to have_selector "#like_section-#{like_tgt_gadget.id}", text: '0'
+    expect(page).to have_selector "#like_section_#{like_tgt_gadget.id}", text: '0'
+    find("#like_section_#{like_tgt_gadget.id}").click
+    expect(page).to have_selector "#like_section_#{like_tgt_gadget.id}", text: '1'
+    find("#like_section_#{like_tgt_gadget.id}").click
+    expect(page).to have_selector "#like_section_#{like_tgt_gadget.id}", text: '0'
     # 最終的にはいいね
-    find("#like_section-#{like_tgt_gadget.id}").click
-    expect(page).to have_selector "#like_section-#{like_tgt_gadget.id}", text: '1'
+    find("#like_section_#{like_tgt_gadget.id}").click
+    expect(page).to have_selector "#like_section_#{like_tgt_gadget.id}", text: '1'
 
     # home画面にあるother_userのガジェットをブックマーク/ブックマーク解除
     expect(page).to have_content 'テストガジェット3'
     bookmark_tgt_gadget = Gadget.last
-    expect(page).to have_selector "#bookmark_section-#{bookmark_tgt_gadget.id}", text: '0'
-    find("#bookmark_section-#{bookmark_tgt_gadget.id}").click
-    expect(page).to have_selector "#bookmark_section-#{bookmark_tgt_gadget.id}", text: '1'
-    find("#bookmark_section-#{bookmark_tgt_gadget.id}").click
-    expect(page).to have_selector "#bookmark_section-#{bookmark_tgt_gadget.id}", text: '0'
+    expect(page).to have_selector "#bookmark_section_#{bookmark_tgt_gadget.id}", text: '0'
+    find("#bookmark_section_#{bookmark_tgt_gadget.id}").click
+    expect(page).to have_selector "#bookmark_section_#{bookmark_tgt_gadget.id}", text: '1'
+    find("#bookmark_section_#{bookmark_tgt_gadget.id}").click
+    expect(page).to have_selector "#bookmark_section_#{bookmark_tgt_gadget.id}", text: '0'
     # 最終的にはブックマーク
-    find("#bookmark_section-#{bookmark_tgt_gadget.id}").click
-    expect(page).to have_selector "#bookmark_section-#{bookmark_tgt_gadget.id}", text: '1'
+    find("#bookmark_section_#{bookmark_tgt_gadget.id}").click
+    expect(page).to have_selector "#bookmark_section_#{bookmark_tgt_gadget.id}", text: '1'
 
     # mypage画面にブックマークしたガジェットがあることを確認
     find('#mypage_large').click
@@ -179,8 +179,8 @@ RSpec.describe 'Gadgets', type: :system, js: true do
     expect(page).to have_current_path("/users/#{other_user.id}")
 
     # いいねしたガジェットがあることを確認
-    expect(page).to have_selector "#like_section-#{like_tgt_gadget.id}", text: '1'
-    expect(page).to have_selector "#bookmark_section-#{bookmark_tgt_gadget.id}", text: '1'
+    expect(page).to have_selector "#like_section_#{like_tgt_gadget.id}", text: '1'
+    expect(page).to have_selector "#bookmark_section_#{bookmark_tgt_gadget.id}", text: '1'
   end
 
   # controller: review_requests(create/destroy/show), comments(create/destroy)
@@ -195,21 +195,21 @@ RSpec.describe 'Gadgets', type: :system, js: true do
     # home画面にあるother_userのガジェットにレビューリクエスト
     expect(page).to have_content 'テストガジェット2'
     request_tgt_gadget = Gadget.first
-    expect(page).to have_selector "#review_request_number_section-#{request_tgt_gadget.id}", text: '0'
-    find("#review_request_section-#{request_tgt_gadget.id}").click
-    expect(page).to have_selector "#review_request_number_section-#{request_tgt_gadget.id}", text: '1'
+    expect(page).to have_selector "#review_request_number_section_#{request_tgt_gadget.id}", text: '0'
+    find("#review_request_section_#{request_tgt_gadget.id}").click
+    expect(page).to have_selector "#review_request_number_section_#{request_tgt_gadget.id}", text: '1'
 
     # レビューリクエスト一覧にテストユーザーが追加されたことを確認
-    find("#review_request_show_button-#{request_tgt_gadget.id}").click
+    find("#review_request_show_button_#{request_tgt_gadget.id}").click
     expect(page).to have_content user.name
 
     # home画面でレビューリクエストを解除
     find('#home_large').click
-    find("#review_request_section-#{request_tgt_gadget.id}").click
-    expect(page).to have_selector "#review_request_number_section-#{request_tgt_gadget.id}", text: '0'
+    find("#review_request_section_#{request_tgt_gadget.id}").click
+    expect(page).to have_selector "#review_request_number_section_#{request_tgt_gadget.id}", text: '0'
 
     # 一覧からテストユーザーが削除されたことを確認
-    find("#review_request_show_button-#{request_tgt_gadget.id}").click
+    find("#review_request_show_button_#{request_tgt_gadget.id}").click
     expect(page).not_to have_content user.name
 
     # other_userのガジェットにコメントを投稿
@@ -225,7 +225,7 @@ RSpec.describe 'Gadgets', type: :system, js: true do
 
     # replyボタンを押下し、リプライフォームを表示
     reply_tgt_comment = Comment.last
-    find("#collapse-reply-icon-#{reply_tgt_comment.id}").click
+    find("#collapse_reply_icon_#{reply_tgt_comment.id}").click
     # リプライを送信
     expect do
       fill_in "reply_form_text_#{reply_tgt_comment.id}", with: 'テストコメントへのリプライ'
@@ -250,7 +250,7 @@ RSpec.describe 'Gadgets', type: :system, js: true do
     # コメントを削除
     expect do
       accept_alert do
-        find('.icon_delete').click
+        find('.icon-delete').click
       end
       expect(page).to have_content '削除されました'
       expect(page).not_to have_content 'テストコメント'

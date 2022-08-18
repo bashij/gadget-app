@@ -1,13 +1,13 @@
-<div class="col-md-3 community_items card p-3 pb-2 m-2">
+<div class="col-md-3 community-items card p-3 pb-2 m-2">
   <%= image_tag community.image.url, class: "card-img-top"%>
   <div class="card-body text-center">
     <div>
       <%= link_to community.name, community_path(community), class: "card-title" %>
     </div>
-    <div id="membership_section-<%= community.id %>">
+    <div id="membership_section_<%= community.id %>">
       <%= render "communities/membership_section", community: community %>
     </div>
-    <div id="membership_count-<%= community.id %>">
+    <div id="membership_count_<%= community.id %>">
       (<%= render "communities/membership_count", community: community %>)
     </div>
   </div>

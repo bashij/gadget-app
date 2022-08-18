@@ -1,19 +1,19 @@
 // レビューリクエストを更新する
 // home
-var home = document.getElementById("review_request_section-<%= @gadget.id %>")
+var home = document.getElementById("review_request_section_<%= @gadget.id %>")
 if (typeof home !== 'undefined' && home !== null) {
   home.innerHTML = "<%= j(render "gadgets/review_request_section", gadget: @gadget) %>";
-  document.getElementById("review_request_number_section-<%= @gadget.id %>").innerHTML = "<%= j(render "gadgets/review_request_number_section", gadget: @gadget) %>";
+  document.getElementById("review_request_number_section_<%= @gadget.id %>").innerHTML = "<%= j(render "gadgets/review_request_number_section", gadget: @gadget) %>";
 } 
 // user詳細
-var bookmark_gadget = document.getElementById("bookmark_review_request_section-<%= @gadget.id %>")
+var bookmark_gadget = document.getElementById("bookmark_review_request_section_<%= @gadget.id %>")
 if (typeof bookmark_gadget !== 'undefined' && bookmark_gadget !== null) {
   bookmark_gadget.innerHTML = "<%= j(render "gadgets/review_request_section", gadget: @gadget) %>";
-  document.getElementById("bookmark_review_request_number_section-<%= @gadget.id %>").innerHTML = "<%= j(render "gadgets/review_request_number_section", gadget: @gadget) %>";
+  document.getElementById("bookmark_review_request_number_section_<%= @gadget.id %>").innerHTML = "<%= j(render "gadgets/review_request_number_section", gadget: @gadget) %>";
 }       
 // gadget詳細
-var detail_gadget = document.getElementById("detail_review_request_section-<%= @gadget.id %>")
+var detail_gadget = document.getElementById("detail_review_request_section_<%= @gadget.id %>")
 if (typeof detail_gadget !== 'undefined' && detail_gadget !== null) {
   detail_gadget.innerHTML = "<%= j(render "gadgets/detail_review_request_section", gadget: @gadget) %>";
-  document.getElementById("review_request_number_section-<%= @gadget.id %>").innerHTML = "<%= j(render "gadgets/review_request_number_section", gadget: @gadget) %>";
+  document.getElementById("review_request_number_section_<%= @gadget.id %>").innerHTML = "<%= j(render "gadgets/review_request_number_section", gadget: @gadget) %>";
 }       
