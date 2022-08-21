@@ -40,7 +40,7 @@
         </div>        
         <div class="mb-3 field message-box">
           <%= f.text_area :content, placeholder: '返信内容を入力', class: 'form-control', id: "own_reply_form_text_#{tweet.id}" %>
-          <%= f.hidden_field :reply_id, value: tweet.id %>
+          <%= f.hidden_field :parent_id, value: tweet.id %>
         </div>       
         <div class="text-center m-4">
           <p>

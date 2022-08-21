@@ -73,7 +73,7 @@ class User < ApplicationRecord
   def tweet_feed
     following_ids = 'SELECT followed_id FROM relationships
                      WHERE follower_id = :user_id'
-    Tweet.where("reply_id IS NULL AND (user_id IN (#{following_ids})
+    Tweet.where("parent_id IS NULL AND (user_id IN (#{following_ids})
                      OR user_id = :user_id)", user_id: id)
   end
 

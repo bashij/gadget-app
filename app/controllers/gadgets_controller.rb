@@ -11,11 +11,11 @@ class GadgetsController < ApplicationController
 
     @gadget = Gadget.find(params[:id])
     @user = @gadget.user
-    comments = @gadget.comments.where(reply_id: nil).includes(:user)
+    comments = @gadget.comments.where(parent_id: nil).includes(:user)
     @comments = Kaminari.paginate_array(comments).page(params[:comments_page]).per(5)
     @comment_reply_form = @comment
-    @replies = Comment.where(reply_id: @comments)
-    @reply_count = Comment.group(:reply_id).reorder(nil).count
+    @replies = Comment.where(parent_id: @comments)
+    @reply_count = Comment.group(:parent_id).reorder(nil).count
 
     # ページネーション
     @comments_page_params = params[:comments_page]

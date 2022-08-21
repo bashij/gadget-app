@@ -241,7 +241,7 @@ RSpec.describe 'Gadgets', type: :system, js: true do
     end.to change(Comment.all, :count).by(1)
 
     # リプライを削除
-    delete_tgt_reply = Comment.find_by(reply_id: reply_tgt_comment.id)
+    delete_tgt_reply = Comment.find_by(parent_id: reply_tgt_comment.id)
     expect do
       accept_alert do
         find("#reply_delete_lg_#{delete_tgt_reply.id}").click

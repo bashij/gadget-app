@@ -18,7 +18,7 @@ class StaticPagesController < ApplicationController
       @displayed_feed = params[:displayed_feed]
     else
       # 全てのユーザーを表示
-      @feed_tweets = Tweet.where(reply_id: nil).page(params[:tweets_page]).per(5)
+      @feed_tweets = Tweet.where(parent_id: nil).page(params[:tweets_page]).per(5)
       @displayed_feed = params[:displayed_feed] if params[:displayed_feed] == 'all_tweet'
     end
     # ガジェット
@@ -36,8 +36,8 @@ class StaticPagesController < ApplicationController
     @communities = Community.includes(:user, :memberships).all.page(params[:communities_page]).per(5)
     # リプライ
     ids = @feed_tweets.pluck(:id)
-    @replies = Tweet.where(reply_id: ids)
-    @reply_count = Tweet.group(:reply_id).reorder(nil).count
+    @replies = Tweet.where(parent_id: ids)
+    @reply_count = Tweet.group(:parent_id).reorder(nil).count
     # ページネーション
     @page_type = params[:page_type]
     @tweets_page_params = params[:tweets_page]

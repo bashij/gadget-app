@@ -1,6 +1,6 @@
 <% if @replies.any? %>
   <% @replies.each do |reply| %>
-    <% if tweet.id == reply.reply_id %>
+    <% if tweet.id == reply.parent_id %>
       <div class="reply" id="reply_<%= reply.id %>">
         <div class="reply-section-left">
           <div class="reply-user-info-lg">

@@ -5,13 +5,13 @@ class TweetsController < ApplicationController
   def create
     @tweet = current_user.tweets.build(tweets_params)
     @tweet.save
-    @reply_count = Tweet.group(:reply_id).reorder(nil).count
-    if @tweet.reply_id.nil?
+    @reply_count = Tweet.group(:parent_id).reorder(nil).count
+    if @tweet.parent_id.nil?
       @replies = []
       @parent_tweet = []
     else
-      @replies = Tweet.where(reply_id: tweets_params[:reply_id])
-      @parent_tweet = Tweet.find(@tweet.reply_id)
+      @replies = Tweet.where(parent_id: tweets_params[:parent_id])
+      @parent_tweet = Tweet.find(@tweet.parent_id)
     end
 
     @tweet_reply_form = current_user.tweets.build
@@ -19,23 +19,23 @@ class TweetsController < ApplicationController
 
   def destroy
     # ツイートに対するリプライを全て削除
-    @replies = Tweet.where(reply_id: @tweet.id)
+    @replies = Tweet.where(parent_id: @tweet.id)
     @replies.each(&:destroy)
     # ツイートを削除
     @tweet.destroy
 
-    @parent_tweet = if @tweet.reply_id.nil?
+    @parent_tweet = if @tweet.parent_id.nil?
                       []
                     else
-                      Tweet.find(@tweet.reply_id)
+                      Tweet.find(@tweet.parent_id)
                     end
-    @reply_count = Tweet.group(:reply_id).reorder(nil).count
+    @reply_count = Tweet.group(:parent_id).reorder(nil).count
   end
 
   private
 
     def tweets_params
-      params.require(:tweet).permit(:content, :reply_id)
+      params.require(:tweet).permit(:content, :parent_id)
     end
 
     def correct_user

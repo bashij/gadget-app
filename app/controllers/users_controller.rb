@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     # ツイート
     @tweets = Tweet
               .includes(:tweet_likes, :tweet_bookmarks)
-              .where(user_id: @user, reply_id: nil)
+              .where(user_id: @user, parent_id: nil)
               .page(params[:own_tweets_page])
               .per(5)
     @tweet_bookmarks = @user.bookmarked_tweets
@@ -34,8 +34,8 @@ class UsersController < ApplicationController
     @tweet_reply_form = @tweet # リプライフォーム作成用
     # リプライ
     parent_ids = @tweets.ids + @tweet_bookmarks.ids
-    @replies = Tweet.includes(:tweet_likes, :tweet_bookmarks).where(reply_id: parent_ids)
-    @reply_count = Tweet.group(:reply_id).reorder(nil).count
+    @replies = Tweet.includes(:tweet_likes, :tweet_bookmarks).where(parent_id: parent_ids)
+    @reply_count = Tweet.group(:parent_id).reorder(nil).count
     # ガジェット
     @feed_gadgets = Gadget
                     .includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_07_234536) do
+ActiveRecord::Schema.define(version: 2022_08_21_051758) do
 
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2022_08_07_234536) do
     t.string "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "reply_id"
+    t.integer "parent_id"
     t.index ["gadget_id"], name: "index_comments_on_gadget_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -157,7 +157,7 @@ ActiveRecord::Schema.define(version: 2022_08_07_234536) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "reply_id"
+    t.integer "parent_id"
     t.index ["user_id", "created_at"], name: "index_tweets_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_tweets_on_user_id"
   end

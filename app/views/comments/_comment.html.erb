@@ -35,7 +35,7 @@
         <div class="mb-3 field message-box">
           <%= f.text_area :content, placeholder: '返信内容を入力', class: 'form-control', id: "reply_form_text_#{comment.id}" %>
           <%= f.hidden_field :gadget_id, value: @gadget %>
-          <%= f.hidden_field :reply_id, value: comment.id %>          
+          <%= f.hidden_field :parent_id, value: comment.id %>          
         </div>       
         <div class="text-center m-4">
           <p>
