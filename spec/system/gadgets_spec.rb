@@ -106,6 +106,9 @@ RSpec.describe 'Gadgets', type: :system, js: true do
     fill_in_rich_text_area 'gadget_review', with: sample_review
     click_on '変更を保存する'
 
+    # 最終更新日時を再取得
+    sample_update = sample_gadget.updated_at.strftime('%Y/%m/%d %H:%M')
+
     # ガジェット詳細画面の表示を確認
     expect(page).to have_content '更新されました'
     expect(page).to have_content sample_name
