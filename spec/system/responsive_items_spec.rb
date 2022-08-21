@@ -27,7 +27,7 @@ RSpec.describe 'ResponsiveItems', type: :system, js: true do
         expect(page).to have_current_path('/')
         find('#header_menu').click
         find('#help_small').click
-        expect(page).to have_current_path('/about')
+        expect(page).to have_current_path('/help')
         find('#header_menu').click
         find('#users_small').click
         expect(page).to have_content user.name

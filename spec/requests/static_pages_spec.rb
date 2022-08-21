@@ -27,9 +27,9 @@ RSpec.describe 'StaticPages', type: :request do
     end
   end
 
-  describe 'GET #about' do
-    specify 'about画面の表示が成功する' do
-      get about_path
+  describe 'GET #help' do
+    specify 'help画面の表示が成功する' do
+      get help_path
       expect(response).to have_http_status :ok
     end
   end
