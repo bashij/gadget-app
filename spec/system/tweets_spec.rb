@@ -134,7 +134,6 @@ RSpec.describe 'Tweets', type: :system, js: true do
     like_tgt_tweet = Tweet.last
     expect(page).to have_selector "#like_section_#{like_tgt_tweet.id}", text: '0'
     find("#like_section_#{like_tgt_tweet.id}").click
-    find("#like_section_#{like_tgt_tweet.id}").click
     expect(page).to have_selector "#like_section_#{like_tgt_tweet.id}", text: '1'
     find("#like_section_#{like_tgt_tweet.id}").click
     expect(page).to have_selector "#like_section_#{like_tgt_tweet.id}", text: '0'
