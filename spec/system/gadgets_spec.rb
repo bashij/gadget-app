@@ -107,7 +107,7 @@ RSpec.describe 'Gadgets', type: :system, js: true do
     click_on '変更を保存する'
 
     # 最終更新日時を再取得
-    sample_update = sample_gadget.updated_at.strftime('%Y/%m/%d %H:%M')
+    sample_update = Gadget.last.updated_at.strftime('%Y/%m/%d %H:%M')
 
     # ガジェット詳細画面の表示を確認
     expect(page).to have_content '更新されました'
