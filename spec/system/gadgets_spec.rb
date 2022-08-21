@@ -195,9 +195,9 @@ RSpec.describe 'Gadgets', type: :system, js: true do
     # home画面にあるother_userのガジェットにレビューリクエスト
     expect(page).to have_content 'テストガジェット2'
     request_tgt_gadget = Gadget.first
-    expect(page).to have_selector "#review_request_number_section_#{request_tgt_gadget.id}", text: '0'
+    expect(page).to have_selector "#review_request_count_#{request_tgt_gadget.id}", text: '0'
     find("#review_request_section_#{request_tgt_gadget.id}").click
-    expect(page).to have_selector "#review_request_number_section_#{request_tgt_gadget.id}", text: '1'
+    expect(page).to have_selector "#review_request_count_#{request_tgt_gadget.id}", text: '1'
 
     # レビューリクエスト一覧にテストユーザーが追加されたことを確認
     find("#review_request_show_button_#{request_tgt_gadget.id}").click
@@ -206,7 +206,7 @@ RSpec.describe 'Gadgets', type: :system, js: true do
     # home画面でレビューリクエストを解除
     find('#home_large').click
     find("#review_request_section_#{request_tgt_gadget.id}").click
-    expect(page).to have_selector "#review_request_number_section_#{request_tgt_gadget.id}", text: '0'
+    expect(page).to have_selector "#review_request_count_#{request_tgt_gadget.id}", text: '0'
 
     # 一覧からテストユーザーが削除されたことを確認
     find("#review_request_show_button_#{request_tgt_gadget.id}").click

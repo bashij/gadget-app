@@ -14,8 +14,8 @@
         <%= link_to gadget_review_requests_path(gadget.id), class: "icon-post", method: :get, 'data-bs-toggle': :tooltip, 'data-bs-placement': :top, 'title': :'レビューリクエストしている人を見る' do %>
           <i class="fa-solid fa-users"></i>
         <% end %>
-        <span id="review_request_number_section_<%= gadget.id %>">
-          <%= render "gadgets/review_request_number_section", gadget: gadget %>          
+        <span id="review_request_count_<%= gadget.id %>">
+          <%= render "gadgets/review_request_count", gadget: gadget %>          
         </span>
       </span>
     </div>
