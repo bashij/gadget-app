@@ -12,7 +12,7 @@ class GadgetsController < ApplicationController
     @gadget = Gadget.find(params[:id])
     @user = @gadget.user
     comments = @gadget.comments.where(parent_id: nil).includes(:user)
-    @comments = Kaminari.paginate_array(comments).page(params[:comments_page]).per(5)
+    @comments = Kaminari.paginate_array(comments).page(params[:comments_page])
     @comment_reply_form = @comment
     @replies = Comment.where(parent_id: @comments)
     @reply_count = Comment.group(:parent_id).reorder(nil).count

@@ -20,11 +20,10 @@ class UsersController < ApplicationController
               .includes(:tweet_likes, :tweet_bookmarks)
               .where(user_id: @user, parent_id: nil)
               .page(params[:own_tweets_page])
-              .per(5)
     @tweet_bookmarks = @user.bookmarked_tweets
                             .includes(:tweet_likes, :tweet_bookmarks)
                             .reorder('tweet_bookmarks.created_at DESC')
-                            .page(params[:bookmark_tweets_page]).per(5)
+                            .page(params[:bookmark_tweets_page])
     # ツイートフォーム
     @tweet = if logged_in?
                current_user.tweets.build
@@ -41,13 +40,12 @@ class UsersController < ApplicationController
                     .includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests)
                     .where(user_id: @user)
                     .page(params[:gadgets_page])
-                    .per(5)
     @gadget_bookmarks = @user.bookmarked_gadgets
                              .includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests)
                              .reorder('gadget_bookmarks.created_at DESC')
-                             .page(params[:bookmark_gadgets_page]).per(5)
+                             .page(params[:bookmark_gadgets_page])
     # コミュニティ
-    @communities = @user.joining_communities.includes(:user, :memberships).page(params[:communities_page]).per(5)
+    @communities = @user.joining_communities.includes(:user, :memberships).page(params[:communities_page])
 
     respond_to do |format|
       format.html
