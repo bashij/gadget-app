@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
       @replies = Comment.where(parent_id: comments_params[:parent_id])
       @parent_comment = Comment.find(@comment.parent_id)
     end
-    @comment_reply_form = current_user.comments.build
+    @comment_reply = current_user.comments.build
   end
 
   def destroy

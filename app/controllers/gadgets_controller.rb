@@ -3,20 +3,17 @@ class GadgetsController < ApplicationController
   before_action :correct_user,   only: %i[edit update destroy]
 
   def show
-    @comment = if logged_in?
-                 current_user.comments.build
-               else
-                 User.new.comments.build
-               end
-
+    # 表示対象ガジェット
     @gadget = Gadget.find(params[:id])
-    @user = @gadget.user
-    comments = @gadget.comments.where(parent_id: nil).includes(:user)
-    @comments = Kaminari.paginate_array(comments).page(params[:comments_page])
-    @comment_reply_form = @comment
+    # コメント、リプライフォーム
+    @comment = logged_in? ? current_user.comments.build : User.new.comments.build
+    @comment_reply = @comment
+    # ガジェットへの親コメント
+    parent_comments = @gadget.parent_comments
+    @comments = Kaminari.paginate_array(parent_comments).page(params[:comments_page])
+    # 親コメントへのリプライコメント
     @replies = Comment.where(parent_id: @comments)
     @reply_count = Comment.group(:parent_id).reorder(nil).count
-
     # ページネーション
     @comments_page_params = params[:comments_page]
 

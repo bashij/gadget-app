@@ -28,7 +28,7 @@
       <span class="content text-break"><%= comment.content %></span>
     </div>    
     <section class="collapse" id="collapse_reply_<%= comment.id %>">
-      <%= form_with(model: [@gadget, @comment_reply_form], local: false) do |f| %>
+      <%= form_with(model: [@gadget, @comment_reply], local: false) do |f| %>
         <div id="error_explanation_<%= comment.id %>" class="text-center">
           <%= render 'shared/error_messages_reply', object: f.object %>
         </div>        
