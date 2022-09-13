@@ -3,18 +3,16 @@ class TweetsController < ApplicationController
   before_action :correct_user,   only: :destroy
 
   def create
+    # リプライフォーム
+    @tweet_reply = current_user.tweets.build
+    # 入力されたツイート
     @tweet = current_user.tweets.build(tweets_params)
     @tweet.save
-    @reply_count = Tweet.group(:parent_id).reorder(nil).count
-    if @tweet.parent_id.nil?
-      @replies = []
-      @parent_tweet = []
-    else
-      @replies = Tweet.where(parent_id: tweets_params[:parent_id])
-      @parent_tweet = Tweet.find(@tweet.parent_id)
-    end
-
-    @tweet_reply_form = current_user.tweets.build
+    # 親ツイート
+    @parent_tweet = Tweet.find_parent(@tweet.parent_id)
+    # 親ツイートへのリプライツイート
+    @replies = Tweet.find_all_replies(parent_id: tweets_params[:parent_id])
+    @reply_count = Tweet.reply_count
   end
 
   def destroy
@@ -23,13 +21,10 @@ class TweetsController < ApplicationController
     @replies.each(&:destroy)
     # ツイートを削除
     @tweet.destroy
-
-    @parent_tweet = if @tweet.parent_id.nil?
-                      []
-                    else
-                      Tweet.find(@tweet.parent_id)
-                    end
-    @reply_count = Tweet.group(:parent_id).reorder(nil).count
+    # 親ツイート
+    @parent_tweet = Tweet.find_parent(@tweet.parent_id)
+    # 親ツイートへのリプライツイート
+    @reply_count = Tweet.reply_count
   end
 
   private

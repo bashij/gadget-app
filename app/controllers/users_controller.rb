@@ -30,7 +30,7 @@ class UsersController < ApplicationController
              else
                User.new.tweets.build
              end
-    @tweet_reply_form = @tweet # リプライフォーム作成用
+    @tweet_reply = @tweet # リプライフォーム作成用
     # リプライ
     parent_ids = @tweets.ids + @tweet_bookmarks.ids
     @replies = Tweet.includes(:tweet_likes, :tweet_bookmarks).where(parent_id: parent_ids)

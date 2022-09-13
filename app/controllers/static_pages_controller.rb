@@ -9,7 +9,7 @@ class StaticPagesController < ApplicationController
              else
                User.new.tweets.build # 非ログイン時はダミーのフォームとする
              end
-    @tweet_reply_form = @tweet
+    @tweet_reply = @tweet
     # ツイート
     # フォロー中のみ表示
     if params[:displayed_feed] == 'following_tweet' && logged_in?
