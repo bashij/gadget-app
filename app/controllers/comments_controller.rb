@@ -3,20 +3,20 @@ class CommentsController < ApplicationController
   before_action :correct_user, only: :destroy
 
   def create
+    # 表示対象ガジェット
     @gadget = Gadget.find(params[:gadget_id])
+    # リプライフォーム
+    @comment_reply = current_user.comments.build
+    # 入力されたコメント
     @comment = current_user.comments.build(gadget_id: params[:gadget_id],
                                            content: params[:comment][:content],
                                            parent_id: params[:comment][:parent_id])
     @comment.save
-    @reply_count = Comment.group(:parent_id).reorder(nil).count
-    if @comment.parent_id.nil?
-      @replies = []
-      @parent_comment = []
-    else
-      @replies = Comment.where(parent_id: comments_params[:parent_id])
-      @parent_comment = Comment.find(@comment.parent_id)
-    end
-    @comment_reply = current_user.comments.build
+    # 親コメント
+    @parent_comment = Comment.find_parent(@comment.parent_id)
+    # 親コメントへのリプライコメント
+    @replies = Comment.find_all_replies(parent_id: comments_params[:parent_id])
+    @reply_count = Comment.reply_count
   end
 
   def destroy
@@ -25,19 +25,16 @@ class CommentsController < ApplicationController
     @replies.each(&:destroy)
     # コメントを削除
     @comment.destroy
-
-    @parent_comment = if @comment.parent_id.nil?
-                        []
-                      else
-                        Comment.find(@comment.parent_id)
-                      end
-    @reply_count = Comment.group(:parent_id).reorder(nil).count
+    # 親コメント
+    @parent_comment = Comment.find_parent(@comment.parent_id)
+    # 親コメントへのリプライコメント
+    @reply_count = Comment.reply_count
   end
 
   private
 
     def comments_params
-      params.require(:comment).permit(:content, :parent_id)
+      params.require(:comment).permit(:content, :parent_id, :gadget_id)
     end
 
     def correct_user

@@ -13,7 +13,7 @@ class GadgetsController < ApplicationController
     @comments = Kaminari.paginate_array(parent_comments).page(params[:comments_page])
     # 親コメントへのリプライコメント
     @replies = Comment.where(parent_id: @comments)
-    @reply_count = Comment.group(:parent_id).reorder(nil).count
+    @reply_count = Comment.reply_count
     # ページネーション
     @comments_page_params = params[:comments_page]
 
