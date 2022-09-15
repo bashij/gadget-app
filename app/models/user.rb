@@ -99,4 +99,18 @@ class User < ApplicationRecord
   def following?(other_user)
     following.include?(other_user)
   end
+
+  # ユーザーがブックマークしているツイートをブックマークした日時順に返す
+  def show_bookmark_tweets(paginate)
+    bookmarked_tweets.includes(:tweet_likes, :tweet_bookmarks)
+                     .reorder('tweet_bookmarks.created_at DESC')
+                     .page(paginate)
+  end
+
+  # ユーザーがブックマークしているガジェットをブックマークした日時順に返す
+  def show_bookmark_gadgets(paginate)
+    bookmarked_gadgets.includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests)
+                      .reorder('gadget_bookmarks.created_at DESC')
+                      .page(paginate)
+  end
 end

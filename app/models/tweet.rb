@@ -38,4 +38,11 @@ class Tweet < ApplicationRecord
   def self.reply_count
     Tweet.group(:parent_id).reorder(nil).count
   end
+
+  # 特定ユーザーのツイート（親ツイートのみ）を整形して返す
+  def self.own_tweet(user, paginate)
+    Tweet.includes(:tweet_likes, :tweet_bookmarks)
+         .where(user_id: user, parent_id: nil)
+         .page(paginate)
+  end
 end

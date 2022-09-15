@@ -13,38 +13,22 @@ class UsersController < ApplicationController
   end
 
   def show
-    # ユーザー
+    # 表示対象ユーザー
     @user = User.includes(:tweets).find(params[:id])
-    # ツイート
-    @tweets = Tweet
-              .includes(:tweet_likes, :tweet_bookmarks)
-              .where(user_id: @user, parent_id: nil)
-              .page(params[:own_tweets_page])
-    @tweet_bookmarks = @user.bookmarked_tweets
-                            .includes(:tweet_likes, :tweet_bookmarks)
-                            .reorder('tweet_bookmarks.created_at DESC')
-                            .page(params[:bookmark_tweets_page])
-    # ツイートフォーム
-    @tweet = if logged_in?
-               current_user.tweets.build
-             else
-               User.new.tweets.build
-             end
-    @tweet_reply = @tweet # リプライフォーム作成用
+    # 自身のツイート、ブックマークしたツイート
+    @tweets = Tweet.own_tweet(@user, params[:own_tweets_page])
+    @tweet_bookmarks = @user.show_bookmark_tweets(params[:bookmark_tweets_page])
+    # ツイート、リプライフォーム
+    @tweet = logged_in? ? current_user.tweets.build : User.new.tweets.build
+    @tweet_reply = @tweet
     # リプライ
     parent_ids = @tweets.ids + @tweet_bookmarks.ids
-    @replies = Tweet.includes(:tweet_likes, :tweet_bookmarks).where(parent_id: parent_ids)
-    @reply_count = Tweet.group(:parent_id).reorder(nil).count
-    # ガジェット
-    @feed_gadgets = Gadget
-                    .includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests)
-                    .where(user_id: @user)
-                    .page(params[:gadgets_page])
-    @gadget_bookmarks = @user.bookmarked_gadgets
-                             .includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests)
-                             .reorder('gadget_bookmarks.created_at DESC')
-                             .page(params[:bookmark_gadgets_page])
-    # コミュニティ
+    @replies = Tweet.find_all_replies(parent_id: parent_ids)
+    @reply_count = Tweet.reply_count
+    # 自身のガジェット、ブックマークしたガジェット
+    @feed_gadgets = Gadget.own_gadget(@user, params[:gadgets_page])
+    @gadget_bookmarks = @user.show_bookmark_gadgets(params[:bookmark_gadgets_page])
+    # 参加中のコミュニティ
     @communities = @user.joining_communities.includes(:user, :memberships).page(params[:communities_page])
 
     respond_to do |format|
