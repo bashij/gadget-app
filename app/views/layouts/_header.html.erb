@@ -27,7 +27,7 @@
     <%= link_to "HELP",help_path,{class: "d-block nav-link", id: "help_small"} %> 
     <%= link_to "USERS",users_path,{class: "d-block nav-link", id: "users_small"} %>
     <% if logged_in? %>
-      <%= link_to "MYPAGE",current_user,{class: "d-block nav-link", id: "mypage_small", id: "mypage_small"} %>
+      <%= link_to "MYPAGE",current_user,{class: "d-block nav-link", id: "mypage_small"} %>
       <%= link_to "SETTING",edit_user_path(current_user),{class: "d-block nav-link", id: "setting_small"} %>
       <%= link_to "LOGOUT",logout_path,{class: "d-block nav-link",method: :delete, id: "logout_small"}%>
     <% else %>
