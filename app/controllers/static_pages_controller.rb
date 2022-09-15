@@ -3,17 +3,13 @@ class StaticPagesController < ApplicationController
     @title = 'HOME'
     @displayed_feed = ''
 
-    # ログイン状態に応じてフォームを切り替える
-    @tweet = if logged_in?
-               current_user.tweets.build
-             else
-               User.new.tweets.build # 非ログイン時はダミーのフォームとする
-             end
+    # ツイート、リプライフォーム (ログイン状態に応じてフォームを切り替える。非ログイン時はダミーのフォームとする)
+    @tweet = logged_in? ? current_user.tweets.build : User.new.tweets.build
     @tweet_reply = @tweet
     # ツイート
     # フォロー中のみ表示
     if params[:displayed_feed] == 'following_tweet' && logged_in?
-      feed_tweets = current_user.tweet_feed.includes(:user, :tweet_likes, :tweet_bookmarks)
+      feed_tweets = current_user.tweet_feed
       @feed_tweets = Kaminari.paginate_array(feed_tweets).page(params[:tweets_page])
       @displayed_feed = params[:displayed_feed]
     else
@@ -24,7 +20,7 @@ class StaticPagesController < ApplicationController
     # ガジェット
     # フォロー中のみ表示
     if params[:displayed_feed] == 'following_gadget' && logged_in?
-      feed_gadgets = current_user.gadget_feed.includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests)
+      feed_gadgets = current_user.gadget_feed
       @feed_gadgets = Kaminari.paginate_array(feed_gadgets).page(params[:gadgets_page])
       @displayed_feed = params[:displayed_feed]
     else
@@ -37,7 +33,7 @@ class StaticPagesController < ApplicationController
     # リプライ
     ids = @feed_tweets.pluck(:id)
     @replies = Tweet.where(parent_id: ids)
-    @reply_count = Tweet.group(:parent_id).reorder(nil).count
+    @reply_count = Tweet.reply_count
     # ページネーション
     @page_type = params[:page_type]
     @tweets_page_params = params[:tweets_page]
