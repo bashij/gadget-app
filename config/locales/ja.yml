@@ -37,13 +37,13 @@ ja:
         id: ツイートID
         user_id: 作成ユーザーID
         content: ツイート内容
-        reply_id: リプライ先ツイートID
+        parent_id: リプライ先ツイートID
       comment:
         id: コメントID
         user_id: 作成ユーザーID
         gadget_id: コメント先ガジェットID
         content: コメント内容
-        reply_id: リプライ先コメントID
+        parent_id: リプライ先コメントID
       community:
         id: コミュニティID
         user_id: 作成ユーザーID

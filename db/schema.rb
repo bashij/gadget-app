@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_07_234536) do
+ActiveRecord::Schema.define(version: 2022_09_17_081916) do
 
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -53,17 +53,17 @@ ActiveRecord::Schema.define(version: 2022_08_07_234536) do
   create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "gadget_id", null: false
-    t.string "content"
+    t.string "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "reply_id"
+    t.integer "parent_id"
     t.index ["gadget_id"], name: "index_comments_on_gadget_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "communities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "name"
+    t.string "name", null: false
     t.string "image"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -93,8 +93,8 @@ ActiveRecord::Schema.define(version: 2022_08_07_234536) do
 
   create_table "gadgets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "name"
-    t.string "category"
+    t.string "name", null: false
+    t.string "category", null: false
     t.string "model_number"
     t.string "manufacturer"
     t.integer "price"
@@ -117,8 +117,8 @@ ActiveRecord::Schema.define(version: 2022_08_07_234536) do
   end
 
   create_table "relationships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "follower_id"
-    t.integer "followed_id"
+    t.integer "follower_id", null: false
+    t.integer "followed_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["followed_id"], name: "index_relationships_on_followed_id"
@@ -137,39 +137,39 @@ ActiveRecord::Schema.define(version: 2022_08_07_234536) do
   end
 
   create_table "tweet_bookmarks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "tweet_id"
+    t.integer "user_id", null: false
+    t.integer "tweet_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id", "tweet_id"], name: "index_tweet_bookmarks_on_user_id_and_tweet_id", unique: true
   end
 
   create_table "tweet_likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "tweet_id"
+    t.integer "user_id", null: false
+    t.integer "tweet_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id", "tweet_id"], name: "index_tweet_likes_on_user_id_and_tweet_id", unique: true
   end
 
   create_table "tweets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.text "content"
+    t.text "content", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "reply_id"
+    t.integer "parent_id"
     t.index ["user_id", "created_at"], name: "index_tweets_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_tweets_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "job"
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "job", null: false
     t.string "image"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "password_digest"
+    t.string "password_digest", null: false
     t.string "remember_digest"
     t.index ["email"], name: "index_users_on_email", unique: true
   end

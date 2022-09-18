@@ -34,13 +34,13 @@
       <span class="content text-break"><%= tweet.content %></span>
     </div>    
     <section class="collapse" id="collapse_reply_<%= tweet.id %>">
-      <%= form_with(model: @tweet_reply_form, local: false) do |f| %>
+      <%= form_with(model: @tweet_reply, local: false) do |f| %>
         <div id="bookmark_error_explanation_<%= tweet.id %>" class="text-center">
           <%= render 'shared/error_messages_reply', object: f.object %>
         </div>        
         <div class="mb-3 field message-box">
           <%= f.text_area :content, placeholder: '返信内容を入力', class: 'form-control', id: "bookmark_reply_form_text_#{tweet.id}" %>
-          <%= f.hidden_field :reply_id, value: tweet.id %>
+          <%= f.hidden_field :parent_id, value: tweet.id %>
         </div>       
         <div class="text-center m-4">
           <p>

@@ -155,7 +155,7 @@ RSpec.describe User, type: :model do
       specify 'userが削除された時、関連するcommentsも削除される' do
         user.save
         other_user.gadgets.create!(name: 'テストガジェット', category: 'PC本体')
-        user.comments.create!(gadget_id: Gadget.last.id, content: 'テストコメント', reply_id: nil)
+        user.comments.create!(gadget_id: Gadget.last.id, content: 'テストコメント', parent_id: nil)
         expect { user.destroy }.to change(Comment.all, :count).by(-1)
       end
     end

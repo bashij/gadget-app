@@ -106,6 +106,9 @@ RSpec.describe 'Gadgets', type: :system, js: true do
     fill_in_rich_text_area 'gadget_review', with: sample_review
     click_on '変更を保存する'
 
+    # 最終更新日時を再取得
+    sample_update = Gadget.last.updated_at.strftime('%Y/%m/%d %H:%M')
+
     # ガジェット詳細画面の表示を確認
     expect(page).to have_content '更新されました'
     expect(page).to have_content sample_name
@@ -195,9 +198,9 @@ RSpec.describe 'Gadgets', type: :system, js: true do
     # home画面にあるother_userのガジェットにレビューリクエスト
     expect(page).to have_content 'テストガジェット2'
     request_tgt_gadget = Gadget.first
-    expect(page).to have_selector "#review_request_number_section_#{request_tgt_gadget.id}", text: '0'
+    expect(page).to have_selector "#review_request_count_#{request_tgt_gadget.id}", text: '0'
     find("#review_request_section_#{request_tgt_gadget.id}").click
-    expect(page).to have_selector "#review_request_number_section_#{request_tgt_gadget.id}", text: '1'
+    expect(page).to have_selector "#review_request_count_#{request_tgt_gadget.id}", text: '1'
 
     # レビューリクエスト一覧にテストユーザーが追加されたことを確認
     find("#review_request_show_button_#{request_tgt_gadget.id}").click
@@ -206,7 +209,7 @@ RSpec.describe 'Gadgets', type: :system, js: true do
     # home画面でレビューリクエストを解除
     find('#home_large').click
     find("#review_request_section_#{request_tgt_gadget.id}").click
-    expect(page).to have_selector "#review_request_number_section_#{request_tgt_gadget.id}", text: '0'
+    expect(page).to have_selector "#review_request_count_#{request_tgt_gadget.id}", text: '0'
 
     # 一覧からテストユーザーが削除されたことを確認
     find("#review_request_show_button_#{request_tgt_gadget.id}").click
@@ -238,7 +241,7 @@ RSpec.describe 'Gadgets', type: :system, js: true do
     end.to change(Comment.all, :count).by(1)
 
     # リプライを削除
-    delete_tgt_reply = Comment.find_by(reply_id: reply_tgt_comment.id)
+    delete_tgt_reply = Comment.find_by(parent_id: reply_tgt_comment.id)
     expect do
       accept_alert do
         find("#reply_delete_lg_#{delete_tgt_reply.id}").click

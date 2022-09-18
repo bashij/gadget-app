@@ -64,7 +64,7 @@ tweet_reply_target_id = users.last.tweets.ids[0]
   tweet_content = "リプライ: #{Faker::Lorem.paragraph_by_chars(number: 100)}"
   users.each do |user|
     # ツイート
-    user.tweets.create!(content: tweet_content, reply_id: tweet_reply_target_id)
+    user.tweets.create!(content: tweet_content, parent_id: tweet_reply_target_id)
     user.tweet_likes.create!(tweet_id: tweet_reply_target_id)
     user.tweet_bookmarks.create!(tweet_id: tweet_reply_target_id)
   end

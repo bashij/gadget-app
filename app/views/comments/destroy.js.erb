@@ -13,7 +13,7 @@ if (typeof error_msg !== 'undefined' && error_msg !== null) {
   error_msg.innerHTML = "<%= j(render "shared/error_messages", object: @comment) %>";
 }
 
-<% if @comment.reply_id.nil? %>
+<% if @comment.parent_id.nil? %>
   // 削除完了メッセージを表示
 
   var delete_post = document.getElementById("comment_<%= @comment.id %>")
@@ -32,5 +32,5 @@ if (typeof error_msg !== 'undefined' && error_msg !== null) {
   }
 
   // リプライ件数を更新  
-  document.getElementById("reply_count_<%= @comment.reply_id %>").innerHTML = "<%= j(render 'comments/reply_count', comment: @parent_comment) %>";
+  document.getElementById("reply_count_<%= @comment.parent_id %>").innerHTML = "<%= j(render 'comments/reply_count', comment: @parent_comment) %>";
 <% end %>

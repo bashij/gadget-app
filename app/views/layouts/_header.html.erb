@@ -6,7 +6,7 @@
   <%# メニュー 通常時 %>
   <div class="menu d-none d-lg-block col-lg-9 text-end">
     <%= link_to "HOME",root_path ,{class: "d-inline-block nav-link", id: "home_large"} %>
-    <%= link_to "HELP",about_path,{class: "d-inline-block nav-link", id: "help_large"} %> 
+    <%= link_to "HELP",help_path,{class: "d-inline-block nav-link", id: "help_large"} %> 
     <%= link_to "USERS",users_path,{class: "d-inline-block nav-link", id: "users_large"} %>
     <% if logged_in? %>
       <%= link_to "MYPAGE",current_user,{class: "d-inline-block nav-link", id: "mypage_large"} %>
@@ -24,10 +24,10 @@
   </div>   
   <div class="collapse col-12 d-lg-none text-end" id="nav_header">
     <%= link_to "HOME",root_path ,{class: "d-block nav-link", id: "home_small"} %>
-    <%= link_to "HELP",about_path,{class: "d-block nav-link", id: "help_small"} %> 
+    <%= link_to "HELP",help_path,{class: "d-block nav-link", id: "help_small"} %> 
     <%= link_to "USERS",users_path,{class: "d-block nav-link", id: "users_small"} %>
     <% if logged_in? %>
-      <%= link_to "MYPAGE",current_user,{class: "d-block nav-link", id: "mypage_small", id: "mypage_small"} %>
+      <%= link_to "MYPAGE",current_user,{class: "d-block nav-link", id: "mypage_small"} %>
       <%= link_to "SETTING",edit_user_path(current_user),{class: "d-block nav-link", id: "setting_small"} %>
       <%= link_to "LOGOUT",logout_path,{class: "d-block nav-link",method: :delete, id: "logout_small"}%>
     <% else %>

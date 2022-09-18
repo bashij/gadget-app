@@ -112,7 +112,7 @@ RSpec.describe Gadget, type: :model do
   describe 'association' do
     describe 'comments' do
       specify 'gadgetが削除された時、関連するcommentsも削除される' do
-        user.comments.create!(gadget_id: gadget.id, content: 'テストコメント', reply_id: nil)
+        user.comments.create!(gadget_id: gadget.id, content: 'テストコメント', parent_id: nil)
         expect { gadget.destroy }.to change(Comment.all, :count).by(-1)
       end
     end

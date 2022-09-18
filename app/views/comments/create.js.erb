@@ -1,4 +1,4 @@
-<% if @comment.reply_id.nil? %>
+<% if @comment.parent_id.nil? %>
 // コメントの場合 /////////////////////////////////////////////////////////////////
 
   <% if @comment.errors.any? %>
@@ -65,7 +65,7 @@
   <% if @comment.errors.any? %>
   // エラーメッセージを表示  
 
-  var error_post = document.getElementById("error_explanation_<%= @comment.reply_id %>")
+  var error_post = document.getElementById("error_explanation_<%= @comment.parent_id %>")
   if (typeof error_post !== 'undefined' && error_post !== null) {
     error_post.innerHTML = "<%= j(render "shared/error_messages_reply", object: @comment) %>";
     error_post.className = "post-error" 
@@ -85,7 +85,7 @@
   // 既存の最新リプライの上に新規リプライを追加
 
   // 入力フォームを空にする(リプライ用フォーム)
-  var reply_form = document.getElementById("reply_form_text_<%= @comment.reply_id %>")
+  var reply_form = document.getElementById("reply_form_text_<%= @comment.parent_id %>")
   if (typeof reply_form !== 'undefined' && reply_form !== null) {
     reply_form.value = '';   
   }
@@ -109,11 +109,11 @@
   completed_section.appendChild(completed_msg);    
 
   // リプライを追加  
-  var reply = document.getElementById("replies_<%= @comment.reply_id %>");
+  var reply = document.getElementById("replies_<%= @comment.parent_id %>");
   if (typeof reply !== 'undefined' && reply !== null) {
     // 最初のreplyの前に空のテンプレを入れる
     var new_reply = document.createElement('div');
-    var parent = document.getElementById("replies_<%= @comment.reply_id %>");
+    var parent = document.getElementById("replies_<%= @comment.parent_id %>");
     var reference = parent.getElementsByClassName("reply")[0];
 
     // 空のテンプレの子要素として、新しいリプライを含むrepliesを追加
@@ -125,14 +125,14 @@
     parent.insertBefore(new_reply[1], reference);
 
     // リプライ件数を更新
-    document.getElementById("reply_count_<%= @comment.reply_id %>").innerHTML = "<%= j(render 'comments/reply_count', comment: @parent_comment) %>";
+    document.getElementById("reply_count_<%= @comment.parent_id %>").innerHTML = "<%= j(render 'comments/reply_count', comment: @parent_comment) %>";
 
     // 投稿完了メッセージを投稿したリプライの上に挿入
     var reference = parent.getElementsByClassName("reply")[0];
     parent.insertBefore(completed_section, reference);    
 
     // エラーメッセージを削除
-    document.getElementById("error_explanation_<%= @comment.reply_id %>").innerHTML = "<%= j(render "shared/error_messages_reply", object: @comment) %>";
+    document.getElementById("error_explanation_<%= @comment.parent_id %>").innerHTML = "<%= j(render "shared/error_messages_reply", object: @comment) %>";
   }
   <% end %>
 <% end %>

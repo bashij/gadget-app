@@ -27,7 +27,7 @@ if (typeof error_msg !== 'undefined' && error_msg !== null) {
   error_msg.innerHTML = "<%= j(render "shared/error_messages", object: @tweet) %>";
 }
 
-<% if @tweet.reply_id.nil? %>
+<% if @tweet.parent_id.nil? %>
   // 削除完了メッセージを表示
   // homeのツイートを削除した場合
   var delete_home_tweet = document.getElementById("tweet_<%= @tweet.id %>")
@@ -70,5 +70,5 @@ if (typeof error_msg !== 'undefined' && error_msg !== null) {
   }
 
   // リプライ件数を更新  
-  document.getElementById("reply_count_<%= @tweet.reply_id %>").innerHTML = "<%= j(render 'tweets/reply_count', tweet: @parent_tweet) %>";
+  document.getElementById("reply_count_<%= @tweet.parent_id %>").innerHTML = "<%= j(render 'tweets/reply_count', tweet: @parent_tweet) %>";
 <% end %>

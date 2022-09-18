@@ -82,7 +82,7 @@ RSpec.describe 'Tweets', type: :system, js: true do
     end.to change(Tweet.all, :count).by(1)
 
     # 削除
-    delete_tgt_reply = Tweet.find_by(reply_id: reply_tgt_tweet.id)
+    delete_tgt_reply = Tweet.find_by(parent_id: reply_tgt_tweet.id)
     expect do
       accept_alert do
         find("#reply_delete_lg_#{delete_tgt_reply.id}").click
@@ -110,7 +110,7 @@ RSpec.describe 'Tweets', type: :system, js: true do
     end.to change(Tweet.all, :count).by(1)
 
     # 削除
-    delete_tgt_reply = Tweet.find_by(reply_id: reply_tgt_tweet.id)
+    delete_tgt_reply = Tweet.find_by(parent_id: reply_tgt_tweet.id)
     expect do
       accept_alert do
         find("#reply_delete_lg_#{delete_tgt_reply.id}").click
@@ -133,7 +133,6 @@ RSpec.describe 'Tweets', type: :system, js: true do
     expect(page).to have_content 'テストツイート2'
     like_tgt_tweet = Tweet.last
     expect(page).to have_selector "#like_section_#{like_tgt_tweet.id}", text: '0'
-    find("#like_section_#{like_tgt_tweet.id}").click
     find("#like_section_#{like_tgt_tweet.id}").click
     expect(page).to have_selector "#like_section_#{like_tgt_tweet.id}", text: '1'
     find("#like_section_#{like_tgt_tweet.id}").click

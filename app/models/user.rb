@@ -73,8 +73,9 @@ class User < ApplicationRecord
   def tweet_feed
     following_ids = 'SELECT followed_id FROM relationships
                      WHERE follower_id = :user_id'
-    Tweet.where("reply_id IS NULL AND (user_id IN (#{following_ids})
+    Tweet.where("parent_id IS NULL AND (user_id IN (#{following_ids})
                      OR user_id = :user_id)", user_id: id)
+         .includes(:user, :tweet_likes, :tweet_bookmarks)
   end
 
   # フォローしているユーザーのガジェットフィード
@@ -82,7 +83,9 @@ class User < ApplicationRecord
     following_ids = 'SELECT followed_id FROM relationships
                      WHERE follower_id = :user_id'
     Gadget.where("user_id IN (#{following_ids})
-                     OR user_id = :user_id", user_id: id).order(updated_at: :DESC)
+                     OR user_id = :user_id", user_id: id)
+          .order(updated_at: :DESC)
+          .includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests)
   end
 
   # ユーザーをフォローする
@@ -98,5 +101,19 @@ class User < ApplicationRecord
   # 現在のユーザーがフォローしてたらtrueを返す
   def following?(other_user)
     following.include?(other_user)
+  end
+
+  # ユーザーがブックマークしているツイートをブックマークした日時順に返す
+  def show_bookmark_tweets(paginate)
+    bookmarked_tweets.includes(:tweet_likes, :tweet_bookmarks)
+                     .reorder('tweet_bookmarks.created_at DESC')
+                     .page(paginate)
+  end
+
+  # ユーザーがブックマークしているガジェットをブックマークした日時順に返す
+  def show_bookmark_gadgets(paginate)
+    bookmarked_gadgets.includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests)
+                      .reorder('gadget_bookmarks.created_at DESC')
+                      .page(paginate)
   end
 end
