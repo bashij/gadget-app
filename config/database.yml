@@ -20,7 +20,6 @@ default: &default
 development:
   <<: *default
   database: gadget_app_development
-  password: "pass"
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -29,6 +28,7 @@ test:
   <<: *default
   database: gadget_app_test
   host: <%= ENV.fetch("APP_DATABASE_HOST") { "db" } %>
+  password: "pass"
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
