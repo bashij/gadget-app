@@ -36,6 +36,9 @@ jobs:
           name: Database setup
           command: bundle exec rails db:migrate
       - run:
+          name: run webpack
+          command: bundle exec bin/webpack
+      - run:
           name: run rubocop
           command: bundle exec rubocop
       - run:
