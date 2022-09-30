@@ -18,7 +18,7 @@ jobs:
   test:
     docker:
       - image: cimg/ruby:3.0.2-browsers
-      - image: circleci/mysql:5.5
+      - image: circleci/mysql:8.0
         environment:
           MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
           MYSQL_DATABASE: gadget_app_test
