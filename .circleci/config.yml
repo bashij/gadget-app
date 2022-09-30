@@ -33,6 +33,9 @@ jobs:
           path: ~/gadget-app
       - ruby/install-deps
       - run:
+          name: Database create
+          command: bundle exec rails db:create      
+      - run:
           name: Database setup
           command: bundle exec rails db:migrate
       - run:
