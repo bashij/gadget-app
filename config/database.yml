@@ -20,6 +20,7 @@ default: &default
 development:
   <<: *default
   database: gadget_app_development
+  password: "pass"
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
