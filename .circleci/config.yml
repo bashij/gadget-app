@@ -21,7 +21,7 @@ jobs:
       - image: cimg/ruby:3.0.2-browsers
       - image: circleci/mysql:8.0
         environment:
-          MYSQL_ROOT_PASSWORD: "ci_test_pass"
+          MYSQL_ROOT_PASSWORD: $CI_MYSQL_ROOT_PASSWORD_CONTEXT
           MYSQL_DATABASE: gadget_app_test
     environment:
       BUNDLE_JOBS: "3"
@@ -44,6 +44,9 @@ jobs:
       - run:
           name: check password
           command: echo "${CI_MYSQL_ROOT_PASSWORD_CONTEXT}"
+      - run:
+          name: check password
+          command: echo "$CI_MYSQL_ROOT_PASSWORD_CONTEXT"
       - run:
           name: check password
           command: echo $BASH_ENV      
