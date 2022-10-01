@@ -30,11 +30,17 @@ jobs:
       RAILS_ENV: test
     working_directory: ~/gadget-app
     steps:
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver    
+      # - browser-tools/install-chrome
+      # - browser-tools/install-chromedriver    
       - checkout:
           path: ~/gadget-app
       - ruby/install-deps
+      - run:
+          name: check password
+          command: echo $CI_MYSQL_ROOT_PASSWORD
+      - run:
+          name: check password
+          command: echo ${CI_MYSQL_ROOT_PASSWORD}
       - run:
           name: Database setup
           command: bundle exec rails db:migrate
