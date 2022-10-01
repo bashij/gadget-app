@@ -46,7 +46,7 @@ jobs:
           command: echo "${CI_MYSQL_ROOT_PASSWORD_CONTEXT}"
       - run:
           name: check password
-          command: echo "$CI_MYSQL_ROOT_PASSWORD_CONTEXT"
+          command: echo "<%= ENV['DATABASE_DEV_PASSWORD'] %>"
       - run:
           name: check password
           command: echo $BASH_ENV      
