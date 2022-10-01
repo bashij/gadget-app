@@ -32,7 +32,7 @@ jobs:
     steps:
       - run:
           name: Setup Environment Variables
-          command: echo "export ROOT_PASSWORD='$(CI_MYSQL_ROOT_PASSWORD)'" >> $BASH_ENV
+          command: echo "export ROOT_PASSWORD='${CI_MYSQL_ROOT_PASSWORD}'" >> $BASH_ENV
       # - browser-tools/install-chrome
       # - browser-tools/install-chromedriver    
       - checkout:
