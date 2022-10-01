@@ -71,5 +71,5 @@ workflows:
       - test:
           context:
             - my-context
-            requires:
-              - build
+          requires:
+            - build
