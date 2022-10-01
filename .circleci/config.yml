@@ -39,6 +39,12 @@ jobs:
           path: ~/gadget-app
       - ruby/install-deps
       - run:
+          name: Environment Variables
+          command: |
+            touch .env
+            echo DATABASE_DEV_PASSWORD=$DATABASE_DEV_PASSWORD > .env
+            echo MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD > .env      
+      - run:
           name: check password
           command: echo "${CI_MYSQL_ROOT_PASSWORD}"      
       - run:
