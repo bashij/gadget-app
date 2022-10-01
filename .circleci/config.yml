@@ -21,7 +21,7 @@ jobs:
       - image: cimg/ruby:3.0.2-browsers
       - image: circleci/mysql:8.0
         environment:
-          # MYSQL_ROOT_PASSWORD: <%= ENV['DATABASE_DEV_PASSWORD'] %>
+          MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
           MYSQL_DATABASE: gadget_app_test
     environment:
       BUNDLE_JOBS: "3"
@@ -46,13 +46,10 @@ jobs:
             echo MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD > .env      
       - run:
           name: check password
-          command: echo "${CI_MYSQL_ROOT_PASSWORD}"      
+          command: echo "${DATABASE_DEV_PASSWORD}"      
       - run:
           name: check password
-          command: echo "${CI_MYSQL_ROOT_PASSWORD_CONTEXT}"
-      - run:
-          name: check password
-          command: echo $BASH_ENV      
+          command: echo "${MYSQL_ROOT_PASSWORD}"
       - run:
           name: Database setup
           command: bundle exec rails db:migrate
