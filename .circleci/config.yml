@@ -69,5 +69,7 @@ workflows:
     jobs:
       - build
       - test:
-          requires:
-            - build
+          context:
+            - my-context
+            requires:
+              - build
