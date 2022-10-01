@@ -21,7 +21,7 @@ jobs:
       - image: cimg/ruby:3.0.2-browsers
       - image: circleci/mysql:8.0
         environment:
-          MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+          MYSQL_ROOT_PASSWORD: $CI_MYSQL_ROOT_PASSWORD_CONTEXT
           MYSQL_DATABASE: gadget_app_test
     environment:
       BUNDLE_JOBS: "3"
@@ -30,9 +30,9 @@ jobs:
       RAILS_ENV: test
     working_directory: ~/gadget-app
     steps:
-      - run:
-          name: Setup Environment Variables
-          command: echo "export ROOT_PASSWORD='${CI_MYSQL_ROOT_PASSWORD}'" >> $BASH_ENV
+      # - run:
+          # name: Setup Environment Variables
+          # command: echo "export ROOT_PASSWORD='${CI_MYSQL_ROOT_PASSWORD}'" >> $BASH_ENV
       # - browser-tools/install-chrome
       # - browser-tools/install-chromedriver    
       - checkout:
@@ -43,7 +43,7 @@ jobs:
           command: echo "${CI_MYSQL_ROOT_PASSWORD}"      
       - run:
           name: check password
-          command: echo "${ROOT_PASSWORD}"
+          command: echo "${CI_MYSQL_ROOT_PASSWORD_CONTEXT}"
       - run:
           name: check password
           command: echo $BASH_ENV      
