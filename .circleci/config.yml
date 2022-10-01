@@ -21,7 +21,7 @@ jobs:
       - image: cimg/ruby:3.0.2-browsers
       - image: circleci/mysql:8.0
         environment:
-          MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+          MYSQL_ROOT_PASSWORD: ci_test_password
           MYSQL_DATABASE: gadget_app_test
     environment:
       BUNDLE_JOBS: "3"
@@ -30,26 +30,11 @@ jobs:
       RAILS_ENV: test
     working_directory: ~/gadget-app
     steps:
-      # - run:
-          # name: Setup Environment Variables
-          # command: echo "export ROOT_PASSWORD='${CI_MYSQL_ROOT_PASSWORD}'" >> $BASH_ENV
-      # - browser-tools/install-chrome
-      # - browser-tools/install-chromedriver    
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver    
       - checkout:
           path: ~/gadget-app
       - ruby/install-deps
-      - run:
-          name: Environment Variables
-          command: |
-            touch .env
-            echo DATABASE_DEV_PASSWORD=$DATABASE_DEV_PASSWORD > .env
-            echo MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD > .env      
-      - run:
-          name: check password
-          command: echo "${DATABASE_DEV_PASSWORD}"      
-      - run:
-          name: check password
-          command: echo "${MYSQL_ROOT_PASSWORD}"
       - run:
           name: Database setup
           command: bundle exec rails db:migrate
@@ -72,7 +57,5 @@ workflows:
     jobs:
       - build
       - test:
-          context:
-            - my-context
           requires:
             - build
