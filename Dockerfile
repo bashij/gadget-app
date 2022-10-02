@@ -14,7 +14,3 @@ COPY Gemfile.lock /gadget-app/Gemfile.lock
 RUN bundle install
 RUN bundle exec rails webpacker:install
 COPY . /gadget-app
-
-COPY start.sh /start.sh
-RUN chmod 744 /start.sh
-CMD ["sh", "/start.sh"]
