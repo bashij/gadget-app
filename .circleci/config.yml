@@ -53,8 +53,7 @@ jobs:
     docker:
       - image: cimg/ruby:3.0.2-browsers
     steps:
-      - checkout:
-          path: ~/gadget-app
+      - checkout
       - setup_remote_docker:
           version: 19.03.13
       - heroku/install
