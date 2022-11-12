@@ -52,6 +52,7 @@ jobs:
       - image: cimg/ruby:3.0.2-browsers
     steps:
       - checkout
+      - ruby/install-deps
       - setup_remote_docker:
           version: 19.03.13
       - add_ssh_keys:
