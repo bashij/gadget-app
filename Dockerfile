@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y curl apt-transport-https wget && \
     apt-get update && apt-get install -y yarn
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
     apt-get install -y nodejs
+RUN apt-get install -y vim
 RUN mkdir /gadget-app
 WORKDIR /gadget-app
 COPY Gemfile /gadget-app/Gemfile
