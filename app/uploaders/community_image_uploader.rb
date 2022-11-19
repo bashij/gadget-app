@@ -1,6 +1,10 @@
 class CommunityImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
-  storage :file
+  if Rails.env.production?
+    storage :fog
+  else
+    storage :file
+  end
 
   # 画像の登録がない場合はデフォルトを表示
   def default_url(*_args)
