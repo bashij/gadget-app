@@ -24,4 +24,7 @@ Rails.application.routes.draw do
     resource :memberships, only: %i[create destroy]
   end
   resources :relationships, only: %i[create destroy]
+  namespace :api do
+    resources :health_check, only: :index
+  end
 end
