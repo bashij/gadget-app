@@ -1,7 +1,7 @@
 on:
-  push: # 一旦全てのブランチを対象として動作を確認する
-    # branches:
-    #   - master
+  push:
+    branches:
+      - master
 
 name: Deploy to Amazon ECS
 
