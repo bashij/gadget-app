@@ -18,8 +18,8 @@ test:
 
 production:
   <<: *default
-  database: <%= Rails.application.credentials.db[:database] %>
-  username: <%= Rails.application.credentials.db[:username] %>
-  password: <%= Rails.application.credentials.db[:password] %>
-  socket: <%= Rails.application.credentials.db[:socket] %>
-  host: <%= Rails.application.credentials.db[:hostname] %>
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  socket: <%= ENV['DB_SOCKET'] %>
+  host: <%= ENV['DB_HOST'] %>
