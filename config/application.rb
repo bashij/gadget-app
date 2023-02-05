@@ -21,6 +21,8 @@ Bundler.require(*Rails.groups)
 
 module GadgetApp
   class Application < Rails::Application
+    # API専用とする
+    config.api_only = true
     # デフォルト設定で初期化
     config.load_defaults 6.1
 
