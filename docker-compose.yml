@@ -1,0 +1,32 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.0
+    env_file: .env
+    ports:
+      - 4306:3306
+    volumes:
+      - db_data:/var/lib/mysql
+  back:
+    env_file: .env
+    tty: true
+    build:
+      context: ./back/
+      dockerfile: Dockerfile
+    volumes:
+      - ./back:/back
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+  front:
+    build:
+      context: ./front/
+      dockerfile: Dockerfile
+    volumes:
+      - ./front/app:/usr/src/app
+    command: 'yarn dev'
+    ports:
+      - "8000:3000"
+volumes:
+  db_data:

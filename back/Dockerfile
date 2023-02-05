@@ -8,13 +8,13 @@ RUN apt-get update && apt-get install -y curl apt-transport-https wget && \
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
     apt-get install -y nodejs
 RUN apt-get install -y vim
-RUN mkdir /gadget-app
-WORKDIR /gadget-app
-COPY Gemfile /gadget-app/Gemfile
-COPY Gemfile.lock /gadget-app/Gemfile.lock
+RUN mkdir /back
+WORKDIR /back
+COPY Gemfile /back/Gemfile
+COPY Gemfile.lock /back/Gemfile.lock
 RUN bundle install
 RUN bundle exec rails webpacker:install
-COPY . /gadget-app
+COPY . /back
 
 COPY start.sh /start.sh
 RUN chmod 744 /start.sh
