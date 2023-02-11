@@ -24,7 +24,10 @@ Rails.application.routes.draw do
     resource :memberships, only: %i[create destroy]
   end
   resources :relationships, only: %i[create destroy]
-  namespace :api do
+  namespace :api, format: 'json' do
+    namespace :v1 do
+      resources :users
+    end
     resources :health_check, only: :index
   end
 end
