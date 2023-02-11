@@ -36,5 +36,15 @@ module GadgetApp
 
     # テストを自動生成しない
     config.generators.system_tests = nil
+
+    # frontからのリソース取得を許可する
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+          origins "http://localhost:8000"
+          resource "*",
+          headers: :any,
+          methods: [:get, :post, :patch, :delete, :options, :head]
+      end
+    end
   end
 end
