@@ -9,6 +9,7 @@ services:
       - db_data:/var/lib/mysql
   back:
     env_file: .env
+    stdin_open: true
     tty: true
     build:
       context: ./back/
