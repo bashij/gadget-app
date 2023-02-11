@@ -15,6 +15,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./back:/back
+      - gem_data:/usr/local/bundle
     ports:
       - '3000:3000'
     depends_on:
@@ -30,3 +31,4 @@ services:
       - "8000:3000"
 volumes:
   db_data:
+  gem_data:
