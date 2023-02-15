@@ -11,13 +11,19 @@ $color_theme9: #30291b;
 $color_accent1: #f15f7a;
 $color_accent2: #ee4060;
 
+html {
+  background-color: $color_theme2;
+  body {
+    background-color: $color_theme2;
+  }
+}
+
 // 共通
 body {
   font-family: "Avenir","Helvetica Neue","Helvetica","Arial","Hiragino Sans","ヒラギノ角ゴシック",YuGothic,"Yu Gothic","メイリオ", Meiryo,"ＭＳ Ｐゴシック","MS PGothic", sans-serif;
   color:$color_theme8;
   line-height: 1.5;
   text-align: justify;
-  background-color: $color_theme2;
   li {
     list-style: none;
   }
@@ -45,22 +51,24 @@ body {
 // pagination
 .pagination {
   justify-content: center;
-  margin: 10px;
-  a {
-    text-decoration: none;
-  }
-  .page-link {
+  margin: 30px;
+  button {
     color: $color_theme8;
+    border: none;
+    padding: 0 8px 0 8px;
+    &.active {
+      border: $color_theme2 solid 1px;
+      border-radius: 20px;
+      color: $color_theme1;
+      background-color: $color_theme9;      
+    }
     @media screen and (max-width: 480px) {
       padding: 0.3rem 0.3rem;
       font-size: 0.8rem;
     }
   }
-  .page-item.active {
-    .page-link {
-      border: none;
-      background-color: $color_theme9;            
-    }     
+  &.hidden {
+    visibility: hidden;
   }
 }
 
