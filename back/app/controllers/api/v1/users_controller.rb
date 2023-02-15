@@ -1,13 +1,20 @@
 module Api
   module V1
     class UsersController < ApplicationController
+      include Pagination
       before_action :logged_in_user, only: %i[edit update destroy]
       before_action :correct_user,   only: %i[edit update destroy]
     
       def index
-        @title = 'ユーザー一覧'
-        @users = User.all.page(params[:users_page]).per(10)
-        render json: { users: @users, title: @title }
+        # 全てのユーザー情報
+        @users = User.order(created_at: :desc)
+        # ユーザーのページネーション情報（デフォルトは5件ずつの表示とする）
+        paged = params[:paged]
+        per = params[:per].present? ? params[:per] : 5
+        @users_paginated = @users.page(paged).per(per)
+        @pagination = pagination(@users_paginated)
+
+        render json: { users: @users_paginated, pagination: @pagination }
       end
 
       def show
