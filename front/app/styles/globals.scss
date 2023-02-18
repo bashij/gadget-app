@@ -138,16 +138,36 @@ body {
   .menu {
     a {
       color: $color_theme1;
+      cursor:  pointer;
     }
   }
   .menu-btn {
-    a {
-      color: $color_theme1;
-    }
+    color: $color_theme1;
+    cursor: pointer;
   }
-  .collapse {
-    a {
-      color: $color_theme1;
+}
+
+.drawerMenu {
+  width: 0;
+  color: $color_theme1;
+  background-color: $color_theme7;
+  transition: 0.5s;
+  height: 0;
+  opacity: 0;
+  z-index: -100;
+  &.open {
+    height: 280px;
+    opacity: 1;
+    z-index: 100;
+  }
+  &.hidden {
+    visibility: hidden;
+  }
+  a {
+    color: $color_theme1;
+    &:hover {
+      text-decoration: underline;
+      color: $color_theme3;
     }
   }
 }
@@ -657,13 +677,6 @@ body {
         width: 50%;
       }
     }
-  }
-}
-
-.nav-link {
-  color: $color_theme8;
-  &:hover {
-    color: $color_theme9;
   }
 }
 
