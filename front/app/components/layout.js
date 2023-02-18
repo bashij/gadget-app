@@ -22,7 +22,7 @@ export default function Layout({ children, home }) {
           {/* メニュー 通常時 */}
           <div className="menu d-none d-lg-block col-lg-9 text-end">
             <Link href="/" className='d-inline-block nav-link' id="home_large">HOME</Link>
-            <Link href="" className='d-inline-block nav-link' id="help_large">HELP</Link>
+            <Link href="help" className='d-inline-block nav-link' id="help_large">HELP</Link>
             <Link href="users" className='d-inline-block nav-link' id="users_large">USERS</Link>
             {/* ログイン時のみ表示 */}
             <Link href="" className='d-inline-block nav-link' id="mypage_large">MYPAGE</Link>
@@ -35,9 +35,8 @@ export default function Layout({ children, home }) {
           <SmallMenu />
       </header>
       <div className="container"> 
-        {/* success,errorに応じたメッセージをここで受け取って表示する。各POSTの返り値が使えるか。 */}
+        {children}
       </div>
-      <main>{children}</main>
       {!home && (
         <div className="">
           <Link href="/">← ホームに戻る</Link>
@@ -60,7 +59,7 @@ export function SmallMenu() {
       </div>
       <div id="nav_header" className={`col-12 d-lg-none text-end drawerMenu ${openMenu ? 'open' : 'hidden'}`}>
         <Link href="/" className='d-block nav-link' id="home_small">HOME</Link>
-        <Link href="" className='d-block nav-link' id="help_small">HELP</Link>
+        <Link href="help" className='d-block nav-link' id="help_small">HELP</Link>
         <Link href="users" className='d-block nav-link' id="users_small">USERS</Link>
         {/* ログイン時のみ表示 */}
         <Link href="" className='d-block nav-link' id="mypage_small">MYPAGE</Link>
