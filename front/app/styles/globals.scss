@@ -81,6 +81,7 @@ body {
   &.btn-create {
     background-color: $color_theme1;
     color: $color_theme8;  
+    border: $color_theme8 solid 2px;  
   }
   &.btn-destroy {    
     color: $color_accent2;
@@ -176,8 +177,8 @@ body {
 .bg-image {
   width:100%;
   height:800px;  
-  // background: linear-gradient(-10deg, rgba(215, 210, 204, .8), rgba(48, 67, 82, .8)) fixed, 
-  //             url('top.jpg') fixed;
+  background: linear-gradient(-10deg, rgba(215, 210, 204, .8), rgba(48, 67, 82, .8)) fixed, 
+              url('/images/top.jpg') fixed;
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -266,6 +267,7 @@ body {
     }            
     .btn {
       border-radius: 30px;
+      margin: 0 3px 0 3px;
       @media screen and (max-width: 480px) {
         font-size: 0.8rem;
       }                  
