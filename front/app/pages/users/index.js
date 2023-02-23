@@ -8,8 +8,9 @@ import useSWR from 'swr';
 const fetcher = url => fetch(url).then(r => r.json())
 
 export default function App () {  
+  const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS;
   const [pageIndex, setPageIndex] = useState(1);
-  const { data, error, isLoading } = useSWR(`http://localhost:3000/api/v1/users?paged=${pageIndex}`, fetcher, {
+  const { data, error, isLoading } = useSWR(`${API_ENDPOINT}?paged=${pageIndex}`, fetcher, {
     keepPreviousData: true
   });
   const totalPages = data?.pagination.total_pages
