@@ -51,11 +51,11 @@ module Api
         @user = User.new(user_params)
         if @user.save
           log_in @user
-          flash[:welcome] = t 'users.create.flash.success'
-          redirect_to root_url
+          message = [I18n.t('users.create.flash.success')]
+          render json: { status: 'success', message: message }
         else
-          @title = 'ユーザー登録'
-          render 'new'
+          message = @user.errors.full_messages
+          render json: { status: 'failure', message: message }
         end
       end
     

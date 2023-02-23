@@ -1,17 +1,24 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import Link from 'next/link'
 import Layout, { siteTitle } from '../components/layout';
+import Message from '../components/message';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import React, {useState} from "react"
+import { useRouter } from "next/router";
 
 
 export default function Home() {
+  const router = useRouter();
+  const [message, setMessage] = useState([router.query.message])
+  const [status, setStatus] = useState(router.query.status)
+
   return (
     <Layout home>
       <Head>
-        <title>{siteTitle} | HOME</title>
+        <title>{`${siteTitle} | HOME`}</title>
       </Head>
+      <Message message={message} status={status}/>
       {/* 非ログイン時のみ表示 */}
       <div className="col-md-12">
         <div className="bg-image">

@@ -82,6 +82,7 @@ body {
     background-color: $color_theme1;
     color: $color_theme8;  
     border: $color_theme8 solid 2px;  
+    border-radius: 20px;
   }
   &.btn-destroy {    
     color: $color_accent2;
@@ -94,32 +95,34 @@ body {
 }
 
 // flash
-.alert-welcome {
-  background-color: $color_accent2; 
-  color: $color_theme1;  
-  margin-bottom: 10px;
-  text-align: center;
-  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
-  font-family: "Avenir Next Condensed Bold","Avenir Next Condensed Heavy";
-  font-size: 1.2rem;
-  letter-spacing: 0.1rem;
+.alert {
+  &.alert-welcome {
+    background-color: $color_accent2; 
+    color: $color_theme1;  
+    margin-bottom: 10px;
+    text-align: center;
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+    font-family: "Avenir Next Condensed Bold","Avenir Next Condensed Heavy";
+    font-size: 1.2rem;
+    letter-spacing: 0.1rem;
+  }
+  &.alert-success {
+    background-color: $color_accent2; 
+    color: $color_theme1;  
+    margin-bottom: 10px;
+    text-align: center;
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+  }
+  &.alert-failure {
+    color: $color_accent2;
+    text-align: center;
+    background-color: $color_theme2;
+    border: none;
+    padding: 0px;
+    margin: 20px 0 20px 0;
+  }
 }
 
-.alert-success {
-  background-color: $color_accent2; 
-  color: $color_theme1;  
-  margin-bottom: 10px;
-  text-align: center;
-  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
-}
-
-.alert-danger {
-  color: $color_accent2;
-  text-align: center;
-  background-color: $color_theme2;
-  border: none;
-  padding: 0px;
-}
 
 // error
 #error_explanation {
