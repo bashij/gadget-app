@@ -58,6 +58,10 @@ ja:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません" 
   sessions:
+    create:
+      flash:
+        success: "ログインしました"
+        danger: "無効なメールアドレスまたはパスワードです"
     flash:
       danger: "ログインしてください"
   communities:

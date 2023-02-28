@@ -43,8 +43,13 @@ module GadgetApp
           origins "http://localhost:8000"
           resource "*",
           headers: :any,
+          credentials: true,
           methods: [:get, :post, :patch, :delete, :options, :head]
       end
     end
+
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+    config.action_dispatch.cookies_same_site_protection = nil
   end
 end
