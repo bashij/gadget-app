@@ -1,22 +1,32 @@
-class TweetLikesController < ApplicationController
-  before_action :logged_in_user, only: %i[create destroy]
-  before_action :correct_user,   only: :destroy
+module Api
+  module V1
+    class TweetLikesController < ApplicationController
+      before_action :logged_in_user, only: %i[create destroy]
+      before_action :correct_user,   only: :destroy
 
-  def create
-    like = current_user.tweet_likes.build(tweet_id: params[:tweet_id])
-    like.save
-    @tweet = Tweet.find(params[:tweet_id])
-  end
+      def create
+        like = current_user.tweet_likes.build(tweet_id: params[:tweet_id])
+        like.save
+        @tweet = Tweet.find(params[:tweet_id])
+        count = @tweet.tweet_likes.size
+        liked = @tweet.liked_by?(current_user)
+        render json: { status: 'success', count: count, liked: liked }
+      end
 
-  def destroy
-    @like.destroy
-    @tweet = Tweet.find(params[:tweet_id])
-  end
+      def destroy
+        @like.destroy
+        @tweet = Tweet.find(params[:tweet_id])
+        count = @tweet.tweet_likes.size
+        liked = @tweet.liked_by?(current_user)
+        render json: { status: 'success', count: count, liked: liked }
+      end
 
-  private
+      private
 
-    def correct_user
-      @like = current_user.tweet_likes.find_by(tweet_id: params[:tweet_id])
-      redirect_to root_url if @like.nil?
+        def correct_user
+          @like = current_user.tweet_likes.find_by(tweet_id: params[:tweet_id])
+          redirect_to root_url if @like.nil?
+        end
     end
+  end
 end

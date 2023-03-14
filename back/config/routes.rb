@@ -29,6 +29,10 @@ Rails.application.routes.draw do
       resources :users
       post '/login', to: 'sessions#create'
       get '/check', to: 'sessions#check_session'
+      resources :tweets do
+        resource :tweet_likes, only: %i[create destroy]
+        resource :tweet_bookmarks, only: %i[create destroy]
+      end
     end
     resources :health_check, only: :index
   end

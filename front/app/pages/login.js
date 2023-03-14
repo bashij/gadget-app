@@ -24,10 +24,9 @@ export default function Login() {
     setFormData({ ...formData, [name]: value })
   }
 
-  const [message, setMessage] = useState([])
-  const [status, setStatus] = useState()
-
   const router = useRouter()
+  const [message, setMessage] = useState([router.query.message])
+  const [status, setStatus] = useState(router.query.status)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -59,8 +58,8 @@ export default function Login() {
     if (status === 'success') {
       router.push(
         {
-        pathname: '/',
-        query: { message: message, status: status },
+          pathname: '/',
+          query: { message: message, status: status },
         },
         '/',
       )
