@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { useRouter } from 'next/router'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart, faBookmark, faReply, faTrash } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
+import { useRouter } from 'next/router'
+import { useEffect, useRef, useState } from 'react'
 
 export default function TweetLike(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_TWEETS

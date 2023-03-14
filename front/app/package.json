@@ -29,6 +29,8 @@
     "swr": "^2.0.3"
   },
   "devDependencies": {
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "sass": "^1.58.0"
   }
 }

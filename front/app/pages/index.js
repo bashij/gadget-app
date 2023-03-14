@@ -1,12 +1,12 @@
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import cookie from 'cookie'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 import Layout, { siteTitle } from '../components/layout'
 import Message from '../components/message'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import React, { useState } from 'react'
-import { useRouter } from 'next/router'
-import cookie from 'cookie'
 
 export async function getServerSideProps(context) {
   // CookieにセッションIDが含まれているか確認する

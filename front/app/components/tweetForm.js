@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
+import { useState } from 'react'
 
 export default function TweetForm(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_TWEETS

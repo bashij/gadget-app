@@ -1,11 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart, faBookmark, faReply, faTrash } from '@fortawesome/free-solid-svg-icons'
-import axios from 'axios'
-import Tweet from '../components/tweet'
+import { useEffect, useRef, useState } from 'react'
 import Reply from '../components/reply'
-import { is } from 'date-fns/locale'
 
 export default function ReplyFeed(props) {
   const router = useRouter()

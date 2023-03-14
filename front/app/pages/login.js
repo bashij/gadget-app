@@ -1,12 +1,12 @@
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useRef, useState } from 'react'
 import Layout, { siteTitle } from '../components/layout'
 import Message from '../components/message'
-import axios from 'axios'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
-import React, { useState, useEffect, useRef } from 'react'
-import { useRouter } from 'next/router'
 
 const pageTitle = 'ログイン'
 

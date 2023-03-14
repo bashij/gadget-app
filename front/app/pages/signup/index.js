@@ -1,9 +1,9 @@
+import axios from 'axios'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { useEffect, useRef, useState } from 'react'
 import Layout, { siteTitle } from '../../components/layout'
 import Message from '../../components/message'
-import axios from 'axios'
-import React, { useState, useEffect, useRef } from 'react'
-import { useRouter } from 'next/router'
 
 const pageTitle = 'ユーザー登録'
 
