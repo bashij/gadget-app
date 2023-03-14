@@ -54,10 +54,13 @@ export default function Signup() {
     }
 
     if (status === 'success') {
-      router.push({
-        pathname: '/',
-        query: { message: message, status: status },
-      })
+      router.push(
+        {
+          pathname: '/',
+          query: { message: message, status: status },
+        },
+        '/',
+      )
       setMessage([])
     }
   }, [status])
