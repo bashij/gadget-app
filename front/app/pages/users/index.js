@@ -6,7 +6,7 @@ import useSWR from 'swr'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
-export default function App() {
+export default function Users() {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
   const [pageIndex, setPageIndex] = useState(1)
   const { data, error, isLoading } = useSWR(`${API_ENDPOINT}?paged=${pageIndex}`, fetcher, {
