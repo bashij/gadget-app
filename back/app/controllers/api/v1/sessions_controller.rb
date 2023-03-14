@@ -22,6 +22,11 @@ module Api
         log_out if logged_in?
         redirect_to root_url
       end
+
+      def check_session
+        # ログイン中のユーザー情報を返す
+        render json: { user: current_user }
+      end
     end
   end
 end

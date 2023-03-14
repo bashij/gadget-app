@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users
       post '/login', to: 'sessions#create'
+      get '/check', to: 'sessions#check_session'
     end
     resources :health_check, only: :index
   end
