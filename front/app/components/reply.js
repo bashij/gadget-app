@@ -1,10 +1,10 @@
+import TweetDelete from '@/components/tweetDelete'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { ja } from 'date-fns/locale'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import TweetDelete from '../components/tweetDelete'
 
 export default function Reply(props) {
   const [isDeleted, setIsDeleted] = useState(false)

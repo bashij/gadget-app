@@ -1,13 +1,13 @@
+import Layout, { siteTitle } from '@/components/layout'
+import Message from '@/components/message'
+import Tweet from '@/components/tweet'
+import TweetForm from '@/components/tweetForm'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import useSWR from 'swr'
-import Layout, { siteTitle } from '../../components/layout'
-import Message from '../../components/message'
-import Tweet from '../../components/tweet'
-import TweetForm from '../../components/tweetForm'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 

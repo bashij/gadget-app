@@ -1,8 +1,8 @@
+import Layout, { siteTitle } from '@/components/layout'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState } from 'react'
 import useSWR from 'swr'
-import Layout, { siteTitle } from '../../components/layout'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 

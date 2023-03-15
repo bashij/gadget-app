@@ -1,6 +1,6 @@
+import Reply from '@/components/reply'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
-import Reply from '../components/reply'
 
 export default function ReplyFeed(props) {
   const router = useRouter()

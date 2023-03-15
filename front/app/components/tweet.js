@@ -1,3 +1,9 @@
+import Message from '@/components/message'
+import ReplyFeed from '@/components/replyFeed'
+import TweetBookmark from '@/components/tweetBookmark'
+import TweetDelete from '@/components/tweetDelete'
+import TweetForm from '@/components/tweetForm'
+import TweetLike from '@/components/tweetLike'
 import { faReply } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
@@ -6,12 +12,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
-import Message from '../components/message'
-import ReplyFeed from '../components/replyFeed'
-import TweetBookmark from '../components/tweetBookmark'
-import TweetDelete from '../components/tweetDelete'
-import TweetForm from '../components/tweetForm'
-import TweetLike from '../components/tweetLike'
 
 export default function Tweet(props) {
   const [isDeleted, setIsDeleted] = useState(false)
