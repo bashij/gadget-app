@@ -44,7 +44,7 @@
         ],
         "pathGroupsExcludedImportTypes": ["react", "next/**"],
         "newlines-between": "always",
-        "alphabetize": { "order": "asc", "caseInsensitive": false }
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
       }
     ],
     // importをファイル先頭に記述
