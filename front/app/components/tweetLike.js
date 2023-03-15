@@ -8,7 +8,7 @@ export default function TweetLike(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_TWEETS
 
   const router = useRouter()
-  const ref = useRef(true)
+  const isInitialRendered = useRef(true)
   const [message, setMessage] = useState([])
   const [status, setStatus] = useState()
   const [likeCount, setLikeCount] = useState(props.tweet.tweet_likes.length)
@@ -49,8 +49,8 @@ export default function TweetLike(props) {
 
   useEffect(() => {
     // 初回レンダリング時には実行しない
-    if (ref.current) {
-      ref.current = false
+    if (isInitialRendered.current) {
+      isInitialRendered.current = false
       return
     }
 

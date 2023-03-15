@@ -8,7 +8,7 @@ export default function TweetBookmark(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_TWEETS
 
   const router = useRouter()
-  const ref = useRef(true)
+  const isInitialRendered = useRef(true)
   const [message, setMessage] = useState([])
   const [status, setStatus] = useState()
   const [bookmarkCount, setBookmarkCount] = useState(props.tweet.tweet_bookmarks.length)
@@ -49,8 +49,8 @@ export default function TweetBookmark(props) {
 
   useEffect(() => {
     // 初回レンダリング時には実行しない
-    if (ref.current) {
-      ref.current = false
+    if (isInitialRendered.current) {
+      isInitialRendered.current = false
       return
     }
 

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 
 export default function ReplyFeed(props) {
   const router = useRouter()
-  const ref = useRef(true)
+  const isInitialRendered = useRef(true)
 
   const relatedReplies = props.replies?.filter((reply) => reply.parent_id === props.tweet.id)
 
@@ -23,8 +23,8 @@ export default function ReplyFeed(props) {
 
   useEffect(() => {
     // 初回レンダリング時には実行しない
-    if (ref.current) {
-      ref.current = false
+    if (isInitialRendered.current) {
+      isInitialRendered.current = false
       return
     }
     if (props.status === 'notLoggedIn') {
@@ -46,8 +46,8 @@ export default function ReplyFeed(props) {
 
   useEffect(() => {
     // 初回レンダリング時には実行しない
-    if (ref.current) {
-      ref.current = false
+    if (isInitialRendered.current) {
+      isInitialRendered.current = false
       return
     }
 
@@ -56,8 +56,8 @@ export default function ReplyFeed(props) {
 
   useEffect(() => {
     // 初回レンダリング時には実行しない
-    if (ref.current) {
-      ref.current = false
+    if (isInitialRendered.current) {
+      isInitialRendered.current = false
       return
     }
 

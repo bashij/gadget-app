@@ -44,12 +44,12 @@ export default function Signup() {
     }
   }
 
-  const ref = useRef(true)
+  const isInitialRendered = useRef(true)
 
   useEffect(() => {
     // 初回レンダリング時には実行しない
-    if (ref.current) {
-      ref.current = false
+    if (isInitialRendered.current) {
+      isInitialRendered.current = false
       return
     }
 

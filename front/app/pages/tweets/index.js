@@ -28,12 +28,12 @@ export default function Tweets(props) {
   const [message, setMessage] = useState([router.query.message])
   const [status, setStatus] = useState(router.query.status)
   const [newTweet, setNewTweet] = useState()
-  const ref = useRef(true)
+  const isInitialRendered = useRef(true)
 
   useEffect(() => {
     // 初回レンダリング時には実行しない
-    if (ref.current) {
-      ref.current = false
+    if (isInitialRendered.current) {
+      isInitialRendered.current = false
       return
     }
 
