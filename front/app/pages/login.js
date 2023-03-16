@@ -69,13 +69,10 @@ export default function Login() {
 
   return (
     <>
-      <Layout login>
+      <Layout login pageName={'logIn'}>
         <Head>
           <title>{`${siteTitle} | ${pageTitle}`}</title>
         </Head>
-        <div className='content-header'>
-          <h3>{pageTitle}</h3>
-        </div>
         <Message message={message} status={status} />
         <div className='row justify-content-center'>
           <div className='col-md-6 col-md-offset-3'>

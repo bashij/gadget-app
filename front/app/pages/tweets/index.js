@@ -63,15 +63,12 @@ export default function Tweets(props) {
 
   if (data || isLoading) {
     return (
-      <Layout>
+      <Layout user={props.user} pageName={'tweet'}>
         <Head>
           <title>{siteTitle} | ツイート一覧</title>
         </Head>
         <div className='row justify-content-center'>
           <div className='col-12 col-lg-10 col-xl-6'>
-            <div className='content-header'>
-              <h3>最近のツイート</h3>
-            </div>
             <div className='switch-area'>
               <Link href='/tweets' className='switch-item active'>
                 全てのユーザーを表示
@@ -162,15 +159,5 @@ export const getServerSideProps = async (context) => {
 
   const user = await response.data.user
 
-  if (user) {
-    // user情報が取得できればログイン済み
-    return {
-      props: { isLoggedIn: true, user: user },
-    }
-  } else {
-    // user情報が取得できなければ未ログイン
-    return {
-      props: { isLoggedIn: false, user: user },
-    }
-  }
+  return { props: { user: user } }
 }

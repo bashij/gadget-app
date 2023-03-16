@@ -2,28 +2,11 @@ import Layout, { siteTitle } from '@/components/layout'
 import Message from '@/components/message'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import cookie from 'cookie'
+import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-
-export async function getServerSideProps(context) {
-  // CookieにセッションIDが含まれているか確認する
-  const cookies = cookie.parse(context.req.headers.cookie ?? '')
-  const sessionId = cookies['_session_id']
-  if (sessionId) {
-    // セッションIDがある場合はログイン済み
-    return {
-      props: { user: { isLoggedIn: true } },
-    }
-  } else {
-    // セッションIDがない場合は未ログイン
-    return {
-      props: { user: { isLoggedIn: false } },
-    }
-  }
-}
 
 export default function Home(props) {
   const router = useRouter()
@@ -31,12 +14,12 @@ export default function Home(props) {
   const [status, setStatus] = useState(router.query.status)
 
   return (
-    <Layout home>
+    <Layout home user={props.user} pageName={'home'}>
       <Head>
         <title>{`${siteTitle} | HOME`}</title>
       </Head>
       <Message message={message} status={status} />
-      {props.user.isLoggedIn ? (
+      {props.user ? (
         <div>ログイン状態</div>
       ) : (
         // 非ログイン時のみ表示
@@ -88,4 +71,17 @@ export default function Home(props) {
       )}
     </Layout>
   )
+}
+
+export const getServerSideProps = async (context) => {
+  const cookie = context.req?.headers.cookie
+  const response = await axios.get('http://back:3000/api/v1/check', {
+    headers: {
+      cookie: cookie,
+    },
+  })
+
+  const user = await response.data.user
+
+  return { props: { user: user } }
 }

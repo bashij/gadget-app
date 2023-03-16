@@ -1,4 +1,5 @@
 import Layout, { siteTitle } from '@/components/layout'
+import axios from 'axios'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -6,7 +7,7 @@ import useSWR from 'swr'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
-export default function Users() {
+export default function Users(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
   const [pageIndex, setPageIndex] = useState(1)
   const { data, error, isLoading } = useSWR(`${API_ENDPOINT}?paged=${pageIndex}`, fetcher, {
@@ -21,7 +22,7 @@ export default function Users() {
 
   if (data || isLoading) {
     return (
-      <Layout>
+      <Layout user={props.user} pageName={'users'}>
         <Head>
           <title>{siteTitle} | ユーザー一覧</title>
         </Head>
@@ -77,4 +78,17 @@ export default function Users() {
       </Layout>
     )
   }
+}
+
+export const getServerSideProps = async (context) => {
+  const cookie = context.req?.headers.cookie
+  const response = await axios.get('http://back:3000/api/v1/check', {
+    headers: {
+      cookie: cookie,
+    },
+  })
+
+  const user = await response.data.user
+
+  return { props: { user: user } }
 }
