@@ -1,63 +1,13 @@
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Head from 'next/head'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 
 export const siteTitle = 'GadgetLink'
 
-export default function Layout({ children, home }) {
-  return (
-    <>
-      <Head>
-        <meta name='viewport' content='width=device-width,initial-scale=1' />
-        <meta name='og:title' content={siteTitle} />
-      </Head>
-      <header className='header p-2 p-lg-3 mb-5 row'>
-        {/* ロゴ */}
-        <div className='logo fs-2 col-3'>
-          <Link href='/'>GadgetLink</Link>
-        </div>
-        {/* メニュー 通常時 */}
-        <div className='menu d-none d-lg-block col-lg-9 text-end'>
-          <Link href='/' className='d-inline-block nav-link' id='home_large'>
-            HOME
-          </Link>
-          <Link href='help' className='d-inline-block nav-link' id='help_large'>
-            HELP
-          </Link>
-          <Link href='users' className='d-inline-block nav-link' id='users_large'>
-            USERS
-          </Link>
-          {/* ログイン時のみ表示 */}
-          <Link href='' className='d-inline-block nav-link' id='mypage_large'>
-            MYPAGE
-          </Link>
-          <Link href='' className='d-inline-block nav-link' id='setting_large'>
-            SETTING
-          </Link>
-          <Link href='' className='d-inline-block nav-link' id='logout_large'>
-            LOGOUT
-          </Link>
-          {/* 非ログイン時のみ表示 */}
-          <Link href='' className='d-inline-block nav-link' id='login_large'>
-            LOGIN
-          </Link>
-        </div>
-        {/* メニュー 縮小時 */}
-        <SmallMenu />
-      </header>
-      <div className='container'>{children}</div>
-      {!home && (
-        <div className=''>
-          <Link href='/'>← ホームに戻る</Link>
-        </div>
-      )}
-    </>
-  )
-}
-
-export function SmallMenu() {
+export default function Layout(props) {
   const [openMenu, setOpenMenu] = useState(false)
   const menuFunction = () => {
     setOpenMenu(!openMenu)
@@ -65,36 +15,127 @@ export function SmallMenu() {
 
   return (
     <>
-      <div className='fs-2 col-9 d-lg-none d-inline-block pe-3 text-end'>
-        <FontAwesomeIcon icon={faBars} className='menu-btn' onClick={() => menuFunction()} />
-      </div>
-      <div
-        id='nav_header'
-        className={`col-12 d-lg-none text-end drawerMenu ${openMenu ? 'open' : 'hidden'}`}
-      >
-        <Link href='/' className='d-block nav-link' id='home_small'>
-          HOME
-        </Link>
-        <Link href='help' className='d-block nav-link' id='help_small'>
-          HELP
-        </Link>
-        <Link href='users' className='d-block nav-link' id='users_small'>
-          USERS
-        </Link>
-        {/* ログイン時のみ表示 */}
-        <Link href='' className='d-block nav-link' id='mypage_small'>
-          MYPAGE
-        </Link>
-        <Link href='' className='d-block nav-link' id='setting_small'>
-          SETTING
-        </Link>
-        <Link href='' className='d-block nav-link' id='logout_small'>
-          LOGOUT
-        </Link>
-        {/* 非ログイン時のみ表示 */}
-        <Link href='' className='d-block nav-link' id='login_small'>
-          LOGIN
-        </Link>
+      <Head>
+        <meta name='viewport' content='width=device-width,initial-scale=1' />
+        <meta name='og:title' content={siteTitle} />
+      </Head>
+      <div className='container'>
+        <div className='row'>
+          <div className={`col-sm-3 side-menu ${openMenu ? 'open' : ''}`}>
+            <Link href='/' className='logo nav-link'>
+              GadgetLink
+            </Link>
+            <Link
+              href='/'
+              className={`nav-link ${props.pageName === 'home' ? 'active' : ''}`}
+              id='home'
+            >
+              HOME
+            </Link>
+            <Link
+              href='tweets'
+              className={`nav-link ${props.pageName === 'tweet' ? 'active' : ''}`}
+              id='tweet'
+            >
+              TWEET
+            </Link>
+            <Link
+              href='gadgets'
+              className={`nav-link ${props.pageName === 'gadget' ? 'active' : ''}`}
+              id='gadget'
+            >
+              GADGET
+            </Link>
+            <Link
+              href='communities'
+              className={`nav-link ${props.pageName === 'community' ? 'active' : ''}`}
+              id='community'
+            >
+              COMMUNITY
+            </Link>
+            <Link
+              href='help'
+              className={`nav-link ${props.pageName === 'help' ? 'active' : ''}`}
+              id='help'
+            >
+              HELP
+            </Link>
+            <Link
+              href='users'
+              className={`nav-link ${props.pageName === 'users' ? 'active' : ''}`}
+              id='users'
+            >
+              USERS
+            </Link>
+            {/* ログイン時のみユーザー情報を表示 */}
+            {props.user ? (
+              <div className='user-menu'>
+                <div className='user-info'>
+                  <span className='nav-link'>
+                    <Image
+                      src={
+                        props.user.image.url == 'default.jpg'
+                          ? '/images/default.jpg'
+                          : `https://static.gadgetlink-app.com${props.tweet.user.image.url}`
+                      }
+                      width={100}
+                      height={100}
+                      alt='user-image'
+                    />
+                  </span>
+                  <span className='nav-link'>{props.user.name}</span>
+                </div>
+                <Link
+                  href=''
+                  className={`nav-link ${props.pageName === 'myPage' ? 'active' : ''}`}
+                  id='mypage'
+                >
+                  MYPAGE
+                </Link>
+                <Link
+                  href=''
+                  className={`nav-link ${props.pageName === 'setting' ? 'active' : ''}`}
+                  id='setting'
+                >
+                  SETTING
+                </Link>
+                <Link
+                  href=''
+                  className={`nav-link ${props.pageName === 'logOut' ? 'active' : ''}`}
+                  id='logout'
+                >
+                  LOGOUT
+                </Link>
+              </div>
+            ) : (
+              <Link
+                href='login'
+                className={`nav-link ${props.pageName === 'logIn' ? 'active' : ''}`}
+                id='login'
+              >
+                LOGIN
+              </Link>
+            )}
+          </div>
+          <div className='side-menu-button'>
+            {openMenu ? (
+              <span className='icon-times'>
+                <FontAwesomeIcon icon={faTimes} onClick={() => menuFunction()} />
+              </span>
+            ) : (
+              <span className='icon-bars'>
+                <FontAwesomeIcon icon={faBars} onClick={() => menuFunction()} />
+              </span>
+            )}
+          </div>
+          <div className='col-sm-3 side-menu-dummy'></div>
+          <div className='col-sm-9 col-xs-12 main'>{props.children}</div>
+          {!props.home && (
+            <div className='col-12 text-end'>
+              <Link href='/'>ホームに戻る</Link>
+            </div>
+          )}
+        </div>
       </div>
     </>
   )

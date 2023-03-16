@@ -137,50 +137,119 @@ body {
   color: $color_accent2;
 }
 
-// header
-.header {
-  background-color: $color_theme7;
-  font-family: 'Avenir Next Condensed Bold', 'Avenir Next Condensed Heavy';
-  .logo {
-    a {
-      color: $color_theme1;
-      text-decoration: none;
-    }
+// side-menu
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: $color_theme8;
+  font-family: 'Avenir Next Condensed Medium', 'Avenir Next Condensed Heavy';
+  color: $color_theme1;
+  display: inline-block;
+  border-radius: 10px;
+  font-size: 1.75rem;
+  margin: 0.75rem 0 0.75rem 0.75rem;
+  padding: 0.5rem;
+  z-index: 1;
+  @media screen and (max-width: 959px) {
+    font-size: 1.25rem;
+    margin: 0.75rem 0 0.75rem 0.75rem;
+    padding: 0.25rem;
   }
-  .menu {
-    a {
-      color: $color_theme1;
-      cursor: pointer;
-    }
+  @media screen and (max-width: 575px) {
+    display: none;
+    width: 45%;
+    opacity: 0.925;
   }
-  .menu-btn {
+  &.open {
+    display: block;
+  }
+  .nav-link {
     color: $color_theme1;
-    cursor: pointer;
+    text-align: center;
+    &.active {
+      background-color: $color_theme6;
+      border-radius: 5px;
+    }
+  }
+  .logo {
+    font-family: 'Avenir Next Condensed Heavy', 'Avenir Next Condensed Bold';
+    font-size: 2.25rem;
+    text-decoration: none;
+    margin-bottom: 0.25rem;
+    border-bottom: 2px solid $color_theme1;
+    @media screen and (max-width: 959px) {
+      font-size: 1.75rem;
+    }
+    @media screen and (max-width: 759px) {
+      font-size: 1.25rem;
+    }
+    @media screen and (max-width: 575px) {
+      font-size: 1.25rem;
+    }
+  }
+  .user-menu {
+    background-color: $color_theme1;
+    border-radius: 5px 5px 10px 10px;
+    .user-info {
+      text-align: center;
+      display: block;
+      font-size: 1.5rem;
+      padding: 0.5rem 0.5rem 0 0.5rem;
+      margin: 0.25rem;
+      @media screen and (max-width: 959px) {
+        font-size: 1rem;
+      }
+    }
+    .nav-link {
+      color: $color_theme7;
+      text-align: center;
+      padding: 0.125rem;
+      @media screen and (max-width: 480px) {
+        img {
+          width: 50px;
+          height: 50px;
+        }
+      }
+    }
   }
 }
 
-.drawerMenu {
-  width: 0;
+.side-menu-button {
+  position: fixed;
+  top: 18px;
+  left: 0;
+  display: none;
   color: $color_theme1;
-  background-color: $color_theme7;
-  transition: 0.5s;
-  height: 0;
-  opacity: 0;
-  z-index: -100;
-  &.open {
-    height: 280px;
-    opacity: 1;
-    z-index: 100;
+  opacity: 0.8;
+  z-index: 2;
+  .icon-bars {
+    background-color: $color_theme8;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
   }
-  &.hidden {
-    visibility: hidden;
+  .icon-times {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
   }
-  a {
-    color: $color_theme1;
-    &:hover {
-      text-decoration: underline;
-      color: $color_theme3;
-    }
+  @media screen and (max-width: 575px) {
+    display: flex;
+  }
+}
+
+.side-menu-dummy {
+  @media screen and (max-width: 575px) {
+    display: none;
   }
 }
 
