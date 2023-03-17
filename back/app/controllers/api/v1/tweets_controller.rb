@@ -1,9 +1,24 @@
 module Api
   module V1
     class TweetsController < ApplicationController
-      include Pagination
       before_action :logged_in_user, only: %i[create destroy]
       before_action :correct_user,   only: :destroy
+
+      def index
+        # 全てのツイート情報
+        @tweets = Tweet.where(parent_id: nil).order(created_at: :desc)
+        # ツイートのページネーション情報（デフォルトは5件ずつの表示とする）
+        paged = params[:paged]
+        per = params[:per].present? ? params[:per] : 5
+        @tweets_paginated = @tweets.page(paged).per(per)
+        @pagination = pagination(@tweets_paginated)
+        # 全ツイートのリプライ件数情報
+        @reply_counts = Tweet.reply_count
+        ids = @tweets_paginated.pluck(:id)
+        @replies = Tweet.where(parent_id: ids)
+
+        render json: { tweets: @tweets_paginated, pagination: @pagination, replies: @replies, replyCounts: @reply_counts }, include: [:user, :tweet_likes, :tweet_bookmarks]
+      end
 
       def create
         # 入力されたツイート
@@ -32,22 +47,6 @@ module Api
         @reply_count = Tweet.where(parent_id: @tweet.parent_id).count
         
         render json: { status: 'success', replyCount: @reply_count }
-      end
-
-      def index
-        # 全てのユーザー情報
-        @tweets = Tweet.where(parent_id: nil).order(created_at: :desc)
-        # ツイートのページネーション情報（デフォルトは5件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].present? ? params[:per] : 5
-        @tweets_paginated = @tweets.page(paged).per(per)
-        @pagination = pagination(@tweets_paginated)
-        # 全ツイートのリプライ件数情報
-        @reply_counts = Tweet.reply_count
-        ids = @tweets_paginated.pluck(:id)
-        @replies = Tweet.where(parent_id: ids)
-
-        render json: { tweets: @tweets_paginated, pagination: @pagination, replies: @replies, replyCounts: @reply_counts }, include: [:user, :tweet_likes, :tweet_bookmarks]
       end
 
       private

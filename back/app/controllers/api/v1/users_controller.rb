@@ -1,7 +1,6 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      include Pagination
       before_action :logged_in_user, only: %i[edit update destroy]
       before_action :correct_user,   only: %i[edit update destroy]
     
