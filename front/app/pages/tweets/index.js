@@ -65,7 +65,7 @@ export default function Tweets(props) {
     return (
       <Layout user={props.user} pageName={'tweet'}>
         <Head>
-          <title>{siteTitle} | ツイート一覧</title>
+          <title>{siteTitle} | ツイート</title>
         </Head>
         <div className='row justify-content-center'>
           <div className='col-12 col-lg-10 col-xl-6'>
