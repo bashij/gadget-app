@@ -4,6 +4,19 @@ module Api
       before_action :logged_in_user, only: %i[create destroy]
       before_action :correct_user,   only: :destroy
 
+      def show
+        # 全てのコミュニティ参加者情報
+        @community = Community.find(params[:community_id])
+        @members = @community.joined_members
+        # ページネーション情報（デフォルトは10件ずつの表示とする）
+        paged = params[:paged]
+        per = params[:per].present? ? params[:per] : 10
+        @members_paginated = @members.page(paged).per(per)
+        @pagination = pagination(@members_paginated)
+
+        render json: { users: @members_paginated, pagination: @pagination }
+      end
+
       def create
         membership = current_user.memberships.build(community_id: params[:community_id])
         membership.save

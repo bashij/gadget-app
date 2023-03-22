@@ -18,47 +18,34 @@ module Api
 
       def show
         @community = Community.find(params[:id])
-        @users = @community.joined_members.page(params[:users_page]).per(10)
-        respond_to do |format|
-          format.html
-          format.js
-        end
-      end
-
-      def new
-        @title = 'コミュニティ登録'
-        @community = current_user.communities.build
+        render json: { community: @community }, include: [:user, :memberships]
       end
 
       def create
         @community = current_user.communities.build(communities_params)
         if @community.save
-          flash[:success] = t 'communities.create.flash.success'
-          redirect_to community_path(@community)
+          message = [I18n.t('communities.create.flash.success')]
+          render json: { status: 'success', message: message, id: @community.id}
         else
-          @title = 'コミュニティ登録'
-          render 'new'
+          message = @community.errors.full_messages
+          render json: { status: 'failure', message: message, id: @community.id }
         end
-      end
-
-      def edit
-        @title = 'コミュニティ編集'
       end
 
       def update
         if @community.update(communities_params)
-          flash[:success] = t 'communities.update.flash.success'
-          redirect_to community_url(params[:id])
+          message = [I18n.t('communities.update.flash.success')]
+          render json: { status: 'success', message: message, id: @community.id}
         else
-          @title = 'コミュニティ編集'
-          render 'edit'
+          message = @community.errors.full_messages
+          render json: { status: 'failure', message: message, id: @community.id }
         end
       end
 
       def destroy
         @community.destroy
-        flash[:success] = t 'communities.destroy.flash.success'
-        redirect_to root_url
+        message = [I18n.t('communities.destroy.flash.success')]
+        render json: { status: 'success', message: message }
       end
 
       private

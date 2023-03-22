@@ -9,7 +9,6 @@ export default function CommunityMembership(props) {
   const isInitialRendered = useRef(true)
   const [message, setMessage] = useState([])
   const [status, setStatus] = useState()
-  const [membershipCount, setMembershipCount] = useState(props.community.memberships.length)
   const [isJoined, setIsJoined] = useState(
     props.community.memberships.some((membership) => membership.user_id === props.user?.id),
   )
@@ -33,12 +32,16 @@ export default function CommunityMembership(props) {
       }
       const resMessage = await response.data.message
       const resStatus = await response.data.status
-      const resCount = await response.data.count
       const resJoined = await response.data.joined
+      const resCount = await response.data.count
       setMessage(resMessage)
       setStatus(resStatus)
-      setMembershipCount(resCount)
       setIsJoined(resJoined)
+      props.setMembershipCount(resCount)
+      // コミュニティ詳細ページで実行した場合は、member一覧を更新する
+      if (props.swrKey) {
+        props.mutate(props.swrKey)
+      }
     } catch (error) {
       console.log(error)
       console.log('catch error')
@@ -75,7 +78,6 @@ export default function CommunityMembership(props) {
           </span>
         </p>
       </div>
-      <div>( {membershipCount}人 )</div>
     </>
   )
 }

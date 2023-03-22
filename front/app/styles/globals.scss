@@ -109,11 +109,8 @@ body {
     letter-spacing: 0.1rem;
   }
   &.alert-success {
-    background-color: $color_accent2;
-    color: $color_theme1;
-    margin-bottom: 10px;
-    text-align: center;
-    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+    background-color: $color_theme2;
+    border: none;
   }
   &.alert-failure {
     color: $color_accent2;
@@ -129,6 +126,15 @@ body {
     border: none;
     padding: 0px;
     margin: 20px 0 20px 0;
+  }
+}
+
+.Toastify__toast {
+  &.toast-message {
+    background: $color_theme1;
+    color: $color_theme8;
+    font-size: 1rem;
+    border-radius: 10px;
   }
 }
 
@@ -369,18 +375,18 @@ body {
   text-align: center;
   padding: 1.2rem 1.2rem 0.2rem 1.2rem;
   margin: 0.5rem 0 1.2rem 0;
-  h3 {
+  p {
     position: relative;
-    font-weight: 600;
+    font-size: 1.25rem;
   }
-  h3::before {
+  p::before {
     content: '';
     position: absolute;
     left: 50%;
     bottom: -10px; /*線の上下位置*/
     display: inline-block;
     width: 60%; /*線の長さ*/
-    height: 4px; /*線の太さ*/
+    height: 3px; /*線の太さ*/
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     background-color: $color_theme5;
@@ -703,6 +709,12 @@ body {
 
 .fa-circle-plus {
   color: $color_theme5;
+}
+
+.new-page-link {
+  font-size: 1.25rem;
+  text-align: center;
+  margin-top: 1.75rem;
 }
 
 // ガジェット

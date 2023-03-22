@@ -34,7 +34,7 @@ Rails.application.routes.draw do
         resource :tweet_bookmarks, only: %i[create destroy]
       end
       resources :communities do
-        resource :memberships, only: %i[create destroy]
+        resource :memberships, only: %i[create destroy show]
       end
     end
     resources :health_check, only: :index

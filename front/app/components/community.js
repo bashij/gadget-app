@@ -1,8 +1,11 @@
 import CommunityMembership from '@/components/communityMembership'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
 
 export default function Community(props) {
+  const [membershipCount, setMembershipCount] = useState(props.community.memberships.length)
+
   return (
     <div key={props.community.id} className='col-md-3 community-items card p-3 pb-2 m-2'>
       <Image
@@ -17,10 +20,15 @@ export default function Community(props) {
         className='card-img-top'
       />
       <div className='card-body text-center'>
-        <Link href='' className='card-title'>
+        <Link href={`/communities/${props.community.id}`} className='card-title'>
           {props.community.name}
         </Link>
-        <CommunityMembership community={props.community} user={props.user} />
+        <CommunityMembership
+          community={props.community}
+          user={props.user}
+          setMembershipCount={setMembershipCount}
+        />
+        <div>( {membershipCount} 人 )</div>
       </div>
     </div>
   )

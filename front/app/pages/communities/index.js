@@ -1,8 +1,14 @@
 import Community from '@/components/community'
 import Layout, { siteTitle } from '@/components/layout'
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
 import Head from 'next/head'
-import { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import useSWR from 'swr'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
@@ -18,6 +24,26 @@ export default function Communities(props) {
   const previousArrow = currentPage > 1 ? currentPage - 1 : currentPage
   const nextArrow = currentPage + 1 <= totalPages ? currentPage + 1 : currentPage
 
+  const router = useRouter()
+  const [message, setMessage] = useState([router.query.message])
+  const [status, setStatus] = useState(router.query.status)
+
+  // コミュニティ削除時
+  useEffect(() => {
+    if (status === 'success') {
+      toast.success(`${message}`, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        className: 'toast-message',
+      })
+    }
+  }, [])
+
   if (error) return <div>failed to load</div>
 
   if (data || isLoading) {
@@ -26,11 +52,18 @@ export default function Communities(props) {
         <Head>
           <title>{siteTitle} | コミュニティ</title>
         </Head>
+        <ToastContainer />
         <div className='row justify-content-center'>
-          <div className='community row justify-content-center mt-3 mb-3'>
+          <div className='community row justify-content-center mt-3'>
             {data?.communities.map((community) => {
               return <Community key={community.id} community={community} user={props.user} />
             })}
+            <div className='new-page-link'>
+              <Link href='/communities/new'>
+                <FontAwesomeIcon className='pe-2' icon={faCirclePlus} />
+                新しいコミュニティを登録する
+              </Link>
+            </div>
           </div>
         </div>
         <div className='pagination'>
