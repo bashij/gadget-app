@@ -33,35 +33,35 @@ export default function Layout(props) {
               HOME
             </Link>
             <Link
-              href='tweets'
+              href='/tweets'
               className={`nav-link ${props.pageName === 'tweet' ? 'active' : ''}`}
               id='tweet'
             >
               TWEET
             </Link>
             <Link
-              href='gadgets'
+              href='/gadgets'
               className={`nav-link ${props.pageName === 'gadget' ? 'active' : ''}`}
               id='gadget'
             >
               GADGET
             </Link>
             <Link
-              href='communities'
+              href='/communities'
               className={`nav-link ${props.pageName === 'community' ? 'active' : ''}`}
               id='community'
             >
               COMMUNITY
             </Link>
             <Link
-              href='help'
+              href='/help'
               className={`nav-link ${props.pageName === 'help' ? 'active' : ''}`}
               id='help'
             >
               HELP
             </Link>
             <Link
-              href='users'
+              href='/users'
               className={`nav-link ${props.pageName === 'users' ? 'active' : ''}`}
               id='users'
             >
@@ -109,7 +109,7 @@ export default function Layout(props) {
               </div>
             ) : (
               <Link
-                href='login'
+                href='/login'
                 className={`nav-link ${props.pageName === 'logIn' ? 'active' : ''}`}
                 id='login'
               >
