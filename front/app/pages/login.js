@@ -116,7 +116,7 @@ export default function Login() {
                 </p>
               </div>
             </form>
-            <div className='p-3 mb-4 text-center h5'>
+            <div className='new-page-link'>
               <Link href='signup'>
                 <p>
                   <FontAwesomeIcon className='pe-2' icon={faCirclePlus} />
