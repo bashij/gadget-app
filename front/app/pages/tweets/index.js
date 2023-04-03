@@ -68,7 +68,7 @@ export default function Tweets(props) {
           <title>{siteTitle} | ツイート</title>
         </Head>
         <div className='row justify-content-center'>
-          <div className='col-12 col-lg-10 col-xl-6'>
+          <div className='col-12 col-lg-10'>
             <div className='switch-area'>
               <Link href='/tweets' className='switch-item active'>
                 全てのユーザーを表示
