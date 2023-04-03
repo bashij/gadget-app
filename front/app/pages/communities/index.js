@@ -58,12 +58,6 @@ export default function Communities(props) {
             {data?.communities.map((community) => {
               return <Community key={community.id} community={community} user={props.user} />
             })}
-            <div className='new-page-link'>
-              <Link href='/communities/new'>
-                <FontAwesomeIcon className='pe-2' icon={faCirclePlus} />
-                新しいコミュニティを登録する
-              </Link>
-            </div>
           </div>
         </div>
         <div className='pagination'>
@@ -91,6 +85,12 @@ export default function Communities(props) {
           <button onClick={() => setPageIndex(nextArrow)}>&gt;</button>
           {/* >> 最後のページ */}
           <button onClick={() => setPageIndex(totalPages)}>&gt;&gt;</button>
+        </div>
+        <div className='new-page-link'>
+          <Link href='/communities/new'>
+            <FontAwesomeIcon className='pe-2' icon={faCirclePlus} />
+            新しいコミュニティを登録する
+          </Link>
         </div>
       </Layout>
     )
