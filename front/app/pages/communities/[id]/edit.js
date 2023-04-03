@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 
 const pageTitle = 'コミュニティ編集'
 
-export default function New(props) {
+export default function Edit(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_COMMUNITIES
 
   const [formData, setFormData] = useState({
