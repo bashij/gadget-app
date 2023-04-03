@@ -180,7 +180,7 @@ export default function Community(props) {
           {data && data?.users.length > 0 ? (
             <Pagination data={data} setPageIndex={setPageIndex} />
           ) : (
-            <p>参加中のユーザーはいません</p>
+            <p>参加中のユーザーはまだいません</p>
           )}
         </div>
       </Layout>
