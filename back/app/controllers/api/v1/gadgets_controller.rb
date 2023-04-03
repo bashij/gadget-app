@@ -1,74 +1,65 @@
-class GadgetsController < ApplicationController
-  before_action :logged_in_user, only: %i[new create edit update destroy]
-  before_action :correct_user,   only: %i[edit update destroy]
+module Api
+  module V1
+    class GadgetsController < ApplicationController
+      before_action :logged_in_user, only: %i[new create edit update destroy]
+      before_action :correct_user,   only: %i[edit update destroy]
 
-  def show
-    # 表示対象ガジェット
-    @gadget = Gadget.find(params[:id])
-    # コメント、リプライフォーム
-    @comment = logged_in? ? current_user.comments.build : User.new.comments.build
-    @comment_reply = @comment
-    # ガジェットへの親コメント
-    parent_comments = @gadget.parent_comments
-    @comments = Kaminari.paginate_array(parent_comments).page(params[:comments_page])
-    # 親コメントへのリプライコメント
-    @replies = Comment.where(parent_id: @comments)
-    @reply_count = Comment.reply_count
-    # ページネーション
-    @comments_page_params = params[:comments_page]
+      def index
+        # 全てのガジェット情報
+        @gadgets = Gadget.all.order(created_at: :desc)
+        # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
+        paged = params[:paged]
+        per = params[:per].present? ? params[:per] : 5
+        @gadgets_paginated = @gadgets.page(paged).per(per)
+        @pagination = pagination(@gadgets_paginated)
 
-    respond_to do |format|
-      format.html
-      format.js
+        render json: { gadgets: @gadgets_paginated, pagination: @pagination }, include: [:user, :gadget_likes, :gadget_bookmarks, :review_requests]
+      end
+
+      def show
+        # 表示対象ガジェット
+        @gadget = Gadget.find(params[:id])
+        render json: { gadget: @gadget }, include: [:user, :comments, :review_requests, :gadget_likes, :gadget_bookmarks]
+      end
+
+      def create
+        @gadget = current_user.gadgets.build(gadgets_params)
+        if @gadget.save
+          message = [I18n.t('gadgets.create.flash.success')]
+          render json: { status: 'success', message: message, id: @gadget.id}
+        else
+          message = @community.errors.full_messages
+          render json: { status: 'failure', message: message, id: @gadget.id }
+        end
+      end
+
+      def update
+        if @gadget.update(gadgets_params)
+          message = [I18n.t('gadgets.update.flash.success')]
+          render json: { status: 'success', message: message, id: @gadget.id}
+        else
+          message = @gadget.errors.full_messages
+          render json: { status: 'failure', message: message, id: @gadget.id }
+        end
+      end
+
+      def destroy
+        @gadget.destroy
+        message = [I18n.t('gadgets.destroy.flash.success')]
+        render json: { status: 'success', message: message, isPageDeleted: true }
+      end
+
+      private
+
+        def gadgets_params
+          params.require(:gadget)
+                .permit(:name, :category, :model_number, :manufacturer, :price, :other_info, :image, :review)
+        end
+
+        def correct_user
+          @gadget = current_user.gadgets.find_by(id: params[:id])
+          redirect_to root_url if @gadget.nil?
+        end
     end
   end
-
-  def new
-    @title = 'ガジェット登録'
-    @gadget = current_user.gadgets.build
-  end
-
-  def create
-    @gadget = current_user.gadgets.build(gadgets_params)
-    if @gadget.save
-      flash[:success] = t 'gadgets.create.flash.success'
-      redirect_to gadget_path(@gadget)
-    else
-      @title = 'ガジェット登録'
-      render 'new'
-    end
-  end
-
-  def edit
-    @title = 'ガジェット編集'
-  end
-
-  def update
-    if @gadget.update(gadgets_params)
-      flash[:success] = t 'gadgets.update.flash.success'
-      redirect_to gadget_path(@gadget)
-    else
-      @title = 'ガジェット編集'
-      render 'edit'
-    end
-  end
-
-  def destroy
-    @user = @gadget.user
-    @gadget.destroy
-    flash[:success] = t 'gadgets.destroy.flash.success'
-    redirect_to user_path(@user)
-  end
-
-  private
-
-    def gadgets_params
-      params.require(:gadget)
-            .permit(:name, :category, :model_number, :manufacturer, :price, :other_info, :image, :review)
-    end
-
-    def correct_user
-      @gadget = current_user.gadgets.find_by(id: params[:id])
-      redirect_to root_url if @gadget.nil?
-    end
 end

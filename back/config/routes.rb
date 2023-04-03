@@ -36,6 +36,12 @@ Rails.application.routes.draw do
       resources :communities do
         resource :memberships, only: %i[create destroy show]
       end
+      resources :gadgets do
+        resource :gadget_likes, only: %i[create destroy]
+        resource :gadget_bookmarks, only: %i[create destroy]
+        resources :comments, only: %i[index create destroy show]
+        resource :review_requests, only: %i[create destroy show]
+      end
     end
     resources :health_check, only: :index
   end

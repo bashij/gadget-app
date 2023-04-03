@@ -737,12 +737,6 @@ body {
       height: 180px;
       width: 180px;
     }
-    .review-icons {
-      margin-top: 1rem;
-    }
-    .review-link {
-      margin: 1rem 1rem;
-    }
   }
   .gadget-image-detail {
     flex-basis: 100px;
@@ -759,6 +753,23 @@ body {
     }
     .review-icons {
       margin: 1.5rem 1.5rem;
+    }
+  }
+  .review-icons {
+    margin-top: 0.25rem;
+    .review-icon {
+      span {
+        margin: 0 0.3rem 0 0.3rem;
+      }
+    }
+  }
+  .review-link {
+    margin: 1rem 1rem;
+    p {
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
     }
   }
   .gadget-content {
@@ -896,36 +907,142 @@ body {
   }
 }
 
-.rich-text-area {
-  min-height: 500px;
-  background-color: $color_theme1;
-  border-radius: 10px;
-  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
-  padding: 2rem;
+.review-header {
+  .review {
+    position: relative;
+    font-size: 1.25rem;
+    text-align: center;
+    margin: 2rem 0 2.5rem 0;
+  }
+  .review::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px; /*線の上下位置*/
+    display: inline-block;
+    width: 60%; /*線の長さ*/
+    height: 3px; /*線の太さ*/
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    background-color: $color_theme5;
+  }
+  .review-content {
+    background-color: $color_theme1;
+    border-radius: 10px;
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+    padding: 1.25rem 1.5rem 0.9rem 1.5rem;
+    margin: 0.5rem 0 1.2rem 0;
+    text-align: left;
+    h1 {
+      padding: 1.5rem 0.5rem 0.75rem 0.5rem;
+      border-bottom: 1px solid $color_theme5;
+    }
+    h2 {
+      padding: 1rem 0.5rem 0.5rem 0.5rem;
+      border-bottom: 1px solid $color_theme4;
+      display: inline-block;
+      width: 50%;
+      text-align: left;
+    }
+    ul {
+      li {
+        list-style: disc;
+      }
+    }
+    ol {
+      li {
+        list-style: decimal;
+      }
+    }
+    div {
+      overflow-wrap: break-word;
+      word-wrap: break-word; // 古いブラウザ用
+    }
+    p {
+      margin: 0 0 0.25rem 0;
+    }
+    blockquote {
+      padding: 0.5rem 1rem;
+      border-left: 4px solid $color_theme4;
+      color: $color_theme6;
+    }
+    .review-link {
+      p {
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
   @media screen and (max-width: 480px) {
     font-size: 0.8rem;
   }
 }
 
-#rich_text_template {
+.EasyMDEContainer {
+  @media screen and (max-width: 480px) {
+    font-size: 0.8rem;
+  }
+  .editor-toolbar {
+    border-radius: 10px;
+  }
+  div.CodeMirror {
+    border-radius: 10px;
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+    padding: 1.25rem 1.5rem 0.5rem 1.5rem;
+    margin: 0 0 1.2rem 0;
+  }
+  .editor-preview-side {
+    background-color: $color_theme1;
+    border-radius: 10px;
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+    padding: 1.25rem 1.5rem 0.9rem 1.5rem;
+    margin: 0 0 1.2rem 0;
+    text-align: left;
+    h1 {
+      padding: 1.5rem 0.5rem 0.75rem 0.5rem;
+      border-bottom: 1px solid $color_theme5;
+    }
+    h2 {
+      padding: 1rem 0.5rem 0.5rem 0.5rem;
+      border-bottom: 1px solid $color_theme4;
+      display: inline-block;
+      width: 50%;
+      text-align: left;
+    }
+    ul {
+      li {
+        list-style: disc;
+      }
+    }
+    ol {
+      li {
+        list-style: decimal;
+      }
+    }
+    div {
+      overflow-wrap: break-word;
+      word-wrap: break-word; // 古いブラウザ用
+    }
+    p {
+      margin: 0 0 0.25rem 0;
+    }
+    blockquote {
+      padding: 0.5rem 1rem;
+      border-left: 4px solid $color_theme4;
+      color: $color_theme6;
+    }
+  }
+}
+
+.add-template {
   cursor: pointer;
-  text-align: center;
-  margin-left: 10px;
+  margin-left: 1rem;
   color: $color_accent2;
   .fa-circle-plus {
+    margin-right: 0.25rem;
     color: $color_accent2;
-    margin-right: 5px;
-  }
-}
-
-.review {
-  background-color: $color_theme1;
-  border-radius: 10px;
-  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
-  padding: 2rem;
-  margin: 0.75rem;
-  @media screen and (max-width: 480px) {
-    font-size: 0.8rem;
   }
 }
 
