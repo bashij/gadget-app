@@ -14,7 +14,7 @@ export default function Pagination(props) {
       <button onClick={() => props.setPageIndex(previousArrow)}>&lt;</button>
       <button
         className={currentPage > 1 ? '' : 'hidden'}
-        onClick={() => props.setPageIndex(pageIndex - 1)}
+        onClick={() => props.setPageIndex(props.pageIndex - 1)}
       >
         {currentPage > 1 ? currentPage - 1 : ''}
       </button>
@@ -23,7 +23,7 @@ export default function Pagination(props) {
       {/* > 次のページ */}
       <button
         className={currentPage + 1 <= totalPages ? '' : 'hidden'}
-        onClick={() => props.setPageIndex(pageIndex + 1)}
+        onClick={() => props.setPageIndex(props.pageIndex + 1)}
       >
         {currentPage + 1 <= totalPages ? currentPage + 1 : ''}
       </button>
