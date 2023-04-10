@@ -41,7 +41,7 @@ export default function Gadget(props) {
         <div className='review-link'>
           {props.gadget.review ? (
             <span id={`review_request_section_${props.gadget.id}`}>
-              <Link href={`gadgets/${props.gadget.id}`}>レビューを見る</Link>
+              <Link href={`/gadgets/${props.gadget.id}`}>レビューを見る</Link>
             </span>
           ) : (
             <ReviewRequest

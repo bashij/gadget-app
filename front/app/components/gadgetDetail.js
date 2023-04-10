@@ -62,7 +62,7 @@ export default function GadgetDetail(props) {
                 height={50}
                 alt='user-image'
               />
-              <Link href=''>{props.gadget.user.name}</Link>
+              <Link href={`/users/${props.gadget.user.id}`}>{props.gadget.user.name}</Link>
             </p>
           </td>
         </tr>

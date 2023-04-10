@@ -67,6 +67,8 @@ export default function Gadget(props) {
           : document.getElementById('comment_form')?.reset()
         // ReplyFormIdを初期化
         setReplyFormId()
+
+        // 成功メッセージを表示
         toast.success(`${message}`, {
           position: 'top-center',
           autoClose: 2000,
@@ -250,7 +252,6 @@ export default function Gadget(props) {
                     user={props.user}
                     replies={data.replies}
                     replyCount={data.replyCounts[comment.id]}
-                    data={data}
                     mutate={mutate}
                     swrKey={`${API_ENDPOINT}/${props.gadget.id}/comments?paged=${pageIndex}`}
                     setMessage={setMessage}

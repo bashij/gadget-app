@@ -22,23 +22,16 @@ module Api
       end
 
       def create
-        # 表示対象ガジェット
-        @gadget = Gadget.find(params[:gadget_id])
         # 入力されたコメント
         @comment = current_user.comments.build(gadget_id: params[:gadget_id],
                                               content: params[:comment][:content],
                                               parent_id: params[:comment][:parent_id])
         if @comment.save
-          # 親コメント
-          @parent_comment = Comment.find_parent(@comment.parent_id)
-          # 親コメントへのリプライ件数
-          @reply_count = Comment.where(parent_id: @comment.parent_id).count
-          
-          message = @comment.parent_id ? ['リプライが投稿されました'] : ['コメントが投稿されました']
-          render json: { status: 'success', message: message, comment: @comment, replyCount: @reply_count }, include: [:user, :gadget]
+          message = [I18n.t('comments.create.flash.success')]
+          render json: { status: 'success', message: message }
         else
           message = @comment.errors.full_messages
-          render json: { status: 'failure', message: message, comment: @comment}
+          render json: { status: 'failure', message: message }
         end
       end
 
@@ -48,11 +41,9 @@ module Api
         @replies.each(&:destroy)
         # コメントを削除
         @comment.destroy
-        # 親コメントへのリプライ件数
-        @reply_count = Comment.where(parent_id: @comment.parent_id).count
 
-        message = @comment.parent_id ? ['リプライが削除されました'] : ['コメントが削除されました']
-        render json: { status: 'success', message: message, replyCount: @reply_count }
+        message = [I18n.t('comments.destroy.flash.success')]
+        render json: { status: 'success', message: message }
       end
 
       private

@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export default function ReplyComment(props) {
   return (
-    <div className={`reply ${props.latest ? `latest ${latestClass}` : ''}`}>
+    <div className='reply'>
       <div className='post' id={`tweet_${props.comment.id}`}>
         <div className='tweet-section-left'>
           <div className='user-info'>
@@ -38,7 +38,6 @@ export default function ReplyComment(props) {
               <CommentDelete
                 comment={props.comment}
                 gadget={props.gadget}
-                user={props.user}
                 mutate={props.mutate}
                 swrKey={props.swrKey}
                 setMessage={props.setMessage}

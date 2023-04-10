@@ -33,7 +33,7 @@ export default function Comment(props) {
   }
 
   return (
-    <div className={`parent-post ${props.latest ? `latest ${latestClass}` : ''}`}>
+    <div className='parent-post'>
       <div className='post' id={`tweet_${props.comment.id}`}>
         <div className='tweet-section-left'>
           <div className='user-info'>
@@ -68,7 +68,6 @@ export default function Comment(props) {
               <CommentDelete
                 comment={props.comment}
                 gadget={props.gadget}
-                user={props.user}
                 mutate={props.mutate}
                 swrKey={props.swrKey}
                 setMessage={props.setMessage}
@@ -113,9 +112,6 @@ export default function Comment(props) {
               comment={reply}
               gadget={props.gadget}
               user={props.user}
-              replies={null}
-              replyCounts={null}
-              data={props.data}
               mutate={props.mutate}
               swrKey={props.swrKey}
               setMessage={props.setMessage}
