@@ -1,5 +1,6 @@
 import Community from '@/components/community'
 import Layout, { siteTitle } from '@/components/layout'
+import Pagination from '@/components/pagination'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
@@ -19,10 +20,6 @@ export default function Communities(props) {
   const { data, error, isLoading } = useSWR(`${API_ENDPOINT}?paged=${pageIndex}`, fetcher, {
     keepPreviousData: true,
   })
-  const totalPages = data?.pagination.total_pages
-  const currentPage = data?.pagination.current_page
-  const previousArrow = currentPage > 1 ? currentPage - 1 : currentPage
-  const nextArrow = currentPage + 1 <= totalPages ? currentPage + 1 : currentPage
 
   const router = useRouter()
   const [message, setMessage] = useState([router.query.message])
@@ -61,30 +58,11 @@ export default function Communities(props) {
           </div>
         </div>
         <div className='pagination'>
-          {/* << 最初のページ */}
-          <button className='' onClick={() => setPageIndex(1)}>
-            &lt;&lt;
-          </button>
-          {/* < 前のページ */}
-          <button onClick={() => setPageIndex(previousArrow)}>&lt;</button>
-          <button
-            className={currentPage > 1 ? '' : 'hidden'}
-            onClick={() => setPageIndex(pageIndex - 1)}
-          >
-            {currentPage > 1 ? currentPage - 1 : ''}
-          </button>
-          {/* 現在のページ */}
-          <button className='active'>{currentPage}</button>
-          {/* > 次のページ */}
-          <button
-            className={currentPage + 1 <= totalPages ? '' : 'hidden'}
-            onClick={() => setPageIndex(pageIndex + 1)}
-          >
-            {currentPage + 1 <= totalPages ? currentPage + 1 : ''}
-          </button>
-          <button onClick={() => setPageIndex(nextArrow)}>&gt;</button>
-          {/* >> 最後のページ */}
-          <button onClick={() => setPageIndex(totalPages)}>&gt;&gt;</button>
+          {data?.communities.length > 0 ? (
+            <Pagination data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
+          ) : (
+            <p>登録されているコミュニティはありません</p>
+          )}
         </div>
         <div className='new-page-link'>
           <Link href='/communities/new'>
