@@ -1,8 +1,8 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      before_action :logged_in_user, only: %i[edit update destroy]
-      before_action :correct_user,   only: %i[edit update destroy]
+      before_action :logged_in_user, only: %i[update destroy]
+      before_action :correct_user,   only: %i[update destroy]
     
       def index
         # 全てのユーザー情報
@@ -19,33 +19,17 @@ module Api
       def show
         # 表示対象ユーザー
         @user = User.includes(:tweets).find(params[:id])
-        # 自身のツイート、ブックマークしたツイート
-        @tweets = Tweet.own_tweet(@user, params[:own_tweets_page])
-        @tweet_bookmarks = @user.show_bookmark_tweets(params[:bookmark_tweets_page])
-        # ツイート、リプライフォーム
-        @tweet = logged_in? ? current_user.tweets.build : User.new.tweets.build
-        @tweet_reply = @tweet
-        # リプライ
-        parent_ids = @tweets.ids + @tweet_bookmarks.ids
-        @replies = Tweet.find_all_replies(parent_id: parent_ids)
-        @reply_count = Tweet.reply_count
-        # 自身のガジェット、ブックマークしたガジェット
-        @feed_gadgets = Gadget.own_gadget(@user, params[:gadgets_page])
-        @gadget_bookmarks = @user.show_bookmark_gadgets(params[:bookmark_gadgets_page])
-        # 参加中のコミュニティ
-        @communities = @user.joining_communities.includes(:user, :memberships).page(params[:communities_page])
-    
-        respond_to do |format|
-          format.html
-          format.js
-        end
+        # ユーザーに関連する件数情報
+        user_count = {
+          community: @user.joining_communities.size,
+          tweet: @user.tweets.where(parent_id: nil).size,
+          bookmarkTweet: @user.bookmarked_tweets.size,
+          bookmarkGadget: @user.bookmarked_gadgets.size
+        }
+
+        render json: { user: @user, userCount: user_count }, include: [:gadgets, :tweets, :communities, :following, :followers, :review_requests, :tweet_bookmarks, :gadget_bookmarks]
       end
-    
-      def new
-        @title = 'ユーザー登録'
-        @user = User.new
-      end
-    
+
       def create
         @user = User.new(user_params)
         if @user.save
@@ -57,45 +41,45 @@ module Api
           render json: { status: 'failure', message: message }
         end
       end
-    
-      def edit
-        @title = 'ユーザー情報編集'
-      end
-    
+
       def update
         if @user.update(user_params)
-          flash[:success] = t 'users.update.flash.success'
-          redirect_to @user
+          message = [I18n.t('users.update.flash.success')]
+          render json: { status: 'success', message: message, id: @user.id}
         else
-          @title = 'ユーザー情報編集'
-          render 'edit'
+          message = @user.errors.full_messages
+          render json: { status: 'failure', message: message, id: @user.id }
         end
       end
     
       def destroy
         User.find(params[:id]).destroy
-        flash[:success] = t 'users.destroy.flash.success'
-        redirect_to root_url
+        message = [I18n.t('users.destroy.flash.success')]
+        render json: { status: 'success', message: message, isPageDeleted: true }
       end
     
       def following
-        @title = 'フォロー'
-        @user  = User.find(params[:id])
-        @users = @user.following.page(params[:users_page]).per(10)
-        respond_to do |format|
-          format.html { render 'show_follow' }
-          format.js
-        end
+        # 詳細ページのユーザーがフォローしている全てのユーザー情報
+        @users = User.find(params[:id]).following
+        # ユーザーのページネーション情報（デフォルトは5件ずつの表示とする）
+        paged = params[:paged]
+        per = params[:per].present? ? params[:per] : 5
+        @users_paginated = @users.page(paged).per(per)
+        @pagination = pagination(@users_paginated)
+
+        render json: { users: @users_paginated, pagination: @pagination }
       end
     
       def followers
-        @title = 'フォロワー'
-        @user  = User.find(params[:id])
-        @users = @user.followers.page(params[:users_page]).per(10)
-        respond_to do |format|
-          format.html { render 'show_follow' }
-          format.js
-        end
+        # 詳細ページのユーザーがフォローされている全てのユーザー情報
+        @users = User.find(params[:id]).followers
+        # ユーザーのページネーション情報（デフォルトは5件ずつの表示とする）
+        paged = params[:paged]
+        per = params[:per].present? ? params[:per] : 5
+        @users_paginated = @users.page(paged).per(per)
+        @pagination = pagination(@users_paginated)
+
+        render json: { users: @users_paginated, pagination: @pagination }
       end
     
       private

@@ -26,7 +26,17 @@ Rails.application.routes.draw do
   resources :relationships, only: %i[create destroy]
   namespace :api, format: 'json' do
     namespace :v1 do
-      resources :users
+      resources :users do
+        member do
+          get :following, :followers
+          get 'user_communities', to: 'communities#user_communities'          
+          get 'user_tweets', to: 'tweets#user_tweets'
+          get 'user_bookmark_tweets', to: 'tweets#user_bookmark_tweets'
+          get 'user_gadgets', to: 'gadgets#user_gadgets'
+          get 'user_bookmark_gadgets', to: 'gadgets#user_bookmark_gadgets'
+        end
+      end
+      resources :relationships, only: %i[create destroy]
       post '/login', to: 'sessions#create'
       get '/check', to: 'sessions#check_session'
       resources :tweets do

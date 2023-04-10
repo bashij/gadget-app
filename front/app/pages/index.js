@@ -1,24 +1,44 @@
 import Layout, { siteTitle } from '@/components/layout'
-import Message from '@/components/message'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function Home(props) {
   const router = useRouter()
   const [message, setMessage] = useState([router.query.message])
   const [status, setStatus] = useState(router.query.status)
 
+  useEffect(() => {
+    // Statusを初期化
+    setStatus()
+
+    if (status === 'success') {
+      // 成功メッセージを表示
+      toast.success(`${message}`, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        className: 'toast-message',
+      })
+    }
+  }, [status])
+
   return (
     <Layout home user={props.user} pageName={'home'}>
       <Head>
         <title>{`${siteTitle} | HOME`}</title>
       </Head>
-      <Message message={message} status={status} />
+      <ToastContainer />
       {props.user ? (
         <div>ログイン状態</div>
       ) : (

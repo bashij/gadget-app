@@ -1,21 +1,38 @@
-class RelationshipsController < ApplicationController
-  before_action :logged_in_user
-  before_action :correct_user, only: :destroy
+module Api
+  module V1
+    class RelationshipsController < ApplicationController
+      before_action :logged_in_user
+      before_action :correct_user, only: :destroy
 
-  def create
-    @user = User.find(params[:followed_id])
-    current_user.follow(@user)
-  end
+      def create
+        @user = User.find(params[:followed_id])
+        current_user.follow(@user)
+        count = @user.followers.size
+        following = current_user.following?(@user)
 
-  def destroy
-    @user = @relationship.followed
-    current_user.unfollow(@user)
-  end
+        message = [I18n.t('relationships.create.flash.success')]
+        render json: { status: 'success', message: message, count: count, following: following }
+      end
 
-  private
+      def destroy
+        @user = @relationship.followed
+        current_user.unfollow(@user)
+        count = @user.followers.size
+        following = current_user.following?(@user)
 
-    def correct_user
-      @relationship = current_user.active_relationships.find_by(id: params[:id])
-      redirect_to root_url if @relationship.nil?
+        message = [I18n.t('relationships.destroy.flash.success')]
+        render json: { status: 'success', message: message, count: count, following: following }
+      end
+
+      private
+
+        def correct_user
+          @relationship = current_user.active_relationships.find_by(followed_id: params[:id])
+          if @relationship.nil?
+            message = ['フォローしていないユーザーのフォロー解除はできません']
+            render json: { status: 'failure', message: message } 
+          end
+        end
     end
+  end
 end

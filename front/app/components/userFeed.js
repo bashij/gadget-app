@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function UserFeed(props) {
   return (
@@ -17,7 +18,9 @@ export default function UserFeed(props) {
                 height={150}
                 alt='user-image'
               />
-              <div className='user mt-2'>{user.name}</div>
+              <Link href={`/users/${user.id}`}>
+                <div className='user mt-2'>{user.name}</div>
+              </Link>
             </div>
           </div>
         )

@@ -86,24 +86,20 @@ export default function Layout(props) {
                   <span className='nav-link'>{props.user.name}</span>
                 </div>
                 <Link
-                  href=''
+                  href={`/users/${props.user.id}`}
                   className={`nav-link ${props.pageName === 'myPage' ? 'active' : ''}`}
                   id='mypage'
                 >
                   MYPAGE
                 </Link>
                 <Link
-                  href=''
+                  href={`/users/${props.user.id}/edit`}
                   className={`nav-link ${props.pageName === 'setting' ? 'active' : ''}`}
                   id='setting'
                 >
                   SETTING
                 </Link>
-                <Link
-                  href=''
-                  className={`nav-link ${props.pageName === 'logOut' ? 'active' : ''}`}
-                  id='logout'
-                >
+                <Link href='' className='nav-link' id='logout'>
                   LOGOUT
                 </Link>
               </div>

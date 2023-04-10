@@ -16,6 +16,19 @@ module Api
         render json: { communities: @communities_paginated, pagination: @pagination }, include: [:user, :memberships]
       end
 
+      def user_communities
+        # 特定のユーザーが参加しているコミュニティ情報
+        user = User.find(params[:id])
+        @communities = user.joining_communities.order(created_at: :desc)
+        # コミュニティのページネーション情報（デフォルトは10件ずつの表示とする）
+        paged = params[:paged]
+        per = params[:per].present? ? params[:per] : 10
+        @communities_paginated = @communities.page(paged).per(per)
+        @pagination = pagination(@communities_paginated)
+
+        render json: { communities: @communities_paginated, pagination: @pagination }, include: [:user, :memberships]
+      end
+
       def show
         @community = Community.find(params[:id])
         render json: { community: @community }, include: [:user, :memberships]

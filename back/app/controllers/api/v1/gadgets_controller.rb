@@ -1,12 +1,38 @@
 module Api
   module V1
     class GadgetsController < ApplicationController
-      before_action :logged_in_user, only: %i[new create edit update destroy]
-      before_action :correct_user,   only: %i[edit update destroy]
+      before_action :logged_in_user, only: %i[create update destroy]
+      before_action :correct_user,   only: %i[update destroy]
 
       def index
         # 全てのガジェット情報
         @gadgets = Gadget.all.order(created_at: :desc)
+        # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
+        paged = params[:paged]
+        per = params[:per].present? ? params[:per] : 5
+        @gadgets_paginated = @gadgets.page(paged).per(per)
+        @pagination = pagination(@gadgets_paginated)
+
+        render json: { gadgets: @gadgets_paginated, pagination: @pagination }, include: [:user, :gadget_likes, :gadget_bookmarks, :review_requests]
+      end
+
+      def user_gadgets
+        # 特定のユーザーが登録しているガジェット情報
+        user = User.find(params[:id])
+        @gadgets = user.gadgets.order(created_at: :desc)
+        # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
+        paged = params[:paged]
+        per = params[:per].present? ? params[:per] : 5
+        @gadgets_paginated = @gadgets.page(paged).per(per)
+        @pagination = pagination(@gadgets_paginated)
+
+        render json: { gadgets: @gadgets_paginated, pagination: @pagination }, include: [:user, :gadget_likes, :gadget_bookmarks, :review_requests]
+      end
+
+      def user_bookmark_gadgets
+        # 特定のユーザーがブックマークしているガジェット情報
+        user = User.find(params[:id])
+        @gadgets = user.bookmarked_gadgets.order(created_at: :desc)
         # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
         paged = params[:paged]
         per = params[:per].present? ? params[:per] : 5

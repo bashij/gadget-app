@@ -8,23 +8,33 @@ import useSWR from 'swr'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
-export default function Users(props) {
+export default function Following(props) {
+  // ログインユーザー自身の詳細ページか判定
+  const isMyPage = props.currentUser?.id === props.pageUserId ? true : false
+
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
   const [pageIndex, setPageIndex] = useState(1)
-  const { data, error, isLoading } = useSWR(`${API_ENDPOINT}?paged=${pageIndex}`, fetcher, {
-    keepPreviousData: true,
-  })
+  const { data, error, isLoading } = useSWR(
+    `${API_ENDPOINT}/${props.pageUserId}/following?paged=${pageIndex}`,
+    fetcher,
+    {
+      keepPreviousData: true,
+    },
+  )
 
   if (error) return <div>failed to load</div>
 
   if (data || isLoading) {
     return (
-      <Layout user={props.user} pageName={'users'}>
+      <Layout user={props.currentUser} pageName={`${isMyPage ? 'myPage' : ''}`}>
         <Head>
-          <title>{siteTitle} | ユーザー一覧</title>
+          <title>{siteTitle} | フォロー中</title>
         </Head>
         <div className='row justify-content-center'>
           <div className='col-10 text-center'>
+            <div className='content-header'>
+              <p>フォロー中</p>
+            </div>
             <div className='mt-3'>
               <UserFeed data={data} />
             </div>
@@ -34,7 +44,7 @@ export default function Users(props) {
           {data?.users.length > 0 ? (
             <Pagination data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
           ) : (
-            <p>登録されているユーザーはまだいません</p>
+            <p>フォロー中のユーザーはまだいません</p>
           )}
         </div>
       </Layout>
@@ -43,14 +53,17 @@ export default function Users(props) {
 }
 
 export const getServerSideProps = async (context) => {
+  // ログインユーザー情報を取得
   const cookie = context.req?.headers.cookie
-  const response = await axios.get('http://back:3000/api/v1/check', {
+  const responseCurrentUser = await axios.get('http://back:3000/api/v1/check', {
     headers: {
       cookie: cookie,
     },
   })
+  const currentUser = await responseCurrentUser.data.user
 
-  const user = await response.data.user
+  // 遷移元ユーザーのIDを取得
+  const id = parseFloat(context.params.id)
 
-  return { props: { user: user } }
+  return { props: { currentUser: currentUser, pageUserId: id } }
 }

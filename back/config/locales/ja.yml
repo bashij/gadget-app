@@ -84,6 +84,13 @@ ja:
     destroy:
       flash:
         success: "ガジェットが削除されました"
+  tweets:
+    create:
+      flash:
+        success: "投稿が完了しました"
+    destroy:
+      flash:
+        success: "投稿を削除しました"
   users:
     create:
       flash:
@@ -94,6 +101,20 @@ ja:
     destroy:
       flash:
         success: "退会処理が完了しました。ご利用ありがとうございました。"
+  relationships:
+    create:
+      flash:
+        success: "フォローしました"
+    destroy:
+      flash:
+        success: "フォローを解除しました"
+  comments:
+    create:
+      flash:
+        success: "投稿が完了しました"
+    destroy:
+      flash:
+        success: "投稿を削除しました"
   date:
     abbr_day_names:
       - 日
