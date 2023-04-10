@@ -6,7 +6,7 @@ export default function TweetForm(props) {
 
   const [formData, setFormData] = useState({
     content: '',
-    parent_id: props.parentId,
+    parent_id: props.tweet?.id,
   })
 
   const handleChange = (e) => {
@@ -24,12 +24,12 @@ export default function TweetForm(props) {
       )
       const resMessage = await response.data.message
       const resStatus = await response.data.status
-      const resTweet = await response.data.tweet
-      const resUpdatedReplyCount = await response.data.replyCount
       props.setMessage(resMessage)
       props.setStatus(resStatus)
-      props.setNewTweet(resTweet)
-      props.setUpdatedReplyCount(resUpdatedReplyCount)
+      props.mutate(props.swrKey)
+      if (props.tweet?.id) {
+        props.setReplyFormId(props.tweet?.id)
+      }
     } catch (error) {
       console.log(error)
       console.log('catch error')
@@ -37,10 +37,10 @@ export default function TweetForm(props) {
   }
 
   return (
-    <div className={`${props.parentId ? 'reply-form' : ''}`}>
+    <div className={`${props.tweet?.id ? 'reply-form' : ''}`}>
       <form
         onSubmit={handleSubmit}
-        id={`${props.parentId ? `reply_form_${props.parentId}` : 'tweet_form'}`}
+        id={`${props.tweet?.id ? `reply_form_${props.tweet?.id}` : 'tweet_form'}`}
       >
         <div className='mb-3'>
           <textarea

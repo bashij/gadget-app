@@ -1,5 +1,4 @@
-import Message from '@/components/message'
-import ReplyFeed from '@/components/replyFeed'
+import ReplyTweet from '@/components/replyTweet'
 import TweetBookmark from '@/components/tweetBookmark'
 import TweetDelete from '@/components/tweetDelete'
 import TweetForm from '@/components/tweetForm'
@@ -10,20 +9,10 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { ja } from 'date-fns/locale'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 export default function Tweet(props) {
-  const [isDeleted, setIsDeleted] = useState(false)
-  const [latestClass, setLatestClass] = useState()
-
-  const router = useRouter()
-  const [message, setMessage] = useState([router.query.message])
-  const [status, setStatus] = useState(router.query.status)
-  const [newTweet, setNewTweet] = useState()
-  const [updatedReplyCount, setUpdatedReplyCount] = useState()
-
-  const replyCount = props.replyCounts[props.tweet.id]
+  const relatedReplies = props.replies?.filter((reply) => reply.parent_id === props.tweet.id)
 
   const [isOpen, setIsOpen] = useState(false)
   const replyRef = useRef(null)
@@ -40,20 +29,13 @@ export default function Tweet(props) {
     height: isOpen ? replyHeight : 0,
   }
 
-  useEffect(() => {
-    setLatestClass('reset-box-shadow')
-  }, [])
+  const [showReply, setShowReply] = useState(false)
+  const handleToggle = () => {
+    setShowReply(!showReply)
+  }
 
-  useEffect(() => {
-    if (status === 'success') {
-      document.getElementById(`reply_form_${props.tweet.id}`)?.reset()
-    }
-  }, [status, newTweet])
-
-  return isDeleted ? (
-    <div className='parent-post deleted-post' id={`tweet_${props.tweet.id}`}></div>
-  ) : (
-    <div className={`parent-post ${props.latest ? `latest ${latestClass}` : ''}`}>
+  return (
+    <div className='parent-post'>
       <div className='post' id={`tweet_${props.tweet.id}`}>
         <div className='tweet-section-left'>
           <div className='user-info'>
@@ -87,7 +69,13 @@ export default function Tweet(props) {
               <FontAwesomeIcon className='icon-post' icon={faReply} onClick={toggleAccordion} />
             </span>
             {props.user && props.tweet.user_id === props.user.id ? (
-              <TweetDelete tweet={props.tweet} user={props.user} setIsDeleted={setIsDeleted} />
+              <TweetDelete
+                tweet={props.tweet}
+                mutate={props.mutate}
+                swrKey={props.swrKey}
+                setMessage={props.setMessage}
+                setStatus={props.setStatus}
+              />
             ) : null}
           </div>
           <div className='horizontal-rule'></div>
@@ -101,28 +89,38 @@ export default function Tweet(props) {
         style={replyStyle}
         className={`reply-section ${isOpen ? 'open' : 'closed'}`}
       >
-        <Message message={message} status={status} />
         <TweetForm
-          setMessage={setMessage}
-          setStatus={setStatus}
-          setNewTweet={setNewTweet}
-          setUpdatedReplyCount={setUpdatedReplyCount}
+          tweet={props.tweet}
+          setMessage={props.setMessage}
+          setStatus={props.setStatus}
+          setReplyFormId={props.setReplyFormId}
           placeholder={'返信内容を入力'}
-          parentId={props.tweet.id}
+          mutate={props.mutate}
+          swrKey={props.swrKey}
         />
       </section>
-      <ReplyFeed
-        tweet={props.tweet}
-        user={props.user}
-        replies={props.replies}
-        replyCount={replyCount}
-        newTweet={newTweet}
-        data={props.data}
-        status={status}
-        message={message}
-        isDeleted={isDeleted}
-        updatedReplyCount={updatedReplyCount}
-      />
+      <div>
+        {props.replyCount !== undefined && props.replyCount !== 0 ? (
+          <span className='reply-count' onClick={handleToggle}>
+            {props.replyCount}件のリプライ
+          </span>
+        ) : null}
+      </div>
+      <div className={`reply-content ${showReply ? 'visible' : 'hidden'}`}>
+        {relatedReplies?.map((reply) => {
+          return (
+            <ReplyTweet
+              key={reply.id}
+              tweet={reply}
+              user={props.user}
+              mutate={props.mutate}
+              swrKey={props.swrKey}
+              setMessage={props.setMessage}
+              setStatus={props.setStatus}
+            />
+          )
+        })}
+      </div>
     </div>
   )
 }
