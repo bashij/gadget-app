@@ -18,8 +18,6 @@ import { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const fetcher = (url) => fetch(url).then((r) => r.json())
-
 export default function User(props) {
   // ログインユーザー自身の詳細ページか判定
   const isMyPage = props.currentUser?.id === props.pageUser.id ? true : false
