@@ -126,7 +126,21 @@ export default function Community(props) {
                       <tr>
                         <th>作成者</th>
                         <td>
-                          <p className='overflow'>{props.community.user.name}</p>
+                          <p className='overflow'>
+                            <Image
+                              src={
+                                props.community.user.image.url == 'default.jpg'
+                                  ? '/images/default.jpg'
+                                  : `https://static.gadgetlink-app.com${props.community.user.image.url}`
+                              }
+                              width={50}
+                              height={50}
+                              alt='user-image'
+                            />
+                            <Link href={`/users/${props.community.user.id}`}>
+                              {props.community.user.name}
+                            </Link>
+                          </p>
                         </td>
                       </tr>
                       <tr>

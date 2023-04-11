@@ -50,8 +50,7 @@ export default function Tweet(props) {
               alt='user-image'
             />
             <div className='user'>
-              <Link href={`users/${props.tweet.user}`}>{props.tweet.user.name}</Link>：
-              {props.tweet.id}
+              <Link href={`/users/${props.tweet.user.id}`}>{props.tweet.user.name}</Link>
             </div>
           </div>
         </div>

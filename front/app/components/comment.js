@@ -48,8 +48,7 @@ export default function Comment(props) {
               alt='user-image'
             />
             <div className='user'>
-              <Link href={`users/${props.comment.user}`}>{props.comment.user.name}</Link>：
-              {props.comment.id}
+              <Link href={`/users/${props.comment.user.id}`}>{props.comment.user.name}</Link>
             </div>
           </div>
         </div>
