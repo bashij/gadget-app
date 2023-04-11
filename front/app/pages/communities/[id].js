@@ -40,7 +40,7 @@ export default function Community(props) {
   // コミュニティ新規作成時
   useEffect(() => {
     if (status === 'success') {
-      toast.success(`${message}`, {
+      toast.success(`${message}`.replace(/,/g, '\n'), {
         position: 'top-center',
         autoClose: 2000,
         hideProgressBar: true,

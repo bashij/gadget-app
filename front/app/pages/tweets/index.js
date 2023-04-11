@@ -40,7 +40,7 @@ export default function Tweets(props) {
       setReplyFormId()
 
       // 成功メッセージを表示
-      toast.success(`${message}`, {
+      toast.success(`${message}`.replace(/,/g, '\n'), {
         position: 'top-center',
         autoClose: 2000,
         hideProgressBar: true,
@@ -54,7 +54,7 @@ export default function Tweets(props) {
 
     // 失敗メッセージを表示
     if (status === 'failure') {
-      toast.error(`${message}`, {
+      toast.error(`${message}`.replace(/,/g, '\n'), {
         position: 'top-center',
         autoClose: 8000,
         hideProgressBar: true,

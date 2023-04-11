@@ -69,7 +69,7 @@ export default function Gadget(props) {
         setReplyFormId()
 
         // 成功メッセージを表示
-        toast.success(`${message}`, {
+        toast.success(`${message}`.replace(/,/g, '\n'), {
           position: 'top-center',
           autoClose: 2000,
           hideProgressBar: true,
@@ -83,7 +83,7 @@ export default function Gadget(props) {
     }
 
     if (status === 'failure') {
-      toast.error(`${message}`, {
+      toast.error(`${message}`.replace(/,/g, '\n'), {
         position: 'top-center',
         autoClose: 8000,
         hideProgressBar: true,

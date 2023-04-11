@@ -28,7 +28,7 @@ export default function Gadgets(props) {
   // ガジェット削除時
   useEffect(() => {
     if (status === 'success') {
-      toast.success(`${message}`, {
+      toast.success(`${message}`.replace(/,/g, '\n'), {
         position: 'top-center',
         autoClose: 2000,
         hideProgressBar: true,

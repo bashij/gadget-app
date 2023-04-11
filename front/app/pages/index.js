@@ -20,7 +20,7 @@ export default function Home(props) {
 
     if (status === 'success') {
       // 成功メッセージを表示
-      toast.success(`${message}`, {
+      toast.success(`${message}`.replace(/,/g, '\n'), {
         position: 'top-center',
         autoClose: 2000,
         hideProgressBar: true,
