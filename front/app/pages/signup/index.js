@@ -1,9 +1,10 @@
 import Layout, { siteTitle } from '@/components/layout'
-import Message from '@/components/message'
 import axios from 'axios'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const pageTitle = 'ユーザー登録'
 
@@ -32,7 +33,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post(API_ENDPOINT, { user: formData })
+      const response = await axios.post(API_ENDPOINT, { user: formData }, { withCredentials: true })
 
       const resmessage = await response.data.message
       const resstatus = await response.data.status
@@ -53,6 +54,10 @@ export default function Signup() {
       return
     }
 
+    // Statusを初期化
+    setStatus()
+
+    // ユーザー新規登録完了後はHOMEへ遷移
     if (status === 'success') {
       router.push(
         {
@@ -63,6 +68,20 @@ export default function Signup() {
       )
       setMessage([])
     }
+
+    // 失敗メッセージを表示
+    if (status === 'failure') {
+      toast.error(`${message}`.replace(/,/g, '\n'), {
+        position: 'top-center',
+        autoClose: 8000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        className: 'toast-message',
+      })
+    }
   }, [status])
 
   return (
@@ -70,11 +89,8 @@ export default function Signup() {
       <Head>
         <title>{`${siteTitle} | ${pageTitle}`}</title>
       </Head>
-      <div className='content-header'>
-        <h3>{pageTitle}</h3>
-      </div>
-      <Message message={message} status={status} />
-      <div className='row justify-content-center'>
+      <ToastContainer />
+      <div className='row justify-content-center mt-3'>
         <div className='col-md-6 col-md-offset-3'>
           <form onSubmit={handleSubmit}>
             <div className='mb-3'>
