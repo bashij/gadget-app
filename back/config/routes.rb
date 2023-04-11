@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       end
       resources :relationships, only: %i[create destroy]
       post '/login', to: 'sessions#create'
+      delete '/logout',  to: 'sessions#destroy'
       get '/check', to: 'sessions#check_session'
       resources :tweets do
         resource :tweet_likes, only: %i[create destroy]

@@ -20,7 +20,8 @@ module Api
 
       def destroy
         log_out if logged_in?
-        redirect_to root_url
+        message = [I18n.t('sessions.destroy.flash.success')]
+        render json: { status: 'success', message: message }
       end
 
       def check_session

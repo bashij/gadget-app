@@ -212,6 +212,10 @@ body {
       color: $color_theme7;
       text-align: center;
       padding: 0.125rem;
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
       &.active {
         background-color: $color_theme6;
         color: $color_theme1;

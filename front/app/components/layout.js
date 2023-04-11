@@ -1,9 +1,11 @@
+import Logout from '@/components/logout'
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
 export const siteTitle = 'GadgetLink'
 
@@ -12,6 +14,24 @@ export default function Layout(props) {
   const menuFunction = () => {
     setOpenMenu(!openMenu)
   }
+
+  const router = useRouter()
+  const [message, setMessage] = useState([router.query.message])
+  const [status, setStatus] = useState(router.query.status)
+
+  // ログアウト処理
+  useEffect(() => {
+    // ログアウトが成功した時はHOMEに遷移する
+    if (status === 'success') {
+      router.push(
+        {
+          pathname: '/',
+          query: { message: message, status: status },
+        },
+        '/',
+      )
+    }
+  }, [status])
 
   return (
     <>
@@ -99,9 +119,7 @@ export default function Layout(props) {
                 >
                   SETTING
                 </Link>
-                <Link href='' className='nav-link' id='logout'>
-                  LOGOUT
-                </Link>
+                <Logout setMessage={setMessage} setStatus={setStatus} />
               </div>
             ) : (
               <Link

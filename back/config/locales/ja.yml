@@ -62,6 +62,9 @@ ja:
       flash:
         success: "ログインしました"
         danger: "無効なメールアドレスまたはパスワードです"
+    destroy:
+      flash:
+        success: "ログアウトしました"
     flash:
       danger: "ログインしてください"
   communities:
