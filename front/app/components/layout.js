@@ -22,7 +22,7 @@ export default function Layout(props) {
   // ログアウト処理
   useEffect(() => {
     // ログアウトが成功した時はHOMEに遷移する
-    if (status === 'success') {
+    if (status === 'justLoggedOut') {
       router.push(
         {
           pathname: '/',
