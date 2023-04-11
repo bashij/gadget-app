@@ -1,10 +1,6 @@
 module Api
   module V1
     class SessionsController < ApplicationController
-      def new
-        @title = 'ログイン'
-      end
-
       def create
         user = User.find_by(email: params[:session][:email].downcase)
         if user && user.authenticate(params[:session][:password])
