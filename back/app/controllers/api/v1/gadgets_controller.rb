@@ -32,7 +32,7 @@ module Api
       def user_bookmark_gadgets
         # 特定のユーザーがブックマークしているガジェット情報
         user = User.find(params[:id])
-        @gadgets = user.bookmarked_gadgets.order(created_at: :desc)
+        @gadgets = user.bookmarked_gadgets_reordered
         # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
         paged = params[:paged]
         per = params[:per].present? ? params[:per] : 5

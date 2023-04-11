@@ -40,7 +40,7 @@ module Api
       def user_bookmark_tweets
         # 特定のユーザーがブックマークしているツイート情報
         user = User.find(params[:id])
-        @tweets = user.bookmarked_tweets.where(parent_id: nil).order(created_at: :desc)
+        @tweets = user.bookmarked_tweets_reordered
         # ツイートのページネーション情報（デフォルトは5件ずつの表示とする）
         paged = params[:paged]
         per = params[:per].present? ? params[:per] : 5

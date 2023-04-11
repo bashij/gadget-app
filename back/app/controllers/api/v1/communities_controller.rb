@@ -19,7 +19,7 @@ module Api
       def user_communities
         # 特定のユーザーが参加しているコミュニティ情報
         user = User.find(params[:id])
-        @communities = user.joining_communities.order(created_at: :desc)
+        @communities = user.joining_communities_reordered
         # コミュニティのページネーション情報（デフォルトは10件ずつの表示とする）
         paged = params[:paged]
         per = params[:per].present? ? params[:per] : 10
