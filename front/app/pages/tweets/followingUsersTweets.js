@@ -13,15 +13,24 @@ import useSWR, { useSWRConfig } from 'swr'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
-export default function Tweets(props) {
-  const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_TWEETS
+export default function FollowingUsersTweets(props) {
+  const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
   const [pageIndex, setPageIndex] = useState(1)
   const { mutate } = useSWRConfig()
-  const { data, error, isLoading } = useSWR(`${API_ENDPOINT}?paged=${pageIndex}`, fetcher, {
-    keepPreviousData: true,
-    revalidateOnFocus: false,
-  })
-
+  const { data, error, isLoading } = useSWR(
+    `${API_ENDPOINT}/${props.user.id}/following_users_tweets?paged=${pageIndex}`,
+    fetcher,
+    {
+      keepPreviousData: true,
+      revalidateOnFocus: false,
+    },
+    {
+      headers: {
+        cookie: props.cookie,
+      },
+    },
+  )
+  console.log(props.user.id)
   const router = useRouter()
   const [message, setMessage] = useState([router.query.message])
   const [status, setStatus] = useState(router.query.status)
@@ -89,10 +98,10 @@ export default function Tweets(props) {
         <div className='row justify-content-center'>
           <div className='col-12 col-lg-10'>
             <div className='switch-area'>
-              <Link href='/tweets' className='switch-item active'>
+              <Link href='/tweets' className='switch-item'>
                 全てのユーザーを表示
               </Link>
-              <Link href='/tweets/followingUsersTweets' className='switch-item'>
+              <Link href='/tweets/followingUsersTweets' className='switch-item active'>
                 フォロー中のみ表示
               </Link>
             </div>
@@ -101,7 +110,7 @@ export default function Tweets(props) {
               setStatus={setStatus}
               placeholder={'新しいツイート'}
               mutate={mutate}
-              swrKey={`${API_ENDPOINT}?paged=${pageIndex}`}
+              swrKey={`${API_ENDPOINT}/${props.user.id}/following_users_tweets?paged=${pageIndex}`}
             />
             <div id='feed_tweet'>
               <div id='tweets' className='posts'>
@@ -114,7 +123,7 @@ export default function Tweets(props) {
                       replies={data.replies}
                       replyCount={data.replyCounts[tweet.id]}
                       mutate={mutate}
-                      swrKey={`${API_ENDPOINT}?paged=${pageIndex}`}
+                      swrKey={`${API_ENDPOINT}/${props.user.id}/following_users_tweets?paged=${pageIndex}`}
                       setMessage={setMessage}
                       setStatus={setStatus}
                       setReplyFormId={setReplyFormId}
@@ -147,5 +156,5 @@ export const getServerSideProps = async (context) => {
 
   const user = await response.data.user
 
-  return { props: { user: user } }
+  return { props: { user: user, cookie: cookie } }
 }
