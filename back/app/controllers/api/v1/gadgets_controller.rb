@@ -42,6 +42,19 @@ module Api
         render json: { gadgets: @gadgets_paginated, pagination: @pagination }, include: [:user, :gadget_likes, :gadget_bookmarks, :review_requests]
       end
 
+      def following_users_gadgets
+        # ログインユーザーがフォローしているユーザーのガジェット情報
+        user = User.find(params[:id])
+        @gadgets = user.following_users_gadgets
+        # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
+        paged = params[:paged]
+        per = params[:per].present? ? params[:per] : 5
+        @gadgets_paginated = @gadgets.page(paged).per(per)
+        @pagination = pagination(@gadgets_paginated)
+
+        render json: { gadgets: @gadgets_paginated, pagination: @pagination }, include: [:user, :gadget_likes, :gadget_bookmarks, :review_requests]
+      end
+
       def show
         # 表示対象ガジェット
         @gadget = Gadget.find(params[:id])

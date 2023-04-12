@@ -13,6 +13,7 @@ Rails.application.routes.draw do
           get 'following_users_tweets', to: 'tweets#following_users_tweets'
           get 'user_gadgets', to: 'gadgets#user_gadgets'
           get 'user_bookmark_gadgets', to: 'gadgets#user_bookmark_gadgets'
+          get 'following_users_gadgets', to: 'gadgets#following_users_gadgets'
         end
       end
       resources :relationships, only: %i[create destroy]

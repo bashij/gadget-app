@@ -79,11 +79,11 @@ class User < ApplicationRecord
   end
 
   # フォローしているユーザーのガジェットフィード
-  def gadget_feed
+  def following_users_gadgets
     following_ids = 'SELECT followed_id FROM relationships
                      WHERE follower_id = :user_id'
-    Gadget.where("user_id IN (#{following_ids})
-                     OR user_id = :user_id", user_id: id)
+    Gadget.where("gadgets.user_id IN (#{following_ids})
+                     OR gadgets.user_id = :user_id", user_id: id)
           .order(updated_at: :DESC)
           .includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests)
   end

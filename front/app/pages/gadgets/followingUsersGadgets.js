@@ -14,13 +14,17 @@ import useSWR from 'swr'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
-export default function Gadgets(props) {
-  const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS
+export default function FollowingUsersGadgets(props) {
+  const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
   const [pageIndex, setPageIndex] = useState(1)
-  const { data, error, isLoading } = useSWR(`${API_ENDPOINT}?paged=${pageIndex}`, fetcher, {
-    keepPreviousData: true,
-    revalidateOnFocus: false,
-  })
+  const { data, error, isLoading } = useSWR(
+    `${API_ENDPOINT}/${props.user.id}/following_users_gadgets?paged=${pageIndex}`,
+    fetcher,
+    {
+      keepPreviousData: true,
+      revalidateOnFocus: false,
+    },
+  )
 
   const router = useRouter()
   const [message, setMessage] = useState([router.query.message])
@@ -64,10 +68,10 @@ export default function Gadgets(props) {
         <div className='row justify-content-center'>
           <div className='col-12 col-lg-10'>
             <div className='switch-area'>
-              <Link href='/gadgets' className='switch-item active'>
+              <Link href='/gadgets' className='switch-item'>
                 全てのユーザーを表示
               </Link>
-              <Link href='/gadgets/followingUsersGadgets' className='switch-item'>
+              <Link href='/gadgets/followingUsersGadgets' className='switch-item active'>
                 フォロー中のみ表示
               </Link>
             </div>
