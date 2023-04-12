@@ -24,13 +24,8 @@ export default function FollowingUsersTweets(props) {
       keepPreviousData: true,
       revalidateOnFocus: false,
     },
-    {
-      headers: {
-        cookie: props.cookie,
-      },
-    },
   )
-  console.log(props.user.id)
+
   const router = useRouter()
   const [message, setMessage] = useState([router.query.message])
   const [status, setStatus] = useState(router.query.status)
