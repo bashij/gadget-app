@@ -18,7 +18,7 @@ export default function Gadgets(props) {
   // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
   if (props.errorMessage) return props.errorMessage
 
-  const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETSa
+  const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS
   const [pageIndex, setPageIndex] = useState(1)
   const { data, error, isLoading } = useSWR(`${API_ENDPOINT}?paged=${pageIndex}`, fetcher, {
     keepPreviousData: true,
