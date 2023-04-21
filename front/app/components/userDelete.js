@@ -7,7 +7,7 @@ export default function UserDelete(props) {
     // statusを初期化
     props.setStatus()
     try {
-      const confirmed = window.confirm('削除してよろしいですか？')
+      const confirmed = window.confirm('退会します。本当によろしいですか？')
       if (!confirmed) {
         return
       }
