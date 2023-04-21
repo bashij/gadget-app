@@ -1,12 +1,13 @@
 import Layout, { siteTitle } from '@/components/layout'
-import Message from '@/components/message'
+import apiClient from '@/utils/apiClient'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const pageTitle = 'ログイン'
 
@@ -31,7 +32,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post(
+      const response = await apiClient.post(
         API_ENDPOINT,
         { session: formData },
         { withCredentials: true },
@@ -41,8 +42,14 @@ export default function Login() {
       setMessage(resmessage)
       setStatus(resstatus)
     } catch (error) {
-      console.log(error)
-      console.log('catch error')
+      setStatus('failure')
+      if (error.response) {
+        setMessage(error.response.errorMessage)
+      } else if (error.request) {
+        setMessage(error.request.errorMessage)
+      } else {
+        setMessage(error.errorMessage)
+      }
     }
   }
 
@@ -65,6 +72,23 @@ export default function Login() {
       )
       setMessage([])
     }
+
+    // ログイン処理が失敗した場合
+    if (status === 'failure') {
+      // Statusを初期化
+      setStatus()
+      // エラーメッセージを表示
+      toast.error(`${message}`.replace(/,/g, '\n'), {
+        position: 'top-center',
+        autoClose: 8000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        className: 'toast-message',
+      })
+    }
   }, [status])
 
   return (
@@ -73,8 +97,8 @@ export default function Login() {
         <Head>
           <title>{`${siteTitle} | ${pageTitle}`}</title>
         </Head>
-        <Message message={message} status={status} />
-        <div className='row justify-content-center'>
+        <ToastContainer />
+        <div className='row justify-content-center mt-3'>
           <div className='col-md-6 col-md-offset-3'>
             <form onSubmit={handleSubmit}>
               <div className='mb-3'>

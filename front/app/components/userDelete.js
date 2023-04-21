@@ -1,4 +1,4 @@
-import axios from 'axios'
+import apiClient from '@/utils/apiClient'
 
 export default function UserDelete(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
@@ -11,7 +11,7 @@ export default function UserDelete(props) {
       if (!confirmed) {
         return
       }
-      const response = await axios.delete(`${API_ENDPOINT}/${userId}`, {
+      const response = await apiClient.delete(`${API_ENDPOINT}/${userId}`, {
         data: { user_id: userId },
         withCredentials: true,
       })
@@ -22,8 +22,14 @@ export default function UserDelete(props) {
       props.setStatus(resStatus)
       props.setIsPageDeleted(resIsPageDeleted)
     } catch (error) {
-      console.log(error)
-      console.log('catch error')
+      props.setStatus('failure')
+      if (error.response) {
+        props.setMessage(error.response.errorMessage)
+      } else if (error.request) {
+        props.setMessage(error.request.errorMessage)
+      } else {
+        props.setMessage(error.errorMessage)
+      }
     }
   }
 

@@ -1,6 +1,6 @@
+import apiClient from '@/utils/apiClient'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import axios from 'axios'
 
 export default function GadgetDelete(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS
@@ -13,7 +13,7 @@ export default function GadgetDelete(props) {
       if (!confirmed) {
         return
       }
-      const response = await axios.delete(`${API_ENDPOINT}/${gadgetId}`, {
+      const response = await apiClient.delete(`${API_ENDPOINT}/${gadgetId}`, {
         data: { gadget_id: gadgetId },
         withCredentials: true,
       })
@@ -24,8 +24,14 @@ export default function GadgetDelete(props) {
       props.setStatus(resStatus)
       props.setIsPageDeleted(resIsPageDeleted)
     } catch (error) {
-      console.log(error)
-      console.log('catch error')
+      props.setStatus('failure')
+      if (error.response) {
+        props.setMessage(error.response.errorMessage)
+      } else if (error.request) {
+        props.setMessage(error.request.errorMessage)
+      } else {
+        props.setMessage(error.errorMessage)
+      }
     }
   }
 

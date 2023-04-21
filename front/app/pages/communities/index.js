@@ -1,9 +1,9 @@
 import Community from '@/components/community'
 import Layout, { siteTitle } from '@/components/layout'
 import Pagination from '@/components/pagination'
+import apiClient from '@/utils/apiClient'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -15,6 +15,9 @@ import useSWR from 'swr'
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
 export default function Communities(props) {
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
+
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_COMMUNITIES
   const [pageIndex, setPageIndex] = useState(1)
   const { data, error, isLoading } = useSWR(`${API_ENDPOINT}?paged=${pageIndex}`, fetcher, {
@@ -41,7 +44,7 @@ export default function Communities(props) {
     }
   }, [])
 
-  if (error) return <div>failed to load</div>
+  if (error) return <div>エラーが発生しました。時間をおいて再度お試しください。</div>
 
   if (data || isLoading) {
     return (
@@ -76,14 +79,29 @@ export default function Communities(props) {
 }
 
 export const getServerSideProps = async (context) => {
-  const cookie = context.req?.headers.cookie
-  const response = await axios.get('http://back:3000/api/v1/check', {
-    headers: {
-      cookie: cookie,
-    },
-  })
+  try {
+    const cookie = context.req?.headers.cookie
+    const response = await apiClient.get('http://back:3000/api/v1/check', {
+      headers: {
+        cookie: cookie,
+      },
+    })
 
-  const user = await response.data.user
+    const user = await response.data.user
 
-  return { props: { user: user } }
+    return { props: { user: user } }
+  } catch (error) {
+    // エラーに応じたメッセージを取得する
+    let errorMessage = ''
+
+    if (error.response) {
+      errorMessage = error.response.errorMessage
+    } else if (error.request) {
+      errorMessage = error.request.errorMessage
+    } else {
+      errorMessage = error.errorMessage
+    }
+
+    return { props: { errorMessage: errorMessage } }
+  }
 }

@@ -1,14 +1,18 @@
 import Layout, { siteTitle } from '@/components/layout'
 import MarkdownEditor from '@/components/markdownEditor'
-import Message from '@/components/message'
-import axios from 'axios'
+import apiClient from '@/utils/apiClient'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const pageTitle = 'ガジェット登録'
 
 export default function New(props) {
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
+
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS
 
   const [formData, setFormData] = useState({
@@ -35,7 +39,7 @@ export default function New(props) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post(
+      const response = await apiClient.post(
         API_ENDPOINT,
         { gadget: formData },
         { withCredentials: true },
@@ -47,8 +51,14 @@ export default function New(props) {
       setStatus(resStatus)
       setId(resId)
     } catch (error) {
-      console.log(error)
-      console.log('catch error')
+      setStatus('failure')
+      if (error.response) {
+        setMessage(error.response.errorMessage)
+      } else if (error.request) {
+        setMessage(error.request.errorMessage)
+      } else {
+        setMessage(error.errorMessage)
+      }
     }
   }
 
@@ -72,6 +82,23 @@ export default function New(props) {
       setMessage([])
       setStatus()
     }
+
+    // 新規作成処理が失敗した場合
+    if (status === 'failure') {
+      // Statusを初期化
+      setStatus()
+      // エラーメッセージを表示
+      toast.error(`${message}`.replace(/,/g, '\n'), {
+        position: 'top-center',
+        autoClose: 8000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        className: 'toast-message',
+      })
+    }
   }, [status])
 
   return (
@@ -80,10 +107,10 @@ export default function New(props) {
         <Head>
           <title>{`${siteTitle} | ${pageTitle}`}</title>
         </Head>
-        <Message message={message} status={status} />
+        <ToastContainer />
         <div className='row justify-content-center'>
           <div className='col-12'>
-            <form onSubmit={handleSubmit} className='row justify-content-center'>
+            <form onSubmit={handleSubmit} className='row justify-content-center mt-3'>
               <div className='col-lg-8 col-sm-10'>
                 <div className='mb-3'>
                   <label className='form-label'>ガジェット名</label>
@@ -194,14 +221,29 @@ export default function New(props) {
 }
 
 export const getServerSideProps = async (context) => {
-  const cookie = context.req?.headers.cookie
-  const response = await axios.get('http://back:3000/api/v1/check', {
-    headers: {
-      cookie: cookie,
-    },
-  })
+  try {
+    const cookie = context.req?.headers.cookie
+    const response = await apiClient.get('http://back:3000/api/v1/check', {
+      headers: {
+        cookie: cookie,
+      },
+    })
 
-  const user = await response.data.user
+    const user = await response.data.user
 
-  return { props: { user: user } }
+    return { props: { user: user } }
+  } catch (error) {
+    // エラーに応じたメッセージを取得する
+    let errorMessage = ''
+
+    if (error.response) {
+      errorMessage = error.response.errorMessage
+    } else if (error.request) {
+      errorMessage = error.request.errorMessage
+    } else {
+      errorMessage = error.errorMessage
+    }
+
+    return { props: { errorMessage: errorMessage } }
+  }
 }

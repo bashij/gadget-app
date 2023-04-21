@@ -39,7 +39,7 @@ export default function Gadget(props) {
           </span>
         </div>
         <div className='review-link'>
-          {props.gadget.review ? (
+          {props.gadget.review.body ? (
             <span id={`review_request_section_${props.gadget.id}`}>
               <Link href={`/gadgets/${props.gadget.id}`}>レビューを見る</Link>
             </span>

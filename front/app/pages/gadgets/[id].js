@@ -7,9 +7,9 @@ import GadgetLike from '@/components/gadgetLike'
 import Layout, { siteTitle } from '@/components/layout'
 import Pagination from '@/components/pagination'
 import ReviewRequest from '@/components/reviewRequest'
+import apiClient from '@/utils/apiClient'
 import { faPenToSquare, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import axios from 'axios'
 import DOMPurify from 'dompurify'
 import 'easymde/dist/easymde.min.css'
 import 'highlight.js/styles/github.css'
@@ -26,6 +26,9 @@ import useSWR, { useSWRConfig } from 'swr'
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
 export default function Gadget(props) {
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
+
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS
   const [pageIndex, setPageIndex] = useState(1)
   const { mutate } = useSWRConfig()
@@ -144,7 +147,7 @@ export default function Gadget(props) {
     document.querySelector('#review').innerHTML = sanitizeMarkdown().__html
   }, [])
 
-  if (error) return <div>failed to load</div>
+  if (error) return <div>エラーが発生しました。時間をおいて再度お試しください。</div>
 
   if (data || isLoading) {
     return (
@@ -276,23 +279,38 @@ export default function Gadget(props) {
 }
 
 export const getServerSideProps = async (context) => {
-  // ログインユーザー情報を取得
-  const cookie = context.req?.headers.cookie
-  const responseUser = await axios.get('http://back:3000/api/v1/check', {
-    headers: {
-      cookie: cookie,
-    },
-  })
-  const user = await responseUser.data.user
+  try {
+    // ログインユーザー情報を取得
+    const cookie = context.req?.headers.cookie
+    const responseUser = await apiClient.get('http://back:3000/api/v1/check', {
+      headers: {
+        cookie: cookie,
+      },
+    })
+    const user = await responseUser.data.user
 
-  // ガジェット詳細情報を取得
-  const id = context.params.id
-  const responseGadget = await axios.get(`http://back:3000/api/v1/gadgets/${id}`, {
-    headers: {
-      cookie: cookie,
-    },
-  })
-  const gadget = await responseGadget.data.gadget
+    // ガジェット詳細情報を取得
+    const id = context.params.id
+    const responseGadget = await apiClient.get(`http://back:3000/api/v1/gadgets/${id}`, {
+      headers: {
+        cookie: cookie,
+      },
+    })
+    const gadget = await responseGadget.data.gadget
 
-  return { props: { user: user, gadget: gadget } }
+    return { props: { user: user, gadget: gadget } }
+  } catch (error) {
+    // エラーに応じたメッセージを取得する
+    let errorMessage = ''
+
+    if (error.response) {
+      errorMessage = error.response.errorMessage
+    } else if (error.request) {
+      errorMessage = error.request.errorMessage
+    } else {
+      errorMessage = error.errorMessage
+    }
+
+    return { props: { errorMessage: errorMessage } }
+  }
 }

@@ -1,11 +1,14 @@
 import Layout, { siteTitle } from '@/components/layout'
 import Pagination from '@/components/pagination'
 import UserFeed from '@/components/userFeed'
-import axios from 'axios'
+import apiClient from '@/utils/apiClient'
 import Head from 'next/head'
 import { useState } from 'react'
 
 export default function RequestUsers(props) {
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
+
   const [pageIndex, setPageIndex] = useState(1)
 
   return (
@@ -35,26 +38,41 @@ export default function RequestUsers(props) {
 }
 
 export const getServerSideProps = async (context) => {
-  // ログインユーザー情報を取得
-  const cookie = context.req?.headers.cookie
-  const responseUser = await axios.get('http://back:3000/api/v1/check', {
-    headers: {
-      cookie: cookie,
-    },
-  })
-  const user = await responseUser.data.user
-
-  // レビューリクエストしているユーザー詳細情報を取得
-  const id = context.params.id
-  const responseRequestUsers = await axios.get(
-    `http://back:3000/api/v1/gadgets/${id}/review_requests`,
-    {
+  try {
+    // ログインユーザー情報を取得
+    const cookie = context.req?.headers.cookie
+    const responseUser = await apiClient.get('http://back:3000/api/v1/check', {
       headers: {
         cookie: cookie,
       },
-    },
-  )
-  const data = await responseRequestUsers.data
+    })
+    const user = await responseUser.data.user
 
-  return { props: { user: user, data: data } }
+    // レビューリクエストしているユーザー詳細情報を取得
+    const id = context.params.id
+    const responseRequestUsers = await apiClient.get(
+      `http://back:3000/api/v1/gadgets/${id}/review_requests`,
+      {
+        headers: {
+          cookie: cookie,
+        },
+      },
+    )
+    const data = await responseRequestUsers.data
+
+    return { props: { user: user, data: data } }
+  } catch (error) {
+    // エラーに応じたメッセージを取得する
+    let errorMessage = ''
+
+    if (error.response) {
+      errorMessage = error.response.errorMessage
+    } else if (error.request) {
+      errorMessage = error.request.errorMessage
+    } else {
+      errorMessage = error.errorMessage
+    }
+
+    return { props: { errorMessage: errorMessage } }
+  }
 }

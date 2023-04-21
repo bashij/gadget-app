@@ -1,13 +1,17 @@
 import Layout, { siteTitle } from '@/components/layout'
-import Message from '@/components/message'
-import axios from 'axios'
+import apiClient from '@/utils/apiClient'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const pageTitle = 'コミュニティ編集'
 
 export default function Edit(props) {
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
+
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_COMMUNITIES
 
   const [formData, setFormData] = useState({
@@ -28,7 +32,7 @@ export default function Edit(props) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.patch(
+      const response = await apiClient.patch(
         `${API_ENDPOINT}/${props.community.id}`,
         { community: formData },
         { withCredentials: true },
@@ -40,8 +44,14 @@ export default function Edit(props) {
       setStatus(resStatus)
       setId(resId)
     } catch (error) {
-      console.log(error)
-      console.log('catch error')
+      setStatus('failure')
+      if (error.response) {
+        setMessage(error.response.errorMessage)
+      } else if (error.request) {
+        setMessage(error.request.errorMessage)
+      } else {
+        setMessage(error.errorMessage)
+      }
     }
   }
 
@@ -65,6 +75,23 @@ export default function Edit(props) {
       setMessage([])
       setStatus()
     }
+
+    // 更新処理が失敗した場合
+    if (status === 'failure') {
+      // Statusを初期化
+      setStatus()
+      // エラーメッセージを表示
+      toast.error(`${message}`.replace(/,/g, '\n'), {
+        position: 'top-center',
+        autoClose: 8000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        className: 'toast-message',
+      })
+    }
   }, [status])
 
   return (
@@ -73,8 +100,8 @@ export default function Edit(props) {
         <Head>
           <title>{`${siteTitle} | ${pageTitle}`}</title>
         </Head>
-        <Message message={message} status={status} />
-        <div className='row justify-content-center'>
+        <ToastContainer />
+        <div className='row justify-content-center mt-3'>
           <div className='col-lg-8 col-sm-10'>
             <form onSubmit={handleSubmit}>
               <div className='mb-3'>
@@ -118,23 +145,38 @@ export default function Edit(props) {
 }
 
 export const getServerSideProps = async (context) => {
-  // ログインユーザー情報を取得
-  const cookie = context.req?.headers.cookie
-  const responseUser = await axios.get('http://back:3000/api/v1/check', {
-    headers: {
-      cookie: cookie,
-    },
-  })
-  const user = await responseUser.data.user
+  try {
+    // ログインユーザー情報を取得
+    const cookie = context.req?.headers.cookie
+    const responseUser = await apiClient.get('http://back:3000/api/v1/check', {
+      headers: {
+        cookie: cookie,
+      },
+    })
+    const user = await responseUser.data.user
 
-  // コミュニティ詳細情報を取得
-  const id = context.params.id
-  const responseCommunity = await axios.get(`http://back:3000/api/v1/communities/${id}`, {
-    headers: {
-      cookie: cookie,
-    },
-  })
-  const community = await responseCommunity.data.community
+    // コミュニティ詳細情報を取得
+    const id = context.params.id
+    const responseCommunity = await apiClient.get(`http://back:3000/api/v1/communities/${id}`, {
+      headers: {
+        cookie: cookie,
+      },
+    })
+    const community = await responseCommunity.data.community
 
-  return { props: { user: user, community: community } }
+    return { props: { user: user, community: community } }
+  } catch (error) {
+    // エラーに応じたメッセージを取得する
+    let errorMessage = ''
+
+    if (error.response) {
+      errorMessage = error.response.errorMessage
+    } else if (error.request) {
+      errorMessage = error.request.errorMessage
+    } else {
+      errorMessage = error.errorMessage
+    }
+
+    return { props: { errorMessage: errorMessage } }
+  }
 }

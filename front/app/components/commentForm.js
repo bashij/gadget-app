@@ -1,4 +1,4 @@
-import axios from 'axios'
+import apiClient from '@/utils/apiClient'
 import { useState } from 'react'
 
 export default function CommentForm(props) {
@@ -18,7 +18,7 @@ export default function CommentForm(props) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post(
+      const response = await apiClient.post(
         `${API_ENDPOINT}/${props.gadget.id}/comments`,
         { comment: formData },
         { withCredentials: true },
@@ -32,8 +32,14 @@ export default function CommentForm(props) {
         props.setReplyFormId(props.comment?.id)
       }
     } catch (error) {
-      console.log(error)
-      console.log('catch error')
+      props.setStatus('failure')
+      if (error.response) {
+        props.setMessage(error.response.errorMessage)
+      } else if (error.request) {
+        props.setMessage(error.request.errorMessage)
+      } else {
+        props.setMessage(error.errorMessage)
+      }
     }
   }
 

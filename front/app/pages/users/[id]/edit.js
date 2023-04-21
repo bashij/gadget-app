@@ -1,6 +1,6 @@
 import Layout, { siteTitle } from '@/components/layout'
 import UserDelete from '@/components/userDelete'
-import axios from 'axios'
+import apiClient from '@/utils/apiClient'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -10,6 +10,9 @@ import 'react-toastify/dist/ReactToastify.css'
 const pageTitle = 'ユーザー情報編集'
 
 export default function Edit(props) {
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
+
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
 
   const [formData, setFormData] = useState({
@@ -34,7 +37,7 @@ export default function Edit(props) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.patch(
+      const response = await apiClient.patch(
         `${API_ENDPOINT}/${props.pageUser.id}`,
         { user: formData },
         { withCredentials: true },
@@ -46,8 +49,14 @@ export default function Edit(props) {
       setStatus(resStatus)
       setId(resId)
     } catch (error) {
-      console.log(error)
-      console.log('catch error')
+      setStatus('failure')
+      if (error.response) {
+        setMessage(error.response.errorMessage)
+      } else if (error.request) {
+        setMessage(error.request.errorMessage)
+      } else {
+        setMessage(error.errorMessage)
+      }
     }
   }
 
@@ -216,25 +225,40 @@ export default function Edit(props) {
 }
 
 export const getServerSideProps = async (context) => {
-  // ログインユーザー情報を取得
-  const cookie = context.req?.headers.cookie
-  const responseCurrentUser = await axios.get('http://back:3000/api/v1/check', {
-    headers: {
-      cookie: cookie,
-    },
-  })
-  const currentUser = await responseCurrentUser.data.user
+  try {
+    // ログインユーザー情報を取得
+    const cookie = context.req?.headers.cookie
+    const responseCurrentUser = await apiClient.get('http://back:3000/api/v1/check', {
+      headers: {
+        cookie: cookie,
+      },
+    })
+    const currentUser = await responseCurrentUser.data.user
 
-  // ユーザー詳細情報を取得
-  const id = context.params.id
-  const responseUser = await axios.get(`http://back:3000/api/v1/users/${id}`, {
-    headers: {
-      cookie: cookie,
-    },
-  })
+    // ユーザー詳細情報を取得
+    const id = context.params.id
+    const responseUser = await apiClient.get(`http://back:3000/api/v1/users/${id}`, {
+      headers: {
+        cookie: cookie,
+      },
+    })
 
-  const pageUser = await responseUser.data.user
-  const userCount = await responseUser.data.userCount
+    const pageUser = await responseUser.data.user
+    const userCount = await responseUser.data.userCount
 
-  return { props: { currentUser: currentUser, pageUser: pageUser, userCount: userCount } }
+    return { props: { currentUser: currentUser, pageUser: pageUser, userCount: userCount } }
+  } catch (error) {
+    // エラーに応じたメッセージを取得する
+    let errorMessage = ''
+
+    if (error.response) {
+      errorMessage = error.response.errorMessage
+    } else if (error.request) {
+      errorMessage = error.request.errorMessage
+    } else {
+      errorMessage = error.errorMessage
+    }
+
+    return { props: { errorMessage: errorMessage } }
+  }
 }

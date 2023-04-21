@@ -6,6 +6,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export const siteTitle = 'GadgetLink'
 
@@ -30,6 +32,20 @@ export default function Layout(props) {
         },
         '/',
       )
+    }
+
+    // ログアウト処理でerrorをcatchした場合
+    if (status === 'failure') {
+      toast.error(`${message}`.replace(/,/g, '\n'), {
+        position: 'top-center',
+        autoClose: 8000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        className: 'toast-message',
+      })
     }
   }, [status])
 
@@ -103,7 +119,9 @@ export default function Layout(props) {
                       alt='user-image'
                     />
                   </span>
-                  <span className='nav-link'>{props.user.name}</span>
+                  <Link href={`/users/${props.user.id}`} className='nav-link' id='mypage'>
+                    {props.user.name}
+                  </Link>
                 </div>
                 <Link
                   href={`/users/${props.user.id}`}

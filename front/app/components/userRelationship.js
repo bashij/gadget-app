@@ -1,4 +1,4 @@
-import axios from 'axios'
+import apiClient from '@/utils/apiClient'
 import { useState } from 'react'
 
 export default function UserRelationship(props) {
@@ -12,12 +12,12 @@ export default function UserRelationship(props) {
     try {
       let response
       if (isFollowing) {
-        response = await axios.delete(`${API_ENDPOINT}/${userId}`, {
+        response = await apiClient.delete(`${API_ENDPOINT}/${userId}`, {
           data: { user_id: userId },
           withCredentials: true,
         })
       } else {
-        response = await axios.post(
+        response = await apiClient.post(
           `${API_ENDPOINT}`,
           {
             followed_id: userId,
@@ -34,8 +34,14 @@ export default function UserRelationship(props) {
       setIsFollowing(resFollowing)
       props.setFollowerCount(resCount)
     } catch (error) {
-      console.log(error)
-      console.log('catch error')
+      props.setStatus('failure')
+      if (error.response) {
+        props.setMessage(error.response.errorMessage)
+      } else if (error.request) {
+        props.setMessage(error.request.errorMessage)
+      } else {
+        props.setMessage(error.errorMessage)
+      }
     }
   }
 

@@ -1,7 +1,7 @@
 import Layout, { siteTitle } from '@/components/layout'
+import apiClient from '@/utils/apiClient'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -10,6 +10,9 @@ import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function Home(props) {
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
+
   const router = useRouter()
   const [message, setMessage] = useState([router.query.message])
   const [status, setStatus] = useState(router.query.status)
@@ -94,14 +97,29 @@ export default function Home(props) {
 }
 
 export const getServerSideProps = async (context) => {
-  const cookie = context.req?.headers.cookie
-  const response = await axios.get('http://back:3000/api/v1/check', {
-    headers: {
-      cookie: cookie,
-    },
-  })
+  try {
+    const cookie = context.req?.headers.cookie
+    const response = await apiClient.get('http://back:3000/api/v1/check', {
+      headers: {
+        cookie: cookie,
+      },
+    })
 
-  const user = await response.data.user
+    const user = await response.data.user
 
-  return { props: { user: user } }
+    return { props: { user: user } }
+  } catch (error) {
+    // エラーに応じたメッセージを取得する
+    let errorMessage = ''
+
+    if (error.response) {
+      errorMessage = error.response.errorMessage
+    } else if (error.request) {
+      errorMessage = error.request.errorMessage
+    } else {
+      errorMessage = error.errorMessage
+    }
+
+    return { props: { errorMessage: errorMessage } }
+  }
 }

@@ -1,6 +1,8 @@
-import axios from 'axios'
+import apiClient from '@/utils/apiClient'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function ReviewRequest(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS
@@ -17,12 +19,12 @@ export default function ReviewRequest(props) {
     try {
       let response
       if (isRequested) {
-        response = await axios.delete(`${API_ENDPOINT}/${gadgetId}/review_requests`, {
+        response = await apiClient.delete(`${API_ENDPOINT}/${gadgetId}/review_requests`, {
           data: { gadget_id: gadgetId },
           withCredentials: true,
         })
       } else {
-        response = await axios.post(
+        response = await apiClient.post(
           `${API_ENDPOINT}/${gadgetId}/review_requests`,
           {
             gadget_id: gadgetId,
@@ -39,8 +41,14 @@ export default function ReviewRequest(props) {
       props.setReviewRequestCount(resCount)
       setIsRequested(resRequested)
     } catch (error) {
-      console.log(error)
-      console.log('catch error')
+      setStatus('failure')
+      if (error.response) {
+        setMessage(error.response.errorMessage)
+      } else if (error.request) {
+        setMessage(error.request.errorMessage)
+      } else {
+        setMessage(error.errorMessage)
+      }
     }
   }
 
@@ -49,6 +57,23 @@ export default function ReviewRequest(props) {
     if (isInitialRendered.current) {
       isInitialRendered.current = false
       return
+    }
+
+    // errorをcatchした場合
+    if (status === 'failure') {
+      // Statusを初期化
+      setStatus()
+      // エラーメッセージを表示
+      toast.error(`${message}`.replace(/,/g, '\n'), {
+        position: 'top-center',
+        autoClose: 8000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        className: 'toast-message',
+      })
     }
 
     if (status === 'notLoggedIn') {

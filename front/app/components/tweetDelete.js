@@ -1,6 +1,6 @@
+import apiClient from '@/utils/apiClient'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import axios from 'axios'
 
 export default function TweetDelete(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_TWEETS
@@ -11,7 +11,7 @@ export default function TweetDelete(props) {
       if (!confirmed) {
         return
       }
-      const response = await axios.delete(`${API_ENDPOINT}/${tweetId}`, {
+      const response = await apiClient.delete(`${API_ENDPOINT}/${tweetId}`, {
         data: { tweet_id: tweetId },
         withCredentials: true,
       })
@@ -21,8 +21,14 @@ export default function TweetDelete(props) {
       props.setStatus(resStatus)
       props.mutate(props.swrKey)
     } catch (error) {
-      console.log(error)
-      console.log('catch error')
+      props.setStatus('failure')
+      if (error.response) {
+        props.setMessage(error.response.errorMessage)
+      } else if (error.request) {
+        props.setMessage(error.request.errorMessage)
+      } else {
+        props.setMessage(error.errorMessage)
+      }
     }
   }
 

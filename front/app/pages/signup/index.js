@@ -1,5 +1,5 @@
 import Layout, { siteTitle } from '@/components/layout'
-import axios from 'axios'
+import apiClient from '@/utils/apiClient'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
@@ -33,15 +33,25 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post(API_ENDPOINT, { user: formData }, { withCredentials: true })
+      const response = await apiClient.post(
+        API_ENDPOINT,
+        { user: formData },
+        { withCredentials: true },
+      )
 
       const resmessage = await response.data.message
       const resstatus = await response.data.status
       setMessage(resmessage)
       setStatus(resstatus)
     } catch (error) {
-      console.log(error)
-      console.log('catch error')
+      setStatus('failure')
+      if (error.response) {
+        setMessage(error.response.errorMessage)
+      } else if (error.request) {
+        setMessage(error.request.errorMessage)
+      } else {
+        setMessage(error.errorMessage)
+      }
     }
   }
 
@@ -54,9 +64,6 @@ export default function Signup() {
       return
     }
 
-    // Statusを初期化
-    setStatus()
-
     // ユーザー新規登録完了後はHOMEへ遷移
     if (status === 'success') {
       router.push(
@@ -67,10 +74,14 @@ export default function Signup() {
         '/',
       )
       setMessage([])
+      setStatus()
     }
 
-    // 失敗メッセージを表示
+    // 処理が失敗した場合
     if (status === 'failure') {
+      // Statusを初期化
+      setStatus()
+      // エラーメッセージを表示
       toast.error(`${message}`.replace(/,/g, '\n'), {
         position: 'top-center',
         autoClose: 8000,

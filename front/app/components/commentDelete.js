@@ -1,6 +1,6 @@
+import apiClient from '@/utils/apiClient'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import axios from 'axios'
 
 export default function CommentDelete(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS
@@ -11,7 +11,7 @@ export default function CommentDelete(props) {
       if (!confirmed) {
         return
       }
-      const response = await axios.delete(`${API_ENDPOINT}/${gadgetId}/comments/${commentId}`, {
+      const response = await apiClient.delete(`${API_ENDPOINT}/${gadgetId}/comments/${commentId}`, {
         data: { id: commentId },
         withCredentials: true,
       })
@@ -21,8 +21,14 @@ export default function CommentDelete(props) {
       props.setStatus(resStatus)
       props.mutate(props.swrKey)
     } catch (error) {
-      console.log(error)
-      console.log('catch error')
+      props.setStatus('failure')
+      if (error.response) {
+        props.setMessage(error.response.errorMessage)
+      } else if (error.request) {
+        props.setMessage(error.request.errorMessage)
+      } else {
+        props.setMessage(error.errorMessage)
+      }
     }
   }
 

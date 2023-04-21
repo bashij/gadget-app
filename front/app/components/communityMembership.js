@@ -1,4 +1,4 @@
-import axios from 'axios'
+import apiClient from '@/utils/apiClient'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 
@@ -17,12 +17,12 @@ export default function CommunityMembership(props) {
     try {
       let response
       if (isJoined) {
-        response = await axios.delete(`${API_ENDPOINT}/${communityId}/memberships`, {
+        response = await apiClient.delete(`${API_ENDPOINT}/${communityId}/memberships`, {
           data: { community_id: communityId },
           withCredentials: true,
         })
       } else {
-        response = await axios.post(
+        response = await apiClient.post(
           `${API_ENDPOINT}/${communityId}/memberships`,
           {
             community_id: communityId,
@@ -43,8 +43,14 @@ export default function CommunityMembership(props) {
         props.mutate(props.swrKey)
       }
     } catch (error) {
-      console.log(error)
-      console.log('catch error')
+      setStatus('failure')
+      if (error.response) {
+        setMessage(error.response.errorMessage)
+      } else if (error.request) {
+        setMessage(error.request.errorMessage)
+      } else {
+        setMessage(error.errorMessage)
+      }
     }
   }
 

@@ -46,7 +46,7 @@ export default function UserBookmarkGadgets(props) {
     }
   }, [status])
 
-  if (error) return <div>failed to load</div>
+  if (error) return <div>エラーが発生しました。時間をおいて再度お試しください。</div>
 
   if (data || isLoading) {
     return (

@@ -1,4 +1,4 @@
-import axios from 'axios'
+import apiClient from '@/utils/apiClient'
 import { useState } from 'react'
 
 export default function TweetForm(props) {
@@ -17,7 +17,7 @@ export default function TweetForm(props) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post(
+      const response = await apiClient.post(
         API_ENDPOINT,
         { tweet: formData },
         { withCredentials: true },
@@ -31,8 +31,14 @@ export default function TweetForm(props) {
         props.setReplyFormId(props.tweet?.id)
       }
     } catch (error) {
-      console.log(error)
-      console.log('catch error')
+      props.setStatus('failure')
+      if (error.response) {
+        props.setMessage(error.response.errorMessage)
+      } else if (error.request) {
+        props.setMessage(error.request.errorMessage)
+      } else {
+        props.setMessage(error.errorMessage)
+      }
     }
   }
 
