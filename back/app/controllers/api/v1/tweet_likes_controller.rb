@@ -25,7 +25,7 @@ module Api
 
         def correct_user
           @like = current_user.tweet_likes.find_by(tweet_id: params[:tweet_id])
-          redirect_to root_url if @like.nil?
+          render json: { status: 'failure', message: ['この操作は実行できません'] } if @like.nil?
         end
     end
   end

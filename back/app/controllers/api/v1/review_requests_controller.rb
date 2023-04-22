@@ -38,7 +38,7 @@ module Api
 
         def correct_user
           @review_request = current_user.review_requests.find_by(gadget_id: params[:gadget_id])
-          redirect_to root_url if @review_request.nil?
+          render json: { status: 'failure', message: ['この操作は実行できません'] } if @review_request.nil?
         end
     end
   end

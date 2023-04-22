@@ -54,7 +54,7 @@ module Api
 
         def correct_user
           @comment = current_user.comments.find_by(id: params[:id])
-          redirect_to root_url if @comment.nil?
+          render json: { status: 'failure', message: ['この操作は実行できません'] } if @comment.nil?
         end
     end
   end

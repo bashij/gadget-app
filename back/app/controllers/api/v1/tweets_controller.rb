@@ -102,7 +102,7 @@ module Api
 
         def correct_user
           @tweet = current_user.tweets.find_by(id: params[:id])
-          redirect_to root_url if @tweet.nil?
+          render json: { status: 'failure', message: ['この操作は実行できません'] } if @tweet.nil?
         end
     end
   end

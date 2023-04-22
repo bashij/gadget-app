@@ -1,8 +1,8 @@
 module Api
   module V1
     class CommunitiesController < ApplicationController
-      before_action :logged_in_user, only: %i[new create edit update destroy]
-      before_action :correct_user,   only: %i[edit update destroy]
+      before_action :logged_in_user, only: %i[create update destroy]
+      before_action :correct_user,   only: %i[update destroy]
 
       def index
         # 全てのコミュニティ情報
@@ -69,7 +69,7 @@ module Api
 
         def correct_user
           @community = current_user.communities.find_by(id: params[:id])
-          redirect_to root_url if @community.nil?
+          render json: { status: 'failure', message: ['この操作は実行できません'] } if @community.nil?
         end
     end
   end

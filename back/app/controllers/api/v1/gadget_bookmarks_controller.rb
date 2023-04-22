@@ -25,7 +25,7 @@ module Api
 
         def correct_user
           @bookmark = current_user.gadget_bookmarks.find_by(gadget_id: params[:gadget_id])
-          redirect_to root_url if @bookmark.nil?
+          render json: { status: 'failure', message: ['この操作は実行できません'] } if @bookmark.nil?
         end
     end
   end

@@ -91,7 +91,7 @@ module Api
         # 正しいユーザーかどうか確認
         def correct_user
           @user = User.find(params[:id])
-          redirect_to(root_url) unless current_user?(@user)
+          render json: { status: 'failure', message: ['この操作は実行できません'] } unless current_user?(@user)
         end
     end    
   end
