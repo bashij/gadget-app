@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -53,15 +53,7 @@ export default function Login() {
     }
   }
 
-  const isInitialRendered = useRef(true)
-
   useEffect(() => {
-    // 初回レンダリング時には実行しない
-    if (isInitialRendered.current) {
-      isInitialRendered.current = false
-      return
-    }
-
     if (status === 'success') {
       router.push(
         {
@@ -81,6 +73,23 @@ export default function Login() {
       toast.error(`${message}`.replace(/,/g, '\n'), {
         position: 'top-center',
         autoClose: 8000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        className: 'toast-message',
+      })
+    }
+
+    // 非ログイン状態なことで別ページから遷移してきた場合
+    if (status === 'notLoggedIn') {
+      // Statusを初期化
+      setStatus()
+      // エラーメッセージを表示
+      toast.error(`${message}`.replace(/,/g, '\n'), {
+        position: 'top-center',
+        autoClose: 1000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,

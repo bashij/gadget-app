@@ -34,7 +34,7 @@ export default function UserGadgets(props) {
           pathname: '/login',
           query: { message: message, status: status },
         },
-        'login',
+        '/login',
       )
     }
   }, [status])

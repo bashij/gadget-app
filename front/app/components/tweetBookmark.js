@@ -85,7 +85,7 @@ export default function TweetBookmark(props) {
           pathname: '/login',
           query: { message: message, status: status },
         },
-        'login',
+        '/login',
       )
     }
   }, [status])

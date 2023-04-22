@@ -21,7 +21,7 @@ export default function FollowingUsersGadgets(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
   const [pageIndex, setPageIndex] = useState(1)
   const { data, error, isLoading } = useSWR(
-    `${API_ENDPOINT}/${props.user.id}/following_users_gadgets?paged=${pageIndex}`,
+    `${API_ENDPOINT}/${props.user?.id}/following_users_gadgets?paged=${pageIndex}`,
     fetcher,
     {
       keepPreviousData: true,
@@ -48,13 +48,24 @@ export default function FollowingUsersGadgets(props) {
       })
     }
 
+    // 非ログイン時はログイン画面へ遷移
+    if (!props.user) {
+      router.push(
+        {
+          pathname: '/login',
+          query: { message: 'ログインしてください', status: 'notLoggedIn' },
+        },
+        '/login',
+      )
+    }
+
     if (status === 'notLoggedIn') {
       router.push(
         {
           pathname: '/login',
           query: { message: message, status: status },
         },
-        'login',
+        '/login',
       )
     }
   }, [status])
@@ -80,15 +91,16 @@ export default function FollowingUsersGadgets(props) {
             </div>
             <div id='feed_gadget'>
               <div id='gadgets' className='gadgets'>
-                {data?.gadgets.map((gadget) => {
-                  return <Gadget key={gadget.id} gadget={gadget} user={props.user} data={data} />
-                })}
+                {data?.gadgets &&
+                  data?.gadgets.map((gadget) => {
+                    return <Gadget key={gadget.id} gadget={gadget} user={props.user} data={data} />
+                  })}
               </div>
             </div>
           </div>
         </div>
         <div className='pagination'>
-          {data && data?.gadgets.length > 0 ? (
+          {data?.gadgets && data?.gadgets.length > 0 ? (
             <Pagination data={data} setPageIndex={setPageIndex} />
           ) : (
             <p>登録されているガジェットはありません</p>

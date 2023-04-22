@@ -102,13 +102,25 @@ export default function Edit(props) {
       })
     }
 
+    // 非ログイン時はログイン画面へ遷移
+    if (!props.currentUser) {
+      router.push(
+        {
+          pathname: '/login',
+          query: { message: 'ログインしてください', status: 'notLoggedIn' },
+        },
+        '/login',
+      )
+    }
+
+    // 非ログイン時に何らかのAPI処理を実行した場合もログイン画面へ遷移
     if (status === 'notLoggedIn') {
       router.push(
         {
           pathname: '/login',
           query: { message: message, status: status },
         },
-        'login',
+        '/login',
       )
     }
   }, [status])

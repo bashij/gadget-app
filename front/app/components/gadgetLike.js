@@ -85,7 +85,7 @@ export default function GadgetLike(props) {
           pathname: '/login',
           query: { message: message, status: status },
         },
-        'login',
+        '/login',
       )
     }
   }, [status])

@@ -21,7 +21,7 @@ export default function FollowingUsersTweets(props) {
   const [pageIndex, setPageIndex] = useState(1)
   const { mutate } = useSWRConfig()
   const { data, error, isLoading } = useSWR(
-    `${API_ENDPOINT}/${props.user.id}/following_users_tweets?paged=${pageIndex}`,
+    `${API_ENDPOINT}/${props.user?.id}/following_users_tweets?paged=${pageIndex}`,
     fetcher,
     {
       keepPreviousData: true,
@@ -73,13 +73,24 @@ export default function FollowingUsersTweets(props) {
       })
     }
 
+    // 非ログイン時はログイン画面へ遷移
+    if (!props.user) {
+      router.push(
+        {
+          pathname: '/login',
+          query: { message: 'ログインしてください', status: 'notLoggedIn' },
+        },
+        '/login',
+      )
+    }
+
     if (status === 'notLoggedIn') {
       router.push(
         {
           pathname: '/login',
           query: { message: message, status: status },
         },
-        'login',
+        '/login',
       )
     }
   }, [status])
@@ -108,32 +119,33 @@ export default function FollowingUsersTweets(props) {
               setStatus={setStatus}
               placeholder={'新しいツイート'}
               mutate={mutate}
-              swrKey={`${API_ENDPOINT}/${props.user.id}/following_users_tweets?paged=${pageIndex}`}
+              swrKey={`${API_ENDPOINT}/${props.user?.id}/following_users_tweets?paged=${pageIndex}`}
             />
             <div id='feed_tweet'>
               <div id='tweets' className='posts'>
-                {data?.tweets.map((tweet) => {
-                  return (
-                    <Tweet
-                      key={tweet.id}
-                      tweet={tweet}
-                      user={props.user}
-                      replies={data.replies}
-                      replyCount={data.replyCounts[tweet.id]}
-                      mutate={mutate}
-                      swrKey={`${API_ENDPOINT}/${props.user.id}/following_users_tweets?paged=${pageIndex}`}
-                      setMessage={setMessage}
-                      setStatus={setStatus}
-                      setReplyFormId={setReplyFormId}
-                    />
-                  )
-                })}
+                {data?.tweets &&
+                  data?.tweets.map((tweet) => {
+                    return (
+                      <Tweet
+                        key={tweet.id}
+                        tweet={tweet}
+                        user={props.user}
+                        replies={data.replies}
+                        replyCount={data.replyCounts[tweet.id]}
+                        mutate={mutate}
+                        swrKey={`${API_ENDPOINT}/${props.user?.id}/following_users_tweets?paged=${pageIndex}`}
+                        setMessage={setMessage}
+                        setStatus={setStatus}
+                        setReplyFormId={setReplyFormId}
+                      />
+                    )
+                  })}
               </div>
             </div>
           </div>
         </div>
         <div className='pagination'>
-          {data?.tweets.length > 0 ? (
+          {data?.tweets && data?.tweets.length > 0 ? (
             <Pagination data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
           ) : (
             <p>投稿されているツイートはありません</p>

@@ -104,7 +104,7 @@ export default function Gadget(props) {
           pathname: '/login',
           query: { message: message, status: status },
         },
-        'login',
+        '/login',
       )
     }
   }, [status])

@@ -41,7 +41,7 @@ export default function UserBookmarkGadgets(props) {
           pathname: '/login',
           query: { message: message, status: status },
         },
-        'login',
+        '/login',
       )
     }
   }, [status])

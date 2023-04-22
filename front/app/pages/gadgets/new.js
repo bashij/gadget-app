@@ -3,7 +3,7 @@ import MarkdownEditor from '@/components/markdownEditor'
 import apiClient from '@/utils/apiClient'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -62,15 +62,7 @@ export default function New(props) {
     }
   }
 
-  const isInitialRendered = useRef(true)
-
   useEffect(() => {
-    // 初回レンダリング時には実行しない
-    if (isInitialRendered.current) {
-      isInitialRendered.current = false
-      return
-    }
-
     if (status === 'success') {
       router.push(
         {
@@ -98,6 +90,17 @@ export default function New(props) {
         progress: undefined,
         className: 'toast-message',
       })
+    }
+
+    // 非ログイン時はログイン画面へ遷移
+    if (!props.user) {
+      router.push(
+        {
+          pathname: '/login',
+          query: { message: 'ログインしてください', status: 'notLoggedIn' },
+        },
+        '/login',
+      )
     }
   }, [status])
 

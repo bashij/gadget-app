@@ -67,7 +67,7 @@ export default function CommunityMembership(props) {
           pathname: '/login',
           query: { message: message, status: status },
         },
-        'login',
+        '/login',
       )
     }
   }, [status])

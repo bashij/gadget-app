@@ -50,7 +50,7 @@ export default function Gadgets(props) {
           pathname: '/login',
           query: { message: message, status: status },
         },
-        'login',
+        '/login',
       )
     }
   }, [status])

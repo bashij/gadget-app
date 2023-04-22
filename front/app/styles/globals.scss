@@ -97,38 +97,6 @@ body {
 }
 
 // flash
-.alert {
-  &.alert-welcome {
-    background-color: $color_accent2;
-    color: $color_theme1;
-    margin-bottom: 10px;
-    text-align: center;
-    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
-    font-family: 'Avenir Next Condensed Bold', 'Avenir Next Condensed Heavy';
-    font-size: 1.2rem;
-    letter-spacing: 0.1rem;
-  }
-  &.alert-success {
-    background-color: $color_theme2;
-    border: none;
-  }
-  &.alert-failure {
-    color: $color_accent2;
-    text-align: center;
-    border: none;
-    padding: 0px;
-    margin: 20px 0 20px 0;
-  }
-  &.alert-notLoggedIn {
-    color: $color_accent2;
-    text-align: center;
-    background-color: $color_theme2;
-    border: none;
-    padding: 0px;
-    margin: 20px 0 20px 0;
-  }
-}
-
 .Toastify__toast {
   &.toast-message {
     background: $color_theme1;
@@ -137,11 +105,6 @@ body {
     border-radius: 10px;
     white-space: pre-line;
   }
-}
-
-// error
-#error_explanation {
-  color: $color_accent2;
 }
 
 // side-menu
