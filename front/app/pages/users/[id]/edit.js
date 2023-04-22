@@ -240,7 +240,7 @@ export const getServerSideProps = async (context) => {
   try {
     // ログインユーザー情報を取得
     const cookie = context.req?.headers.cookie
-    const responseCurrentUser = await apiClient.get('http://back:3000/api/v1/check', {
+    const responseCurrentUser = await apiClient.get(process.env.API_ENDPOINT_CHECK_SESSION, {
       headers: {
         cookie: cookie,
       },
@@ -249,7 +249,7 @@ export const getServerSideProps = async (context) => {
 
     // ユーザー詳細情報を取得
     const id = context.params.id
-    const responseUser = await apiClient.get(`http://back:3000/api/v1/users/${id}`, {
+    const responseUser = await apiClient.get(`${process.env.API_ENDPOINT_USERS}/${id}`, {
       headers: {
         cookie: cookie,
       },

@@ -159,7 +159,7 @@ export default function FollowingUsersTweets(props) {
 export const getServerSideProps = async (context) => {
   try {
     const cookie = context.req?.headers.cookie
-    const response = await apiClient.get('http://back:3000/api/v1/check', {
+    const response = await apiClient.get(process.env.API_ENDPOINT_CHECK_SESSION, {
       headers: {
         cookie: cookie,
       },
