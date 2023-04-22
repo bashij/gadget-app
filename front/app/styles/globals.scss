@@ -57,9 +57,15 @@ body {
   button {
     color: $color_theme8;
     border: none;
-    padding: 0 8px 0 8px;
+    padding: 0 0.5rem 0 0.5rem;
+    margin: 0 0.15rem 0 0.15rem;
     &.active {
       border: $color_theme2 solid 1px;
+      border-radius: 20px;
+      color: $color_theme1;
+      background-color: $color_theme9;
+    }
+    &:hover {
       border-radius: 20px;
       color: $color_theme1;
       background-color: $color_theme9;

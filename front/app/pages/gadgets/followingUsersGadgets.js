@@ -101,7 +101,7 @@ export default function FollowingUsersGadgets(props) {
         </div>
         <div className='pagination'>
           {data?.gadgets && data?.gadgets.length > 0 ? (
-            <Pagination data={data} setPageIndex={setPageIndex} />
+            <Pagination data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
           ) : (
             <p>登録されているガジェットはありません</p>
           )}

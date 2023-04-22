@@ -211,7 +211,7 @@ export default function Community(props) {
         </div>
         <div className='pagination'>
           {data && data?.users.length > 0 ? (
-            <Pagination data={data} setPageIndex={setPageIndex} />
+            <Pagination data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
           ) : (
             <p>参加中のユーザーはまだいません</p>
           )}
