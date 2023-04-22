@@ -133,7 +133,7 @@ export default function Edit(props) {
         </Head>
         <ToastContainer />
         <div className='row justify-content-center mt-3'>
-          <div className='col-md-6 col-md-offset-3'>
+          <div className='col-lg-8 col-sm-10'>
             <form onSubmit={handleSubmit}>
               <div className='mb-3'>
                 <label className='form-label'>ユーザー名</label>
