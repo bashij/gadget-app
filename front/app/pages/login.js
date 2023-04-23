@@ -57,10 +57,10 @@ export default function Login() {
     if (status === 'success') {
       router.push(
         {
-          pathname: '/',
+          pathname: '/gadgets',
           query: { message: message, status: status },
         },
-        '/',
+        '/gadgets',
       )
       setMessage([])
     }

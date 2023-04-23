@@ -68,10 +68,10 @@ export default function Signup() {
     if (status === 'success') {
       router.push(
         {
-          pathname: '/',
+          pathname: '/gadgets',
           query: { message: message, status: status },
         },
-        '/',
+        '/gadgets',
       )
       setMessage([])
       setStatus()

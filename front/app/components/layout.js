@@ -69,18 +69,18 @@ export default function Layout(props) {
               HOME
             </Link>
             <Link
-              href='/tweets'
-              className={`nav-link ${props.pageName === 'tweet' ? 'active' : ''}`}
-              id='tweet'
-            >
-              TWEET
-            </Link>
-            <Link
               href='/gadgets'
               className={`nav-link ${props.pageName === 'gadget' ? 'active' : ''}`}
               id='gadget'
             >
               GADGET
+            </Link>
+            <Link
+              href='/tweets'
+              className={`nav-link ${props.pageName === 'tweet' ? 'active' : ''}`}
+              id='tweet'
+            >
+              TWEET
             </Link>
             <Link
               href='/communities'
