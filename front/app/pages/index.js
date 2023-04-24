@@ -43,17 +43,17 @@ export default function Home(props) {
       </Head>
       <ToastContainer />
       {props.user ? (
-        <div>ログイン状態</div>
+        <div></div>
       ) : (
         // 非ログイン時のみ表示
-        <div className='col-md-12'>
+        <div className='col-12'>
           <div className='bg-image'>
             <div className='top-content'>
               <h1 className='app-name'>GadgetLink</h1>
               <div className='content-explanation'>
                 <p className='lead'>ガジェットで繋がるSNS</p>
                 <div className='explanation-detail'>
-                  <h2 className='fw-bold'>こだわりのガジェットをシェア</h2>
+                  <h2>こだわりのガジェットをシェア</h2>
                   <p>
                     <FontAwesomeIcon icon={faCheck} />
                     独自の活用法やカスタマイズ情報を交換
@@ -64,7 +64,7 @@ export default function Home(props) {
                   </p>
                 </div>
                 <div className='explanation-detail'>
-                  <h2 className='fw-bold'>気になるガジェット情報を収集</h2>
+                  <h2>気になるガジェット情報を収集</h2>
                   <p>
                     <FontAwesomeIcon icon={faCheck} />
                     自分と似たユーザーのガジェットを参考に

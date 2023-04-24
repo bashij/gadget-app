@@ -58,16 +58,19 @@ export default function Layout(props) {
       <div className='container'>
         <div className='row'>
           <div className={`col-sm-3 side-menu ${openMenu ? 'open' : ''}`}>
-            <Link href='/' className='logo nav-link'>
+            <Link href='/gadgets' className='logo nav-link'>
               GadgetLink
             </Link>
-            <Link
-              href='/'
-              className={`nav-link ${props.pageName === 'home' ? 'active' : ''}`}
-              id='home'
-            >
-              HOME
-            </Link>
+            {/* ログイン時はHOMEへのリンクを非表示 */}
+            {props.user ? null : (
+              <Link
+                href='/'
+                className={`nav-link ${props.pageName === 'home' ? 'active' : ''}`}
+                id='home'
+              >
+                HOME
+              </Link>
+            )}
             <Link
               href='/gadgets'
               className={`nav-link ${props.pageName === 'gadget' ? 'active' : ''}`}
