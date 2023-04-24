@@ -37,10 +37,10 @@ export default function Login() {
         { session: formData },
         { withCredentials: true },
       )
-      const resmessage = await response.data.message
-      const resstatus = await response.data.status
-      setMessage(resmessage)
-      setStatus(resstatus)
+      const resMessage = await response.data.message
+      const resStatus = await response.data.status
+      setMessage(resMessage)
+      setStatus(resStatus)
     } catch (error) {
       setStatus('failure')
       if (error.response) {
