@@ -17,7 +17,7 @@ export default function RequestUsers(props) {
         <title>{siteTitle} | リクエストユーザー一覧</title>
       </Head>
       <div className='row justify-content-center'>
-        <div className='col-12'>
+        <div className='col-12 text-center'>
           <div className='content-header'>
             <p>レビューリクエストしているユーザー</p>
           </div>

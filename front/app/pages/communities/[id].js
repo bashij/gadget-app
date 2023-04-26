@@ -200,7 +200,7 @@ export default function Community(props) {
           />
         </div>
         <div className='row justify-content-center'>
-          <div className='col-12'>
+          <div className='col-12 text-center'>
             <div className='content-header'>
               <p>参加中のユーザー</p>
             </div>
