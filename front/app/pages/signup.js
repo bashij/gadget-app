@@ -1,9 +1,14 @@
-import Layout, { siteTitle } from '@/components/layout'
-import apiClient from '@/utils/apiClient'
+import { useEffect, useRef, useState } from 'react'
+
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useEffect, useRef, useState } from 'react'
+
 import { toast, ToastContainer } from 'react-toastify'
+
+import Layout, { siteTitle } from '@/components/layout'
+import apiClient from '@/utils/apiClient'
+
+
 import 'react-toastify/dist/ReactToastify.css'
 
 const pageTitle = 'ユーザー登録'

@@ -1,15 +1,20 @@
+import { useRef, useState } from 'react'
+
+import Image from 'next/image'
+import Link from 'next/link'
+
+import { faReply } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import { ja } from 'date-fns/locale'
+
 import ReplyTweet from '@/components/replyTweet'
 import TweetBookmark from '@/components/tweetBookmark'
 import TweetDelete from '@/components/tweetDelete'
 import TweetForm from '@/components/tweetForm'
 import TweetLike from '@/components/tweetLike'
-import { faReply } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import { ja } from 'date-fns/locale'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRef, useState } from 'react'
+
+
 
 export default function Tweet(props) {
   const relatedReplies = props.replies?.filter((reply) => reply.parent_id === props.tweet.id)

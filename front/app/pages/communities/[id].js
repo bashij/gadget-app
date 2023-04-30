@@ -1,20 +1,23 @@
+import { useEffect, useRef, useState } from 'react'
+
+import Head from 'next/head'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { format } from 'date-fns'
+import { toast, ToastContainer } from 'react-toastify'
+
+import useSWR, { useSWRConfig } from 'swr'
 import CommunityDelete from '@/components/communityDelete'
 import CommunityMembership from '@/components/communityMembership'
 import Layout, { siteTitle } from '@/components/layout'
 import Pagination from '@/components/pagination'
 import UserFeed from '@/components/userFeed'
 import apiClient from '@/utils/apiClient'
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { format } from 'date-fns'
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useEffect, useRef, useState } from 'react'
-import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import useSWR, { useSWRConfig } from 'swr'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 

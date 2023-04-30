@@ -1,8 +1,10 @@
-import CommentDelete from '@/components/commentDelete'
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import { ja } from 'date-fns/locale'
 import Image from 'next/image'
 import Link from 'next/link'
+
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import { ja } from 'date-fns/locale'
+
+import CommentDelete from '@/components/commentDelete'
 
 export default function ReplyComment(props) {
   return (

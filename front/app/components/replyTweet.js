@@ -1,8 +1,10 @@
-import TweetDelete from '@/components/tweetDelete'
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import { ja } from 'date-fns/locale'
 import Image from 'next/image'
 import Link from 'next/link'
+
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import { ja } from 'date-fns/locale'
+
+import TweetDelete from '@/components/tweetDelete'
 
 export default function ReplyTweet(props) {
   return (

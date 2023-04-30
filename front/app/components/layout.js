@@ -1,12 +1,15 @@
-import Logout from '@/components/logout'
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEffect, useState } from 'react'
+
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { toast } from 'react-toastify'
+
+import Logout from '@/components/logout'
 import 'react-toastify/dist/ReactToastify.css'
 
 export const siteTitle = 'GadgetLink'

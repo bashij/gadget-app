@@ -1,3 +1,7 @@
+import { faBookmark } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { toast, ToastContainer } from 'react-toastify'
+
 import Layout, { siteTitle } from '@/components/layout'
 import UserBookmarkGadgets from '@/components/userBookmarkGadgets'
 import UserBookmarkTweets from '@/components/userBookmarkTweets'
@@ -6,16 +10,16 @@ import UserGadgets from '@/components/userGadgets'
 import UserRelationship from '@/components/userRelationship'
 import UserTweets from '@/components/userTweets'
 import apiClient from '@/utils/apiClient'
-import { faBookmark } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import 'easymde/dist/easymde.min.css'
 import 'highlight.js/styles/github.css'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+
 import { useEffect, useState } from 'react'
-import { toast, ToastContainer } from 'react-toastify'
+
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function User(props) {

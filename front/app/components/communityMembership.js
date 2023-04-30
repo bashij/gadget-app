@@ -1,6 +1,8 @@
-import apiClient from '@/utils/apiClient'
-import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
+
+import { useRouter } from 'next/router'
+
+import apiClient from '@/utils/apiClient'
 
 export default function CommunityMembership(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_COMMUNITIES

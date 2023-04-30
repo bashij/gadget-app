@@ -1,6 +1,7 @@
+import Head from 'next/head'
+
 import Layout, { siteTitle } from '@/components/layout'
 import apiClient from '@/utils/apiClient'
-import Head from 'next/head'
 
 export default function Help(props) {
   // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する

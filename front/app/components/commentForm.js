@@ -1,5 +1,6 @@
-import apiClient from '@/utils/apiClient'
 import { useState } from 'react'
+
+import apiClient from '@/utils/apiClient'
 
 export default function CommentForm(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS

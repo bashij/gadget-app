@@ -1,9 +1,11 @@
+import { useState } from 'react'
+
+import Head from 'next/head'
+
 import Layout, { siteTitle } from '@/components/layout'
 import Pagination from '@/components/pagination'
 import UserFeed from '@/components/userFeed'
 import apiClient from '@/utils/apiClient'
-import Head from 'next/head'
-import { useState } from 'react'
 
 export default function RequestUsers(props) {
   // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する

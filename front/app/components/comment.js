@@ -1,13 +1,18 @@
-import CommentDelete from '@/components/commentDelete'
-import CommentForm from '@/components/commentForm'
-import ReplyComment from '@/components/replyComment'
+import { useRef, useState } from 'react'
+
+import Image from 'next/image'
+import Link from 'next/link'
+
 import { faReply } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { ja } from 'date-fns/locale'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRef, useState } from 'react'
+
+import CommentDelete from '@/components/commentDelete'
+import CommentForm from '@/components/commentForm'
+import ReplyComment from '@/components/replyComment'
+
+
 
 export default function Comment(props) {
   const relatedReplies = props.replies?.filter((reply) => reply.parent_id === props.comment.id)

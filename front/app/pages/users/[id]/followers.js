@@ -1,10 +1,14 @@
+import { useState } from 'react'
+
+import Head from 'next/head'
+
+import useSWR from 'swr'
+
 import Layout, { siteTitle } from '@/components/layout'
 import Pagination from '@/components/pagination'
 import UserFeed from '@/components/userFeed'
 import apiClient from '@/utils/apiClient'
-import Head from 'next/head'
-import { useState } from 'react'
-import useSWR from 'swr'
+
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 

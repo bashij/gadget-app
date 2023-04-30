@@ -1,6 +1,7 @@
-import apiClient from '@/utils/apiClient'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import apiClient from '@/utils/apiClient'
 
 export default function CommunityDelete(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_COMMUNITIES

@@ -1,3 +1,10 @@
+import { faPenToSquare, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import DOMPurify from 'dompurify'
+import { marked } from 'marked'
+import { toast, ToastContainer } from 'react-toastify'
+import useSWR, { useSWRConfig } from 'swr'
+
 import Comment from '@/components/comment'
 import CommentForm from '@/components/commentForm'
 import GadgetBookmark from '@/components/gadgetBookmark'
@@ -8,20 +15,17 @@ import Layout, { siteTitle } from '@/components/layout'
 import Pagination from '@/components/pagination'
 import ReviewRequest from '@/components/reviewRequest'
 import apiClient from '@/utils/apiClient'
-import { faPenToSquare, faUsers } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import DOMPurify from 'dompurify'
 import 'easymde/dist/easymde.min.css'
 import 'highlight.js/styles/github.css'
-import { marked } from 'marked'
+
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+
 import { useEffect, useState } from 'react'
-import { toast, ToastContainer } from 'react-toastify'
+
 import 'react-toastify/dist/ReactToastify.css'
-import useSWR, { useSWRConfig } from 'swr'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 

@@ -1,15 +1,20 @@
+import { useEffect, useState } from 'react'
+
+import Head from 'next/head'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+
+import { toast, ToastContainer } from 'react-toastify'
+import useSWR, { useSWRConfig } from 'swr'
+
 import Layout, { siteTitle } from '@/components/layout'
 import Pagination from '@/components/pagination'
 import Tweet from '@/components/tweet'
 import TweetForm from '@/components/tweetForm'
 import apiClient from '@/utils/apiClient'
-import Head from 'next/head'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import { toast, ToastContainer } from 'react-toastify'
+
+
 import 'react-toastify/dist/ReactToastify.css'
-import useSWR, { useSWRConfig } from 'swr'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 

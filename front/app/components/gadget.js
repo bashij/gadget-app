@@ -1,12 +1,17 @@
+import { useState } from 'react'
+
+import Image from 'next/image'
+import Link from 'next/link'
+
+import { faUsers } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import GadgetBookmark from '@/components/gadgetBookmark'
 import GadgetDetail from '@/components/gadgetDetail'
 import GadgetLike from '@/components/gadgetLike'
 import ReviewRequest from '@/components/reviewRequest'
-import { faUsers } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useState } from 'react'
+
+
 
 export default function Gadget(props) {
   const [reviewRequestCount, setReviewRequestCount] = useState(props.gadget.review_requests.length)
