@@ -11,14 +11,9 @@ import { toast, ToastContainer } from 'react-toastify'
 import Layout, { siteTitle } from '@/components/layout'
 import apiClient from '@/utils/apiClient'
 
-
-
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function Home(props) {
-  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
-  if (props.errorMessage) return props.errorMessage
-
   const router = useRouter()
   const [message, setMessage] = useState([router.query.message])
   const [status, setStatus] = useState(router.query.status)
@@ -41,6 +36,9 @@ export default function Home(props) {
       })
     }
   }, [status])
+
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
 
   return (
     <Layout home user={props.user} pageName={'home'}>

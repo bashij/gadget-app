@@ -8,10 +8,10 @@ import UserFeed from '@/components/userFeed'
 import apiClient from '@/utils/apiClient'
 
 export default function RequestUsers(props) {
+  const [pageIndex, setPageIndex] = useState(1)
+
   // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
   if (props.errorMessage) return props.errorMessage
-
-  const [pageIndex, setPageIndex] = useState(1)
 
   return (
     <Layout user={props.user} pageName={'gadget'}>

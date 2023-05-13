@@ -9,13 +9,9 @@ import Pagination from '@/components/pagination'
 import UserFeed from '@/components/userFeed'
 import apiClient from '@/utils/apiClient'
 
-
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
 export default function Following(props) {
-  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
-  if (props.errorMessage) return props.errorMessage
-
   // ログインユーザー自身の詳細ページか判定
   const isMyPage = props.currentUser?.id === props.pageUserId ? true : false
 
@@ -28,6 +24,9 @@ export default function Following(props) {
       keepPreviousData: true,
     },
   )
+
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
 
   if (error) return <div>エラーが発生しました。時間をおいて再度お試しください。</div>
 
@@ -48,8 +47,12 @@ export default function Following(props) {
           </div>
         </div>
         <div className='pagination'>
-          {data?.users.length > 0 ? (
+          {data && !data.users ? (
+            <p>エラーが発生しました。時間をおいて再度お試しください。</p>
+          ) : data?.users.length > 0 ? (
             <Pagination data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
+          ) : isLoading ? (
+            <p>データを読み込んでいます...</p>
           ) : (
             <p>フォロー中のユーザーはまだいません</p>
           )}

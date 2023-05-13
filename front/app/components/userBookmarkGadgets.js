@@ -26,7 +26,7 @@ export default function UserBookmarkGadgets(props) {
   )
 
   // 最新の件数を取得
-  const recordCount = data?.pagination.total_count
+  const recordCount = data?.pagination?.total_count
   useEffect(() => {
     if (recordCount) {
       props.setUserBookmarkGadgetCount(recordCount)
@@ -59,7 +59,7 @@ export default function UserBookmarkGadgets(props) {
           <div className='col-12 col-lg-10'>
             <div id='feed_gadget'>
               <div id='gadgets' className='gadgets'>
-                {data?.gadgets.map((gadget) => {
+                {data?.gadgets?.map((gadget) => {
                   return (
                     <Gadget key={gadget.id} gadget={gadget} user={props.currentUser} data={data} />
                   )
@@ -69,8 +69,12 @@ export default function UserBookmarkGadgets(props) {
           </div>
         </div>
         <div className='pagination'>
-          {data && data?.gadgets.length > 0 ? (
+          {data && !data.gadgets ? (
+            <p>エラーが発生しました。時間をおいて再度お試しください。</p>
+          ) : data?.gadgets.length > 0 ? (
             <Pagination data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
+          ) : isLoading ? (
+            <p>データを読み込んでいます...</p>
           ) : (
             <p>登録されているガジェットはありません</p>
           )}

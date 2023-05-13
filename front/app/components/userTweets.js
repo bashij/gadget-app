@@ -22,7 +22,7 @@ export default function UserTweets(props) {
   )
 
   // 最新の件数を取得
-  const recordCount = data?.pagination.total_count
+  const recordCount = data?.pagination?.total_count
   useEffect(() => {
     if (recordCount) {
       props.setUserTweetCount(recordCount)
@@ -39,7 +39,7 @@ export default function UserTweets(props) {
           <div className='col-12 col-lg-10'>
             <div id='feed_tweet'>
               <div id='tweets' className='posts'>
-                {data?.tweets.map((tweet) => {
+                {data?.tweets?.map((tweet) => {
                   return (
                     <Tweet
                       key={tweet.id}
@@ -60,8 +60,12 @@ export default function UserTweets(props) {
           </div>
         </div>
         <div className='pagination'>
-          {data?.tweets.length > 0 ? (
+          {data && !data.tweets ? (
+            <p>エラーが発生しました。時間をおいて再度お試しください。</p>
+          ) : data?.tweets.length > 0 ? (
             <Pagination data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
+          ) : isLoading ? (
+            <p>データを読み込んでいます...</p>
           ) : (
             <p>投稿されているツイートはありません</p>
           )}

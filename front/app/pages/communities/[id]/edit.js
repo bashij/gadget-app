@@ -8,20 +8,16 @@ import { toast, ToastContainer } from 'react-toastify'
 import Layout, { siteTitle } from '@/components/layout'
 import apiClient from '@/utils/apiClient'
 
-
 import 'react-toastify/dist/ReactToastify.css'
 
 const pageTitle = 'コミュニティ編集'
 
 export default function Edit(props) {
-  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
-  if (props.errorMessage) return props.errorMessage
-
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_COMMUNITIES
 
   const [formData, setFormData] = useState({
-    name: `${props.community.name}`,
-    image: `${props.community.image.url}`,
+    name: `${props.community?.name}`,
+    image: `${props.community?.image.url}`,
   })
 
   const handleChange = (e) => {
@@ -38,7 +34,7 @@ export default function Edit(props) {
     e.preventDefault()
     try {
       const response = await apiClient.patch(
-        `${API_ENDPOINT}/${props.community.id}`,
+        `${API_ENDPOINT}/${props.community?.id}`,
         { community: formData },
         { withCredentials: true },
       )
@@ -91,7 +87,7 @@ export default function Edit(props) {
     }
 
     // 非ログイン時はログイン画面へ遷移
-    if (!props.user) {
+    if (!props.errorMessage && !props.user) {
       router.push(
         {
           pathname: '/login',
@@ -101,6 +97,9 @@ export default function Edit(props) {
       )
     }
   }, [status])
+
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
 
   return (
     <>

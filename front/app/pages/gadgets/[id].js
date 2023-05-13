@@ -30,9 +30,6 @@ import 'react-toastify/dist/ReactToastify.css'
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
 export default function Gadget(props) {
-  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
-  if (props.errorMessage) return props.errorMessage
-
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS
   const [pageIndex, setPageIndex] = useState(1)
   const { mutate } = useSWRConfig()
@@ -151,6 +148,9 @@ export default function Gadget(props) {
     document.querySelector('#review').innerHTML = sanitizeMarkdown().__html
   }, [])
 
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
+
   if (error) return <div>エラーが発生しました。時間をおいて再度お試しください。</div>
 
   if (data || isLoading) {
@@ -250,7 +250,7 @@ export default function Gadget(props) {
               swrKey={`${API_ENDPOINT}/${props.gadget.id}/comments?paged=${pageIndex}`}
             />
             <div id='feed_comment' className='posts'>
-              {data?.comments.map((comment) => {
+              {data?.comments?.map((comment) => {
                 return (
                   <Comment
                     key={comment.id}
@@ -269,8 +269,12 @@ export default function Gadget(props) {
               })}
             </div>
             <div className='pagination'>
-              {data && data?.comments.length > 0 ? (
+              {data && !data.comments ? (
+                <p>エラーが発生しました。時間をおいて再度お試しください。</p>
+              ) : data?.comments.length > 0 ? (
                 <Pagination data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
+              ) : isLoading ? (
+                <p>データを読み込んでいます...</p>
               ) : (
                 <p>コメントはまだありません</p>
               )}

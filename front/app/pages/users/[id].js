@@ -23,11 +23,8 @@ import { useEffect, useState } from 'react'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function User(props) {
-  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
-  if (props.errorMessage) return props.errorMessage
-
   // ログインユーザー自身の詳細ページか判定
-  const isMyPage = props.currentUser?.id === props.pageUser.id ? true : false
+  const isMyPage = props.currentUser?.id === props.pageUser?.id ? true : false
 
   const router = useRouter()
   const [message, setMessage] = useState([router.query.message])
@@ -35,16 +32,16 @@ export default function User(props) {
   const [replyFormId, setReplyFormId] = useState()
 
   // 各タブの表示件数
-  const [userCommunityCount, setUserCommunityCount] = useState(props.userCount.community)
-  const [userTweetCount, setUserTweetCount] = useState(props.userCount.tweet)
+  const [userCommunityCount, setUserCommunityCount] = useState(props.userCount?.community)
+  const [userTweetCount, setUserTweetCount] = useState(props.userCount?.tweet)
   const [userBookmarkTweetCount, setUserBookmarkTweetCount] = useState(
-    props.userCount.bookmarkTweet,
+    props.userCount?.bookmarkTweet,
   )
   const [userBookmarkGadgetCount, setUserBookmarkGadgetCount] = useState(
-    props.userCount.bookmarkGadget,
+    props.userCount?.bookmarkGadget,
   )
 
-  const [followerCount, setFollowerCount] = useState(props.pageUser.followers.length)
+  const [followerCount, setFollowerCount] = useState(props.pageUser?.followers.length)
 
   useEffect(() => {
     // Statusを初期化
@@ -159,6 +156,9 @@ export default function User(props) {
         )
     }
   }
+
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
 
   return (
     <Layout user={props.currentUser} pageName={`${isMyPage ? 'myPage' : ''}`}>

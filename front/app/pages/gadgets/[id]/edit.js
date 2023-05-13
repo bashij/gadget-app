@@ -9,28 +9,24 @@ import Layout, { siteTitle } from '@/components/layout'
 import MarkdownEditor from '@/components/markdownEditor'
 import apiClient from '@/utils/apiClient'
 
-
 import 'react-toastify/dist/ReactToastify.css'
 
 const pageTitle = 'ガジェット編集'
 
 export default function Edit(props) {
-  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
-  if (props.errorMessage) return props.errorMessage
-
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS
 
   // 引用の'>'を復元
-  const originalReview = props.gadget.review.body.replace(/&gt;/g, '>')
+  const originalReview = props.gadget?.review.body.replace(/&gt;/g, '>')
 
   const [formData, setFormData] = useState({
-    name: `${props.gadget.name}`,
-    category: `${props.gadget.category}`,
-    model_number: `${props.gadget.model_number}`,
-    manufacturer: `${props.gadget.manufacturer}`,
-    price: `${props.gadget.price ? props.gadget.price : ''}`,
-    other_info: `${props.gadget.other_info}`,
-    image: `${props.gadget.image.url}`,
+    name: `${props.gadget?.name}`,
+    category: `${props.gadget?.category}`,
+    model_number: `${props.gadget?.model_number}`,
+    manufacturer: `${props.gadget?.manufacturer}`,
+    price: `${props.gadget?.price ? props.gadget.price : ''}`,
+    other_info: `${props.gadget?.other_info}`,
+    image: `${props.gadget?.image.url}`,
     review: `${originalReview}`,
   })
 
@@ -48,7 +44,7 @@ export default function Edit(props) {
     e.preventDefault()
     try {
       const response = await apiClient.patch(
-        `${API_ENDPOINT}/${props.gadget.id}`,
+        `${API_ENDPOINT}/${props.gadget?.id}`,
         { gadget: formData },
         { withCredentials: true },
       )
@@ -101,7 +97,7 @@ export default function Edit(props) {
     }
 
     // 非ログイン時はログイン画面へ遷移
-    if (!props.user) {
+    if (!props.errorMessage && !props.user) {
       router.push(
         {
           pathname: '/login',
@@ -111,6 +107,9 @@ export default function Edit(props) {
       )
     }
   }, [status])
+
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
 
   return (
     <>

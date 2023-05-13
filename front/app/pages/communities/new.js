@@ -8,15 +8,11 @@ import { toast, ToastContainer } from 'react-toastify'
 import Layout, { siteTitle } from '@/components/layout'
 import apiClient from '@/utils/apiClient'
 
-
 import 'react-toastify/dist/ReactToastify.css'
 
 const pageTitle = 'コミュニティ登録'
 
 export default function New(props) {
-  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
-  if (props.errorMessage) return props.errorMessage
-
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_COMMUNITIES
 
   const [formData, setFormData] = useState({
@@ -91,7 +87,7 @@ export default function New(props) {
     }
 
     // 非ログイン時はログイン画面へ遷移
-    if (!props.user) {
+    if (!props.errorMessage && !props.user) {
       router.push(
         {
           pathname: '/login',
@@ -101,6 +97,9 @@ export default function New(props) {
       )
     }
   }, [status])
+
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
 
   return (
     <>

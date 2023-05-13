@@ -13,15 +13,11 @@ import Tweet from '@/components/tweet'
 import TweetForm from '@/components/tweetForm'
 import apiClient from '@/utils/apiClient'
 
-
 import 'react-toastify/dist/ReactToastify.css'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
 export default function FollowingUsersTweets(props) {
-  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
-  if (props.errorMessage) return props.errorMessage
-
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
   const [pageIndex, setPageIndex] = useState(1)
   const { mutate } = useSWRConfig()
@@ -79,7 +75,7 @@ export default function FollowingUsersTweets(props) {
     }
 
     // 非ログイン時はログイン画面へ遷移
-    if (!props.user) {
+    if (!props.errorMessage && !props.user) {
       router.push(
         {
           pathname: '/login',
@@ -99,6 +95,9 @@ export default function FollowingUsersTweets(props) {
       )
     }
   }, [status])
+
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
 
   if (error) return <div>エラーが発生しました。時間をおいて再度お試しください。</div>
 
@@ -128,30 +127,33 @@ export default function FollowingUsersTweets(props) {
             />
             <div id='feed_tweet'>
               <div id='tweets' className='posts'>
-                {data?.tweets &&
-                  data?.tweets.map((tweet) => {
-                    return (
-                      <Tweet
-                        key={tweet.id}
-                        tweet={tweet}
-                        user={props.user}
-                        replies={data.replies}
-                        replyCount={data.replyCounts[tweet.id]}
-                        mutate={mutate}
-                        swrKey={`${API_ENDPOINT}/${props.user?.id}/following_users_tweets?paged=${pageIndex}`}
-                        setMessage={setMessage}
-                        setStatus={setStatus}
-                        setReplyFormId={setReplyFormId}
-                      />
-                    )
-                  })}
+                {data?.tweets?.map((tweet) => {
+                  return (
+                    <Tweet
+                      key={tweet.id}
+                      tweet={tweet}
+                      user={props.user}
+                      replies={data.replies}
+                      replyCount={data.replyCounts[tweet.id]}
+                      mutate={mutate}
+                      swrKey={`${API_ENDPOINT}/${props.user?.id}/following_users_tweets?paged=${pageIndex}`}
+                      setMessage={setMessage}
+                      setStatus={setStatus}
+                      setReplyFormId={setReplyFormId}
+                    />
+                  )
+                })}
               </div>
             </div>
           </div>
         </div>
         <div className='pagination'>
-          {data?.tweets && data?.tweets.length > 0 ? (
+          {data && !data.tweets ? (
+            <p>エラーが発生しました。時間をおいて再度お試しください。</p>
+          ) : data?.tweets.length > 0 ? (
             <Pagination data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
+          ) : isLoading ? (
+            <p>データを読み込んでいます...</p>
           ) : (
             <p>投稿されているツイートはありません</p>
           )}

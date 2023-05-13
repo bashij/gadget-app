@@ -49,18 +49,22 @@ export default function UserGadgets(props) {
       <div>
         <ToastContainer />
         <div className='content-header'>
-          <p>登録ガジェット({data?.pagination.total_count})</p>
+          <p>登録ガジェット({data?.pagination?.total_count})</p>
         </div>
         <div id='feed_gadget'>
           <div id='gadgets' className='gadgets'>
-            {data?.gadgets.map((gadget) => {
+            {data?.gadgets?.map((gadget) => {
               return <Gadget key={gadget.id} gadget={gadget} user={props.currentUser} data={data} />
             })}
           </div>
         </div>
         <div className='pagination'>
-          {data && data?.gadgets.length > 0 ? (
+          {data && !data.gadgets ? (
+            <p>エラーが発生しました。時間をおいて再度お試しください。</p>
+          ) : data?.gadgets.length > 0 ? (
             <Pagination data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
+          ) : isLoading ? (
+            <p>データを読み込んでいます...</p>
           ) : (
             <p>登録されているガジェットはありません</p>
           )}

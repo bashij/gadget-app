@@ -9,18 +9,17 @@ import Pagination from '@/components/pagination'
 import UserFeed from '@/components/userFeed'
 import apiClient from '@/utils/apiClient'
 
-
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
 export default function Users(props) {
-  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
-  if (props.errorMessage) return props.errorMessage
-
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
   const [pageIndex, setPageIndex] = useState(1)
   const { data, error, isLoading } = useSWR(`${API_ENDPOINT}?paged=${pageIndex}`, fetcher, {
     keepPreviousData: true,
   })
+
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
 
   if (error) return <div>エラーが発生しました。時間をおいて再度お試しください。</div>
 
@@ -38,8 +37,12 @@ export default function Users(props) {
           </div>
         </div>
         <div className='pagination'>
-          {data?.users.length > 0 ? (
+          {data && !data.users ? (
+            <p>エラーが発生しました。時間をおいて再度お試しください。</p>
+          ) : data?.users.length > 0 ? (
             <Pagination data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
+          ) : isLoading ? (
+            <p>データを読み込んでいます...</p>
           ) : (
             <p>登録されているユーザーはまだいません</p>
           )}

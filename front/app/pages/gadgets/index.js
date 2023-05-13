@@ -14,16 +14,11 @@ import Layout, { siteTitle } from '@/components/layout'
 import Pagination from '@/components/pagination'
 import apiClient from '@/utils/apiClient'
 
-
-
 import 'react-toastify/dist/ReactToastify.css'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
 export default function Gadgets(props) {
-  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
-  if (props.errorMessage) return props.errorMessage
-
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS
   const [pageIndex, setPageIndex] = useState(1)
   const { data, error, isLoading } = useSWR(`${API_ENDPOINT}?paged=${pageIndex}`, fetcher, {
@@ -61,6 +56,9 @@ export default function Gadgets(props) {
     }
   }, [status])
 
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
+
   if (error) return <div>エラーが発生しました。時間をおいて再度お試しください。</div>
 
   if (data || isLoading) {
@@ -82,7 +80,7 @@ export default function Gadgets(props) {
             </div>
             <div id='feed_gadget'>
               <div id='gadgets' className='gadgets'>
-                {data?.gadgets.map((gadget) => {
+                {data?.gadgets?.map((gadget) => {
                   return <Gadget key={gadget.id} gadget={gadget} user={props.user} data={data} />
                 })}
               </div>
@@ -90,8 +88,12 @@ export default function Gadgets(props) {
           </div>
         </div>
         <div className='pagination'>
-          {data && data?.gadgets.length > 0 ? (
+          {data && !data.gadgets ? (
+            <p>エラーが発生しました。時間をおいて再度お試しください。</p>
+          ) : data?.gadgets.length > 0 ? (
             <Pagination data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
+          ) : isLoading ? (
+            <p>データを読み込んでいます...</p>
           ) : (
             <p>登録されているガジェットはありません</p>
           )}

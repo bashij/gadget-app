@@ -13,15 +13,11 @@ import Tweet from '@/components/tweet'
 import TweetForm from '@/components/tweetForm'
 import apiClient from '@/utils/apiClient'
 
-
 import 'react-toastify/dist/ReactToastify.css'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
 export default function Tweets(props) {
-  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
-  if (props.errorMessage) return props.errorMessage
-
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_TWEETS
   const [pageIndex, setPageIndex] = useState(1)
   const { mutate } = useSWRConfig()
@@ -85,6 +81,9 @@ export default function Tweets(props) {
     }
   }, [status])
 
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
+
   if (error) return <div>エラーが発生しました。時間をおいて再度お試しください。</div>
 
   if (data || isLoading) {
@@ -113,7 +112,7 @@ export default function Tweets(props) {
             />
             <div id='feed_tweet'>
               <div id='tweets' className='posts'>
-                {data?.tweets.map((tweet) => {
+                {data?.tweets?.map((tweet) => {
                   return (
                     <Tweet
                       key={tweet.id}
@@ -134,8 +133,12 @@ export default function Tweets(props) {
           </div>
         </div>
         <div className='pagination'>
-          {data?.tweets.length > 0 ? (
+          {data && !data.tweets ? (
+            <p>エラーが発生しました。時間をおいて再度お試しください。</p>
+          ) : data?.tweets.length > 0 ? (
             <Pagination data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
+          ) : isLoading ? (
+            <p>データを読み込んでいます...</p>
           ) : (
             <p>投稿されているツイートはありません</p>
           )}

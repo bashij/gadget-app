@@ -9,22 +9,18 @@ import Layout, { siteTitle } from '@/components/layout'
 import UserDelete from '@/components/userDelete'
 import apiClient from '@/utils/apiClient'
 
-
 import 'react-toastify/dist/ReactToastify.css'
 
 const pageTitle = 'ユーザー情報編集'
 
 export default function Edit(props) {
-  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
-  if (props.errorMessage) return props.errorMessage
-
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
 
   const [formData, setFormData] = useState({
-    name: `${props.pageUser.name}`,
-    email: `${props.pageUser.email}`,
-    job: `${props.pageUser.job}`,
-    image: `${props.pageUser.image.url}`,
+    name: `${props.pageUser?.name}`,
+    email: `${props.pageUser?.email}`,
+    job: `${props.pageUser?.job}`,
+    image: `${props.pageUser?.image.url}`,
     password: '',
     password_confirmation: '',
   })
@@ -108,7 +104,7 @@ export default function Edit(props) {
     }
 
     // 非ログイン時はログイン画面へ遷移
-    if (!props.currentUser) {
+    if (!props.errorMessage && !props.currentUser) {
       router.push(
         {
           pathname: '/login',
@@ -129,6 +125,9 @@ export default function Edit(props) {
       )
     }
   }, [status])
+
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
 
   return (
     <>

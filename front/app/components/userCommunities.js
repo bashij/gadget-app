@@ -30,7 +30,7 @@ export default function UserCommunities(props) {
   const [status, setStatus] = useState(router.query.status)
 
   // 最新の件数を取得
-  const recordCount = data?.pagination.total_count
+  const recordCount = data?.pagination?.total_count
   useEffect(() => {
     if (recordCount) {
       props.setUserCommunityCount(recordCount)
@@ -45,14 +45,18 @@ export default function UserCommunities(props) {
         <ToastContainer />
         <div className='row justify-content-center'>
           <div className='community row justify-content-center'>
-            {data?.communities.map((community) => {
+            {data?.communities?.map((community) => {
               return <Community key={community.id} community={community} user={props.currentUser} />
             })}
           </div>
         </div>
         <div className='pagination'>
-          {data?.communities.length > 0 ? (
+          {data && !data.communities ? (
+            <p>エラーが発生しました。時間をおいて再度お試しください。</p>
+          ) : data?.communities.length > 0 ? (
             <Pagination data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
+          ) : isLoading ? (
+            <p>データを読み込んでいます...</p>
           ) : (
             <p>参加しているコミュニティはありません</p>
           )}

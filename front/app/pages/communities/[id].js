@@ -9,8 +9,8 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { format } from 'date-fns'
 import { toast, ToastContainer } from 'react-toastify'
-
 import useSWR, { useSWRConfig } from 'swr'
+
 import CommunityDelete from '@/components/communityDelete'
 import CommunityMembership from '@/components/communityMembership'
 import Layout, { siteTitle } from '@/components/layout'
@@ -22,14 +22,11 @@ import 'react-toastify/dist/ReactToastify.css'
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
 export default function Community(props) {
-  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
-  if (props.errorMessage) return props.errorMessage
-
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_COMMUNITIES
   const [pageIndex, setPageIndex] = useState(1)
   const { mutate } = useSWRConfig()
   const { data, error, isLoading } = useSWR(
-    `${API_ENDPOINT}/${props.community.id}/memberships?paged=${pageIndex}`,
+    `${API_ENDPOINT}/${props.community?.id}/memberships?paged=${pageIndex}`,
     fetcher,
     {
       keepPreviousData: true,
@@ -37,7 +34,7 @@ export default function Community(props) {
     },
   )
 
-  const [membershipCount, setMembershipCount] = useState(props.community.memberships.length)
+  const [membershipCount, setMembershipCount] = useState(props.community?.memberships.length)
 
   const router = useRouter()
   const [message, setMessage] = useState([router.query.message])
@@ -95,6 +92,9 @@ export default function Community(props) {
       })
     }
   }, [status])
+
+  // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
+  if (props.errorMessage) return props.errorMessage
 
   if (error) return <div>エラーが発生しました。時間をおいて再度お試しください。</div>
 
@@ -213,8 +213,12 @@ export default function Community(props) {
           </div>
         </div>
         <div className='pagination'>
-          {data && data?.users.length > 0 ? (
+          {data && !data.users ? (
+            <p>エラーが発生しました。時間をおいて再度お試しください。</p>
+          ) : data?.users.length > 0 ? (
             <Pagination data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
+          ) : isLoading ? (
+            <p>データを読み込んでいます...</p>
           ) : (
             <p>参加中のユーザーはまだいません</p>
           )}
