@@ -1,12 +1,12 @@
+import { useEffect, useMemo, useState } from 'react'
+
+import dynamic from 'next/dynamic'
+
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DOMPurify from 'dompurify'
 import 'easymde/dist/easymde.min.css'
 import { marked } from 'marked'
-
-import dynamic from 'next/dynamic'
-
-import { useEffect, useMemo, useState } from 'react'
 
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), { ssr: false })
 

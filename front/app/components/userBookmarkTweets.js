@@ -1,11 +1,11 @@
-import Pagination from '@/components/pagination'
-import Tweet from '@/components/tweet'
-
 import { useEffect, useState } from 'react'
 
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import useSWR, { useSWRConfig } from 'swr'
+
+import Pagination from '@/components/pagination'
+import Tweet from '@/components/tweet'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 

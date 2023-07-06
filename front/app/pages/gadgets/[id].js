@@ -1,3 +1,10 @@
+import { useEffect, useState } from 'react'
+
+import Head from 'next/head'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+
 import { faPenToSquare, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DOMPurify from 'dompurify'
@@ -17,13 +24,6 @@ import ReviewRequest from '@/components/reviewRequest'
 import apiClient from '@/utils/apiClient'
 import 'easymde/dist/easymde.min.css'
 import 'highlight.js/styles/github.css'
-
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-
-import { useEffect, useState } from 'react'
 
 import 'react-toastify/dist/ReactToastify.css'
 

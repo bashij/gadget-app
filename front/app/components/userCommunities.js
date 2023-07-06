@@ -1,6 +1,3 @@
-import Community from '@/components/community'
-import Pagination from '@/components/pagination'
-
 import { useEffect, useState } from 'react'
 
 import Link from 'next/link'
@@ -11,6 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import useSWR from 'swr'
+
+import Community from '@/components/community'
+import Pagination from '@/components/pagination'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
