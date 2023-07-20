@@ -1,0 +1,55 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    // eslint-config-prettier を有効化
+    "prettier"
+  ],
+  "plugins": ["import", "unused-imports"],
+  "rules": {
+    "unused-imports/no-unused-imports": "error",
+    // importの並び順設定
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling"],
+          "object",
+          "type",
+          "index"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "next/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "API",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "**\\.css",
+            "group": "index",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react", "next/**"],
+        "newlines-between": "always",
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ],
+    // importをファイル先頭に記述
+    "import/first": "error",
+    // 最後のimportの後に空行を追加
+    "import/newline-after-import": "error"
+  }
+}
