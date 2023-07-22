@@ -14,7 +14,7 @@ test:
   <<: *default
   database: gadget_app_test
   host: <%= ENV.fetch("APP_DATABASE_HOST") { "db" } %>
-  password: ci_test_password
+  password: <%= ENV['DATABASE_TEST_PASSWORD'] %>
 
 production:
   <<: *default
