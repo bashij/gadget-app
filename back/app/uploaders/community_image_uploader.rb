@@ -23,7 +23,7 @@ class CommunityImageUploader < CarrierWave::Uploader::Base
   process resize_to_fit: [300, 300]
 
   # アップロードできるファイルの拡張子を限定する
-  def extension_whitelist
+  def extension_allowlist
     %w[jpg jpeg gif png]
   end
 
