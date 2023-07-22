@@ -118,7 +118,6 @@ class User < ApplicationRecord
   # ユーザーが参加しているコミュニティを、参加した日時順に返す
   def joining_communities_reordered
     joining_communities.includes(:user, :memberships)
-                      .reorder('memberships.created_at DESC')
+                       .reorder('memberships.created_at DESC')
   end
-
 end

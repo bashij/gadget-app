@@ -9,11 +9,11 @@ module Api
         @communities = Community.order(created_at: :desc)
         # コミュニティのページネーション情報（デフォルトは10件ずつの表示とする）
         paged = params[:paged]
-        per = params[:per].present? ? params[:per] : 10
+        per = params[:per].presence || 10
         @communities_paginated = @communities.page(paged).per(per)
         @pagination = pagination(@communities_paginated)
 
-        render json: { communities: @communities_paginated, pagination: @pagination }, include: [:user, :memberships]
+        render json: { communities: @communities_paginated, pagination: @pagination }, include: %i[user memberships]
       end
 
       def user_communities
@@ -22,23 +22,23 @@ module Api
         @communities = user.joining_communities_reordered
         # コミュニティのページネーション情報（デフォルトは10件ずつの表示とする）
         paged = params[:paged]
-        per = params[:per].present? ? params[:per] : 10
+        per = params[:per].presence || 10
         @communities_paginated = @communities.page(paged).per(per)
         @pagination = pagination(@communities_paginated)
 
-        render json: { communities: @communities_paginated, pagination: @pagination }, include: [:user, :memberships]
+        render json: { communities: @communities_paginated, pagination: @pagination }, include: %i[user memberships]
       end
 
       def show
         @community = Community.find(params[:id])
-        render json: { community: @community }, include: [:user, :memberships]
+        render json: { community: @community }, include: %i[user memberships]
       end
 
       def create
         @community = current_user.communities.build(communities_params)
         if @community.save
           message = [I18n.t('communities.create.flash.success')]
-          render json: { status: 'success', message: message, id: @community.id}
+          render json: { status: 'success', message: message, id: @community.id }
         else
           message = @community.errors.full_messages
           render json: { status: 'failure', message: message, id: @community.id }
@@ -48,7 +48,7 @@ module Api
       def update
         if @community.update(communities_params)
           message = [I18n.t('communities.update.flash.success')]
-          render json: { status: 'success', message: message, id: @community.id}
+          render json: { status: 'success', message: message, id: @community.id }
         else
           message = @community.errors.full_messages
           render json: { status: 'failure', message: message, id: @community.id }

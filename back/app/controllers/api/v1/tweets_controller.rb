@@ -9,7 +9,7 @@ module Api
         @tweets = Tweet.where(parent_id: nil).order(created_at: :desc)
         # ツイートのページネーション情報（デフォルトは5件ずつの表示とする）
         paged = params[:paged]
-        per = params[:per].present? ? params[:per] : 5
+        per = params[:per].presence || 5
         @tweets_paginated = @tweets.page(paged).per(per)
         @pagination = pagination(@tweets_paginated)
         # 全ツイートのリプライ件数情報
@@ -17,7 +17,12 @@ module Api
         ids = @tweets_paginated.pluck(:id)
         @replies = Tweet.where(parent_id: ids)
 
-        render json: { tweets: @tweets_paginated, pagination: @pagination, replies: @replies, replyCounts: @reply_counts }, include: [:user, :tweet_likes, :tweet_bookmarks]
+        render json: {
+          tweets: @tweets_paginated,
+          pagination: @pagination,
+          replies: @replies,
+          replyCounts: @reply_counts
+        }, include: %i[user tweet_likes tweet_bookmarks]
       end
 
       def user_tweets
@@ -26,7 +31,7 @@ module Api
         @tweets = user.tweets.where(parent_id: nil).order(created_at: :desc)
         # ツイートのページネーション情報（デフォルトは5件ずつの表示とする）
         paged = params[:paged]
-        per = params[:per].present? ? params[:per] : 5
+        per = params[:per].presence || 5
         @tweets_paginated = @tweets.page(paged).per(per)
         @pagination = pagination(@tweets_paginated)
         # 全ツイートのリプライ件数情報
@@ -34,7 +39,12 @@ module Api
         ids = @tweets_paginated.pluck(:id)
         @replies = Tweet.where(parent_id: ids)
 
-        render json: { tweets: @tweets_paginated, pagination: @pagination, replies: @replies, replyCounts: @reply_counts }, include: [:user, :tweet_likes, :tweet_bookmarks]
+        render json: {
+          tweets: @tweets_paginated,
+          pagination: @pagination,
+          replies: @replies,
+          replyCounts: @reply_counts
+        }, include: %i[user tweet_likes tweet_bookmarks]
       end
 
       def user_bookmark_tweets
@@ -43,7 +53,7 @@ module Api
         @tweets = user.bookmarked_tweets_reordered
         # ツイートのページネーション情報（デフォルトは5件ずつの表示とする）
         paged = params[:paged]
-        per = params[:per].present? ? params[:per] : 5
+        per = params[:per].presence || 5
         @tweets_paginated = @tweets.page(paged).per(per)
         @pagination = pagination(@tweets_paginated)
         # 全ツイートのリプライ件数情報
@@ -51,7 +61,12 @@ module Api
         ids = @tweets_paginated.pluck(:id)
         @replies = Tweet.where(parent_id: ids)
 
-        render json: { tweets: @tweets_paginated, pagination: @pagination, replies: @replies, replyCounts: @reply_counts }, include: [:user, :tweet_likes, :tweet_bookmarks]
+        render json: {
+          tweets: @tweets_paginated,
+          pagination: @pagination,
+          replies: @replies,
+          replyCounts: @reply_counts
+        }, include: %i[user tweet_likes tweet_bookmarks]
       end
 
       def following_users_tweets
@@ -60,7 +75,7 @@ module Api
         @tweets = user.following_users_tweets
         # ツイートのページネーション情報（デフォルトは5件ずつの表示とする）
         paged = params[:paged]
-        per = params[:per].present? ? params[:per] : 5
+        per = params[:per].presence || 5
         @tweets_paginated = @tweets.page(paged).per(per)
         @pagination = pagination(@tweets_paginated)
         # 全ツイートのリプライ件数情報
@@ -68,7 +83,12 @@ module Api
         ids = @tweets_paginated.pluck(:id)
         @replies = Tweet.where(parent_id: ids)
 
-        render json: { tweets: @tweets_paginated, pagination: @pagination, replies: @replies, replyCounts: @reply_counts }, include: [:user, :tweet_likes, :tweet_bookmarks]
+        render json: {
+          tweets: @tweets_paginated,
+          pagination: @pagination,
+          replies: @replies,
+          replyCounts: @reply_counts
+        }, include: %i[user tweet_likes tweet_bookmarks]
       end
 
       def create
@@ -89,7 +109,7 @@ module Api
         @replies.each(&:destroy)
         # ツイートを削除
         @tweet.destroy
-        
+
         message = [I18n.t('tweets.destroy.flash.success')]
         render json: { status: 'success', message: message }
       end

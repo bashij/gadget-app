@@ -10,7 +10,7 @@ module Api
         @users = @gadget.requesting_users
         # ページネーション情報（デフォルトは10件ずつの表示とする）
         paged = params[:paged]
-        per = params[:per].present? ? params[:per] : 10
+        per = params[:per].presence || 10
         @users_paginated = @users.page(paged).per(per)
         @pagination = pagination(@users_paginated)
 

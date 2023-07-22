@@ -28,10 +28,10 @@ module Api
 
         def correct_user
           @relationship = current_user.active_relationships.find_by(followed_id: params[:id])
-          if @relationship.nil?
-            message = ['フォローしていないユーザーのフォロー解除はできません']
-            render json: { status: 'failure', message: message } 
-          end
+          return unless @relationship.nil?
+
+          message = ['フォローしていないユーザーのフォロー解除はできません']
+          render json: { status: 'failure', message: message }
         end
     end
   end
