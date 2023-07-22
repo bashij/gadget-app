@@ -6,19 +6,18 @@ require:
 AllCops:
   NewCops: enable
   Exclude: # 自動生成されるファイルは基本的に除外
-    - 'vendor/**/*'
-    - 'db/**/*'
+    - "vendor/**/*"
+    - "db/**/*"
     # - 'bin/*'
-    - 'bin/yarn'
-    - 'bin/webpack'
-    - 'bin/webpack-dev-server'
+    - "bin/yarn"
+    - "bin/webpack"
+    - "bin/webpack-dev-server"
     - "config/**/*"
-    - 'public/**/*'
-    - 'log/**/*'
-    - 'tmp/**/*'
+    - "public/**/*"
+    - "log/**/*"
+    - "tmp/**/*"
     - !ruby/regexp /old_and_unused\.rb$/
-    - 'node_modules/**/*'
-
+    - "node_modules/**/*"
 
 # ドキュメントの無い public class を許可する
 Style/Documentation:
@@ -36,25 +35,25 @@ Style/EmptyMethod:
 # privateメソッド可読性向上のため許可
 Layout/IndentationWidth:
   Exclude:
-    - 'app/controllers/*'
+    - "app/controllers/api/v1/*"
 
 Layout/IndentationConsistency:
   Exclude:
-    - 'app/controllers/*'
+    - "app/controllers/api/v1/*"
 
 # HealthCheck用のため例外を許可
 Style/ClassAndModuleChildren:
   Exclude:
-    - 'app/controllers/api/health_check_controller.rb'
+    - "app/controllers/api/health_check_controller.rb"
 
 Rails/HttpStatus:
   Exclude:
-    - 'app/controllers/api/health_check_controller.rb'
+    - "app/controllers/api/health_check_controller.rb"
 
 # ユーザーパスワードとパスワード確認のバリデーションをスキップする必要があるため、update_attributeの使用を許可
 Rails/SkipsModelValidations:
   Exclude:
-    - 'app/models/user.rb'
+    - "app/models/user.rb"
 
 # 可読性を優先し、presence: trueの明示を許可
 Rails/RedundantPresenceValidationOnBelongsTo:
@@ -63,140 +62,132 @@ Rails/RedundantPresenceValidationOnBelongsTo:
 # 可読性を重視し、複数行の三項演算子を許可
 Style/MultilineTernaryOperator:
   Exclude:
-    - 'app/models/user.rb'
+    - "app/models/user.rb"
 
 # Session関連
 # 可読性・汎用性を重視し許可
 Style/SafeNavigation:
   Exclude:
-    - 'app/controllers/sessions_controller.rb'    
-    - 'app/helpers/sessions_helper.rb'
-    
+    - "app/controllers/api/v1/sessions_controller.rb"
+    - "app/helpers/sessions_helper.rb"
+
 Rails/HelperInstanceVariable:
   Exclude:
-    - 'app/helpers/sessions_helper.rb'
+    - "app/helpers/sessions_helper.rb"
 
 # Abc Sizeがデフォルト値以上のcontrollerを例外として許可（デフォルトAbc Size:15）
 Metrics/AbcSize:
   Exclude:
-    - 'app/controllers/*'
+    - "app/controllers/api/v1/*"
 
 # bullet設定のため行数制限の対象外とする（デフォルト制限行数：25行/ブロック）
 # テストは行数規定を除外
 Metrics/BlockLength:
   Exclude:
-    - 'config/environments/development.rb'
-    - 'spec/models/*'
-    - 'spec/requests/*'
-    - 'spec/system/*'
-    - 'spec/spec_helper.rb'
+    - "config/environments/development.rb"
+    - "spec/models/*"
+    - "spec/requests/*"
+    - "spec/system/*"
+    - "spec/spec_helper.rb"
 
 # コントローラと一部ヘルパーはメソッド行数が11行以上でも許可する
 Metrics/MethodLength:
   Exclude:
-    - 'app/controllers/*'
-    - 'spec/spec_helper.rb'
+    - "app/controllers/api/v1/*"
+    - "spec/spec_helper.rb"
 
 # 一部コントローラは規定値以上の行数を許可する（デフォルト制限行数：100行）
 Metrics/ClassLength:
   Exclude:
-    - 'app/controllers/users_controller.rb'
-
-# 一部コントローラは規定値以上の複雑さを許容する
-Metrics/CyclomaticComplexity:
-  Exclude:
-    - 'app/controllers/static_pages_controller.rb'
-Metrics/PerceivedComplexity:
-  Exclude:
-    - 'app/controllers/static_pages_controller.rb'
+    - "app/controllers/api/v1/users_controller.rb"
 
 # テスト用自動生成ファイルを除外
 Style/ExpandPathArguments:
   Exclude:
-    - 'bin/rspec'
+    - "bin/rspec"
 
 Style/StringLiterals:
   Exclude:
-    - 'spec/rails_helper.rb'
+    - "spec/rails_helper.rb"
 
 Rails/FilePath:
   Exclude:
-    - 'spec/rails_helper.rb'
+    - "spec/rails_helper.rb"
 
 Lint/RedundantDirGlobSort:
   Exclude:
-    - 'spec/rails_helper.rb'
+    - "spec/rails_helper.rb"
 
 Style/BlockComments:
   Exclude:
-    - 'spec/spec_helper.rb'
+    - "spec/spec_helper.rb"
 
 # テストは行数規定を除外
 RSpec/ExampleLength:
   Exclude:
-    - 'spec/models/user_spec.rb'
-    - 'spec/models/gadget_spec.rb'
-    - 'spec/requests/users_spec.rb'
-    - 'spec/system/*.rb'
+    - "spec/models/user_spec.rb"
+    - "spec/models/gadget_spec.rb"
+    - "spec/requests/users_spec.rb"
+    - "spec/system/*.rb"
 
 # テスト文言は日本語とするため除外
 RSpec/ContextWording:
   Exclude:
-    - 'spec/requests/*.rb'
-    - 'spec/system/*.rb'
+    - "spec/requests/*.rb"
+    - "spec/system/*.rb"
 
 RSpec/Capybara/FeatureMethods:
   Exclude:
-    - 'spec/system/*.rb'
+    - "spec/system/*.rb"
 
 # 規定数(6)以上のmemoized helper methodを許可する
 RSpec/MultipleMemoizedHelpers:
-    Exclude:
-    - 'spec/requests/comments_spec.rb'
+  Exclude:
+    - "spec/requests/comments_spec.rb"
 
 # system specは複数のexpectationsを許可する
 RSpec/MultipleExpectations:
-    Exclude:
-    - 'spec/system/*.rb'
+  Exclude:
+    - "spec/system/*.rb"
 
 # ネストを許可
 RSpec/NestedGroups:
   Exclude:
-    - 'spec/requests/users_spec.rb'
-    - 'spec/requests/tweets_spec.rb'
-    - 'spec/requests/gadgets_spec.rb'
-    - 'spec/requests/communities_spec.rb'
-    - 'spec/requests/tweet_likes_spec.rb'
-    - 'spec/requests/tweet_bookmarks_spec.rb'
-    - 'spec/requests/gadget_likes_spec.rb'
-    - 'spec/requests/gadget_bookmarks_spec.rb'
-    - 'spec/requests/review_requests_spec.rb'
-    - 'spec/requests/comments_spec.rb'
-    - 'spec/requests/relationships_spec.rb'
-    - 'spec/requests/memberships_spec.rb'
+    - "spec/requests/users_spec.rb"
+    - "spec/requests/tweets_spec.rb"
+    - "spec/requests/gadgets_spec.rb"
+    - "spec/requests/communities_spec.rb"
+    - "spec/requests/tweet_likes_spec.rb"
+    - "spec/requests/tweet_bookmarks_spec.rb"
+    - "spec/requests/gadget_likes_spec.rb"
+    - "spec/requests/gadget_bookmarks_spec.rb"
+    - "spec/requests/review_requests_spec.rb"
+    - "spec/requests/comments_spec.rb"
+    - "spec/requests/relationships_spec.rb"
+    - "spec/requests/memberships_spec.rb"
 
 # インスタンス変数を許可
 RSpec/InstanceVariable:
   Exclude:
-    - 'spec/requests/gadgets_spec.rb'
-    - 'spec/requests/communities_spec.rb'
-    - 'spec/requests/comments_spec.rb'
-    - 'spec/requests/relationships_spec.rb'
+    - "spec/requests/gadgets_spec.rb"
+    - "spec/requests/communities_spec.rb"
+    - "spec/requests/comments_spec.rb"
+    - "spec/requests/relationships_spec.rb"
 
 # ダミーデータを用意するために許可
 RSpec/LetSetup:
   Exclude:
-    - 'spec/system/tweets_spec.rb'
-    - 'spec/system/gadgets_spec.rb'
-    - 'spec/system/communities_spec.rb'
+    - "spec/system/tweets_spec.rb"
+    - "spec/system/gadgets_spec.rb"
+    - "spec/system/communities_spec.rb"
 
 # 空のfactorybotファイルを許可する（不要が確定したら削除する）
 Lint/EmptyBlock:
   Exclude:
-    - 'spec/factories/tweet_likes.rb'
-    - 'spec/factories/tweet_bookmarks.rb'
-    - 'spec/factories/gadget_likes.rb'
-    - 'spec/factories/gadget_bookmarks.rb'
-    - 'spec/factories/review_requests.rb'
-    - 'spec/factories/memberships.rb'
-    - 'spec/factories/relationships.rb'
+    - "spec/factories/tweet_likes.rb"
+    - "spec/factories/tweet_bookmarks.rb"
+    - "spec/factories/gadget_likes.rb"
+    - "spec/factories/gadget_bookmarks.rb"
+    - "spec/factories/review_requests.rb"
+    - "spec/factories/memberships.rb"
+    - "spec/factories/relationships.rb"
