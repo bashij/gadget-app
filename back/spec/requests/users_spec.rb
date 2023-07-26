@@ -5,181 +5,170 @@ RSpec.describe 'Users', type: :request do
   let(:other_user) { create(:user) }
 
   describe 'GET #index' do
-    specify '一覧画面の表示が成功する' do
-      get users_path
+    before do
+      # 2件のuserを新規作成
+      @user1 = create(:user)
+      @user2 = create(:user)
+    end
+
+    specify 'リクエストが成功する' do
+      get '/api/v1/users/'
       expect(response).to have_http_status :ok
     end
 
-    specify 'コンテンツのヘッダが存在する' do
-      get users_path
-      expect(response.body).to include 'ユーザー一覧'
+    specify '要求通りの情報を返す' do
+      get '/api/v1/users/'
+      json = JSON.parse(response.body)
+
+      expect(json['users'].length).to eq(2)
     end
   end
 
   describe 'GET #show' do
-    specify '詳細画面の表示が成功する' do
-      get user_path(user)
+    specify 'リクエストが成功する' do
+      get "/api/v1/users/#{user.id}"
       expect(response).to have_http_status :ok
     end
 
-    describe '各コンテンツのヘッダが存在する' do
-      specify '登録ガジェット一覧' do
-        get user_path(user)
-        expect(response.body).to include '登録ガジェット一覧'
-      end
+    specify '要求通りの情報を返す' do
+      get "/api/v1/users/#{user.id}"
+      json = JSON.parse(response.body)
 
-      specify 'コミュニティ' do
-        get user_path(user)
-        expect(response.body).to include 'コミュニティ'
-      end
-
-      specify 'ツイート' do
-        get user_path(user)
-        expect(response.body).to include 'ツイート'
-      end
-
-      specify 'ブックマークツイート' do
-        get user_path(user)
-        expect(response.body).to include 'ブックマークツイート'
-      end
-
-      specify 'ブックマークガジェット' do
-        get user_path(user)
-        expect(response.body).to include 'ブックマークガジェット'
-      end
-    end
-  end
-
-  describe 'GET #new' do
-    specify '新規作成画面の表示が成功する' do
-      get new_user_path
-      expect(response).to have_http_status :ok
-    end
-
-    specify 'コンテンツのヘッダが存在する' do
-      get new_user_path
-      expect(response.body).to include 'ユーザー登録'
+      expect(json['user']['name']).to eq(user.name)
     end
   end
 
   describe 'GET #following' do
-    specify 'フォロー一覧画面の表示が成功する' do
-      get following_user_path(user)
+    before do
+      # ログイン
+      session_params = { email: user.email, password: user.password, remember_me: 0 }
+      post '/api/v1/login', params: { session: session_params }
+      # ログインユーザーで別のユーザーをフォロー
+      @other_user1 = create(:user)
+      @other_user2 = create(:user)
+      post '/api/v1/relationships', params: { followed_id: @other_user1.id }
+      post '/api/v1/relationships', params: { followed_id: @other_user2.id }
+    end
+
+    specify 'リクエストが成功する' do
+      get "/api/v1/users/#{user.id}/following"
       expect(response).to have_http_status :ok
     end
 
-    specify 'コンテンツのヘッダが存在する' do
-      get following_user_path(user)
-      expect(response.body).to include 'フォロー'
+    specify '要求通りの情報を返す' do
+      get "/api/v1/users/#{user.id}/following"
+      json = JSON.parse(response.body)
+
+      expect(json['users'].length).to eq(2)
     end
   end
 
   describe 'GET #followers' do
-    specify '新規作成画面の表示が成功する' do
-      get followers_user_path(user)
+    before do
+      # ログイン
+      session_params = { email: user.email, password: user.password, remember_me: 0 }
+      post '/api/v1/login', params: { session: session_params }
+      # ログインユーザーで別のユーザーをフォロー
+      @other_user1 = create(:user)
+      @other_user2 = create(:user)
+      post '/api/v1/relationships', params: { followed_id: @other_user1.id }
+      post '/api/v1/relationships', params: { followed_id: @other_user2.id }
+    end
+
+    specify 'リクエストが成功する' do
+      get "/api/v1/users/#{@other_user1.id}/followers"
       expect(response).to have_http_status :ok
     end
 
-    specify 'コンテンツのヘッダが存在する' do
-      get followers_user_path(user)
-      expect(response.body).to include 'フォロワー'
+    specify '要求通りの情報を返す' do
+      get "/api/v1/users/#{@other_user1.id}/followers"
+      json = JSON.parse(response.body)
+
+      expect(json['users'].length).to eq(1)
     end
   end
 
   describe 'POST #create' do
-    context '新規作成成功の場合' do
+    context '成功の場合' do
       specify 'ユーザー数が１件増える' do
+        valid_params = { name: 'テストユーザー',
+                         email: 'example@gmail.com',
+                         job: 'IT系',
+                         password: 'password' }
         expect do
-          post users_path, params: { user:
-                                   { name: 'テストユーザー',
-                                     email: 'example@gmail.com',
-                                     job: 'IT系',
-                                     password: 'password' } }
+          post '/api/v1/users', params: { user: valid_params }
         end.to change(User.all, :count).by(1)
       end
 
-      specify 'ホーム画面へリダイレクトされる' do
-        post users_path, params: { user:
-                                 { name: 'テストユーザー',
-                                   email: 'example@gmail.com',
-                                   job: 'IT系',
-                                   password: 'password' } }
-        expect(response).to redirect_to root_url
+      specify '成功した情報を返す' do
+        valid_params = { name: 'テストユーザー',
+                         email: 'example@gmail.com',
+                         job: 'IT系',
+                         password: 'password' }
+        post '/api/v1/users', params: { user: valid_params }
+        json = JSON.parse(response.body)
+
+        expect(json['status']).to eq('success')
+        expect(json['message']).to eq(['GadgetLinkへようこそ！'])
       end
     end
 
-    context '新規作成失敗の場合' do
-      specify 'ユーザー登録画面が再表示される' do
-        post users_path, params: { user:
-                                 { name: '',
-                                   email: 'example@gmail.com',
-                                   job: 'IT系',
-                                   password: 'password' } }
-        expect(response.body).to include 'ユーザー登録'
-      end
-    end
-  end
-
-  describe 'GET #edit' do
-    context 'ログインしていない状態' do
-      specify 'ログイン画面へリダイレクトされる' do
-        get edit_user_path(user)
-        expect(response).to redirect_to login_path
-      end
-    end
-
-    context 'ログインしている状態' do
-      before do
-        post login_path, params: { session: { email: user.email, password: user.password, remember_me: 0 } }
+    context '失敗の場合' do
+      specify 'ユーザー数が増減しない' do
+        valid_params = { name: '',
+                         email: 'example@gmail.com',
+                         job: 'IT系',
+                         password: 'password' }
+        expect do
+          post '/api/v1/users', params: { user: valid_params }
+        end.not_to change(User.all, :count)
       end
 
-      specify '編集画面の表示が成功する' do
-        get edit_user_path(user)
-        expect(response).to have_http_status :ok
-      end
+      specify '処理失敗の情報を返す' do
+        valid_params = { name: '',
+                         email: 'example@gmail.com',
+                         job: 'IT系',
+                         password: 'password' }
+        post '/api/v1/users', params: { user: valid_params }
+        json = JSON.parse(response.body)
 
-      specify 'コンテンツのヘッダが存在する' do
-        get edit_user_path(user)
-        expect(response.body).to include 'ユーザー情報編集'
-      end
-
-      specify 'ログインユーザー以外の編集画面を表示しようとするとホーム画面へリダイレクトされる' do
-        user
-        get edit_user_path(other_user)
-        expect(response).to redirect_to root_url
+        expect(json['status']).to eq('failure')
       end
     end
   end
 
   describe 'DELETE #destroy' do
     context 'ログインしていない状態' do
-      specify 'ログイン画面へリダイレクトされる' do
-        delete user_path(user)
-        expect(response).to redirect_to login_path
+      specify 'ログイン画面へ遷移するための情報を返す' do
+        delete "/api/v1/users/#{user.id}"
+        json = JSON.parse(response.body)
+
+        expect(response).to have_http_status :ok
+        expect(json['status']).to eq('notLoggedIn')
+        expect(json['message']).to eq(['ログインしてください'])
       end
     end
 
     context 'ログインしている状態' do
       before do
-        post login_path, params: { session: { email: user.email, password: user.password, remember_me: 0 } }
+        session_params = { email: user.email, password: user.password, remember_me: 0 }
+        post '/api/v1/login', params: { session: session_params }
       end
 
-      context '削除成功の場合' do
+      context '成功の場合' do
         specify 'ユーザー数が１件減る' do
-          expect { delete user_path(user) }.to change(User.all, :count).by(-1)
-        end
-
-        specify 'ホーム画面へリダイレクトされる' do
-          delete user_path(user)
-          expect(response).to redirect_to root_url
+          expect { delete "/api/v1/users/#{user.id}" }.to change(User.all, :count).by(-1)
         end
       end
 
-      context '削除失敗の場合' do
-        specify 'ログインユーザー以外を削除しようとするとホーム画面へリダイレクトされる' do
-          user
-          delete user_path(other_user)
-          expect(response).to redirect_to root_url
+      context '失敗の場合' do
+        specify 'ログインユーザー以外を削除しようとすると操作失敗の情報を返す' do
+          delete "/api/v1/users/#{other_user.id}"
+          json = JSON.parse(response.body)
+
+          expect(response).to have_http_status :ok
+          expect(json['status']).to eq('failure')
+          expect(json['message']).to eq(['この操作は実行できません'])
         end
       end
     end
@@ -187,42 +176,58 @@ RSpec.describe 'Users', type: :request do
 
   describe 'PATCH #update' do
     context 'ログインしていない状態' do
-      specify 'ログイン画面へリダイレクトされる' do
-        patch user_path(user), params: { user: { name: "#{user.name} updateテスト" } }
-        expect(response).to redirect_to login_path
+      specify 'ログイン画面へ遷移するための情報を返す' do
+        valid_params = { user_id: user.id, name: "#{user.name} updateテスト" }
+        patch "/api/v1/users/#{user.id}", params: { user: valid_params }
+        json = JSON.parse(response.body)
+
+        expect(response).to have_http_status :ok
+        expect(json['status']).to eq('notLoggedIn')
+        expect(json['message']).to eq(['ログインしてください'])
       end
     end
 
     context 'ログインしている状態' do
       before do
-        post login_path, params: { session: { email: user.email, password: user.password, remember_me: 0 } }
+        session_params = { email: user.email, password: user.password, remember_me: 0 }
+        post '/api/v1/login', params: { session: session_params }
       end
 
       context '更新成功の場合' do
         specify 'nameが更新される' do
           user_name = user.name
-          patch user_path(user), params: { user: { name: "#{user_name} updateテスト" } }
-          expect(user.reload.name).not_to eq user_name
+          valid_params = { user_id: user.id, name: "#{user.name} updateテスト" }
+          patch "/api/v1/users/#{user.id}", params: { user: valid_params }
+          expect(user.reload.name).to eq("#{user_name} updateテスト")
         end
 
-        specify 'ユーザー詳細画面へリダイレクトされる' do
-          user_name = user.name
-          patch user_path(user), params: { user: { name: "#{user_name} updateテスト" } }
-          expect(response).to redirect_to user_path(user)
+        specify '更新したユーザー情報を返す' do
+          valid_params = { user_id: user.id, name: "#{user.name} updateテスト" }
+          patch "/api/v1/users/#{user.id}", params: { user: valid_params }
+          json = JSON.parse(response.body)
+
+          expect(json['status']).to eq('success')
+          expect(json['id']).to eq(user.id)
         end
       end
 
       context '更新失敗の場合' do
-        specify 'ユーザー編集画面が再表示される' do
-          user_name = ''
-          patch user_path(user), params: { user: { name: user_name } }
-          expect(response.body).to include 'ユーザー情報編集'
+        specify '処理失敗の情報を返す' do
+          valid_params = { user_id: user.id, name: '' }
+          patch "/api/v1/users/#{user.id}", params: { user: valid_params }
+          json = JSON.parse(response.body)
+
+          expect(json['status']).to eq('failure')
         end
 
-        specify 'ログインユーザー以外を更新しようとするとホーム画面へリダイレクトされる' do
-          user
-          patch user_path(other_user), params: { user: { name: 'updateテスト' } }
-          expect(response).to redirect_to root_url
+        specify 'ログインユーザー以外を更新しようとすると操作失敗の情報を返す' do
+          valid_params = { user_id: user.id, name: "#{user.name} updateテスト" }
+          patch "/api/v1/users/#{other_user.id}", params: { user: valid_params }
+          json = JSON.parse(response.body)
+
+          expect(response).to have_http_status :ok
+          expect(json['status']).to eq('failure')
+          expect(json['message']).to eq(['この操作は実行できません'])
         end
       end
     end

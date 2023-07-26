@@ -5,119 +5,115 @@ RSpec.describe 'Communities', type: :request do
   let(:community) { create(:community) }
   let(:other_community) { create(:community) }
 
-  describe 'GET #show' do
-    specify '詳細画面の表示が成功する' do
-      get community_path(community)
+  describe 'GET #index' do
+    before do
+      # 2件のcommunityを新規作成
+      @community1 = create(:community)
+      @community2 = create(:community)
+    end
+
+    specify 'リクエストが成功する' do
+      get '/api/v1/communities'
       expect(response).to have_http_status :ok
     end
 
-    describe '各コンテンツのヘッダが存在する' do
-      specify 'コミュニティ名' do
-        get community_path(community)
-        expect(response.body).to include 'コミュニティ名'
-      end
+    specify '要求通りの情報を返す' do
+      get '/api/v1/communities'
+      json = JSON.parse(response.body)
 
-      specify '参加者一覧' do
-        get community_path(community)
-        expect(response.body).to include '参加者一覧'
-      end
+      expect(json['communities'].length).to eq(2)
     end
   end
 
-  describe 'GET #new' do
-    context 'ログインしていない状態' do
-      specify 'ログイン画面へリダイレクトされる' do
-        get new_community_path
-        expect(response).to redirect_to login_path
-      end
+  describe 'GET #user_communities' do
+    before do
+      session_params = { email: user.email, password: user.password, remember_me: 0 }
+      post '/api/v1/login', params: { session: session_params }
     end
 
-    context 'ログインしている状態' do
-      before do
-        post login_path, params: { session: { email: user.email, password: user.password, remember_me: 0 } }
-      end
+    specify 'リクエストが成功する' do
+      get "/api/v1/users/#{user.id}/user_communities"
+      expect(response).to have_http_status :ok
+    end
 
-      specify '新規作成画面の表示が成功する' do
-        get new_community_path
-        expect(response).to have_http_status :ok
-      end
+    specify '要求通りの情報を返す' do
+      # 2件のコミュニティに参加する
+      post "/api/v1/communities/#{community.id}/memberships", params: { community_id: community.id }
+      post "/api/v1/communities/#{other_community.id}/memberships", params: { community_id: other_community.id }
 
-      specify 'コンテンツのヘッダが存在する' do
-        get new_community_path
-        expect(response.body).to include 'コミュニティ登録'
-      end
+      get "/api/v1/users/#{user.id}/user_communities"
+      json = JSON.parse(response.body)
+
+      expect(json['communities'].length).to eq(2)
     end
   end
 
-  describe 'GET #edit' do
-    context 'ログインしていない状態' do
-      specify 'ログイン画面へリダイレクトされる' do
-        get edit_community_path(community)
-        expect(response).to redirect_to login_path
-      end
+  describe 'GET #show' do
+    specify 'リクエストが成功する' do
+      get "/api/v1/communities/#{community.id}"
+      expect(response).to have_http_status :ok
     end
 
-    context 'ログインしている状態' do
-      before do
-        post login_path, params: { session: { email: user.email, password: user.password, remember_me: 0 } }
-        post communities_path, params: { community: { user_id: user.id, name: 'テストコミュニティ' } }
-        @community = user.communities.first
-      end
+    specify '要求通りの情報を返す' do
+      get "/api/v1/communities/#{community.id}"
+      json = JSON.parse(response.body)
 
-      specify '編集画面の表示が成功する' do
-        get edit_community_path(@community)
-        expect(response).to have_http_status :ok
-      end
-
-      specify 'コンテンツのヘッダが存在する' do
-        get edit_community_path(@community)
-        expect(response.body).to include 'コミュニティ編集'
-      end
-
-      specify 'ログインユーザー以外のコミュニティ編集画面を表示しようとするとホーム画面へリダイレクトされる' do
-        get edit_community_path(community)
-        expect(response).to redirect_to root_url
-      end
+      expect(json['community']['name']).to eq(community.name)
     end
   end
 
   describe 'POST #create' do
     context 'ログインしていない状態' do
-      specify 'ログイン画面へリダイレクトされる' do
-        post communities_path, params: { community: { user_id: user.id, name: 'テストコミュニティ' } }
-        expect(response).to redirect_to login_path
+      specify 'ログイン画面へ遷移するための情報を返す' do
+        valid_params = { user_id: user.id, name: 'テストコミュニティ' }
+        post '/api/v1/communities', params: { community: valid_params }
+        json = JSON.parse(response.body)
+
+        expect(response).to have_http_status :ok
+        expect(json['status']).to eq('notLoggedIn')
+        expect(json['message']).to eq(['ログインしてください'])
       end
     end
 
     context 'ログインしている状態' do
       before do
-        post login_path, params: { session: { email: user.email, password: user.password, remember_me: 0 } }
+        session_params = { email: user.email, password: user.password, remember_me: 0 }
+        post '/api/v1/login', params: { session: session_params }
       end
 
       context '成功の場合' do
         specify 'コミュニティ数が１件増える' do
+          valid_params = { user_id: user.id, name: 'テストコミュニティ' }
           expect do
-            post communities_path, params: { community: { user_id: user.id, name: 'テストコミュニティ' } }
+            post '/api/v1/communities', params: { community: valid_params }
           end.to change(Community.all, :count).by(1)
         end
 
-        specify 'コミュニティ詳細画面が表示される' do
-          post communities_path, params: { community: { user_id: user.id, name: 'テストコミュニティ' } }
+        specify '新規作成したコミュニティ情報を返す' do
+          valid_params = { user_id: user.id, name: 'テストコミュニティ' }
+          post '/api/v1/communities', params: { community: valid_params }
           new_community = user.communities.last
-          expect(response).to redirect_to community_path(new_community)
+          json = JSON.parse(response.body)
+
+          expect(json['status']).to eq('success')
+          expect(json['id']).to eq(new_community.id)
         end
       end
 
       context '失敗の場合' do
         specify 'コミュニティ数が増減しない' do
+          valid_params = { user_id: user.id, name: '' }
           expect do
-            post communities_path, params: { community: { user_id: user.id, name: '' } }
+            post '/api/v1/communities', params: { community: valid_params }
           end.not_to change(Community.all, :count)
         end
 
-        specify 'バリデーションメッセージが画面に表示される' do
-          post communities_path, params: { community: { user_id: user.id, name: '' } }
-          expect(response.body).to include 'コミュニティ名を入力してください'
+        specify '処理失敗の情報を返す' do
+          valid_params = { user_id: user.id, name: '' }
+          post '/api/v1/communities', params: { community: valid_params }
+          json = JSON.parse(response.body)
+
+          expect(json['status']).to eq('failure')
         end
       end
     end
@@ -125,16 +121,24 @@ RSpec.describe 'Communities', type: :request do
 
   describe 'DELETE #destroy' do
     context 'ログインしていない状態' do
-      specify 'ログイン画面へリダイレクトされる' do
-        delete community_path(community)
-        expect(response).to redirect_to login_path
+      specify 'ログイン画面へ遷移するための情報を返す' do
+        delete "/api/v1/communities/#{community.id}"
+        json = JSON.parse(response.body)
+
+        expect(response).to have_http_status :ok
+        expect(json['status']).to eq('notLoggedIn')
+        expect(json['message']).to eq(['ログインしてください'])
       end
     end
 
     context 'ログインしている状態' do
       before do
-        post login_path, params: { session: { email: user.email, password: user.password, remember_me: 0 } }
-        post communities_path, params: { community: { user_id: user.id, name: 'テストコミュニティ' } }
+        # ログイン
+        session_params = { email: user.email, password: user.password, remember_me: 0 }
+        post '/api/v1/login', params: { session: session_params }
+        # 新規コミュニティ作成
+        valid_params = { user_id: user.id, name: 'テストコミュニティ' }
+        post '/api/v1/communities', params: { community: valid_params }
         @new_community = user.communities.last
         @user_id = @new_community.user_id
       end
@@ -142,20 +146,19 @@ RSpec.describe 'Communities', type: :request do
       context '成功の場合' do
         specify 'コミュニティ数が１件減る' do
           expect do
-            delete community_path(@new_community), params: { community: { user_id: @user_id } }
+            delete "/api/v1/communities/#{@new_community.id}"
           end.to change(Community.all, :count).by(-1)
-        end
-
-        specify 'ユーザー詳細画面が表示される' do
-          delete community_path(@new_community), params: { community: { user_id: @user_id } }
-          expect(response).to redirect_to root_url
         end
       end
 
       context '失敗の場合' do
-        specify 'ログインユーザー以外のコミュニティを削除しようとするとホーム画面へリダイレクトされる' do
-          delete community_path(other_community), params: { community: { user_id: user.id } }
-          expect(response).to redirect_to root_url
+        specify 'ログインユーザー以外のコミュニティを削除しようとすると操作失敗の情報を返す' do
+          delete "/api/v1/communities/#{other_community.id}"
+          json = JSON.parse(response.body)
+
+          expect(response).to have_http_status :ok
+          expect(json['status']).to eq('failure')
+          expect(json['message']).to eq(['この操作は実行できません'])
         end
       end
     end
@@ -163,43 +166,63 @@ RSpec.describe 'Communities', type: :request do
 
   describe 'PATCH #update' do
     context 'ログインしていない状態' do
-      specify 'ログイン画面へリダイレクトされる' do
-        patch community_path(community), params: { community: { name: "#{community.name} updateテスト" } }
-        expect(response).to redirect_to login_path
+      specify 'ログイン画面へ遷移するための情報を返す' do
+        valid_params = { user_id: user.id, name: "#{community.name} updateテスト" }
+        patch "/api/v1/communities/#{community.id}", params: { community: valid_params }
+        json = JSON.parse(response.body)
+
+        expect(response).to have_http_status :ok
+        expect(json['status']).to eq('notLoggedIn')
+        expect(json['message']).to eq(['ログインしてください'])
       end
     end
 
     context 'ログインしている状態' do
       before do
-        post login_path, params: { session: { email: user.email, password: user.password, remember_me: 0 } }
-        post communities_path, params: { community: { user_id: user.id, name: 'テストコミュニティ' } }
+        # ログイン
+        session_params = { email: user.email, password: user.password, remember_me: 0 }
+        post '/api/v1/login', params: { session: session_params }
+        # 新規コミュニティ作成
+        valid_params = { user_id: user.id, name: 'テストコミュニティ' }
+        post '/api/v1/communities', params: { community: valid_params }
         @new_community = user.communities.last
       end
 
       context '更新成功の場合' do
         specify 'nameが更新される' do
-          community_name = @new_community.name
-          patch community_path(@new_community), params: { community: { name: "#{community_name} updateテスト" } }
-          expect(@new_community.reload.name).not_to eq community_name
+          valid_params = { user_id: user.id, name: "#{@new_community.name} updateテスト" }
+          patch "/api/v1/communities/#{@new_community.id}", params: { community: valid_params }
+          updated_name = Community.find(@new_community.id).name
+          expect(updated_name).to eq("#{@new_community.name} updateテスト")
         end
 
-        specify 'コミュニティ詳細画面へリダイレクトされる' do
-          community_name = @new_community.name
-          patch community_path(@new_community), params: { community: { name: "#{community_name} updateテスト" } }
-          expect(response).to redirect_to community_path(@new_community)
+        specify '更新したコミュニティ情報を返す' do
+          valid_params = { user_id: user.id, name: "#{@new_community.name} updateテスト" }
+          patch "/api/v1/communities/#{@new_community.id}", params: { community: valid_params }
+          json = JSON.parse(response.body)
+
+          expect(json['status']).to eq('success')
+          expect(json['id']).to eq(@new_community.id)
         end
       end
 
       context '更新失敗の場合' do
-        specify 'コミュニティ編集画面が再表示される' do
-          community_name = ''
-          patch community_path(@new_community), params: { community: { name: community_name } }
-          expect(response.body).to include 'コミュニティ編集'
+        specify '処理失敗の情報を返す' do
+          valid_params = { user_id: user.id, name: '' }
+          patch "/api/v1/communities/#{@new_community.id}", params: { community: valid_params }
+          json = JSON.parse(response.body)
+
+          expect(json['status']).to eq('failure')
         end
 
-        specify 'ログインユーザー以外のコミュニティを更新しようとするとホーム画面へリダイレクトされる' do
-          patch community_path(other_community), params: { community: { name: 'updateテスト' } }
-          expect(response).to redirect_to root_url
+        specify 'ログインユーザー以外のコミュニティを更新しようとすると操作失敗の情報を返す' do
+          valid_params = { user_id: user.id, name: 'updateテスト' }
+          patch "/api/v1/communities/#{other_community.id}", params: { community: valid_params }
+          json = JSON.parse(response.body)
+
+          expect(response).to have_http_status :ok
+          expect(json['status']).to eq('failure')
+          expect(json['message']).to eq(['この操作は実行できません'])
         end
       end
     end
