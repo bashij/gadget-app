@@ -72,7 +72,7 @@ module Api
           message = [I18n.t('gadgets.create.flash.success')]
           render json: { status: 'success', message: message, id: @gadget.id }
         else
-          message = @community.errors.full_messages
+          message = @gadget.errors.full_messages
           render json: { status: 'failure', message: message, id: @gadget.id }
         end
       end
