@@ -11,8 +11,6 @@ import { toast, ToastContainer } from 'react-toastify'
 import Layout, { siteTitle } from '@/components/layout'
 import apiClient from '@/utils/apiClient'
 
-
-
 import 'react-toastify/dist/ReactToastify.css'
 
 const pageTitle = 'ログイン'
@@ -117,7 +115,9 @@ export default function Login() {
           <div className='col-lg-8 col-sm-10'>
             <form onSubmit={handleSubmit}>
               <div className='mb-3'>
-                <label className='form-label'>メールアドレス</label>
+                <label className='form-label' htmlFor='email'>
+                  メールアドレス
+                </label>
                 <span className='required-item'>必須</span>
                 <input
                   type='email'
@@ -126,10 +126,13 @@ export default function Login() {
                   onChange={handleChange}
                   value={formData.email}
                   required
+                  id='email'
                 />
               </div>
               <div className='mb-3'>
-                <label className='form-label'>パスワード</label>
+                <label className='form-label' htmlFor='password'>
+                  パスワード
+                </label>
                 <span className='required-item'>必須</span>
                 <input
                   type='password'
@@ -138,6 +141,7 @@ export default function Login() {
                   onChange={handleChange}
                   value={formData.password}
                   required
+                  id='password'
                 />
               </div>
               <div className='mb-3'>
