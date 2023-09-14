@@ -71,7 +71,7 @@ export default function GadgetDetail(props) {
           <th>最終更新</th>
           <td>
             <p className='overflow' suppressHydrationWarning>
-              {format(new Date(props.gadget.created_at), 'yyyy/MM/dd HH:mm')}
+              {format(new Date(props.gadget.updated_at), 'yyyy/MM/dd HH:mm')}
             </p>
           </td>
         </tr>
