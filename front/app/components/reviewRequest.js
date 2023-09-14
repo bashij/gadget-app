@@ -92,11 +92,12 @@ export default function ReviewRequest(props) {
 
   return (
     <span className='' id={`review_request_section_${props.gadget.id}`}>
-      {isRequested ? (
-        <p onClick={(event) => handleClick(event, props.gadget.id)}>レビューリクエストをやめる</p>
-      ) : (
-        <p onClick={(event) => handleClick(event, props.gadget.id)}>レビューをリクエストする</p>
-      )}
+      <p
+        onClick={(event) => handleClick(event, props.gadget.id)}
+        data-testid={`review_request_icon_${props.gadget.id}`}
+      >
+        {isRequested ? 'レビューリクエストをやめる' : 'レビューをリクエストする'}
+      </p>
     </span>
   )
 }

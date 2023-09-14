@@ -40,7 +40,9 @@ export default function Gadget(props) {
             <Link href={`/gadgets/${props.gadget.id}/review_requests`}>
               <FontAwesomeIcon className='icon-post' icon={faUsers} />
             </Link>
-            <span id={`review_request_count_${props.gadget.id}`}>{reviewRequestCount}</span>
+            <span data-testid={`review_request_count_${props.gadget.id}`}>
+              {reviewRequestCount}
+            </span>
           </span>
         </div>
         <div className='review-link'>

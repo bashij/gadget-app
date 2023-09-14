@@ -99,8 +99,9 @@ export default function GadgetBookmark(props) {
         className={isBookmarked ? 'icon-delete' : 'icon-post'}
         icon={faBookmark}
         onClick={(event) => handleClick(event, props.gadget.id)}
+        data-testid={`gadget_bookmark_icon_${props.gadget.id}`}
       />
-      <span>{bookmarkCount}</span>
+      <span data-testid={`gadget_bookmark_count_${props.gadget.id}`}>{bookmarkCount}</span>
     </>
   )
 }
