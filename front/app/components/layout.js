@@ -118,7 +118,7 @@ export default function Layout(props) {
                       src={
                         props.user.image.url == 'default.jpg'
                           ? '/images/default.jpg'
-                          : `https://static.gadgetlink-app.com${props.tweet.user.image.url}`
+                          : `https://static.gadgetlink-app.com${props.user.image.url}`
                       }
                       width={100}
                       height={100}
