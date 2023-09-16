@@ -39,7 +39,7 @@ afterAll(() => {
   server.close()
 })
 
-describe('Gadgets', () => {
+describe('FollowingUsersGadgets', () => {
   test('ガジェット一覧が正常に表示される', async () => {
     render(
       <SWRConfig value={{ dedupingInterval: 0 }}>
