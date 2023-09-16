@@ -229,3 +229,19 @@ export const DUMMY_DATA_INDEX = {
     5: 5,
   },
 }
+
+export const DUMMY_DATA_USER = {
+  user: {
+    id: 7,
+    name: 'user_name_test7',
+    email: 'email_test7@gmail.com',
+    job: 'IT系',
+    image: {
+      url: null,
+    },
+    created_at: '2023-01-01T00:00:00.000+09:00',
+    updated_at: '2023-01-01T00:00:00.000+09:00',
+    password_digest: '$2a$12$QdZhBzL7xzERxbiQn2Llk.be4ulWWT/m.JcXv3pOHqXd/keLPxhwK',
+    remember_digest: null,
+  },
+}
