@@ -21,14 +21,16 @@ export default function FollowingUsersTweets(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
   const [pageIndex, setPageIndex] = useState(1)
   const { mutate } = useSWRConfig()
-  const { data, error, isLoading } = useSWR(
-    `${API_ENDPOINT}/${props.user?.id}/following_users_tweets?paged=${pageIndex}`,
-    fetcher,
-    {
-      keepPreviousData: true,
-      revalidateOnFocus: false,
-    },
-  )
+  const { data, error, isLoading } = props.user
+    ? useSWR(
+        `${API_ENDPOINT}/${props.user?.id}/following_users_tweets?paged=${pageIndex}`,
+        fetcher,
+        {
+          keepPreviousData: true,
+          revalidateOnFocus: false,
+        },
+      )
+    : { data: null, error: null, isLoading: false }
 
   const router = useRouter()
   const [message, setMessage] = useState([router.query.message])
