@@ -34,6 +34,19 @@ const handlers = [
       )
     },
   ),
+  rest.delete(
+    `${process.env.NEXT_PUBLIC_API_ENDPOINT_TWEETS}/${props.tweet.id}/tweet_likes`,
+    (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          status: 'success',
+          count: 0,
+          liked: false,
+        }),
+      )
+    },
+  ),
   rest.post(
     `${process.env.NEXT_PUBLIC_API_ENDPOINT_TWEETS}/${props.tweet.id}/tweet_bookmarks`,
     (req, res, ctx) => {
@@ -43,6 +56,19 @@ const handlers = [
           status: 'success',
           count: 3,
           bookmarked: true,
+        }),
+      )
+    },
+  ),
+  rest.delete(
+    `${process.env.NEXT_PUBLIC_API_ENDPOINT_TWEETS}/${props.tweet.id}/tweet_bookmarks`,
+    (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          status: 'success',
+          count: 1,
+          bookmarked: false,
         }),
       )
     },
@@ -104,11 +130,34 @@ describe('Tweet', () => {
     expect(screen.getByTestId(`tweet_like_count_${props.tweet.id}`).textContent).toBe('1')
 
     // アイコンをクリック
-    userEvent.click(screen.getByTestId(`tweet_like_icon_${props.tweet.id}`))
+    await userEvent.click(screen.getByTestId(`tweet_like_icon_${props.tweet.id}`))
 
     await waitFor(() => {
       // 増加後の数値を確認
       expect(screen.getByTestId(`tweet_like_count_${props.tweet.id}`).textContent).toBe('2')
+    })
+  })
+
+  test('いいねアイコンをクリックすると数値が1減少する', async () => {
+    // いいね済みのユーザーとしてログイン
+    const updatedProps = {
+      ...props,
+      user: {
+        ...props.user,
+        id: 2,
+      },
+    }
+    render(<Tweet {...updatedProps} />)
+
+    // 初期数値を確認
+    expect(screen.getByTestId(`tweet_like_count_${props.tweet.id}`).textContent).toBe('1')
+
+    // アイコンをクリック
+    await userEvent.click(screen.getByTestId(`tweet_like_icon_${props.tweet.id}`))
+
+    await waitFor(() => {
+      // 減少後の数値を確認
+      expect(screen.getByTestId(`tweet_like_count_${props.tweet.id}`).textContent).toBe('0')
     })
   })
 
@@ -119,11 +168,34 @@ describe('Tweet', () => {
     expect(screen.getByTestId(`tweet_bookmark_count_${props.tweet.id}`).textContent).toBe('2')
 
     // アイコンをクリック
-    userEvent.click(screen.getByTestId(`tweet_bookmark_icon_${props.tweet.id}`))
+    await userEvent.click(screen.getByTestId(`tweet_bookmark_icon_${props.tweet.id}`))
 
     await waitFor(() => {
       // 増加後の数値を確認
       expect(screen.getByTestId(`tweet_bookmark_count_${props.tweet.id}`).textContent).toBe('3')
+    })
+  })
+
+  test('ブックマークアイコンをクリックすると数値が1減少する', async () => {
+    // ブックマーク済みのユーザーとしてログイン
+    const updatedProps = {
+      ...props,
+      user: {
+        ...props.user,
+        id: 2,
+      },
+    }
+    render(<Tweet {...updatedProps} />)
+
+    // 初期数値を確認
+    expect(screen.getByTestId(`tweet_bookmark_count_${props.tweet.id}`).textContent).toBe('2')
+
+    // アイコンをクリック
+    await userEvent.click(screen.getByTestId(`tweet_bookmark_icon_${props.tweet.id}`))
+
+    await waitFor(() => {
+      // 減少後の数値を確認
+      expect(screen.getByTestId(`tweet_bookmark_count_${props.tweet.id}`).textContent).toBe('1')
     })
   })
 })
