@@ -99,8 +99,9 @@ export default function TweetLike(props) {
         className={isLiked ? 'icon-delete' : 'icon-post'}
         icon={faHeart}
         onClick={(event) => handleClick(event, props.tweet.id)}
+        data-testid={`tweet_like_icon_${props.tweet.id}`}
       />
-      <span>{likeCount}</span>
+      <span data-testid={`tweet_like_count_${props.tweet.id}`}>{likeCount}</span>
     </span>
   )
 }

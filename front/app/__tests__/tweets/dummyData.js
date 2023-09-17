@@ -230,6 +230,92 @@ export const DUMMY_DATA_INDEX = {
   },
 }
 
+export const DUMMY_DATA_COMPONENT = {
+  tweet: {
+    id: 1,
+    content: 'tweet_content_test1',
+    user_id: 1,
+    created_at: '2023-01-01T01:00:00.000+09:00',
+    created_at: '2023-01-01T01:00:00.000+09:00',
+    parent_id: null,
+    user: {
+      id: 1,
+      name: 'user_name_test1',
+      email: 'email_test1@gmail.com',
+      job: 'IT系',
+      image: {
+        url: null,
+      },
+      created_at: '2023-01-01T00:00:00.000+09:00',
+      updated_at: '2023-01-01T00:00:00.000+09:00',
+      password_digest: '$2a$12$QdZhBzL7xzERxbiQn2Llk.be4ulWWT/m.JcXv3pOHqXd/keLPxhwK',
+      remember_digest: null,
+    },
+    tweet_likes: [
+      {
+        id: 1,
+        user_id: 2,
+        tweet_id: 1,
+        created_at: '2023-01-01T02:00:00.000+09:00',
+        updated_at: '2023-01-01T02:00:00.000+09:00',
+      },
+    ],
+    tweet_bookmarks: [
+      {
+        id: 1,
+        user_id: 2,
+        tweet_id: 1,
+        created_at: '2023-01-01T02:00:00.000+09:00',
+        updated_at: '2023-01-01T02:00:00.000+09:00',
+      },
+      {
+        id: 2,
+        user_id: 3,
+        tweet_id: 1,
+        created_at: '2023-01-01T02:00:00.000+09:00',
+        updated_at: '2023-01-01T02:00:00.000+09:00',
+      },
+    ],
+  },
+  replies: [
+    {
+      id: 6,
+      content: 'tweet_content_test6_reply',
+      user_id: 6,
+      created_at: '2023-06-01T02:00:00.000+09:00',
+      updated_at: '2023-06-01T02:00:00.000+09:00',
+      parent_id: 1,
+      user: {
+        id: 6,
+        name: 'user_name_test6',
+        email: 'email_test6@gmail.com',
+        job: 'IT系',
+        image: { url: null },
+        created_at: '2023-01-01T02:00:00.000+09:00',
+        updated_at: '2023-01-01T02:00:00.000+09:00',
+        password_digest: '$2a$12$QdZhBzL7xzERxbiQn2Llk.be4ulWWT/m.JcXv3pOHqXd/keLPxhwK',
+        remember_digest: null,
+      },
+      tweet_likes: [],
+      tweet_bookmarks: [],
+    },
+  ],
+  replyCount: [1],
+  user: {
+    id: 5,
+    name: 'user_name_test5',
+    email: 'email_test5@gmail.com',
+    job: 'IT系',
+    image: {
+      url: null,
+    },
+    created_at: '2023-01-01T00:00:00.000+09:00',
+    updated_at: '2023-01-01T00:00:00.000+09:00',
+    password_digest: '$2a$12$QdZhBzL7xzERxbiQn2Llk.be4ulWWT/m.JcXv3pOHqXd/keLPxhwK',
+    remember_digest: null,
+  },
+}
+
 export const DUMMY_DATA_USER = {
   user: {
     id: 7,

@@ -99,8 +99,9 @@ export default function TweetBookmark(props) {
         className={isBookmarked ? 'icon-delete' : 'icon-post'}
         icon={faBookmark}
         onClick={(event) => handleClick(event, props.tweet.id)}
+        data-testid={`tweet_bookmark_icon_${props.tweet.id}`}
       />
-      <span>{bookmarkCount}</span>
+      <span data-testid={`tweet_bookmark_count_${props.tweet.id}`}>{bookmarkCount}</span>
     </span>
   )
 }
