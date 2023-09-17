@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom'
 import { cleanup, render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { ja } from 'date-fns/locale'
 import { enableFetchMocks } from 'jest-fetch-mock'
@@ -7,7 +8,9 @@ import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { SWRConfig } from 'swr'
 import Tweets from '../../pages/tweets/index'
-import { DUMMY_DATA_INDEX } from './dummyData'
+import { DUMMY_DATA_INDEX, DUMMY_DATA_USER } from './dummyData'
+
+const props = DUMMY_DATA_USER
 
 enableFetchMocks()
 
@@ -21,6 +24,15 @@ jest.mock('next/router', () => ({
 const handlers = [
   rest.get(process.env.NEXT_PUBLIC_API_ENDPOINT_TWEETS, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(DUMMY_DATA_INDEX))
+  }),
+  rest.post(process.env.NEXT_PUBLIC_API_ENDPOINT_TWEETS, (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        status: 'success',
+        message: ['successMessage'],
+      }),
+    )
   }),
 ]
 
@@ -150,6 +162,46 @@ describe('Tweets', () => {
       expect(tweetContent5).toBeInTheDocument()
       expect(tweetDate5).toBeInTheDocument()
       expect(tweetReply5).toBeInTheDocument()
+    })
+  })
+
+  test('ツイートを投稿する', async () => {
+    render(
+      <SWRConfig value={{ dedupingInterval: 0 }}>
+        <Tweets {...props} />
+      </SWRConfig>,
+    )
+
+    // ツイートを入力
+    const textBox = screen.getByPlaceholderText('新しいツイート')
+    await userEvent.type(textBox, 'ツイート投稿テスト')
+
+    // 投稿ボタンをクリック
+    await userEvent.click(screen.getAllByRole('button', { name: '投稿する' })[0])
+
+    // ボタン押下時の成功メッセージが表示されることを確認
+    await waitFor(() => {
+      expect(screen.getByText('successMessage')).toBeInTheDocument()
+    })
+  })
+
+  test('リプライを投稿する', async () => {
+    render(
+      <SWRConfig value={{ dedupingInterval: 0 }}>
+        <Tweets {...props} />
+      </SWRConfig>,
+    )
+
+    // リプライを入力
+    const textBox = screen.getAllByPlaceholderText('返信内容を入力')[0]
+    await userEvent.type(textBox, 'リプライ投稿テスト')
+
+    // 投稿ボタンをクリック
+    await userEvent.click(screen.getAllByRole('button', { name: '投稿する' })[1])
+
+    // ボタン押下時の成功メッセージが表示されることを確認
+    await waitFor(() => {
+      expect(screen.getByText('successMessage')).toBeInTheDocument()
     })
   })
 })
