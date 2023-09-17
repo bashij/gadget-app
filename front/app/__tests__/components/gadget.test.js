@@ -32,6 +32,19 @@ const handlers = [
       )
     },
   ),
+  rest.delete(
+    `${process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS}/${props.gadget.id}/gadget_likes`,
+    (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          status: 'success',
+          count: 0,
+          liked: false,
+        }),
+      )
+    },
+  ),
   rest.post(
     `${process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS}/${props.gadget.id}/gadget_bookmarks`,
     (req, res, ctx) => {
@@ -45,6 +58,19 @@ const handlers = [
       )
     },
   ),
+  rest.delete(
+    `${process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS}/${props.gadget.id}/gadget_bookmarks`,
+    (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          status: 'success',
+          count: 1,
+          bookmarked: false,
+        }),
+      )
+    },
+  ),
   rest.post(
     `${process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS}/${props.gadget.id}/review_requests`,
     (req, res, ctx) => {
@@ -54,6 +80,19 @@ const handlers = [
           status: 'success',
           count: 4,
           requested: true,
+        }),
+      )
+    },
+  ),
+  rest.delete(
+    `${process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS}/${props.gadget.id}/review_requests`,
+    (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          status: 'success',
+          count: 2,
+          requested: false,
         }),
       )
     },
@@ -106,6 +145,29 @@ describe('Gadget', () => {
     })
   })
 
+  test('いいねアイコンをクリックすると数値が1減少する', async () => {
+    // いいね済みのユーザーとしてログイン
+    const updatedProps = {
+      ...props,
+      user: {
+        ...props.user,
+        id: 2,
+      },
+    }
+    render(<Gadget {...updatedProps} />)
+
+    // 初期数値を確認
+    expect(screen.getByTestId(`gadget_like_count_${props.gadget.id}`).textContent).toBe('1')
+
+    // アイコンをクリック
+    userEvent.click(screen.getByTestId(`gadget_like_icon_${props.gadget.id}`))
+
+    await waitFor(() => {
+      // 減少後の数値を確認
+      expect(screen.getByTestId(`gadget_like_count_${props.gadget.id}`).textContent).toBe('0')
+    })
+  })
+
   test('ブックマークアイコンをクリックすると数値が1増加する', async () => {
     render(<Gadget {...props} />)
 
@@ -121,6 +183,29 @@ describe('Gadget', () => {
     })
   })
 
+  test('ブックマークアイコンをクリックすると数値が1減少する', async () => {
+    // ブックマーク済みのユーザーとしてログイン
+    const updatedProps = {
+      ...props,
+      user: {
+        ...props.user,
+        id: 2,
+      },
+    }
+    render(<Gadget {...updatedProps} />)
+
+    // 初期数値を確認
+    expect(screen.getByTestId(`gadget_bookmark_count_${props.gadget.id}`).textContent).toBe('2')
+
+    // アイコンをクリック
+    userEvent.click(screen.getByTestId(`gadget_bookmark_icon_${props.gadget.id}`))
+
+    await waitFor(() => {
+      // 減少後の数値を確認
+      expect(screen.getByTestId(`gadget_bookmark_count_${props.gadget.id}`).textContent).toBe('1')
+    })
+  })
+
   test('レビューリクエストをクリックすると数値が1増加する', async () => {
     render(<Gadget {...props} />)
 
@@ -133,6 +218,29 @@ describe('Gadget', () => {
     await waitFor(() => {
       // 増加後の数値を確認
       expect(screen.getByTestId(`review_request_count_${props.gadget.id}`).textContent).toBe('4')
+    })
+  })
+
+  test('レビューリクエストをクリックすると数値が1減少する', async () => {
+    // レビューリクエスト済みのユーザーとしてログイン
+    const updatedProps = {
+      ...props,
+      user: {
+        ...props.user,
+        id: 2,
+      },
+    }
+    render(<Gadget {...updatedProps} />)
+
+    // 初期数値を確認
+    expect(screen.getByTestId(`review_request_count_${props.gadget.id}`).textContent).toBe('3')
+
+    // アイコンをクリック
+    userEvent.click(screen.getByTestId(`review_request_icon_${props.gadget.id}`))
+
+    await waitFor(() => {
+      // 減少後の数値を確認
+      expect(screen.getByTestId(`review_request_count_${props.gadget.id}`).textContent).toBe('2')
     })
   })
 })
