@@ -62,7 +62,7 @@ describe('Community', () => {
   test('コミュニティコンポーネントが正常に表示される', async () => {
     render(<Community {...props} />)
 
-    // propsとして渡した値がツイートコンポーネントとして表示されていることを確認
+    // propsとして渡した値がコミュニティコンポーネントとして表示されていることを確認
     const communityName = screen.getByRole('link', { name: 'community_name_test1' })
     const communityMembers = screen.getByText('( 3 人 )')
     expect(communityName).toBeInTheDocument()
