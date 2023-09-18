@@ -4,10 +4,13 @@ import userEvent from '@testing-library/user-event'
 import { enableFetchMocks } from 'jest-fetch-mock'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
+import { useRouter } from 'next/router'
 import Community from '../../pages/communities/[id]'
 import { DUMMY_DATA_COMPONENT, DUMMY_DATA_MEMBERSHIPS } from '../communities/dummyData'
 
 const props = DUMMY_DATA_COMPONENT
+
+window.confirm = jest.fn(() => true)
 
 enableFetchMocks()
 
@@ -47,6 +50,18 @@ const handlers = [
           status: 'success',
           count: 2,
           jointed: false,
+        }),
+      )
+    },
+  ),
+  rest.delete(
+    `${process.env.NEXT_PUBLIC_API_ENDPOINT_COMMUNITIES}/${props.community.id}`,
+    (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          status: 'success',
+          message: ['successMessage'],
         }),
       )
     },
@@ -124,6 +139,33 @@ describe('Community', () => {
     await waitFor(() => {
       // 減少後の人数を確認
       expect(screen.getByText('2 人')).toBeInTheDocument()
+    })
+  })
+
+  test('コミュニティを削除する', async () => {
+    // 対象コミュニティを作成したユーザーとしてログイン
+    const updatedProps = {
+      ...props,
+      user: {
+        ...props.user,
+        id: 1,
+      },
+    }
+    render(<Community {...updatedProps} />)
+
+    // 削除ボタンをクリック
+    await userEvent.click(screen.getByText('コミュニティを削除'))
+
+    // ボタン押下時の router.push が動作しているかテスト
+    await waitFor(() => {
+      expect(useRouter().push).toHaveBeenCalled()
+      expect(useRouter().push).toHaveBeenCalledWith(
+        {
+          pathname: '/communities',
+          query: { message: ['successMessage'], status: 'success' },
+        },
+        '/communities/',
+      )
     })
   })
 })
