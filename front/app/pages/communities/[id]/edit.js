@@ -112,7 +112,9 @@ export default function Edit(props) {
           <div className='col-lg-8 col-sm-10'>
             <form onSubmit={handleSubmit}>
               <div className='mb-3'>
-                <label className='form-label'>コミュニティ名</label>
+                <label className='form-label' htmlFor='name'>
+                  コミュニティ名
+                </label>
                 <span className='required-item'>必須</span>
                 <input
                   type='text'
@@ -121,16 +123,20 @@ export default function Edit(props) {
                   onChange={handleChange}
                   value={formData.name}
                   required
+                  id='name'
                 />
               </div>
               <div className='mb-3'>
-                <label className='form-label'>コミュニティ画像</label>
+                <label className='form-label' htmlFor='image'>
+                  コミュニティ画像
+                </label>
                 <input
                   type='file'
                   className='form-control'
                   name='image'
                   onChange={handleChange}
                   value={formData.image.url}
+                  id='image'
                 />
               </div>
               <div className='text-center m-4'>
