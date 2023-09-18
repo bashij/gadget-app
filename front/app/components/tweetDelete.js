@@ -39,6 +39,7 @@ export default function TweetDelete(props) {
         className='icon-delete'
         icon={faTrash}
         onClick={(event) => handleClick(event, props.tweet.id)}
+        data-testid={`tweet_delete_icon_${props.tweet.id}`}
       />
     </span>
   )

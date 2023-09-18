@@ -12,6 +12,14 @@ import { DUMMY_DATA_INDEX, DUMMY_DATA_USER } from './dummyData'
 
 const props = DUMMY_DATA_USER
 
+// 削除関連
+// 削除する対象のツイートID
+const firstTweetId = DUMMY_DATA_INDEX.tweets[0].id
+// 削除する対象のリプライID
+const firstReplyId = DUMMY_DATA_INDEX.replies[0].id
+// 削除アイコンクリック時に表示されるダイアログをOKとする
+window.confirm = jest.fn(() => true)
+
 enableFetchMocks()
 
 jest.mock('next/router', () => ({
@@ -26,6 +34,24 @@ const handlers = [
     return res(ctx.status(200), ctx.json(DUMMY_DATA_INDEX))
   }),
   rest.post(process.env.NEXT_PUBLIC_API_ENDPOINT_TWEETS, (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        status: 'success',
+        message: ['successMessage'],
+      }),
+    )
+  }),
+  rest.delete(`${process.env.NEXT_PUBLIC_API_ENDPOINT_TWEETS}/${firstTweetId}`, (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        status: 'success',
+        message: ['successMessage'],
+      }),
+    )
+  }),
+  rest.delete(`${process.env.NEXT_PUBLIC_API_ENDPOINT_TWEETS}/${firstReplyId}`, (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -198,6 +224,54 @@ describe('Tweets', () => {
 
     // 投稿ボタンをクリック
     await userEvent.click(screen.getAllByRole('button', { name: '投稿する' })[1])
+
+    // ボタン押下時の成功メッセージが表示されることを確認
+    await waitFor(() => {
+      expect(screen.getByText('successMessage')).toBeInTheDocument()
+    })
+  })
+
+  test('ツイートを削除する', async () => {
+    // 1件目のツイートを投稿したユーザーとしてログイン
+    const updatedProps = {
+      ...props,
+      user: {
+        ...props.user,
+        id: 1,
+      },
+    }
+    render(
+      <SWRConfig value={{ dedupingInterval: 0 }}>
+        <Tweets {...updatedProps} />
+      </SWRConfig>,
+    )
+
+    // 削除アイコンをクリック
+    await userEvent.click(screen.getByTestId(`tweet_delete_icon_${firstTweetId}`))
+
+    // ボタン押下時の成功メッセージが表示されることを確認
+    await waitFor(() => {
+      expect(screen.getByText('successMessage')).toBeInTheDocument()
+    })
+  })
+
+  test('リプライを削除する', async () => {
+    // 1件目のリプライを投稿したユーザーとしてログイン
+    const updatedProps = {
+      ...props,
+      user: {
+        ...props.user,
+        id: 6,
+      },
+    }
+    render(
+      <SWRConfig value={{ dedupingInterval: 0 }}>
+        <Tweets {...updatedProps} />
+      </SWRConfig>,
+    )
+
+    // 削除アイコンをクリック
+    await userEvent.click(screen.getByTestId(`tweet_delete_icon_${firstReplyId}`))
 
     // ボタン押下時の成功メッセージが表示されることを確認
     await waitFor(() => {
