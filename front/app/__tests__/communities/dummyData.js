@@ -363,3 +363,47 @@ export const DUMMY_DATA_COMPONENT = {
     remember_digest: null,
   },
 }
+
+export const DUMMY_DATA_MEMBERSHIPS = {
+  users: [
+    {
+      id: 1,
+      name: 'user_name_test1',
+      email: 'email_test1@gmail.com',
+      job: 'IT系',
+      image: { url: null },
+      created_at: '2023-01-01T00:00:00.000+09:00',
+      updated_at: '2023-01-01T00:00:00.000+09:00',
+      password_digest: '$2a$12$QdZhBzL7xzERxbiQn2Llk.be4ulWWT/m.JcXv3pOHqXd/keLPxhwK',
+      remember_digest: null,
+    },
+    {
+      id: 2,
+      name: 'user_name_test2',
+      email: 'email_test2@gmail.com',
+      job: 'IT系',
+      image: { url: null },
+      created_at: '2023-01-01T00:00:00.000+09:00',
+      updated_at: '2023-01-01T00:00:00.000+09:00',
+      password_digest: '$2a$12$QdZhBzL7xzERxbiQn2Llk.be4ulWWT/m.JcXv3pOHqXd/keLPxhwK',
+      remember_digest: null,
+    },
+    {
+      id: 3,
+      name: 'user_name_test3',
+      email: 'email_test3@gmail.com',
+      job: 'IT系',
+      image: { url: null },
+      created_at: '2023-01-01T00:00:00.000+09:00',
+      updated_at: '2023-01-01T00:00:00.000+09:00',
+      password_digest: '$2a$12$QdZhBzL7xzERxbiQn2Llk.be4ulWWT/m.JcXv3pOHqXd/keLPxhwK',
+      remember_digest: null,
+    },
+  ],
+  pagination: {
+    total_count: 3,
+    limit_value: 10,
+    total_pages: 1,
+    current_page: 1,
+  },
+}
