@@ -39,6 +39,7 @@ export default function CommentDelete(props) {
         className='icon-delete'
         icon={faTrash}
         onClick={(event) => handleClick(event, props.gadget.id, props.comment.id)}
+        data-testid={`comment_delete_icon_${props.comment.id}`}
       />
     </span>
   )
