@@ -5,6 +5,9 @@ import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { useRouter } from 'next/router'
 import New from '../../pages/communities/new'
+import { DUMMY_DATA_USER } from '../communities/dummyData'
+
+const props = DUMMY_DATA_USER
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockReturnValue({
@@ -39,7 +42,7 @@ afterAll(() => {
 
 describe('New', () => {
   test('コミュニティ新規登録が成功する', async () => {
-    render(<New />)
+    render(<New {...props} />)
 
     // 登録するコミュニティ名
     const nameValue = 'community_name_test1'
@@ -56,8 +59,8 @@ describe('New', () => {
     await userEvent.upload(imageInputElement, dummyImageFile)
 
     // 値が追加されているか確認
-    const displayedValue1 = await screen.findByDisplayValue(nameValue)
-    expect(displayedValue1).toBeInTheDocument()
+    const displayedValue = await screen.findByDisplayValue(nameValue)
+    expect(displayedValue).toBeInTheDocument()
     expect(imageInputElement.files[0]).toBe(dummyImageFile)
 
     // フォームの登録のボタンを押下
