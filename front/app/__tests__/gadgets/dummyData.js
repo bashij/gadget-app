@@ -330,7 +330,7 @@ export const DUMMY_DATA_COMPONENT = {
     review: {
       id: 1,
       name: 'review',
-      body: null,
+      body: '',
       record_type: 'Gadget',
       record_id: 1,
       created_at: '2023-01-01T01:00:00.000+09:00',
