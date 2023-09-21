@@ -98,12 +98,12 @@ describe('Edit', () => {
     const reviewInputElement = screen.getByLabelText('レビュー')
 
     // 初期値をクリア
-    nameInputElement.value = ''
-    modelNumberInputElement.value = ''
-    manufacturerInputElement.value = ''
-    priceInputElement.value = ''
-    otherInfoInputElement.value = ''
-    reviewInputElement.value = ''
+    await userEvent.clear(nameInputElement)
+    await userEvent.clear(modelNumberInputElement)
+    await userEvent.clear(manufacturerInputElement)
+    await userEvent.clear(priceInputElement)
+    await userEvent.clear(otherInfoInputElement)
+    await userEvent.clear(reviewInputElement)
 
     // それぞれの値を入力
     await userEvent.type(nameInputElement, nameValue)

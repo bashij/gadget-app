@@ -62,7 +62,7 @@ describe('Edit', () => {
     const imageInputElement = screen.getByLabelText('コミュニティ画像')
 
     // それぞれの値を入力
-    nameInputElement.value = '' // 初期値をクリア
+    await userEvent.clear(nameInputElement) // 初期値をクリア
     await userEvent.type(nameInputElement, nameValue)
     await userEvent.upload(imageInputElement, dummyImageFile)
 
