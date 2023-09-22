@@ -79,7 +79,7 @@ describe('Signup', () => {
     })
 
     // フォームの登録のボタンを押下する動作
-    userEvent.click(screen.getByText('登録する'))
+    await userEvent.click(screen.getByText('登録する'))
 
     // ボタン押下時の router.push が動作しているかテスト
     await waitFor(() => {
