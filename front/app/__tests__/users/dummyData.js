@@ -1837,3 +1837,74 @@ export const DUMMY_DATA_USER_BOOKMARK_GADGETS = {
   ],
   pagination: { total_count: 10, limit_value: 5, total_pages: 2, current_page: 1 },
 }
+
+export const DUMMY_DATA_RELATIONSHIPS = {
+  users: [
+    {
+      id: 2,
+      name: 'user_name_test2',
+      email: 'email_test2@gmail.com',
+      job: 'IT系',
+      image: {
+        url: null,
+      },
+      created_at: '2023-01-01T00:00:00.000+09:00',
+      updated_at: '2023-01-01T00:00:00.000+09:00',
+      password_digest: '$2a$12$QdZhBzL7xzERxbiQn2Llk.be4ulWWT/m.JcXv3pOHqXd/keLPxhwK',
+      remember_digest: null,
+    },
+    {
+      id: 3,
+      name: 'user_name_test3',
+      email: 'email_test3@gmail.com',
+      job: 'IT系',
+      image: {
+        url: null,
+      },
+      created_at: '2023-01-01T00:00:00.000+09:00',
+      updated_at: '2023-01-01T00:00:00.000+09:00',
+      password_digest: '$2a$12$QdZhBzL7xzERxbiQn2Llk.be4ulWWT/m.JcXv3pOHqXd/keLPxhwK',
+      remember_digest: null,
+    },
+    {
+      id: 4,
+      name: 'user_name_test4',
+      email: 'email_test4@gmail.com',
+      job: 'IT系',
+      image: {
+        url: null,
+      },
+      created_at: '2023-01-01T00:00:00.000+09:00',
+      updated_at: '2023-01-01T00:00:00.000+09:00',
+      password_digest: '$2a$12$QdZhBzL7xzERxbiQn2Llk.be4ulWWT/m.JcXv3pOHqXd/keLPxhwK',
+      remember_digest: null,
+    },
+    {
+      id: 5,
+      name: 'user_name_test5',
+      email: 'email_test5@gmail.com',
+      job: 'IT系',
+      image: {
+        url: null,
+      },
+      created_at: '2023-01-01T00:00:00.000+09:00',
+      updated_at: '2023-01-01T00:00:00.000+09:00',
+      password_digest: '$2a$12$QdZhBzL7xzERxbiQn2Llk.be4ulWWT/m.JcXv3pOHqXd/keLPxhwK',
+      remember_digest: null,
+    },
+    {
+      id: 6,
+      name: 'user_name_test6',
+      email: 'email_test6@gmail.com',
+      job: 'IT系',
+      image: {
+        url: null,
+      },
+      created_at: '2023-01-01T00:00:00.000+09:00',
+      updated_at: '2023-01-01T00:00:00.000+09:00',
+      password_digest: '$2a$12$QdZhBzL7xzERxbiQn2Llk.be4ulWWT/m.JcXv3pOHqXd/keLPxhwK',
+      remember_digest: null,
+    },
+  ],
+  pagination: { total_count: 10, limit_value: 5, total_pages: 2, current_page: 1 },
+}
