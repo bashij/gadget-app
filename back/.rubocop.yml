@@ -87,7 +87,6 @@ Metrics/BlockLength:
     - "config/environments/development.rb"
     - "spec/models/*"
     - "spec/requests/*"
-    - "spec/system/*"
     - "spec/spec_helper.rb"
 
 # コントローラと一部ヘルパーはメソッド行数が11行以上でも許可する
@@ -134,27 +133,20 @@ RSpec/ExampleLength:
     - "spec/requests/relationships_spec.rb"
     - "spec/requests/sessions_spec.rb"
     - "spec/requests/tweets_spec.rb"
-    - "spec/system/*.rb"
 
 # テスト文言は日本語とするため除外
 RSpec/ContextWording:
   Exclude:
     - "spec/requests/*.rb"
-    - "spec/system/*.rb"
-
-RSpec/Capybara/FeatureMethods:
-  Exclude:
-    - "spec/system/*.rb"
 
 # 規定数(6)以上のmemoized helper methodを許可する
 RSpec/MultipleMemoizedHelpers:
   Exclude:
     - "spec/requests/comments_spec.rb"
 
-# system,request specは複数のexpectationsを許可する
+# request specは複数のexpectationsを許可する
 RSpec/MultipleExpectations:
   Exclude:
-    - "spec/system/*.rb"
     - "spec/requests/*.rb"
 
 # ネストを許可
@@ -182,14 +174,6 @@ RSpec/InstanceVariable:
     - "spec/requests/communities_spec.rb"
     - "spec/requests/comments_spec.rb"
     - "spec/requests/relationships_spec.rb"
-
-# ダミーデータを用意するために許可
-RSpec/LetSetup:
-  Exclude:
-    - "spec/system/tweets_spec.rb"
-    - "spec/system/gadgets_spec.rb"
-    - "spec/system/communities_spec.rb"
-
 # 空のfactorybotファイルを許可する（不要が確定したら削除する）
 Lint/EmptyBlock:
   Exclude:
