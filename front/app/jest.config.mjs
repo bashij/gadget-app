@@ -19,7 +19,15 @@ const config = {
 
   globalSetup: '<rootDir>/__tests__/setupEnv.js',
 
-  testPathIgnorePatterns: ['<rootDir>/__tests__/setupEnv.js'],
+  testPathIgnorePatterns: [
+    // 設定ファイル
+    '<rootDir>/__tests__/setupEnv.js',
+    // ダミーデータファイル
+    '<rootDir>/__tests__/communities/dummyData.js',
+    '<rootDir>/__tests__/tweets/dummyData.js',
+    '<rootDir>/__tests__/gadgets/dummyData.js',
+    '<rootDir>/__tests__/users/dummyData.js',
+  ],
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
