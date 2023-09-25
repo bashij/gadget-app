@@ -1,7 +1,0 @@
-document.getElementById("feed_comment").innerHTML = "<%= j(render "shared/feed_comment", comments: @comments ) %>";
-
-<% if @comments_page_params.nil? %>
-  document.getElementById("comment_form").innerHTML = "<%= j(render "shared/comment_form", comment: @comment) %>";
-<% else %>  
-  document.getElementById("comment_form").innerHTML = "";
-<% end %>

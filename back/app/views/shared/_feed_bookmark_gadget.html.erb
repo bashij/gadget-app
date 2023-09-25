@@ -1,8 +1,0 @@
-<% if @gadget_bookmarks.any? %>
-  <div id="gadgets" class="gadgets"> 
-    <% @gadget_bookmarks.each do |gadget| %>     
-      <%= render partial: 'gadgets/bookmark_gadget', locals: {gadget: gadget} %>      
-    <% end %>
-  </div>
-  <%= paginate @gadget_bookmarks, remote: true, theme: 'bootstrap-5', :param_name => 'bookmark_gadgets_page' %>  
-<% end %>
