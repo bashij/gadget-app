@@ -29,28 +29,28 @@ jobs:
       - name: Cache node modules
         uses: actions/cache@v2
         with:
-          path: gadget-app/back/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('gadget-app/back/**/yarn.lock') }}
+          path: back/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('back/**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
       - name: Bundler and gem install
-        working-directory: gadget-app/back
+        working-directory: back
         run: |
           gem install bundler
           bundle install --jobs 4 --retry 3 --path vendor/bundle
       - name: Yarn install
-        working-directory: gadget-app/back
+        working-directory: back
         run: yarn install --check-files
 
       - name: Database create and migrate
-        working-directory: gadget-app/back
+        working-directory: back
         run: |
           cp config/database.yml.ci config/database.yml
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
       - name: Run rspec
-        working-directory: gadget-app/back
+        working-directory: back
         run: bundle exec rspec
 
   rubocop:
@@ -66,5 +66,5 @@ jobs:
           ruby-version: 3.0.2
 
       - name: Run rubocop
-        working-directory: gadget-app/back
+        working-directory: back
         run: bundle exec rubocop
