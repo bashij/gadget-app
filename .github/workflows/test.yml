@@ -39,6 +39,7 @@ jobs:
         run: |
           gem install bundler
           bundle install --jobs 4 --retry 3 --path vendor/bundle
+
       - name: Yarn install
         working-directory: back
         run: yarn install --check-files
@@ -49,6 +50,7 @@ jobs:
           cp config/database.yml.ci config/database.yml
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
+
       - name: Run rspec
         working-directory: back
         run: bundle exec rspec
@@ -64,6 +66,12 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0.2
+
+      - name: Bundler and gem install
+        working-directory: back
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3 --path vendor/bundle
 
       - name: Run rubocop
         working-directory: back
