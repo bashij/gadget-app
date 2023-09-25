@@ -22,7 +22,9 @@ export default function FollowingUsersTweets(props) {
   const [pageIndex, setPageIndex] = useState(1)
   const { mutate } = useSWRConfig()
   const { data, error, isLoading } = useSWR(
-    `${API_ENDPOINT}/${props.user?.id}/following_users_tweets?paged=${pageIndex}`,
+    props.user
+      ? `${API_ENDPOINT}/${props.user.id}/following_users_tweets?paged=${pageIndex}`
+      : null,
     fetcher,
     {
       keepPreviousData: true,

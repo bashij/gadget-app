@@ -99,8 +99,9 @@ export default function GadgetLike(props) {
         className={isLiked ? 'icon-delete' : 'icon-post'}
         icon={faHeart}
         onClick={(event) => handleClick(event, props.gadget.id)}
+        data-testid={`gadget_like_icon_${props.gadget.id}`}
       />
-      <span>{likeCount}</span>
+      <span data-testid={`gadget_like_count_${props.gadget.id}`}>{likeCount}</span>
     </>
   )
 }

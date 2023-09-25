@@ -4,42 +4,60 @@ RSpec.describe 'Sessions', type: :request do
   let(:user) { create(:user) }
   let(:unregistered_user) { build(:user) }
 
-  describe 'GET #new' do
-    specify 'ログイン画面の表示が成功する' do
-      get login_path
-      expect(response).to have_http_status :ok
-    end
-  end
-
   describe 'POST #create' do
     context '存在するユーザー' do
       specify 'ログインが成功する' do
-        post login_path, params: { session: { email: user.email, password: user.password, remember_me: 0 } }
-        expect(response).to redirect_to root_path
+        session_params = { email: user.email, password: user.password, remember_me: 0 }
+        post '/api/v1/login', params: { session: session_params }
+        expect(response).to have_http_status :ok
       end
 
       specify 'セッションの永続化が成功する' do
-        post login_path, params: { session: { email: user.email, password: user.password, remember_me: 1 } }
+        session_params = { email: user.email, password: user.password, remember_me: 1 }
+        post '/api/v1/login', params: { session: session_params }
         expect(cookies[:remember_token]).to be_truthy
       end
     end
 
     context '存在しないユーザー' do
       specify 'ログインが失敗する' do
-        post login_path, params: { session:
-                                 { email: unregistered_user.email,
-                                   password: unregistered_user.password,
-                                   remember_me: 0 } }
-        expect(response.body).to include '無効なメールアドレスまたはパスワードです'
+        session_params = { email: unregistered_user.email, password: unregistered_user.password, remember_me: 0 }
+        post '/api/v1/login', params: { session: session_params }
+        json = JSON.parse(response.body)
+
+        expect(response).to have_http_status :ok
+        expect(json['status']).to eq('failure')
+        expect(json['message']).to eq(['無効なメールアドレスまたはパスワードです'])
       end
     end
   end
 
   describe 'DELETE #destroy' do
     specify 'ログアウトが成功する' do
-      post login_path, params: { session: { email: user.email, password: user.password, remember_me: 0 } }
-      delete logout_path
-      expect(response).to redirect_to root_path
+      # 一度ログインする
+      session_params = { email: user.email, password: user.password, remember_me: 0 }
+      post '/api/v1/login', params: { session: session_params }
+      # ログアウトする
+      delete '/api/v1/logout'
+      json = JSON.parse(response.body)
+
+      expect(response).to have_http_status :ok
+      expect(json['status']).to eq('justLoggedOut')
+      expect(json['message']).to eq(['ログアウトしました'])
+    end
+  end
+
+  describe 'GET #check_session' do
+    specify 'ログイン中のユーザー情報を返す' do
+      # ログイン
+      session_params = { email: user.email, password: user.password, remember_me: 0 }
+      post '/api/v1/login', params: { session: session_params }
+      # リクエスト実行
+      get '/api/v1/check'
+      json = JSON.parse(response.body)
+
+      expect(response).to have_http_status :ok
+      expect(json['user']['name']).to eq(user.name)
     end
   end
 end

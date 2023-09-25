@@ -118,7 +118,7 @@ export default function Layout(props) {
                       src={
                         props.user.image.url == 'default.jpg'
                           ? '/images/default.jpg'
-                          : `https://static.gadgetlink-app.com${props.tweet.user.image.url}`
+                          : `https://static.gadgetlink-app.com${props.user.image.url}`
                       }
                       width={100}
                       height={100}
@@ -168,11 +168,6 @@ export default function Layout(props) {
           </div>
           <div className='col-sm-3 side-menu-dummy'></div>
           <div className='col-sm-9 col-xs-12 main'>{props.children}</div>
-          {!props.home && (
-            <div className='col-12 text-end'>
-              <Link href='/'>ホームに戻る</Link>
-            </div>
-          )}
         </div>
       </div>
     </>

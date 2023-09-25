@@ -1,9 +1,0 @@
-<div id="tweets" class="posts">
-  <% if @feed_tweets.any? %>
-    <%= render @feed_tweets %>  
-    <%= paginate @feed_tweets, params: {page_type: "tweet"}, remote: true, theme: 'bootstrap-5', :param_name => 'tweets_page' %>  
-  <% else %>
-    <div class="post">
-    </div>
-  <% end %>
-</div>

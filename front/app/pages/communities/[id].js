@@ -7,11 +7,11 @@ import { useRouter } from 'next/router'
 
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { format } from 'date-fns'
 import { toast, ToastContainer } from 'react-toastify'
 import useSWR, { useSWRConfig } from 'swr'
 
 import CommunityDelete from '@/components/communityDelete'
+import CommunityDetail from '@/components/communityDetail'
 import CommunityMembership from '@/components/communityMembership'
 import Layout, { siteTitle } from '@/components/layout'
 import Pagination from '@/components/pagination'
@@ -127,54 +127,7 @@ export default function Community(props) {
                   </div>
                 </div>
                 <div className='community-content'>
-                  <table className='table table-sm community-table-detail'>
-                    <tbody>
-                      <tr>
-                        <th>コミュニティ名</th>
-                        <td>
-                          <p className='overflow'>{props.community.name}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th>参加人数</th>
-                        <td>
-                          <p className='overflow'>
-                            <span id={`membership_count_${props.community.id}`}>
-                              {membershipCount} 人
-                            </span>
-                          </p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th>作成者</th>
-                        <td>
-                          <p className='overflow'>
-                            <Image
-                              src={
-                                props.community.user.image.url == 'default.jpg'
-                                  ? '/images/default.jpg'
-                                  : `https://static.gadgetlink-app.com${props.community.user.image.url}`
-                              }
-                              width={50}
-                              height={50}
-                              alt='user-image'
-                            />
-                            <Link href={`/users/${props.community.user.id}`}>
-                              {props.community.user.name}
-                            </Link>
-                          </p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th>作成日時</th>
-                        <td>
-                          <p className='overflow' suppressHydrationWarning>
-                            {format(new Date(props.community.created_at), 'yyyy/MM/dd HH:mm')}
-                          </p>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <CommunityDetail community={props.community} membershipCount={membershipCount} />
                   {props.user && props.community.user_id === props.user.id ? (
                     <div className='edit-links'>
                       <div className='link-section'>

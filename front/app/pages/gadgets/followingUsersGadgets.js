@@ -22,7 +22,9 @@ export default function FollowingUsersGadgets(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
   const [pageIndex, setPageIndex] = useState(1)
   const { data, error, isLoading } = useSWR(
-    `${API_ENDPOINT}/${props.user?.id}/following_users_gadgets?paged=${pageIndex}`,
+    props.user
+      ? `${API_ENDPOINT}/${props.user.id}/following_users_gadgets?paged=${pageIndex}`
+      : null,
     fetcher,
     {
       keepPreviousData: true,

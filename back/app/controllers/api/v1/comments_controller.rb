@@ -10,7 +10,7 @@ module Api
         @comments = @gadget.comments.where(parent_id: nil).order(created_at: :desc)
         # ページネーション情報（デフォルトは10件ずつの表示とする）
         paged = params[:paged]
-        per = params[:per].present? ? params[:per] : 10
+        per = params[:per].presence || 10
         @comments_paginated = @comments.page(paged).per(per)
         @pagination = pagination(@comments_paginated)
         # 全コメントのリプライ件数情報
@@ -18,14 +18,19 @@ module Api
         ids = @comments_paginated.pluck(:id)
         @replies = Comment.where(parent_id: ids)
 
-        render json: { comments: @comments_paginated, pagination: @pagination, replies: @replies, replyCounts: @reply_counts }, include: [:user]
+        render json: {
+          comments: @comments_paginated,
+          pagination: @pagination,
+          replies: @replies,
+          replyCounts: @reply_counts
+        }, include: [:user]
       end
 
       def create
         # 入力されたコメント
         @comment = current_user.comments.build(gadget_id: params[:gadget_id],
-                                              content: params[:comment][:content],
-                                              parent_id: params[:comment][:parent_id])
+                                               content: params[:comment][:content],
+                                               parent_id: params[:comment][:parent_id])
         if @comment.save
           message = [I18n.t('comments.create.flash.success')]
           render json: { status: 'success', message: message }

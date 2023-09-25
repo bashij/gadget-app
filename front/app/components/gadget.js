@@ -11,8 +11,6 @@ import GadgetDetail from '@/components/gadgetDetail'
 import GadgetLike from '@/components/gadgetLike'
 import ReviewRequest from '@/components/reviewRequest'
 
-
-
 export default function Gadget(props) {
   const [reviewRequestCount, setReviewRequestCount] = useState(props.gadget.review_requests.length)
 
@@ -40,7 +38,9 @@ export default function Gadget(props) {
             <Link href={`/gadgets/${props.gadget.id}/review_requests`}>
               <FontAwesomeIcon className='icon-post' icon={faUsers} />
             </Link>
-            <span id={`review_request_count_${props.gadget.id}`}>{reviewRequestCount}</span>
+            <span data-testid={`review_request_count_${props.gadget.id}`}>
+              {reviewRequestCount}
+            </span>
           </span>
         </div>
         <div className='review-link'>
@@ -48,16 +48,16 @@ export default function Gadget(props) {
             <span id={`review_request_section_${props.gadget.id}`}>
               <Link href={`/gadgets/${props.gadget.id}`}>レビューを見る</Link>
             </span>
-          ) : (
+          ) : props.gadget.user_id !== props.user?.id ? (
             <ReviewRequest
               gadget={props.gadget}
               user={props.user}
               setReviewRequestCount={setReviewRequestCount}
             />
-          )}
+          ) : null}
         </div>
         <div className='review-link'>
-          {props.gadget.user_id === props.user ? (
+          {props.gadget.user_id === props.user?.id ? (
             <Link href={`/gadgets/${props.gadget.id}/edit`}>レビュー編集</Link>
           ) : null}
         </div>

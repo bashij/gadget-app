@@ -140,7 +140,9 @@ export default function Edit(props) {
           <div className='col-lg-8 col-sm-10'>
             <form onSubmit={handleSubmit}>
               <div className='mb-3'>
-                <label className='form-label'>ユーザー名</label>
+                <label className='form-label' htmlFor='name'>
+                  ユーザー名
+                </label>
                 <span className='required-item'>必須</span>
                 <input
                   type='text'
@@ -149,10 +151,13 @@ export default function Edit(props) {
                   onChange={handleChange}
                   value={formData.name}
                   required
+                  id='name'
                 />
               </div>
               <div className='mb-3'>
-                <label className='form-label'>メールアドレス</label>
+                <label className='form-label' htmlFor='email'>
+                  メールアドレス
+                </label>
                 <span className='required-item'>必須</span>
                 <input
                   type='email'
@@ -161,18 +166,21 @@ export default function Edit(props) {
                   onChange={handleChange}
                   value={formData.email}
                   required
+                  id='email'
                 />
               </div>
               <div className='mb-3'>
-                <label className='form-label'>職業</label>
+                <label className='form-label' htmlFor='job'>
+                  職業
+                </label>
                 <span className='required-item'>必須</span>
                 <select
                   name='job'
-                  id='id'
                   className='form-control'
                   onChange={handleChange}
                   value={formData.job}
                   required
+                  id='job'
                 >
                   <option value=''>選択してください</option>
                   <option value='IT系'>IT系</option>
@@ -183,17 +191,22 @@ export default function Edit(props) {
                 </select>
               </div>
               <div className='mb-3'>
-                <label className='form-label'>ユーザー画像</label>
+                <label className='form-label' htmlFor='image'>
+                  ユーザー画像
+                </label>
                 <input
                   type='file'
                   className='form-control'
                   name='image'
                   onChange={handleChange}
                   value={formData.image.url}
+                  id='image'
                 />
               </div>
               <div className='mb-3'>
-                <label className='form-label'>パスワード</label>
+                <label className='form-label' htmlFor='password'>
+                  パスワード
+                </label>
                 {pageTitle === 'ユーザー登録' ? <span className='required-item'>必須</span> : null}
                 <input
                   type='password'
@@ -202,10 +215,13 @@ export default function Edit(props) {
                   onChange={handleChange}
                   value={formData.password}
                   required={pageTitle === 'ユーザー登録' ? true : false}
+                  id='password'
                 />
               </div>
               <div className='mb-3'>
-                <label className='form-label'>パスワード（確認）</label>
+                <label className='form-label' htmlFor='password_confirmation'>
+                  パスワード（確認）
+                </label>
                 {pageTitle === 'ユーザー登録' ? <span className='required-item'>必須</span> : null}
                 <input
                   type='password'
@@ -214,6 +230,7 @@ export default function Edit(props) {
                   onChange={handleChange}
                   value={formData.password_confirmation}
                   required={pageTitle === 'ユーザー登録' ? true : false}
+                  id='password_confirmation'
                 />
               </div>
               <div className='text-center m-4'>

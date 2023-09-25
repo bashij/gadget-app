@@ -1,7 +1,0 @@
-<span>
-  <% if community.joined_by?(current_user) %>
-    <%=link_to '脱退', community_memberships_path(community.id), method: :delete, remote: true, class: "btn btn-destroy" %>
-  <% else %>
-    <%=link_to '参加', community_memberships_path(community.id), method: :post, remote: true, class: "btn btn-create" %>
-  <% end %>
-</span>

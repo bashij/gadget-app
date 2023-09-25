@@ -120,7 +120,9 @@ export default function New(props) {
             <form onSubmit={handleSubmit} className='row justify-content-center mt-3'>
               <div className='col-lg-8 col-sm-10'>
                 <div className='mb-3'>
-                  <label className='form-label'>ガジェット名</label>
+                  <label className='form-label' htmlFor='name'>
+                    ガジェット名
+                  </label>
                   <span className='required-item'>必須</span>
                   <input
                     type='text'
@@ -129,10 +131,13 @@ export default function New(props) {
                     onChange={handleChange}
                     value={formData.name}
                     required
+                    id='name'
                   />
                 </div>
                 <div className='mb-3'>
-                  <label className='form-label'>カテゴリ</label>
+                  <label className='form-label' htmlFor='category'>
+                    カテゴリ
+                  </label>
                   <span className='required-item'>必須</span>
                   <select
                     type='text'
@@ -141,6 +146,7 @@ export default function New(props) {
                     onChange={handleChange}
                     value={formData.category}
                     required
+                    id='category'
                   >
                     <option value=''>選択してください</option>
                     <option value='PC本体'>PC本体</option>
@@ -154,53 +160,68 @@ export default function New(props) {
                   </select>
                 </div>
                 <div className='mb-3'>
-                  <label className='form-label'>型番</label>
+                  <label className='form-label' htmlFor='model_number'>
+                    型番
+                  </label>
                   <input
                     type='text'
                     className='form-control'
                     name='model_number'
                     onChange={handleChange}
                     value={formData.model_number}
+                    id='model_number'
                   />
                 </div>
                 <div className='mb-3'>
-                  <label className='form-label'>メーカー</label>
+                  <label className='form-label' htmlFor='manufacturer'>
+                    メーカー
+                  </label>
                   <input
                     type='text'
                     className='form-control'
                     name='manufacturer'
                     onChange={handleChange}
                     value={formData.manufacturer}
+                    id='manufacturer'
                   />
                 </div>
                 <div className='mb-3'>
-                  <label className='form-label'>価格</label>
+                  <label className='form-label' htmlFor='price'>
+                    価格
+                  </label>
                   <input
                     type='number'
                     className='form-control'
                     name='price'
                     onChange={handleChange}
                     value={formData.price}
+                    id='price'
                   />
                 </div>
                 <div className='mb-3'>
-                  <label className='form-label'>その他スペック</label>
+                  <label className='form-label' htmlFor='other_info'>
+                    その他スペック
+                  </label>
                   <input
                     type='text'
                     className='form-control'
                     name='other_info'
                     onChange={handleChange}
                     value={formData.other_info}
+                    id='other_info'
                   />
                 </div>
                 <div className='mb-3'>
-                  <label className='form-label'>ガジェット画像</label>
+                  <label className='form-label' htmlFor='image'>
+                    ガジェット画像
+                  </label>
                   <input
                     type='file'
                     className='form-control'
                     name='image'
                     onChange={handleChange}
                     value={formData.image?.url}
+                    id='image'
                   />
                 </div>
               </div>

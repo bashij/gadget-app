@@ -10,7 +10,7 @@ module Api
         @members = @community.joined_members
         # ページネーション情報（デフォルトは10件ずつの表示とする）
         paged = params[:paged]
-        per = params[:per].present? ? params[:per] : 10
+        per = params[:per].presence || 10
         @members_paginated = @members.page(paged).per(per)
         @pagination = pagination(@members_paginated)
 

@@ -8,21 +8,26 @@ RSpec.describe 'GadgetLikes', type: :request do
 
   describe 'POST #create' do
     context 'ログインしていない状態' do
-      specify 'ログイン画面へリダイレクトされる' do
-        post gadget_gadget_likes_path(gadget)
-        expect(response).to redirect_to login_path
+      specify 'ログイン画面へ遷移するための情報を返す' do
+        post "/api/v1/gadgets/#{gadget.id}/gadget_likes", params: { gadget_id: gadget.id }
+        json = JSON.parse(response.body)
+
+        expect(response).to have_http_status :ok
+        expect(json['status']).to eq('notLoggedIn')
+        expect(json['message']).to eq(['ログインしてください'])
       end
     end
 
     context 'ログインしている状態' do
       before do
-        post login_path, params: { session: { email: user.email, password: user.password, remember_me: 0 } }
+        session_params = { email: user.email, password: user.password, remember_me: 0 }
+        post '/api/v1/login', params: { session: session_params }
       end
 
       context '成功の場合' do
         specify 'ガジェットへのいいね数が１件増える' do
           expect do
-            post gadget_gadget_likes_path(gadget), xhr: true
+            post "/api/v1/gadgets/#{gadget.id}/gadget_likes", params: { gadget_id: gadget.id }
           end.to change(GadgetLike.all, :count).by(1)
         end
       end
@@ -34,30 +39,39 @@ RSpec.describe 'GadgetLikes', type: :request do
 
   describe 'DELETE #destroy' do
     context 'ログインしていない状態' do
-      specify 'ログイン画面へリダイレクトされる' do
-        delete gadget_gadget_likes_path(gadget)
-        expect(response).to redirect_to login_path
+      specify 'ログイン画面へ遷移するための情報を返す' do
+        delete "/api/v1/gadgets/#{gadget.id}/gadget_likes", params: { gadget_id: gadget.id }
+        json = JSON.parse(response.body)
+
+        expect(response).to have_http_status :ok
+        expect(json['status']).to eq('notLoggedIn')
+        expect(json['message']).to eq(['ログインしてください'])
       end
     end
 
     context 'ログインしている状態' do
       before do
-        post login_path, params: { session: { email: user.email, password: user.password, remember_me: 0 } }
-        post gadget_gadget_likes_path(gadget)
+        session_params = { email: user.email, password: user.password, remember_me: 0 }
+        post '/api/v1/login', params: { session: session_params }
+        post "/api/v1/gadgets/#{gadget.id}/gadget_likes", params: { gadget_id: gadget.id }
       end
 
       context '成功の場合' do
         specify 'ガジェットへのいいね数が１件減る' do
           expect do
-            delete gadget_gadget_likes_path(gadget), xhr: true
+            delete "/api/v1/gadgets/#{gadget.id}/gadget_likes", params: { gadget_id: gadget.id }
           end.to change(GadgetLike.all, :count).by(-1)
         end
       end
 
       context '失敗の場合' do
-        specify 'ログインユーザー以外のガジェットへのいいねを削除しようとするとホーム画面へリダイレクトされる' do
-          delete gadget_gadget_likes_path(other_gadget), xhr: true
-          expect(response).to redirect_to root_url
+        specify 'ログインユーザー以外のガジェットへのいいねを削除しようとすると操作失敗の情報を返す' do
+          delete "/api/v1/gadgets/#{other_gadget.id}/gadget_likes", params: { gadget_id: other_gadget.id }
+          json = JSON.parse(response.body)
+
+          expect(response).to have_http_status :ok
+          expect(json['status']).to eq('failure')
+          expect(json['message']).to eq(['この操作は実行できません'])
         end
       end
     end
