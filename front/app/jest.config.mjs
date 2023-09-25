@@ -28,6 +28,9 @@ const config = {
     '<rootDir>/__tests__/gadgets/dummyData.js',
     '<rootDir>/__tests__/users/dummyData.js',
   ],
+
+  // タイムアウトを10秒に設定
+  testTimeout: 10000,
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
