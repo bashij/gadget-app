@@ -23,6 +23,8 @@ jobs:
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
 
       - name: Cache node modules
         uses: actions/cache@v2
@@ -62,6 +64,8 @@ jobs:
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
 
       - name: Bundler and gem install
         working-directory: back
