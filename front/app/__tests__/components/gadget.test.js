@@ -137,7 +137,7 @@ describe('Gadget', () => {
     expect(screen.getByTestId(`gadget_like_count_${props.gadget.id}`).textContent).toBe('1')
 
     // アイコンをクリック
-    userEvent.click(screen.getByTestId(`gadget_like_icon_${props.gadget.id}`))
+    await userEvent.click(screen.getByTestId(`gadget_like_icon_${props.gadget.id}`))
 
     await waitFor(() => {
       // 増加後の数値を確認
@@ -160,7 +160,7 @@ describe('Gadget', () => {
     expect(screen.getByTestId(`gadget_like_count_${props.gadget.id}`).textContent).toBe('1')
 
     // アイコンをクリック
-    userEvent.click(screen.getByTestId(`gadget_like_icon_${props.gadget.id}`))
+    await userEvent.click(screen.getByTestId(`gadget_like_icon_${props.gadget.id}`))
 
     await waitFor(() => {
       // 減少後の数値を確認
@@ -175,7 +175,7 @@ describe('Gadget', () => {
     expect(screen.getByTestId(`gadget_bookmark_count_${props.gadget.id}`).textContent).toBe('2')
 
     // アイコンをクリック
-    userEvent.click(screen.getByTestId(`gadget_bookmark_icon_${props.gadget.id}`))
+    await userEvent.click(screen.getByTestId(`gadget_bookmark_icon_${props.gadget.id}`))
 
     await waitFor(() => {
       // 増加後の数値を確認
@@ -198,7 +198,7 @@ describe('Gadget', () => {
     expect(screen.getByTestId(`gadget_bookmark_count_${props.gadget.id}`).textContent).toBe('2')
 
     // アイコンをクリック
-    userEvent.click(screen.getByTestId(`gadget_bookmark_icon_${props.gadget.id}`))
+    await userEvent.click(screen.getByTestId(`gadget_bookmark_icon_${props.gadget.id}`))
 
     await waitFor(() => {
       // 減少後の数値を確認
@@ -213,7 +213,7 @@ describe('Gadget', () => {
     expect(screen.getByTestId(`review_request_count_${props.gadget.id}`).textContent).toBe('3')
 
     // アイコンをクリック
-    userEvent.click(screen.getByTestId(`review_request_icon_${props.gadget.id}`))
+    await userEvent.click(screen.getByTestId(`review_request_icon_${props.gadget.id}`))
 
     await waitFor(() => {
       // 増加後の数値を確認
@@ -236,7 +236,7 @@ describe('Gadget', () => {
     expect(screen.getByTestId(`review_request_count_${props.gadget.id}`).textContent).toBe('3')
 
     // アイコンをクリック
-    userEvent.click(screen.getByTestId(`review_request_icon_${props.gadget.id}`))
+    await userEvent.click(screen.getByTestId(`review_request_icon_${props.gadget.id}`))
 
     await waitFor(() => {
       // 減少後の数値を確認

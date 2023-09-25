@@ -59,7 +59,7 @@ describe('Login', () => {
     expect(displayedValue2).toBeInTheDocument()
 
     // フォームの登録のボタンを押下する動作
-    userEvent.click(screen.getByText('ログイン'))
+    await userEvent.click(screen.getByText('ログイン'))
 
     // ボタン押下時の router.push が動作しているかテスト
     await waitFor(() => {

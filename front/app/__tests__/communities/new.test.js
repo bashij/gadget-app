@@ -64,7 +64,7 @@ describe('New', () => {
     expect(imageInputElement.files[0]).toBe(dummyImageFile)
 
     // フォームの登録のボタンを押下
-    userEvent.click(screen.getByText('登録する'))
+    await userEvent.click(screen.getByText('登録する'))
 
     // ボタン押下時の router.push が動作しているかテスト
     await waitFor(() => {
