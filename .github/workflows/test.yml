@@ -91,9 +91,9 @@ jobs:
           # cache: npm
 
       - name: Yarn install
-        working-directory: front
+        working-directory: front/app
         run: yarn install
 
       - name: Rub jest
-        working-directory: front
+        working-directory: front/app
         run: yarn jest
