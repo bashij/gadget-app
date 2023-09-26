@@ -1,11 +1,11 @@
-name: Run RSpec, Rubocop, Jest, ESLint
+name: Run RSpec, RuboCop, Jest, ESLint
 
 on:
   push:
   pull_request:
 
 jobs:
-  rspec:
+  RSpec:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     services:
@@ -51,11 +51,11 @@ jobs:
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
 
-      - name: Run rspec
+      - name: Run RSpec
         working-directory: back
         run: bundle exec rspec
 
-  rubocop:
+  RuboCop:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -73,11 +73,11 @@ jobs:
           gem install bundler
           bundle install --jobs 4 --retry 3 --path vendor/bundle
 
-      - name: Run rubocop
+      - name: Run RuboCop
         working-directory: back
         run: bundle exec rubocop
 
-  jest:
+  Jest:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -107,7 +107,7 @@ jobs:
         working-directory: front/app
         run: yarn install
 
-      - name: Rub jest
+      - name: Run Jest
         working-directory: front/app
         run: yarn jest
 
@@ -128,6 +128,6 @@ jobs:
         working-directory: front/app
         run: yarn install
 
-      - name: Rub lint
+      - name: Run ESLint
         working-directory: front/app
         run: yarn run lint
