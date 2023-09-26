@@ -1,4 +1,4 @@
-name: Run rspec, rubocop
+name: Run RSpec, Rubocop, Jest, ESLint
 
 on:
   push:
@@ -76,3 +76,24 @@ jobs:
       - name: Run rubocop
         working-directory: back
         run: bundle exec rubocop
+
+  jest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/seup-node@v3
+        with:
+          node-version: 18
+          # cache: npm
+
+      - name: Yarn install
+        working-directory: front
+        run: yarn install
+
+      - name: Rub jest
+      working-directory: front
+        run: yarn jest
