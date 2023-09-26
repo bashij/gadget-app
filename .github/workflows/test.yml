@@ -102,7 +102,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          # cache: npm
 
       - name: Yarn install
         working-directory: front/app
@@ -111,3 +110,24 @@ jobs:
       - name: Rub jest
         working-directory: front/app
         run: yarn jest
+
+  ESLint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Yarn install
+        working-directory: front/app
+        run: yarn install
+
+      - name: Rub lint
+        working-directory: front/app
+        run: yarn run lint
