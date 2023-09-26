@@ -95,5 +95,5 @@ jobs:
         run: yarn install
 
       - name: Rub jest
-      working-directory: front
+        working-directory: front
         run: yarn jest
