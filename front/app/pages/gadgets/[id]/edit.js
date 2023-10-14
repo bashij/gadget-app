@@ -26,13 +26,14 @@ export default function Edit(props) {
     manufacturer: `${props.gadget?.manufacturer}`,
     price: `${props.gadget?.price ? props.gadget.price : ''}`,
     other_info: `${props.gadget?.other_info}`,
-    image: `${props.gadget?.image.url}`,
     review: `${originalReview}`,
   })
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
+    const { name, value, files } = e.target
+    e.target.name === 'image'
+      ? setFormData({ ...formData, [name]: files[0] })
+      : setFormData({ ...formData, [name]: value })
   }
 
   const router = useRouter()
@@ -46,7 +47,12 @@ export default function Edit(props) {
       const response = await apiClient.patch(
         `${API_ENDPOINT}/${props.gadget?.id}`,
         { gadget: formData },
-        { withCredentials: true },
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
       )
       const resMessage = await response.data.message
       const resStatus = await response.data.status

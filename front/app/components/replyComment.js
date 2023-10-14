@@ -14,9 +14,9 @@ export default function ReplyComment(props) {
           <div className='user-info'>
             <Image
               src={
-                props.comment.user.image.url == 'default.jpg'
+                props.comment.user.image.url === 'default.jpg'
                   ? '/images/default.jpg'
-                  : `https://static.gadgetlink-app.com${props.comment.user.image.url}`
+                  : props.comment.user.image.url
               }
               width={150}
               height={150}

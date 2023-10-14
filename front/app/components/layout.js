@@ -116,9 +116,9 @@ export default function Layout(props) {
                   <span className='nav-link'>
                     <Image
                       src={
-                        props.user.image.url == 'default.jpg'
+                        props.user.image.url === 'default.jpg'
                           ? '/images/default.jpg'
-                          : `https://static.gadgetlink-app.com${props.user.image.url}`
+                          : props.user.image.url
                       }
                       width={100}
                       height={100}

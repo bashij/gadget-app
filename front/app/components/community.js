@@ -5,7 +5,6 @@ import Link from 'next/link'
 
 import CommunityMembership from '@/components/communityMembership'
 
-
 export default function Community(props) {
   const [membershipCount, setMembershipCount] = useState(props.community.memberships.length)
 
@@ -13,9 +12,9 @@ export default function Community(props) {
     <div key={props.community.id} className='col-md-3 community-items card p-3 pb-2 m-2'>
       <Image
         src={
-          props.community.image.url == 'default.jpg'
+          props.community.image.url === 'default.jpg'
             ? '/images/default.jpg'
-            : `https://static.gadgetlink-app.com${props.community.image.url}`
+            : props.community.image.url
         }
         width={150}
         height={150}

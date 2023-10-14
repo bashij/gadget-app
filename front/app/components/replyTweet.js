@@ -14,9 +14,9 @@ export default function ReplyTweet(props) {
           <div className='user-info'>
             <Image
               src={
-                props.tweet.user.image.url == 'default.jpg'
+                props.tweet.user.image.url === 'default.jpg'
                   ? '/images/default.jpg'
-                  : `https://static.gadgetlink-app.com${props.tweet.user.image.url}`
+                  : props.tweet.user.image.url
               }
               width={150}
               height={150}

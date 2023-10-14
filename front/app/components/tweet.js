@@ -14,8 +14,6 @@ import TweetDelete from '@/components/tweetDelete'
 import TweetForm from '@/components/tweetForm'
 import TweetLike from '@/components/tweetLike'
 
-
-
 export default function Tweet(props) {
   const relatedReplies = props.replies?.filter((reply) => reply.parent_id === props.tweet.id)
 
@@ -46,9 +44,9 @@ export default function Tweet(props) {
           <div className='user-info'>
             <Image
               src={
-                props.tweet.user.image.url == 'default.jpg'
+                props.tweet.user.image.url === 'default.jpg'
                   ? '/images/default.jpg'
-                  : `https://static.gadgetlink-app.com${props.tweet.user.image.url}`
+                  : props.tweet.user.image.url
               }
               width={150}
               height={150}

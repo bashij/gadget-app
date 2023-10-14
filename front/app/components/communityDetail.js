@@ -27,9 +27,9 @@ export default function CommunityDetail(props) {
             <p className='overflow'>
               <Image
                 src={
-                  props.community.user.image.url == 'default.jpg'
+                  props.community.user.image.url === 'default.jpg'
                     ? '/images/default.jpg'
-                    : `https://static.gadgetlink-app.com${props.community.user.image.url}`
+                    : props.community.user.image.url
                 }
                 width={50}
                 height={50}

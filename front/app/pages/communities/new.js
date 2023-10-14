@@ -21,8 +21,10 @@ export default function New(props) {
   })
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
+    const { name, value, files } = e.target
+    e.target.name === 'image'
+      ? setFormData({ ...formData, [name]: files[0] })
+      : setFormData({ ...formData, [name]: value })
   }
 
   const router = useRouter()
@@ -36,7 +38,12 @@ export default function New(props) {
       const response = await apiClient.post(
         API_ENDPOINT,
         { community: formData },
-        { withCredentials: true },
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
       )
       const resMessage = await response.data.message
       const resStatus = await response.data.status
@@ -135,7 +142,7 @@ export default function New(props) {
                   className='form-control'
                   name='image'
                   onChange={handleChange}
-                  value={formData.image.url}
+                  value={formData.image?.url}
                   id='image'
                 />
               </div>
@@ -155,6 +162,28 @@ export default function New(props) {
 export const getServerSideProps = async (context) => {
   try {
     const cookie = context.req?.headers.cookie
+
+    console.log(
+      '--------------------------------------------context--------------------------------------------',
+    )
+    console.log(context)
+    console.log(
+      '--------------------------------------------context.req--------------------------------------------',
+    )
+    console.log(context.req)
+    console.log(
+      '--------------------------------------------context.req?.headers--------------------------------------------',
+    )
+    console.log(context.req?.headers)
+    console.log(
+      '--------------------------------------------context.req?.headers.cookie--------------------------------------------',
+    )
+    console.log(context.req?.headers.cookie)
+    console.log(
+      '--------------------------------------------cookie--------------------------------------------',
+    )
+    console.log(cookie)
+
     const response = await apiClient.get(process.env.API_ENDPOINT_CHECK_SESSION, {
       headers: {
         cookie: cookie,
@@ -162,6 +191,22 @@ export const getServerSideProps = async (context) => {
     })
 
     const user = await response.data.user
+    console.log(
+      '--------------------------------------------response--------------------------------------------',
+    )
+    console.log(response)
+    console.log(
+      '--------------------------------------------response.data--------------------------------------------',
+    )
+    console.log(response.data)
+    console.log(
+      '--------------------------------------------response.data.user--------------------------------------------',
+    )
+    console.log(response.data.user)
+    console.log(
+      '--------------------------------------------user--------------------------------------------',
+    )
+    console.log(user)
 
     return { props: { user: user } }
   } catch (error) {

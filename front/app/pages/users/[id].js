@@ -175,9 +175,9 @@ export default function User(props) {
             <div>
               <Image
                 src={
-                  props.pageUser.image.url == 'default.jpg'
+                  props.pageUser.image.url === 'default.jpg'
                     ? '/images/default.jpg'
-                    : `https://static.gadgetlink-app.com${props.pageUser.image.url}`
+                    : props.pageUser.image.url
                 }
                 width={150}
                 height={150}
