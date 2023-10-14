@@ -31,6 +31,5 @@ Rails.application.routes.draw do
         resource :review_requests, only: %i[create destroy show]
       end
     end
-    resources :health_check, only: :index
   end
 end
