@@ -40,16 +40,19 @@ module GadgetApp
     # frontからのリソース取得を許可する
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-          origins "http://localhost:8000"
+          origins "http://localhost:8000", "https://www.gadgetlink-app.com"
           resource "*",
-          headers: :any,
-          credentials: true,
-          methods: [:get, :post, :patch, :delete, :options, :head]
+            headers: :any,
+            credentials: true,
+            methods: [:get, :post, :patch, :delete, :options, :head]
       end
     end
 
     config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore
+    config.middleware.use ActionDispatch::Session::CookieStore,
+                          domain: :all,
+                          tld_length: 2,
+                          secure: true
     config.action_dispatch.cookies_same_site_protection = nil
   end
 end

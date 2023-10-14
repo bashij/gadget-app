@@ -1,7 +1,6 @@
 #!/bin/bash
 
 sudo service nginx start
-cd /gadget-app
+cd /gadget-app/back
 RAILS_ENV=production bin/rails db:migrate
-RAILS_ENV=production bin/rails assets:precompile
 bundle exec pumactl start

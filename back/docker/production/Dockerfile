@@ -1,6 +1,6 @@
 FROM ruby:3.0.2 AS base
 
-WORKDIR /gadget-app
+WORKDIR /gadget-app/back
 ENV RAILS_ENV production
 ENV NODE_MAJOR_VERSION 14
 ENV BUNDLE_DEPLOYMENT true
@@ -35,15 +35,15 @@ FROM builder AS main
 
 COPY . .
 
-COPY --from=bundle /gadget-app/vendor/bundle /gadget-app/vendor/bundle
-COPY --from=yarn /gadget-app/node_modules /gadget-app/node_moduless
+COPY --from=bundle /gadget-app/back/vendor/bundle /gadget-app/back/vendor/bundle
+COPY --from=yarn /gadget-app/back/node_modules /gadget-app/back/node_moduless
 
 # nginx
 RUN groupadd nginx
 RUN useradd -g nginx nginx
 ADD docker/production/nginx.conf /etc/nginx/nginx.conf
-ADD docker/production/entrypoint.sh /gadget-app/entrypoint.sh
+ADD docker/production/entrypoint.sh /gadget-app/back/entrypoint.sh
 
 EXPOSE 80
 
-RUN chmod +x /gadget-app/entrypoint.sh
+RUN chmod +x /gadget-app/back/entrypoint.sh
