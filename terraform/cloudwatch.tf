@@ -7,8 +7,16 @@ resource "aws_cloudwatch_log_group" "containerinsights" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "ga_prod_fargate" {
-  name = "/ecs/ga-prod-fargate"
+resource "aws_cloudwatch_log_group" "ga_prod_fargate_front" {
+  name = "/ecs/ga-prod-fargate-front"
+
+  tags = {
+    Environment = "prod"
+  }
+}
+
+resource "aws_cloudwatch_log_group" "ga_prod_fargate_back" {
+  name = "/ecs/ga-prod-fargate-back"
 
   tags = {
     Environment = "prod"

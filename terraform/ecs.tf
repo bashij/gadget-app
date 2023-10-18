@@ -28,7 +28,7 @@ resource "aws_ecs_cluster_capacity_providers" "prod" {
 ####################
 # ECR
 ####################
-resource "aws_ecr_repository" "prod" {
+resource "aws_ecr_repository" "front" {
   encryption_configuration {
     encryption_type = "AES256"
   }
@@ -38,7 +38,28 @@ resource "aws_ecr_repository" "prod" {
   }
 
   image_tag_mutability = "MUTABLE"
-  name                 = "ga-prod-fargate"
+  name                 = "ga-prod-fargate-front"
+
+  tags = {
+    Environment = "prod"
+  }
+
+  tags_all = {
+    Environment = "prod"
+  }
+}
+
+resource "aws_ecr_repository" "back" {
+  encryption_configuration {
+    encryption_type = "AES256"
+  }
+
+  image_scanning_configuration {
+    scan_on_push = "true"
+  }
+
+  image_tag_mutability = "MUTABLE"
+  name                 = "ga-prod-fargate-back"
 
   tags = {
     Environment = "prod"

@@ -11,6 +11,7 @@ resource "aws_s3_bucket" "static" {
     permissions = ["FULL_CONTROL"]
     type        = "CanonicalUser"
   }
+  timeouts {}
   object_lock_enabled = "false"
   policy              = <<POLICY
 {

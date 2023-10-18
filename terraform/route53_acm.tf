@@ -54,6 +54,17 @@ resource "aws_route53_record" "a02" {
   }
 }
 
+resource "aws_route53_record" "a03" {
+  zone_id = aws_route53_zone.prod.zone_id
+  name    = "back.gadgetlink-app.com"
+  type    = "A"
+  alias {
+    name                   = "dualstack.${aws_lb.alb.dns_name}"
+    zone_id                = aws_lb.alb.zone_id
+    evaluate_target_health = false
+  }
+}
+
 resource "aws_route53_record" "cname01" {
   zone_id = aws_route53_zone.prod.zone_id
   name    = var.cname01_name
@@ -70,6 +81,15 @@ resource "aws_route53_record" "cname02" {
   ttl     = 300
 
   records = [var.cname02_record]
+}
+
+resource "aws_route53_record" "cname03" {
+  zone_id = aws_route53_zone.prod.zone_id
+  name    = var.cname03_name
+  type    = "CNAME"
+  ttl     = 300
+
+  records = [var.cname03_record]
 }
 
 ####################
