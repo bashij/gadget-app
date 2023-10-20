@@ -162,28 +162,6 @@ export default function New(props) {
 export const getServerSideProps = async (context) => {
   try {
     const cookie = context.req?.headers.cookie
-
-    console.log(
-      '--------------------------------------------context--------------------------------------------',
-    )
-    console.log(context)
-    console.log(
-      '--------------------------------------------context.req--------------------------------------------',
-    )
-    console.log(context.req)
-    console.log(
-      '--------------------------------------------context.req?.headers--------------------------------------------',
-    )
-    console.log(context.req?.headers)
-    console.log(
-      '--------------------------------------------context.req?.headers.cookie--------------------------------------------',
-    )
-    console.log(context.req?.headers.cookie)
-    console.log(
-      '--------------------------------------------cookie--------------------------------------------',
-    )
-    console.log(cookie)
-
     const response = await apiClient.get(process.env.API_ENDPOINT_CHECK_SESSION, {
       headers: {
         cookie: cookie,
@@ -191,22 +169,6 @@ export const getServerSideProps = async (context) => {
     })
 
     const user = await response.data.user
-    console.log(
-      '--------------------------------------------response--------------------------------------------',
-    )
-    console.log(response)
-    console.log(
-      '--------------------------------------------response.data--------------------------------------------',
-    )
-    console.log(response.data)
-    console.log(
-      '--------------------------------------------response.data.user--------------------------------------------',
-    )
-    console.log(response.data.user)
-    console.log(
-      '--------------------------------------------user--------------------------------------------',
-    )
-    console.log(user)
 
     return { props: { user: user } }
   } catch (error) {
