@@ -1,7 +1,5 @@
 on:
   push:
-    branches:
-      - master
 
 name: Deploy to Amazon ECS
 
@@ -12,52 +10,100 @@ jobs:
     environment: production
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1-node16
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-northeast-1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
 
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Build, tag, and push image to Amazon ECR
-      id: build-image
-      env:
-        DOCKER_BUILDKIT: 1
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: ga-prod-fargate
-        IMAGE_TAG: ${{ github.sha }}
-      run: |
-        docker build \
-          -f docker/production/Dockerfile \
-          --cache-from=$ECR_REGISTRY/$ECR_REPOSITORY:latest \
-          --build-arg BUILDKIT_INLINE_CACHE=1 \
-          -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
-          -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-    - name: 【Rails】 Fill in the new image ID in the Amazon ECS task definition
-      id: task-def-with-rails
-      uses: aws-actions/amazon-ecs-render-task-definition@v1
-      with:
-        task-definition: deploy/task-definition.json
-        container-name: ga-prod-fargate
-        image: ${{ steps.build-image.outputs.image }}
+      - name: (Backend) Build, tag, and push image to Amazon ECR
+        id: build-backend-image
+        env:
+          DOCKER_BUILDKIT: 1
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ga-prod-fargate-back
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build \
+            -f back/docker/production/Dockerfile \
+            --cache-from=$ECR_REGISTRY/$ECR_REPOSITORY:latest \
+            --build-arg BUILDKIT_INLINE_CACHE=1 \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:latest back
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+      - name: (Backend) Fill in the new image ID in the Amazon ECS task definition
+        id: task-def-with-back
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: deploy/back/task-definition.json
+          container-name: ga-prod-fargate-back
+          image: ${{ steps.build-backend-image.outputs.image }}
 
-    - name: Deploy Amazon ECS task definition
-      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-      with:
-        task-definition: ${{ steps.task-def-with-rails.outputs.task-definition }}
-        service: ga-prod-fargate
-        cluster: ga-prod-fargate
-        wait-for-service-stability: true
-        codedeploy-appspec: deploy/appspec.yml
-        codedeploy-application: AppECS-ga-prod-fargate-ga-prod-fargate
-        codedeploy-deployment-group: DgpECS-ga-prod-fargate-ga-prod-fargate
+      - name: (Backend) Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def-with-back.outputs.task-definition }}
+          service: ga-prod-fargate-back
+          cluster: ga-prod-fargate
+          wait-for-service-stability: true
+          codedeploy-appspec: deploy/back/appspec.yml
+          codedeploy-application: AppECS-ga-prod-fargate-ga-prod-fargate-back
+          codedeploy-deployment-group: DgpECS-ga-prod-fargate-ga-prod-fargate-back
+
+      - name: (Frontend) Build, tag, and push image to Amazon ECR
+        id: build-frontend-image
+        env:
+          DOCKER_BUILDKIT: 1
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ga-prod-fargate-front
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build \
+            -f front/docker/production/Dockerfile \
+            --cache-from=$ECR_REGISTRY/$ECR_REPOSITORY:latest \
+            --build-arg BUILDKIT_INLINE_CACHE=1 \
+            --build-arg NEXT_PUBLIC_IS_DEV=false \
+            --build-arg NEXT_PUBLIC_API_ENDPOINT_USERS=${{ secrets.COMMON_API_ENDPOINT }}/users \
+            --build-arg NEXT_PUBLIC_API_ENDPOINT_RELATIONSHIPS=${{ secrets.COMMON_API_ENDPOINT }}/relationships \
+            --build-arg NEXT_PUBLIC_API_ENDPOINT_LOGIN=${{ secrets.COMMON_API_ENDPOINT }}/login \
+            --build-arg NEXT_PUBLIC_API_ENDPOINT_LOGOUT=${{ secrets.COMMON_API_ENDPOINT }}/logout \
+            --build-arg NEXT_PUBLIC_API_ENDPOINT_TWEETS=${{ secrets.COMMON_API_ENDPOINT }}/tweets \
+            --build-arg NEXT_PUBLIC_API_ENDPOINT_COMMUNITIES=${{ secrets.COMMON_API_ENDPOINT }}/communities \
+            --build-arg NEXT_PUBLIC_API_ENDPOINT_GADGETS=${{ secrets.COMMON_API_ENDPOINT }}/gadgets \
+            --build-arg API_ENDPOINT_CHECK_SESSION=${{ secrets.COMMON_API_ENDPOINT }}/check \
+            --build-arg API_ENDPOINT_USERS=${{ secrets.COMMON_API_ENDPOINT }}/users \
+            --build-arg API_ENDPOINT_COMMUNITIES=${{ secrets.COMMON_API_ENDPOINT }}/communities \
+            --build-arg API_ENDPOINT_GADGETS=${{ secrets.COMMON_API_ENDPOINT }}/gadgets \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:latest front
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+      - name: (Frontend) Fill in the new image ID in the Amazon ECS task definition
+        id: task-def-with-front
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: deploy/front/task-definition.json
+          container-name: ga-prod-fargate-front
+          image: ${{ steps.build-frontend-image.outputs.image }}
+
+      - name: (Frontend) Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def-with-front.outputs.task-definition }}
+          service: ga-prod-fargate-front
+          cluster: ga-prod-fargate
+          wait-for-service-stability: true
+          codedeploy-appspec: deploy/front/appspec.yml
+          codedeploy-application: AppECS-ga-prod-fargate-ga-prod-fargate-front
+          codedeploy-deployment-group: DgpECS-ga-prod-fargate-ga-prod-fargate-front
