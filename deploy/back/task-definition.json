@@ -9,7 +9,7 @@
         "logDriver": "awslogs",
         "secretOptions": null,
         "options": {
-          "awslogs-group": "/ecs/ga-prod-fargate",
+          "awslogs-group": "/ecs/ga-prod-fargate-back",
           "awslogs-region": "ap-northeast-1",
           "awslogs-stream-prefix": "ecs"
         }
@@ -22,9 +22,7 @@
           "containerPort": 80
         }
       ],
-      "command": [
-        "/gadget-app/entrypoint.sh"
-      ],
+      "command": ["/gadget-app/back/entrypoint.sh"],
       "linuxParameters": null,
       "cpu": 0,
       "environment": [
@@ -48,6 +46,14 @@
       "workingDirectory": null,
       "secrets": [
         {
+          "valueFrom": "/ga-prod-fargate/aws-access-key-id",
+          "name": "AWS_ACCESS_KEY_ID"
+        },
+        {
+          "valueFrom": "/ga-prod-fargate/aws-secret-access-key",
+          "name": "AWS_SECRET_ACCESS_KEY"
+        },
+        {
           "valueFrom": "/ga-prod-fargate/db-host",
           "name": "DB_HOST"
         },
@@ -70,14 +76,6 @@
         {
           "valueFrom": "/ga-prod-fargate/rails-master-key",
           "name": "RAILS_MASTER_KEY"
-        },
-        {
-          "valueFrom": "/ga-prod-fargate/aws-access-key-id",
-          "name": "AWS_ACCESS_KEY_ID"
-        },
-        {
-          "valueFrom": "/ga-prod-fargate/aws-secret-access-key",
-          "name": "AWS_SECRET_ACCESS_KEY"
         }
       ],
       "dockerSecurityOptions": null,
@@ -101,18 +99,15 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "ga-prod-fargate"
+      "name": "ga-prod-fargate-back"
     }
   ],
   "placementConstraints": [],
   "memory": "512",
   "taskRoleArn": "arn:aws:iam::110618757106:role/ecsTaskExecutionRole",
-  "compatibilities": [
-    "EC2",
-    "FARGATE"
-  ],
-  "taskDefinitionArn": "arn:aws:ecs:ap-northeast-1:110618757106:task-definition/ga-prod-fargate:28",
-  "family": "ga-prod-fargate",
+  "compatibilities": ["EC2", "FARGATE"],
+  "taskDefinitionArn": "arn:aws:ecs:ap-northeast-1:110618757106:task-definition/ga-prod-fargate-back:5",
+  "family": "ga-prod-fargate-back",
   "requiresAttributes": [
     {
       "targetId": null,
@@ -170,16 +165,14 @@
     }
   ],
   "pidMode": null,
-  "requiresCompatibilities": [
-    "FARGATE"
-  ],
+  "requiresCompatibilities": ["FARGATE"],
   "networkMode": "awsvpc",
   "runtimePlatform": {
     "operatingSystemFamily": "LINUX",
     "cpuArchitecture": null
   },
   "cpu": "256",
-  "revision": 28,
+  "revision": 5,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,

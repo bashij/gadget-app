@@ -12,8 +12,6 @@ import CommentDelete from '@/components/commentDelete'
 import CommentForm from '@/components/commentForm'
 import ReplyComment from '@/components/replyComment'
 
-
-
 export default function Comment(props) {
   const relatedReplies = props.replies?.filter((reply) => reply.parent_id === props.comment.id)
 
@@ -44,9 +42,9 @@ export default function Comment(props) {
           <div className='user-info'>
             <Image
               src={
-                props.comment.user.image.url == 'default.jpg'
+                props.comment.user.image.url === 'default.jpg'
                   ? '/images/default.jpg'
-                  : `https://static.gadgetlink-app.com${props.comment.user.image.url}`
+                  : props.comment.user.image.url
               }
               width={150}
               height={150}

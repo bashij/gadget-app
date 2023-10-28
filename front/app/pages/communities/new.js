@@ -21,8 +21,10 @@ export default function New(props) {
   })
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
+    const { name, value, files } = e.target
+    e.target.name === 'image'
+      ? setFormData({ ...formData, [name]: files[0] })
+      : setFormData({ ...formData, [name]: value })
   }
 
   const router = useRouter()
@@ -36,7 +38,12 @@ export default function New(props) {
       const response = await apiClient.post(
         API_ENDPOINT,
         { community: formData },
-        { withCredentials: true },
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
       )
       const resMessage = await response.data.message
       const resStatus = await response.data.status
@@ -135,7 +142,7 @@ export default function New(props) {
                   className='form-control'
                   name='image'
                   onChange={handleChange}
-                  value={formData.image.url}
+                  value={formData.image?.url}
                   id='image'
                 />
               </div>

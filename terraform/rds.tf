@@ -38,6 +38,8 @@ resource "aws_db_instance" "db01" {
   storage_type                          = "gp2"
   skip_final_snapshot                   = "true"
 
+  timeouts {}
+
   tags = {
     Environment = "prod"
   }

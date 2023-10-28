@@ -38,7 +38,7 @@ resource "aws_lb" "alb" {
 ####################
 # ALB target group
 ####################
-resource "aws_lb_target_group" "fargate01" {
+resource "aws_lb_target_group" "fargate_front1" {
   deregistration_delay = "300"
 
   health_check {
@@ -46,7 +46,7 @@ resource "aws_lb_target_group" "fargate01" {
     healthy_threshold   = "5"
     interval            = "30"
     matcher             = "200"
-    path                = "/api/health_check"
+    path                = "/"
     port                = "traffic-port"
     protocol            = "HTTP"
     timeout             = "5"
@@ -55,7 +55,7 @@ resource "aws_lb_target_group" "fargate01" {
 
   ip_address_type               = "ipv4"
   load_balancing_algorithm_type = "round_robin"
-  name                          = "ga-prod-alb-group-fargate01"
+  name                          = "ga-prod-alb-group-fargate-front1"
   port                          = "80"
   protocol                      = "HTTP"
   protocol_version              = "HTTP1"
@@ -79,7 +79,7 @@ resource "aws_lb_target_group" "fargate01" {
   vpc_id      = aws_vpc.prod.id
 }
 
-resource "aws_lb_target_group" "fargate02" {
+resource "aws_lb_target_group" "fargate_front2" {
   deregistration_delay = "300"
 
   health_check {
@@ -87,7 +87,7 @@ resource "aws_lb_target_group" "fargate02" {
     healthy_threshold   = "5"
     interval            = "30"
     matcher             = "200"
-    path                = "/api/health_check"
+    path                = "/"
     port                = "traffic-port"
     protocol            = "HTTP"
     timeout             = "5"
@@ -96,7 +96,89 @@ resource "aws_lb_target_group" "fargate02" {
 
   ip_address_type               = "ipv4"
   load_balancing_algorithm_type = "round_robin"
-  name                          = "ga-prod-alb-group-fargate02"
+  name                          = "ga-prod-alb-group-fargate-front2"
+  port                          = "80"
+  protocol                      = "HTTP"
+  protocol_version              = "HTTP1"
+  slow_start                    = "0"
+
+  stickiness {
+    cookie_duration = "86400"
+    enabled         = "false"
+    type            = "lb_cookie"
+  }
+
+  tags = {
+    Environment = "prod"
+  }
+
+  tags_all = {
+    Environment = "prod"
+  }
+
+  target_type = "ip"
+  vpc_id      = aws_vpc.prod.id
+}
+
+resource "aws_lb_target_group" "fargate_back1" {
+  deregistration_delay = "300"
+
+  health_check {
+    enabled             = "true"
+    healthy_threshold   = "5"
+    interval            = "30"
+    matcher             = "200"
+    path                = "/api/v1/check"
+    port                = "traffic-port"
+    protocol            = "HTTP"
+    timeout             = "5"
+    unhealthy_threshold = "2"
+  }
+
+  ip_address_type               = "ipv4"
+  load_balancing_algorithm_type = "round_robin"
+  name                          = "ga-prod-alb-group-fargate-back1"
+  port                          = "80"
+  protocol                      = "HTTP"
+  protocol_version              = "HTTP1"
+  slow_start                    = "0"
+
+  stickiness {
+    cookie_duration = "86400"
+    enabled         = "false"
+    type            = "lb_cookie"
+  }
+
+  tags = {
+    Environment = "prod"
+  }
+
+  tags_all = {
+    Environment = "prod"
+  }
+
+  target_type = "ip"
+  vpc_id      = aws_vpc.prod.id
+}
+
+resource "aws_lb_target_group" "fargate_back2" {
+  deregistration_delay = "300"
+
+  health_check {
+    enabled             = "true"
+    healthy_threshold   = "5"
+    interval            = "30"
+    matcher             = "200"
+    path                = "/api/v1/check"
+    port                = "traffic-port"
+    protocol            = "HTTP"
+    timeout             = "5"
+    unhealthy_threshold = "2"
+  }
+
+  ip_address_type               = "ipv4"
+  load_balancing_algorithm_type = "round_robin"
+  name                          = "ga-prod-alb-group-fargate-back2"
   port                          = "80"
   protocol                      = "HTTP"
   protocol_version              = "HTTP1"
@@ -123,7 +205,7 @@ resource "aws_lb_target_group" "fargate02" {
 ####################
 # ALB listener
 ####################
-resource "aws_lb_listener" "prod" {
+resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.alb.id
   port              = "443"
   protocol          = "HTTPS"
@@ -132,20 +214,99 @@ resource "aws_lb_listener" "prod" {
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.fargate01.arn
+    target_group_arn = aws_lb_target_group.fargate_front1.arn
   }
 }
 
-resource "aws_lb_listener_rule" "prod" {
-  listener_arn = aws_lb_listener.prod.arn
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.alb.id
+  port              = "80"
+  protocol          = "HTTP"
+  ssl_policy        = ""
+  certificate_arn   = ""
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
+####################
+# ALB listener rule
+####################
+resource "aws_lb_listener_rule" "https_front" {
+  listener_arn = aws_lb_listener.https.arn
+  priority     = 1
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.fargate_front1.arn
+  }
+
+  condition {
+    host_header {
+      values = ["www.gadgetlink-app.com"]
+    }
+  }
+
+  tags = {
+    Name = "front"
+  }
+
+}
+
+resource "aws_lb_listener_rule" "https_back" {
+  listener_arn = aws_lb_listener.https.arn
+  priority     = 2
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.fargate_back1.arn
+  }
+
+  condition {
+    host_header {
+      values = ["back.gadgetlink-app.com"]
+    }
+  }
+
+  tags = {
+    Name = "back"
+  }
+}
+
+resource "aws_lb_listener_rule" "https_default" {
+  listener_arn = aws_lb_listener.https.arn
   priority     = 99999
 
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.fargate01.arn
+    target_group_arn = aws_lb_target_group.fargate_front1.arn
   }
 
   condition {
   }
 }
 
+resource "aws_lb_listener_rule" "redirect_http_to_https" {
+  listener_arn = aws_lb_listener.http.arn
+  priority     = 99999
+
+  action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+
+  condition {
+  }
+}

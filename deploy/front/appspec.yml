@@ -1,0 +1,9 @@
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "deploy/front-task-definition.json"
+        LoadBalancerInfo:
+          ContainerName: "ga-prod-fargate-front"
+          ContainerPort: 3000

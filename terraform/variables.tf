@@ -46,3 +46,11 @@ variable "cname02_name" {
 variable "cname02_record" {
   description = "Route 53 cname02 record"
 }
+
+variable "cname03_name" {
+  description = "Route 53 cname03 name"
+}
+
+variable "cname03_record" {
+  description = "Route 53 cname03 record"
+}

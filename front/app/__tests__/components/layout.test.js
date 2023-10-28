@@ -13,7 +13,7 @@ const props = {
     id: 1,
     name: 'user_name_test1',
     email: 'email_test1@gmail.com',
-    image: { url: null },
+    image: { url: 'default.jpg' },
   },
 }
 

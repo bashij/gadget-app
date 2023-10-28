@@ -55,9 +55,9 @@ export default function GadgetDetail(props) {
             <p className='overflow'>
               <Image
                 src={
-                  props.gadget.user.image.url == 'default.jpg'
+                  props.gadget.user.image.url === 'default.jpg'
                     ? '/images/default.jpg'
-                    : `https://static.gadgetlink-app.com${props.gadget.user.image.url}`
+                    : props.gadget.user.image.url
                 }
                 width={50}
                 height={50}

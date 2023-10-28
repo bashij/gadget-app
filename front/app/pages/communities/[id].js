@@ -115,9 +115,9 @@ export default function Community(props) {
                   <div>
                     <Image
                       src={
-                        props.community.image.url == 'default.jpg'
+                        props.community.image.url === 'default.jpg'
                           ? '/images/default.jpg'
-                          : `https://static.gadgetlink-app.com${props.community.image.url}`
+                          : props.community.image.url
                       }
                       width={150}
                       height={150}

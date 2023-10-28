@@ -41,15 +41,6 @@ Layout/IndentationConsistency:
   Exclude:
     - "app/controllers/api/v1/*"
 
-# HealthCheck用のため例外を許可
-Style/ClassAndModuleChildren:
-  Exclude:
-    - "app/controllers/api/health_check_controller.rb"
-
-Rails/HttpStatus:
-  Exclude:
-    - "app/controllers/api/health_check_controller.rb"
-
 # ユーザーパスワードとパスワード確認のバリデーションをスキップする必要があるため、update_attributeの使用を許可
 Rails/SkipsModelValidations:
   Exclude:

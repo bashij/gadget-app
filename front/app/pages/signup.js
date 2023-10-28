@@ -25,8 +25,10 @@ export default function Signup() {
   })
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
+    const { name, value, files } = e.target
+    e.target.name === 'image'
+      ? setFormData({ ...formData, [name]: files[0] })
+      : setFormData({ ...formData, [name]: value })
   }
 
   const [message, setMessage] = useState([])
@@ -40,7 +42,12 @@ export default function Signup() {
       const response = await apiClient.post(
         API_ENDPOINT,
         { user: formData },
-        { withCredentials: true },
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
       )
 
       const resMessage = await response.data.message
@@ -168,7 +175,7 @@ export default function Signup() {
                 className='form-control'
                 name='image'
                 onChange={handleChange}
-                value={formData.image}
+                value={formData.image?.url}
                 id='image'
               />
             </div>

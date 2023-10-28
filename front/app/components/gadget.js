@@ -19,9 +19,9 @@ export default function Gadget(props) {
       <div className='gadget-image'>
         <Image
           src={
-            props.gadget.image.url == 'default.jpg'
+            props.gadget.image.url === 'default.jpg'
               ? '/images/default.jpg'
-              : `https://static.gadgetlink-app.com${props.gadget.image.url}`
+              : props.gadget.image.url
           }
           width={150}
           height={150}
