@@ -8,6 +8,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { toast, ToastContainer } from 'react-toastify'
 
+import GuestLogin from '@/components/guestLogin'
 import Layout, { siteTitle } from '@/components/layout'
 import apiClient from '@/utils/apiClient'
 
@@ -24,6 +25,20 @@ export default function Home(props) {
 
     if (status === 'success') {
       // 成功メッセージを表示
+      toast.success(`${message}`.replace(/,/g, '\n'), {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        className: 'toast-message',
+      })
+    }
+
+    if (status === 'justLoggedOut') {
+      // ログアウト時のメッセージを表示
       toast.success(`${message}`.replace(/,/g, '\n'), {
         position: 'top-center',
         autoClose: 2000,
@@ -87,10 +102,8 @@ export default function Home(props) {
                   新規登録
                 </Link>
               </div>
-              <div className='guest-link'>
-                <Link href='' className=''>
-                  ゲストログイン
-                </Link>
+              <div className='guest-btn-area'>
+                <GuestLogin />
               </div>
             </div>
           </div>

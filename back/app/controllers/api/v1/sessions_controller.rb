@@ -24,6 +24,20 @@ module Api
         # ログイン中のユーザー情報を返す
         render json: { user: current_user }
       end
+
+      def guest_login
+        # ランダムに取得したサンプルユーザーでログイン
+        user = User.where('email REGEXP ?', '^sample\d+@example.com$').sample
+        if user && user.authenticate('password')
+          user.update(name: "#{user.name}（ゲスト）") if user.name.exclude?('（ゲスト）')
+          log_in user
+          message = [I18n.t('sessions.guest_login.flash.success')]
+          render json: { status: 'success', message: message }
+        else
+          message = [I18n.t('sessions.guest_login.flash.danger')]
+          render json: { status: 'failure', message: message }
+        end
+      end
     end
   end
 end

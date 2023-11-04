@@ -65,6 +65,10 @@ ja:
     destroy:
       flash:
         success: "ログアウトしました"
+    guest_login:
+      flash:
+        success: "ゲストユーザーとしてログインしました"
+        danger: "現在ゲストログインはご利用いただけません。通常ログインまたは新規登録をご利用ください。"
     flash:
       danger: "ログインしてください"
   communities:
@@ -104,6 +108,8 @@ ja:
     destroy:
       flash:
         success: "退会処理が完了しました。ご利用ありがとうございました。"
+    other:
+      guest_user: "ゲストユーザーの編集・削除はできません"
   relationships:
     create:
       flash:

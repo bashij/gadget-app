@@ -329,6 +329,13 @@ body {
       }
     }
   }
+  .btn {
+    border-radius: 30px;
+    margin: 0 3px 0 3px;
+    @media screen and (max-width: 480px) {
+      font-size: 0.8rem;
+    }
+  }
   .btn-area {
     margin-top: 40px;
     margin-bottom: 15px;
@@ -342,15 +349,8 @@ body {
       margin-top: 100px;
       margin-bottom: 5px;
     }
-    .btn {
-      border-radius: 30px;
-      margin: 0 3px 0 3px;
-      @media screen and (max-width: 480px) {
-        font-size: 0.8rem;
-      }
-    }
   }
-  .guest-link {
+  .guest-btn-area {
     display: inline-block;
     margin-top: 5px;
     font-size: 1.2rem;
