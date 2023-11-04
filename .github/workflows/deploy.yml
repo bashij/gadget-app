@@ -82,6 +82,7 @@ jobs:
             --build-arg NEXT_PUBLIC_API_ENDPOINT_TWEETS=${{ secrets.COMMON_API_ENDPOINT }}/tweets \
             --build-arg NEXT_PUBLIC_API_ENDPOINT_COMMUNITIES=${{ secrets.COMMON_API_ENDPOINT }}/communities \
             --build-arg NEXT_PUBLIC_API_ENDPOINT_GADGETS=${{ secrets.COMMON_API_ENDPOINT }}/gadgets \
+            --build-arg NEXT_PUBLIC_API_ENDPOINT_GUEST=${{ secrets.COMMON_API_ENDPOINT }}/guest_login \
             --build-arg API_ENDPOINT_CHECK_SESSION=${{ secrets.COMMON_API_ENDPOINT }}/check \
             --build-arg API_ENDPOINT_USERS=${{ secrets.COMMON_API_ENDPOINT }}/users \
             --build-arg API_ENDPOINT_COMMUNITIES=${{ secrets.COMMON_API_ENDPOINT }}/communities \
