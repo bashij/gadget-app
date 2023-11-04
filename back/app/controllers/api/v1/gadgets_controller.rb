@@ -102,7 +102,7 @@ module Api
 
         def correct_user
           @gadget = current_user.gadgets.find_by(id: params[:id])
-          render json: { status: 'failure', message: ['この操作は実行できません'] } if @gadget.nil?
+          render json: { status: 'failure', message: [I18n.t('common.correct_user')] } if @gadget.nil?
         end
     end
   end

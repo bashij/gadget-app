@@ -118,6 +118,8 @@ ja:
     destroy:
       flash:
         success: "投稿を削除しました"
+  common:
+    correct_user: "この操作は実行できません"
   date:
     abbr_day_names:
       - 日

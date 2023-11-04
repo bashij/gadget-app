@@ -25,7 +25,7 @@ module Api
 
         def correct_user
           @like = current_user.tweet_likes.find_by(tweet_id: params[:tweet_id])
-          render json: { status: 'failure', message: ['この操作は実行できません'] } if @like.nil?
+          render json: { status: 'failure', message: [I18n.t('common.correct_user')] } if @like.nil?
         end
     end
   end

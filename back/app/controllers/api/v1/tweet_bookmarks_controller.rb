@@ -25,7 +25,7 @@ module Api
 
         def correct_user
           @bookmark = current_user.tweet_bookmarks.find_by(tweet_id: params[:tweet_id])
-          render json: { status: 'failure', message: ['この操作は実行できません'] } if @bookmark.nil?
+          render json: { status: 'failure', message: [I18n.t('common.correct_user')] } if @bookmark.nil?
         end
     end
   end

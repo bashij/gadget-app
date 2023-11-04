@@ -93,7 +93,7 @@ module Api
         # 正しいユーザーかどうか確認
         def correct_user
           @user = User.find(params[:id])
-          render json: { status: 'failure', message: ['この操作は実行できません'] } unless current_user?(@user)
+          render json: { status: 'failure', message: [I18n.t('common.correct_user')] } unless current_user?(@user)
         end
     end
   end

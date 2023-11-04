@@ -122,7 +122,7 @@ module Api
 
         def correct_user
           @tweet = current_user.tweets.find_by(id: params[:id])
-          render json: { status: 'failure', message: ['この操作は実行できません'] } if @tweet.nil?
+          render json: { status: 'failure', message: [I18n.t('common.correct_user')] } if @tweet.nil?
         end
     end
   end
