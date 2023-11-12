@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Sessions', type: :request do
   let(:user) { create(:user) }
   let(:unregistered_user) { build(:user) }
+  let(:guest_user) { create(:user, email: 'sample1@example.com') }
 
   describe 'POST #create' do
     context '存在するユーザー' do
@@ -58,6 +59,31 @@ RSpec.describe 'Sessions', type: :request do
 
       expect(response).to have_http_status :ok
       expect(json['user']['name']).to eq(user.name)
+    end
+  end
+
+  describe 'POST #guest_login' do
+    context 'ゲストユーザーとして利用可能なサンプルユーザーが存在する場合' do
+      specify 'ログインが成功する' do
+        guest_user
+        post '/api/v1/guest_login'
+        json = JSON.parse(response.body)
+
+        expect(response).to have_http_status :ok
+        expect(json['status']).to eq('success')
+        expect(json['message']).to eq(['ゲストユーザーとしてログインしました'])
+      end
+    end
+
+    context 'ゲストユーザーとして利用可能なサンプルユーザーが存在しない場合' do
+      specify 'ログインが失敗する' do
+        post '/api/v1/guest_login'
+        json = JSON.parse(response.body)
+
+        expect(response).to have_http_status :ok
+        expect(json['status']).to eq('failure')
+        expect(json['message']).to eq(['現在ゲストログインはご利用いただけません。通常ログインまたは新規登録をご利用ください。'])
+      end
     end
   end
 end
