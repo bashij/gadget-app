@@ -10,7 +10,7 @@ jest.mock('next/router', () => ({
 }))
 
 describe('Home', () => {
-  it('ヘッダーが表示されている', () => {
+  test('ヘッダーが表示されている', () => {
     render(<Home />)
 
     const heading = screen.getByRole('heading', { name: 'GadgetLink' })
@@ -18,13 +18,15 @@ describe('Home', () => {
     expect(heading).toBeInTheDocument()
   })
 
-  it('各ボタンが適切なタグで表示されている', () => {
+  test('各ボタンが適切なタグで表示されている', () => {
     render(<Home />)
 
     const link1 = screen.getByRole('link', { name: 'ログイン' })
     const link2 = screen.getByRole('link', { name: '新規登録' })
-
     expect(link1).toBeInTheDocument()
     expect(link2).toBeInTheDocument()
+
+    const button1 = screen.getByRole('button', { name: 'ゲストログイン' })
+    expect(button1).toBeInTheDocument()
   })
 })

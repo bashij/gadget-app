@@ -70,4 +70,11 @@ describe('Login', () => {
       )
     })
   })
+
+  test('ゲストログインボタンが適切なタグで表示されている', () => {
+    render(<Login />)
+
+    const button1 = screen.getByRole('button', { name: 'ゲストログイン' })
+    expect(button1).toBeInTheDocument()
+  })
 })
