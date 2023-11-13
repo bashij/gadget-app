@@ -8,6 +8,7 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { toast, ToastContainer } from 'react-toastify'
 
+import GuestLogin from '@/components/guestLogin'
 import Layout, { siteTitle } from '@/components/layout'
 import apiClient from '@/utils/apiClient'
 
@@ -154,11 +155,12 @@ export default function Login() {
                 <span className='ps-1'>次回から入力を省略</span>
               </div>
               <div className='text-center m-4'>
-                <p>
-                  <input type='submit' name='commit' value='ログイン' className='btn btn-create' />
-                </p>
+                <input type='submit' name='commit' value='ログイン' className='btn btn-create' />
               </div>
             </form>
+            <div className='text-center'>
+              <GuestLogin />
+            </div>
             <div className='new-page-link'>
               <Link href='signup'>
                 <p>

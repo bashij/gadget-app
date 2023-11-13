@@ -69,7 +69,7 @@ module Api
 
         def correct_user
           @community = current_user.communities.find_by(id: params[:id])
-          render json: { status: 'failure', message: ['この操作は実行できません'] } if @community.nil?
+          render json: { status: 'failure', message: [I18n.t('common.correct_user')] } if @community.nil?
         end
     end
   end

@@ -59,7 +59,7 @@ module Api
 
         def correct_user
           @comment = current_user.comments.find_by(id: params[:id])
-          render json: { status: 'failure', message: ['この操作は実行できません'] } if @comment.nil?
+          render json: { status: 'failure', message: [I18n.t('common.correct_user')] } if @comment.nil?
         end
     end
   end

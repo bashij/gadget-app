@@ -38,7 +38,7 @@ module Api
 
         def correct_user
           @membership = current_user.memberships.find_by(community_id: params[:community_id])
-          render json: { status: 'failure', message: ['この操作は実行できません'] } if @membership.nil?
+          render json: { status: 'failure', message: [I18n.t('common.correct_user')] } if @membership.nil?
         end
     end
   end

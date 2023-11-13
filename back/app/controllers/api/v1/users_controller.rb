@@ -3,6 +3,7 @@ module Api
     class UsersController < ApplicationController
       before_action :logged_in_user, only: %i[update destroy]
       before_action :correct_user,   only: %i[update destroy]
+      before_action :guest_user,     only: %i[update destroy]
 
       def index
         # 全てのユーザー情報
@@ -93,7 +94,15 @@ module Api
         # 正しいユーザーかどうか確認
         def correct_user
           @user = User.find(params[:id])
-          render json: { status: 'failure', message: ['この操作は実行できません'] } unless current_user?(@user)
+          render json: { status: 'failure', message: [I18n.t('common.correct_user')] } unless current_user?(@user)
+        end
+
+        # ゲストユーザーかどうか確認
+        def guest_user
+          @user = User.find(params[:id])
+          return unless @user.email.match?(/^sample\d+@example\.com$/)
+
+          render json: { status: 'failure', message: [I18n.t('users.other.guest_user')] }
         end
     end
   end

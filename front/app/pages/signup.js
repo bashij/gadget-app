@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 
 import { toast, ToastContainer } from 'react-toastify'
 
+import GuestLogin from '@/components/guestLogin'
 import Layout, { siteTitle } from '@/components/layout'
 import apiClient from '@/utils/apiClient'
 
@@ -210,11 +211,12 @@ export default function Signup() {
               />
             </div>
             <div className='text-center m-4'>
-              <p>
-                <input type='submit' name='commit' value='登録する' className='btn btn-create' />
-              </p>
+              <input type='submit' name='commit' value='登録する' className='btn btn-create' />
             </div>
           </form>
+          <div className='text-center'>
+            <GuestLogin />
+          </div>
         </div>
       </div>
     </Layout>

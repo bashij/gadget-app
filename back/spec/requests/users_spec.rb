@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Users', type: :request do
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
+  let(:guest_user) { create(:user, email: 'sample1@example.com') }
 
   describe 'GET #index' do
     before do
@@ -172,6 +173,24 @@ RSpec.describe 'Users', type: :request do
         end
       end
     end
+
+    context 'ゲストユーザーでログインしている状態' do
+      before do
+        session_params = { email: guest_user.email, password: guest_user.password, remember_me: 0 }
+        post '/api/v1/login', params: { session: session_params }
+      end
+
+      context '失敗の場合' do
+        specify '操作失敗の情報を返す' do
+          delete "/api/v1/users/#{guest_user.id}"
+          json = JSON.parse(response.body)
+
+          expect(response).to have_http_status :ok
+          expect(json['status']).to eq('failure')
+          expect(json['message']).to eq(['ゲストユーザーの編集・削除はできません'])
+        end
+      end
+    end
   end
 
   describe 'PATCH #update' do
@@ -228,6 +247,24 @@ RSpec.describe 'Users', type: :request do
           expect(response).to have_http_status :ok
           expect(json['status']).to eq('failure')
           expect(json['message']).to eq(['この操作は実行できません'])
+        end
+      end
+    end
+
+    context 'ゲストユーザーでログインしている状態' do
+      before do
+        session_params = { email: guest_user.email, password: guest_user.password, remember_me: 0 }
+        post '/api/v1/login', params: { session: session_params }
+      end
+
+      context '失敗の場合' do
+        specify '操作失敗の情報を返す' do
+          patch "/api/v1/users/#{guest_user.id}"
+          json = JSON.parse(response.body)
+
+          expect(response).to have_http_status :ok
+          expect(json['status']).to eq('failure')
+          expect(json['message']).to eq(['ゲストユーザーの編集・削除はできません'])
         end
       end
     end
