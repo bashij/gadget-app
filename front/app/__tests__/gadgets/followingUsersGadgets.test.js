@@ -60,7 +60,7 @@ describe('FollowingUsersGadgets', () => {
       const contentHeader3 = screen.getAllByText('型番')
       const contentHeader4 = screen.getAllByText('メーカー')
       const contentHeader5 = screen.getAllByText('価格')
-      const contentHeader6 = screen.getAllByText('その他情報')
+      const contentHeader6 = screen.getAllByText('その他スペック')
       const contentHeader7 = screen.getAllByText('投稿者')
       const contentHeader8 = screen.getAllByText('最終更新')
       expect(contentHeader1).toHaveLength(5)

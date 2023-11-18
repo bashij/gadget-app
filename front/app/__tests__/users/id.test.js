@@ -133,7 +133,7 @@ describe('User', () => {
       expect(screen.getAllByText('型番')).toHaveLength(5)
       expect(screen.getAllByText('メーカー')).toHaveLength(5)
       expect(screen.getAllByText('価格')).toHaveLength(5)
-      expect(screen.getAllByText('その他情報')).toHaveLength(5)
+      expect(screen.getAllByText('その他スペック')).toHaveLength(5)
       expect(screen.getAllByText('投稿者')).toHaveLength(5)
       expect(screen.getAllByText('最終更新')).toHaveLength(5)
 
@@ -404,7 +404,7 @@ describe('User', () => {
       expect(screen.getAllByText('型番')).toHaveLength(10)
       expect(screen.getAllByText('メーカー')).toHaveLength(10)
       expect(screen.getAllByText('価格')).toHaveLength(10)
-      expect(screen.getAllByText('その他情報')).toHaveLength(10)
+      expect(screen.getAllByText('その他スペック')).toHaveLength(10)
       expect(screen.getAllByText('投稿者')).toHaveLength(10)
       expect(screen.getAllByText('最終更新')).toHaveLength(10)
 
@@ -449,7 +449,7 @@ describe('User', () => {
       expect(screen.getAllByText('型番')).toHaveLength(10)
       expect(screen.getAllByText('メーカー')).toHaveLength(10)
       expect(screen.getAllByText('価格')).toHaveLength(10)
-      expect(screen.getAllByText('その他情報')).toHaveLength(10)
+      expect(screen.getAllByText('その他スペック')).toHaveLength(10)
       expect(screen.getAllByText('投稿者')).toHaveLength(10)
       expect(screen.getAllByText('最終更新')).toHaveLength(10)
 

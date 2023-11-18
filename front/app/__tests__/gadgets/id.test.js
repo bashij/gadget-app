@@ -119,7 +119,7 @@ describe('Gadget', () => {
     expect(screen.getByText('型番')).toBeInTheDocument()
     expect(screen.getByText('メーカー')).toBeInTheDocument()
     expect(screen.getByText('価格')).toBeInTheDocument()
-    expect(screen.getByText('その他情報')).toBeInTheDocument()
+    expect(screen.getByText('その他スペック')).toBeInTheDocument()
     expect(screen.getByText('投稿者')).toBeInTheDocument()
     expect(screen.getByText('最終更新')).toBeInTheDocument()
     // コンテンツ
