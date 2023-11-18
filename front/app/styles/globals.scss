@@ -805,7 +805,41 @@ body {
       font-size: 0.92rem;
       .link-section {
         width: 50%;
+        display: inline-block;
       }
+    }
+  }
+}
+
+.search-icon {
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  margin: 0.25rem 0 0.25rem 0;
+  font-size: 1.25rem;
+  color: $color_theme7;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.search-area {
+  justify-content: center;
+  transition: height 0.3s ease;
+  overflow: hidden;
+  .search-price-area {
+    display: inline-flex;
+    width: 100%;
+    .price-form {
+      width: 35%;
+    }
+    .price-range {
+      width: 30%;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

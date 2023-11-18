@@ -10,6 +10,7 @@ import { toast, ToastContainer } from 'react-toastify'
 import useSWR from 'swr'
 
 import Gadget from '@/components/gadget'
+import GadgetSearch from '@/components/gadgetSearch'
 import Layout, { siteTitle } from '@/components/layout'
 import Pagination from '@/components/pagination'
 import apiClient from '@/utils/apiClient'
@@ -21,9 +22,22 @@ const fetcher = (url) => fetch(url).then((r) => r.json())
 export default function FollowingUsersGadgets(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
   const [pageIndex, setPageIndex] = useState(1)
+  const [filters, setFilters] = useState({
+    name: '',
+    category: '',
+    model_number: '',
+    manufacturer: '',
+    price_minimum: '',
+    price_maximum: '',
+    other_info: '',
+    review: '',
+    sort_condition: '',
+  })
   const { data, error, isLoading } = useSWR(
     props.user
-      ? `${API_ENDPOINT}/${props.user.id}/following_users_gadgets?paged=${pageIndex}`
+      ? `${API_ENDPOINT}/${
+          props.user.id
+        }/following_users_gadgets?paged=${pageIndex}&${new URLSearchParams(filters)}`
       : null,
     fetcher,
     {
@@ -95,6 +109,13 @@ export default function FollowingUsersGadgets(props) {
                 フォロー中のみ表示
               </Link>
             </div>
+            <GadgetSearch
+              filters={filters}
+              setFilters={setFilters}
+              isLoading={isLoading}
+              searchResultCount={data?.searchResultCount}
+              setPageIndex={setPageIndex}
+            />
             <div id='feed_gadget'>
               <div id='gadgets' className='gadgets'>
                 {data?.gadgets?.map((gadget) => {
