@@ -55,6 +55,11 @@ Style/MultilineTernaryOperator:
   Exclude:
     - "app/models/user.rb"
 
+# 可読性を重視し、冗長な代入を許可
+Style/RedundantAssignment:
+  Exclude:
+    - "app/models/gadget.rb"
+
 # Session関連
 # 可読性・汎用性を重視し許可
 Style/SafeNavigation:
@@ -66,10 +71,11 @@ Rails/HelperInstanceVariable:
   Exclude:
     - "app/helpers/sessions_helper.rb"
 
-# Abc Sizeがデフォルト値以上のcontrollerを例外として許可（デフォルトAbc Size:15）
+# Abc Sizeがデフォルト値以上のcontrollerと一部modelを例外として許可（デフォルトAbc Size:15）
 Metrics/AbcSize:
   Exclude:
     - "app/controllers/api/v1/*"
+    - "app/models/gadget.rb"
 
 # bullet設定のため行数制限の対象外とする（デフォルト制限行数：25行/ブロック）
 # テストは行数規定を除外
@@ -80,10 +86,11 @@ Metrics/BlockLength:
     - "spec/requests/*"
     - "spec/spec_helper.rb"
 
-# コントローラと一部ヘルパーはメソッド行数が11行以上でも許可する
+# コントローラと一部モデル、ヘルパーはメソッド行数が11行以上でも許可する
 Metrics/MethodLength:
   Exclude:
     - "app/controllers/api/v1/*"
+    - "app/models/gadget.rb"
     - "spec/spec_helper.rb"
 
 # 一部コントローラは規定値以上の行数を許可する（デフォルト制限行数：100行）
@@ -160,6 +167,7 @@ RSpec/NestedGroups:
 RSpec/InstanceVariable:
   Exclude:
     - "spec/requests/gadgets_spec.rb"
+    - "spec/requests/gadgets_filter_spec.rb"
     - "spec/requests/tweets_spec.rb"
     - "spec/requests/users_spec.rb"
     - "spec/requests/communities_spec.rb"

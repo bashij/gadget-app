@@ -5,15 +5,15 @@ module Api
       before_action :correct_user,   only: %i[update destroy]
 
       def index
-        # 全てのガジェット情報
-        @gadgets = Gadget.all.order(created_at: :desc)
+        # 全てのガジェット情報(検索条件があれば一致するもののみ)
+        @gadgets = Gadget.filter_by(params)
         # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
         paged = params[:paged]
         per = params[:per].presence || 5
         @gadgets_paginated = @gadgets.page(paged).per(per)
         @pagination = pagination(@gadgets_paginated)
 
-        render json: { gadgets: @gadgets_paginated, pagination: @pagination },
+        render json: { gadgets: @gadgets_paginated, pagination: @pagination, searchResultCount: @gadgets.count },
                include: %i[user gadget_likes gadget_bookmarks review_requests]
       end
 
@@ -46,16 +46,16 @@ module Api
       end
 
       def following_users_gadgets
-        # ログインユーザーがフォローしているユーザーのガジェット情報
+        # ログインユーザーがフォローしているユーザーのガジェット情報(検索条件があれば一致するもののみ)
         user = User.find(params[:id])
-        @gadgets = user.following_users_gadgets
+        @gadgets = user.following_users_gadgets(params)
         # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
         paged = params[:paged]
         per = params[:per].presence || 5
         @gadgets_paginated = @gadgets.page(paged).per(per)
         @pagination = pagination(@gadgets_paginated)
 
-        render json: { gadgets: @gadgets_paginated, pagination: @pagination },
+        render json: { gadgets: @gadgets_paginated, pagination: @pagination, searchResultCount: @gadgets.count },
                include: %i[user gadget_likes gadget_bookmarks review_requests]
       end
 

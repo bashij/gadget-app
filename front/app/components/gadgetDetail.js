@@ -44,7 +44,7 @@ export default function GadgetDetail(props) {
           </td>
         </tr>
         <tr>
-          <th>その他情報</th>
+          <th>その他スペック</th>
           <td>
             <p className='overflow'>{props.gadget.other_info}</p>
           </td>

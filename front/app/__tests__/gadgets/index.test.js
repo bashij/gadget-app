@@ -50,12 +50,12 @@ describe('Gadgets', () => {
       expect(link2).toBeInTheDocument()
 
       // ガジェット一覧が正常に表示されていることを確認 ヘッダー
-      expect(screen.getAllByText('ガジェット名')).toHaveLength(5)
-      expect(screen.getAllByText('カテゴリ')).toHaveLength(5)
-      expect(screen.getAllByText('型番')).toHaveLength(5)
-      expect(screen.getAllByText('メーカー')).toHaveLength(5)
-      expect(screen.getAllByText('価格')).toHaveLength(5)
-      expect(screen.getAllByText('その他情報')).toHaveLength(5)
+      expect(screen.getAllByText('ガジェット名')).toHaveLength(6)
+      expect(screen.getAllByText('カテゴリ')).toHaveLength(6)
+      expect(screen.getAllByText('型番')).toHaveLength(6)
+      expect(screen.getAllByText('メーカー')).toHaveLength(6)
+      expect(screen.getAllByText('価格')).toHaveLength(6)
+      expect(screen.getAllByText('その他スペック')).toHaveLength(6)
       expect(screen.getAllByText('投稿者')).toHaveLength(5)
       expect(screen.getAllByText('最終更新')).toHaveLength(5)
     })
@@ -63,7 +63,7 @@ describe('Gadgets', () => {
     // ガジェット一覧が正常に表示されていることを確認 コンテンツ
     // 最初のガジェット
     expect(screen.getByText('gadget_name_test1')).toBeInTheDocument()
-    expect(screen.getByText('オーディオ')).toBeInTheDocument()
+    expect(screen.getAllByText('オーディオ')).toHaveLength(2) // 検索フォームの選択肢を含めて2箇所
     expect(screen.getByText('model_number_test1')).toBeInTheDocument()
     expect(screen.getByText('manufacturer_test1')).toBeInTheDocument()
     expect(screen.getByText('¥11,111')).toBeInTheDocument()
@@ -73,12 +73,28 @@ describe('Gadgets', () => {
 
     //最後のガジェット
     expect(screen.getByText('gadget_name_test5')).toBeInTheDocument()
-    expect(screen.getByText('モニター')).toBeInTheDocument()
+    expect(screen.getAllByText('モニター')).toHaveLength(2) // 検索フォームの選択肢を含めて2箇所
     expect(screen.getByText('model_number_test5')).toBeInTheDocument()
     expect(screen.getByText('manufacturer_test5')).toBeInTheDocument()
     expect(screen.getByText('¥55,555')).toBeInTheDocument()
     expect(screen.getByText('other_info_test5')).toBeInTheDocument()
     expect(screen.getByText('user_name_test4')).toBeInTheDocument()
     expect(screen.getByText('2023/02/28 16:00')).toBeInTheDocument()
+  })
+
+  test('検索関連情報が正常に表示される', async () => {
+    render(
+      <SWRConfig value={{ dedupingInterval: 0 }}>
+        <Gadgets />
+      </SWRConfig>,
+    )
+
+    await waitFor(() => {
+      // 検索アイコンの表示を確認
+      expect(screen.getByText('ガジェット検索')).toBeInTheDocument()
+
+      // 検索結果の件数が正常に表示されていることを確認
+      expect(screen.getByText('該当件数 5件')).toBeInTheDocument()
+    })
   })
 })
