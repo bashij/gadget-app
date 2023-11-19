@@ -17,7 +17,7 @@ export default function Edit(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS
 
   // 引用の'>'を復元
-  const originalReview = props.gadget?.review.body.replace(/&gt;/g, '>')
+  const originalReview = props.gadget?.review.replace(/&gt;/g, '>')
 
   const [formData, setFormData] = useState({
     name: `${props.gadget?.name}`,

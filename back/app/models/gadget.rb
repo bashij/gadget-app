@@ -15,12 +15,12 @@ class Gadget < ApplicationRecord
   validates :other_info, length: { maximum: 100 }
   validates :review, length: { maximum: 5000 }
   mount_uploader :image, GadgetImageUploader
-  has_rich_text :review
   scope :name_like, ->(name) { like_scope('name', name) }
   scope :category_like, ->(category) { like_scope('category', category) }
   scope :model_number_like, ->(model_number) { like_scope('model_number', model_number) }
   scope :manufacturer_like, ->(manufacturer) { like_scope('manufacturer', manufacturer) }
   scope :other_info_like, ->(other_info) { like_scope('other_info', other_info) }
+  scope :review_like, ->(review) { like_scope('review', review) }
   scope :price_more_than, ->(price) { where('price >= ?', price.to_f) if price.present? }
   scope :price_less_than, ->(price) { where('price <= ?', price.to_f) if price.present? }
 
@@ -80,6 +80,7 @@ class Gadget < ApplicationRecord
     gadgets = gadgets.price_more_than(params[:price_minimum])
     gadgets = gadgets.price_less_than(params[:price_maximum])
     gadgets = gadgets.other_info_like(params[:other_info])
+    gadgets = gadgets.review_like(params[:review])
 
     gadgets
   end

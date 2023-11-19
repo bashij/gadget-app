@@ -822,6 +822,9 @@ body {
   &:hover {
     text-decoration: underline;
   }
+  &.trash {
+    color: $color_accent1;
+  }
 }
 
 .search-area {

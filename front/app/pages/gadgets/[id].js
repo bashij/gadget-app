@@ -112,7 +112,7 @@ export default function Gadget(props) {
 
   useEffect(() => {
     // レビューが存在する場合のみ処理を行う
-    if (!props.gadget.review.body) {
+    if (!props.gadget.review) {
       return
     }
     // マークダウンで許可するタグと属性を規定
@@ -137,7 +137,7 @@ export default function Gadget(props) {
     // 規定に沿ってレビューをエスケープ
     const sanitizeMarkdown = () => {
       // 引用の'>'を復元してから、マークダウン形式をHTML形式に変換する
-      const originalReview = props.gadget.review.body.replace(/&gt;/g, '>')
+      const originalReview = props.gadget.review.replace(/&gt;/g, '>')
       const sanitizedHtml = DOMPurify.sanitize(marked(originalReview), {
         ALLOWED_TAGS: allowedTags,
         ALLOWED_ATTR: allowedAttributes,
@@ -217,7 +217,7 @@ export default function Gadget(props) {
             <div className='review-header'>
               <p className='review'>レビュー</p>
               <div className='review-content'>
-                {props.gadget.review.body ? (
+                {props.gadget.review ? (
                   <div id='review'></div>
                 ) : (
                   <div>
