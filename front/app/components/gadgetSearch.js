@@ -1,18 +1,45 @@
 import { useEffect, useState } from 'react'
 
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function GadgetSearch(props) {
-  const [showReply, setShowReply] = useState(false)
+  const [showSearchArea, setShowSearchArea] = useState(false)
+
+  useEffect(() => {
+    // 入力値が存在する場合は、検索条件入力欄を初期表示する
+    if (Object.values(props.filters).every((value) => value === '')) {
+      setShowSearchArea(false)
+    } else {
+      setShowSearchArea(true)
+    }
+  }, [])
+
   const handleToggle = () => {
-    setShowReply(!showReply)
+    setShowSearchArea(!showSearchArea)
   }
 
-  // 検索条件を入力する度に１ページ目に戻す
+  const handleClear = () => {
+    localStorage.removeItem('filters')
+    props.setFilters({
+      name: '',
+      category: '',
+      model_number: '',
+      manufacturer: '',
+      price_minimum: '',
+      price_maximum: '',
+      other_info: '',
+      review: '',
+      sort_condition: '',
+    })
+  }
+
   useEffect(() => {
+    // 検索条件をローカルストレージに保存する
+    localStorage.setItem('filters', JSON.stringify(props.filters))
+    // 検索条件を入力する度に１ページ目に戻す
     props.setPageIndex(1)
   }, [props.filters])
 
@@ -22,7 +49,7 @@ export default function GadgetSearch(props) {
         <FontAwesomeIcon className='pe-2' icon={faSearch} />
         ガジェット検索
       </span>
-      <div className={`row search-area ${showReply ? 'visible' : 'hidden'}`}>
+      <div className={`row search-area ${showSearchArea ? 'visible' : 'hidden'}`}>
         <div className='col-lg-8 col-sm-10'>
           <div className='mb-3'>
             <label className='form-label' htmlFor='name'>
@@ -160,6 +187,10 @@ export default function GadgetSearch(props) {
               <option value='価格が高い順'>価格が高い順</option>
             </select>
           </div>
+          <span className='search-icon trash' onClick={handleClear}>
+            <FontAwesomeIcon className='pe-2' icon={faTrashAlt} />
+            検索条件をクリア
+          </span>
         </div>
         <div className='content-header'>
           <p className='text-center'>

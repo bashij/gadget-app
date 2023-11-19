@@ -22,7 +22,9 @@ const fetcher = (url) => fetch(url).then((r) => r.json())
 export default function FollowingUsersGadgets(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
   const [pageIndex, setPageIndex] = useState(1)
-  const [filters, setFilters] = useState({
+
+  // 検索条件の初期値
+  const getDefaultFilters = () => ({
     name: '',
     category: '',
     model_number: '',
@@ -33,6 +35,17 @@ export default function FollowingUsersGadgets(props) {
     review: '',
     sort_condition: '',
   })
+
+  // 検索条件がローカルストレージに保存されている場合はそちらを初期表示する
+  const [filters, setFilters] = useState(() => {
+    const storedFilters = typeof window !== 'undefined' && localStorage.getItem('filters')
+    if (storedFilters) {
+      return JSON.parse(storedFilters)
+    } else {
+      return getDefaultFilters()
+    }
+  })
+
   const { data, error, isLoading } = useSWR(
     props.user
       ? `${API_ENDPOINT}/${
