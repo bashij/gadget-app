@@ -15,7 +15,6 @@ class Gadget < ApplicationRecord
   validates :other_info, length: { maximum: 100 }
   validates :review, length: { maximum: 5000 }
   mount_uploader :image, GadgetImageUploader
-  has_rich_text :review
   scope :name_like, ->(name) { like_scope('name', name) }
   scope :category_like, ->(category) { like_scope('category', category) }
   scope :model_number_like, ->(model_number) { like_scope('model_number', model_number) }

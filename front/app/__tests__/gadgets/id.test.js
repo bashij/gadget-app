@@ -105,9 +105,7 @@ describe('Gadget', () => {
       ...props,
       gadget: {
         ...props.gadget,
-        review: {
-          body: 'gadget_review_test1',
-        },
+        review: 'gadget_review_test1',
       },
     }
     render(<Gadget {...updatedProps} />)
