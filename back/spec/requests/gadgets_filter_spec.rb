@@ -131,6 +131,31 @@ RSpec.describe 'GadgetsFilter', type: :request do
     end
   end
 
+  describe 'GET #index 検索条件:レビュー' do
+    before do
+      # 3件のgadgetを新規作成
+      @gadget1 = create(:gadget, review: 'テスト1')
+      @gadget2 = create(:gadget, review: '検索テスト1')
+      @gadget3 = create(:gadget, review: '検索テスト2')
+    end
+
+    # 検索ワードを設定
+    encoded_word = URI.encode_www_form_component('検索')
+
+    specify 'リクエストが成功する' do
+      get "/api/v1/gadgets/?review=#{encoded_word}"
+      expect(response).to have_http_status :ok
+    end
+
+    specify '要求通りの情報を返す' do
+      get "/api/v1/gadgets/?review=#{encoded_word}"
+      json = JSON.parse(response.body)
+
+      expect(json['gadgets'].length).to eq(2)
+      expect(json['searchResultCount']).to eq(2)
+    end
+  end
+
   describe 'GET #index 検索条件:価格' do
     before do
       # 4件のgadgetを新規作成
@@ -317,6 +342,39 @@ RSpec.describe 'GadgetsFilter', type: :request do
 
     specify '要求通りの情報を返す' do
       get "/api/v1/users/#{user.id}/following_users_gadgets?other_info=#{encoded_word}"
+      json = JSON.parse(response.body)
+
+      expect(json['gadgets'].length).to eq(2)
+      expect(json['searchResultCount']).to eq(2)
+    end
+  end
+
+  describe 'GET #following_users_gadgets 検索条件:レビュー' do
+    before do
+      # ログイン
+      session_params = { email: user.email, password: user.password, remember_me: 0 }
+      post '/api/v1/login', params: { session: session_params }
+      # 別のユーザーで合計3件のgadgetを新規作成
+      @other_user1 = create(:user)
+      @other_user2 = create(:user)
+      @gadget1 = create(:gadget, user: @other_user1, review: 'テスト1')
+      @gadget2 = create(:gadget, user: @other_user1, review: '検索テスト1')
+      @gadget3 = create(:gadget, user: @other_user2, review: '検索テスト2')
+      # ログインユーザーで別のユーザーをフォロー
+      post '/api/v1/relationships', params: { followed_id: @other_user1.id }
+      post '/api/v1/relationships', params: { followed_id: @other_user2.id }
+    end
+
+    # 検索ワードを設定
+    encoded_word = URI.encode_www_form_component('検索')
+
+    specify 'リクエストが成功する' do
+      get "/api/v1/users/#{user.id}/following_users_gadgets?review=#{encoded_word}"
+      expect(response).to have_http_status :ok
+    end
+
+    specify '要求通りの情報を返す' do
+      get "/api/v1/users/#{user.id}/following_users_gadgets?review=#{encoded_word}"
       json = JSON.parse(response.body)
 
       expect(json['gadgets'].length).to eq(2)
