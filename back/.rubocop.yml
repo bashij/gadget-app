@@ -59,6 +59,7 @@ Style/MultilineTernaryOperator:
 Style/RedundantAssignment:
   Exclude:
     - "app/models/gadget.rb"
+    - "app/models/user.rb"
 
 # Session関連
 # 可読性・汎用性を重視し許可
@@ -93,10 +94,11 @@ Metrics/MethodLength:
     - "app/models/gadget.rb"
     - "spec/spec_helper.rb"
 
-# 一部コントローラは規定値以上の行数を許可する（デフォルト制限行数：100行）
+# 一部コントローラとモデルは規定値以上の行数を許可する（デフォルト制限行数：100行）
 Metrics/ClassLength:
   Exclude:
     - "app/controllers/api/v1/users_controller.rb"
+    - "app/models/user.rb"
 
 # テスト用自動生成ファイルを除外
 Style/ExpandPathArguments:
@@ -170,6 +172,7 @@ RSpec/InstanceVariable:
     - "spec/requests/gadgets_filter_spec.rb"
     - "spec/requests/tweets_spec.rb"
     - "spec/requests/users_spec.rb"
+    - "spec/requests/users_filter_spec.rb"
     - "spec/requests/communities_spec.rb"
     - "spec/requests/comments_spec.rb"
     - "spec/requests/relationships_spec.rb"
