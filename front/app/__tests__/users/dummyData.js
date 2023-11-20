@@ -57,6 +57,7 @@ export const DUMMY_DATA_INDEX = {
     },
   ],
   pagination: { total_count: 10, limit_value: 5, total_pages: 2, current_page: 1 },
+  searchResultCount: 5,
 }
 
 export const DUMMY_DATA_USER_DETAIL = {
@@ -1722,4 +1723,5 @@ export const DUMMY_DATA_RELATIONSHIPS = {
     },
   ],
   pagination: { total_count: 10, limit_value: 5, total_pages: 2, current_page: 1 },
+  searchResultCount: 5,
 }
