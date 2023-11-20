@@ -38,6 +38,8 @@ class User < ApplicationRecord
   mount_uploader :image, UserImageUploader
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  scope :name_like, ->(name) { like_scope('name', name) }
+  scope :job_like, ->(job) { like_scope('job', job) }
 
   # 渡された文字列のハッシュ値を返す
   def self.digest(string)
@@ -119,5 +121,38 @@ class User < ApplicationRecord
   def joining_communities_reordered
     joining_communities.includes(:user, :memberships)
                        .reorder('memberships.created_at DESC')
+  end
+
+  # 指定の値を部分一致で検索
+  def self.like_scope(attribute, value)
+    if value.present?
+      where("#{attribute} LIKE ?", "%#{value}%")
+    else
+      all
+    end
+  end
+
+  # 検索条件に一致する全てのユーザー情報を返す
+  def self.filter_by(params)
+    # 指定の並び順で全件取得
+    column, direction = extract_sort_conditions(params[:sort_condition])
+    users = all.order("#{column} #{direction}")
+
+    # 検索条件がある場合は絞り込み
+    users = users.name_like(params[:name])
+    users = users.job_like(params[:job])
+
+    users
+  end
+
+  def self.extract_sort_conditions(sort_condition)
+    case sort_condition
+    when '', '更新が新しい順'
+      %w[updated_at desc]
+    when '更新が古い順'
+      %w[updated_at asc]
+    else
+      [nil, nil]
+    end
   end
 end

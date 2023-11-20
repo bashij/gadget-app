@@ -6,15 +6,15 @@ module Api
       before_action :guest_user,     only: %i[update destroy]
 
       def index
-        # 全てのユーザー情報
-        @users = User.order(created_at: :desc)
+        # 全てのユーザー情報(検索条件があれば一致するもののみ)
+        @users = User.filter_by(params)
         # ユーザーのページネーション情報（デフォルトは5件ずつの表示とする）
         paged = params[:paged]
         per = params[:per].presence || 5
         @users_paginated = @users.page(paged).per(per)
         @pagination = pagination(@users_paginated)
 
-        render json: { users: @users_paginated, pagination: @pagination }
+        render json: { users: @users_paginated, pagination: @pagination, searchResultCount: @users.count }
       end
 
       def show
@@ -62,27 +62,27 @@ module Api
       end
 
       def following
-        # 詳細ページのユーザーがフォローしている全てのユーザー情報
-        @users = User.find(params[:id]).following
+        # 詳細ページのユーザーがフォローしている全てのユーザー情報(検索条件があれば一致するもののみ)
+        @users = User.find(params[:id]).following.filter_by(params)
         # ユーザーのページネーション情報（デフォルトは5件ずつの表示とする）
         paged = params[:paged]
         per = params[:per].presence || 5
         @users_paginated = @users.page(paged).per(per)
         @pagination = pagination(@users_paginated)
 
-        render json: { users: @users_paginated, pagination: @pagination }
+        render json: { users: @users_paginated, pagination: @pagination, searchResultCount: @users.count }
       end
 
       def followers
-        # 詳細ページのユーザーがフォローされている全てのユーザー情報
-        @users = User.find(params[:id]).followers
+        # 詳細ページのユーザーがフォローされている全てのユーザー情報(検索条件があれば一致するもののみ)
+        @users = User.find(params[:id]).followers.filter_by(params)
         # ユーザーのページネーション情報（デフォルトは5件ずつの表示とする）
         paged = params[:paged]
         per = params[:per].presence || 5
         @users_paginated = @users.page(paged).per(per)
         @pagination = pagination(@users_paginated)
 
-        render json: { users: @users_paginated, pagination: @pagination }
+        render json: { users: @users_paginated, pagination: @pagination, searchResultCount: @users.count }
       end
 
       private

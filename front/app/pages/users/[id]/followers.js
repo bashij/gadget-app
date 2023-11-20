@@ -7,6 +7,7 @@ import useSWR from 'swr'
 import Layout, { siteTitle } from '@/components/layout'
 import Pagination from '@/components/pagination'
 import UserFeed from '@/components/userFeed'
+import UserSearch from '@/components/userSearch'
 import apiClient from '@/utils/apiClient'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
@@ -17,8 +18,29 @@ export default function Followers(props) {
 
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
   const [pageIndex, setPageIndex] = useState(1)
+
+  // 検索条件の初期値
+  const getDefaultFilters = () => ({
+    name: '',
+    job: '',
+    sort_condition: '',
+  })
+
+  // 検索条件がローカルストレージに保存されている場合はそちらを初期表示する
+  const filterName = 'followersFilters'
+  const [filters, setFilters] = useState(() => {
+    const storedFilters = typeof window !== 'undefined' && localStorage.getItem(filterName)
+    if (storedFilters) {
+      return JSON.parse(storedFilters)
+    } else {
+      return getDefaultFilters()
+    }
+  })
+
   const { data, error, isLoading } = useSWR(
-    `${API_ENDPOINT}/${props.pageUserId}/followers?paged=${pageIndex}`,
+    `${API_ENDPOINT}/${props.pageUserId}/followers?paged=${pageIndex}&${new URLSearchParams(
+      filters,
+    )}`,
     fetcher,
     {
       keepPreviousData: true,
@@ -40,6 +62,16 @@ export default function Followers(props) {
           <div className='col-10 text-center'>
             <div className='content-header'>
               <p>フォロワー</p>
+            </div>
+            <div className='text-start mt-3'>
+              <UserSearch
+                filters={filters}
+                setFilters={setFilters}
+                isLoading={isLoading}
+                searchResultCount={data?.searchResultCount}
+                setPageIndex={setPageIndex}
+                filterName={filterName}
+              />
             </div>
             <div className='mt-3'>
               <UserFeed data={data} />
