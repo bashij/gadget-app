@@ -64,4 +64,25 @@ describe('Following', () => {
       expect(screen.getByRole('link', { name: 'user_name_test6' })).toBeInTheDocument()
     })
   })
+
+  test('検索関連情報が正常に表示される', async () => {
+    // ユーザーID1のフォロー中一覧を表示
+    const updatedProps = {
+      ...props,
+      pageUserId: 1,
+    }
+    render(
+      <SWRConfig value={{ dedupingInterval: 0 }}>
+        <Following {...updatedProps} />
+      </SWRConfig>,
+    )
+
+    await waitFor(() => {
+      // 検索アイコンの表示を確認
+      expect(screen.getByText('ユーザー検索')).toBeInTheDocument()
+      expect(screen.getByText('検索条件をクリア')).toBeInTheDocument()
+      // 検索結果の件数が正常に表示されていることを確認
+      expect(screen.getByText('該当件数 5件')).toBeInTheDocument()
+    })
+  })
 })

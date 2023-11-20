@@ -22,7 +22,7 @@ export default function GadgetSearch(props) {
   }
 
   const handleClear = () => {
-    localStorage.removeItem('filters')
+    localStorage.removeItem(props.filterName)
     props.setFilters({
       name: '',
       category: '',
@@ -38,7 +38,7 @@ export default function GadgetSearch(props) {
 
   useEffect(() => {
     // 検索条件をローカルストレージに保存する
-    localStorage.setItem('filters', JSON.stringify(props.filters))
+    localStorage.setItem(props.filterName, JSON.stringify(props.filters))
     // 検索条件を入力する度に１ページ目に戻す
     props.setPageIndex(1)
   }, [props.filters])

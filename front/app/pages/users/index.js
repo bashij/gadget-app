@@ -7,6 +7,7 @@ import useSWR from 'swr'
 import Layout, { siteTitle } from '@/components/layout'
 import Pagination from '@/components/pagination'
 import UserFeed from '@/components/userFeed'
+import UserSearch from '@/components/userSearch'
 import apiClient from '@/utils/apiClient'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
@@ -14,9 +15,32 @@ const fetcher = (url) => fetch(url).then((r) => r.json())
 export default function Users(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_USERS
   const [pageIndex, setPageIndex] = useState(1)
-  const { data, error, isLoading } = useSWR(`${API_ENDPOINT}?paged=${pageIndex}`, fetcher, {
-    keepPreviousData: true,
+
+  // 検索条件の初期値
+  const getDefaultFilters = () => ({
+    name: '',
+    job: '',
+    sort_condition: '',
   })
+
+  // 検索条件がローカルストレージに保存されている場合はそちらを初期表示する
+  const filterName = 'userFilters'
+  const [filters, setFilters] = useState(() => {
+    const storedFilters = typeof window !== 'undefined' && localStorage.getItem(filterName)
+    if (storedFilters) {
+      return JSON.parse(storedFilters)
+    } else {
+      return getDefaultFilters()
+    }
+  })
+
+  const { data, error, isLoading } = useSWR(
+    `${API_ENDPOINT}?paged=${pageIndex}&${new URLSearchParams(filters)}`,
+    fetcher,
+    {
+      keepPreviousData: true,
+    },
+  )
 
   // サーバーサイドでエラーが発生した場合はエラーメッセージを表示して処理を終了する
   if (props.errorMessage) return props.errorMessage
@@ -30,6 +54,16 @@ export default function Users(props) {
           <title>{siteTitle} | ユーザー一覧</title>
         </Head>
         <div className='row justify-content-center'>
+          <div className='col-10 mt-3'>
+            <UserSearch
+              filters={filters}
+              setFilters={setFilters}
+              isLoading={isLoading}
+              searchResultCount={data?.searchResultCount}
+              setPageIndex={setPageIndex}
+              filterName={filterName}
+            />
+          </div>
           <div className='col-10 text-center'>
             <div className='mt-3'>
               <UserFeed data={data} />

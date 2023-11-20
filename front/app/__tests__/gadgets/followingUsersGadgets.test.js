@@ -97,7 +97,7 @@ describe('FollowingUsersGadgets', () => {
     await waitFor(() => {
       // 検索アイコンの表示を確認
       expect(screen.getByText('ガジェット検索')).toBeInTheDocument()
-
+      expect(screen.getByText('検索条件をクリア')).toBeInTheDocument()
       // 検索結果の件数が正常に表示されていることを確認
       expect(screen.getByText('該当件数 5件')).toBeInTheDocument()
     })

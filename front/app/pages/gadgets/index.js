@@ -37,8 +37,9 @@ export default function Gadgets(props) {
   })
 
   // 検索条件がローカルストレージに保存されている場合はそちらを初期表示する
+  const filterName = 'gadgetFilters'
   const [filters, setFilters] = useState(() => {
-    const storedFilters = typeof window !== 'undefined' && localStorage.getItem('filters')
+    const storedFilters = typeof window !== 'undefined' && localStorage.getItem(filterName)
     if (storedFilters) {
       return JSON.parse(storedFilters)
     } else {
@@ -113,6 +114,7 @@ export default function Gadgets(props) {
               isLoading={isLoading}
               searchResultCount={data?.searchResultCount}
               setPageIndex={setPageIndex}
+              filterName={filterName}
             />
             <div id='feed_gadget'>
               <div id='gadgets' className='gadgets'>
