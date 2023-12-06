@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 
 import { useRouter } from 'next/router'
 
+import { faUsers } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { toast } from 'react-toastify'
 
 import apiClient from '@/utils/apiClient'
@@ -96,6 +98,7 @@ export default function ReviewRequest(props) {
         onClick={(event) => handleClick(event, props.gadget.id)}
         data-testid={`review_request_icon_${props.gadget.id}`}
       >
+        <FontAwesomeIcon className='pe-2' icon={faUsers} />
         {isRequested ? 'レビューリクエストをやめる' : 'レビューをリクエストする'}
       </p>
     </span>
