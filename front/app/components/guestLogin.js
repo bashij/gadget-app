@@ -50,10 +50,10 @@ export default function GuestLogin() {
     if (status === 'success') {
       router.push(
         {
-          pathname: '/gadgets',
+          pathname: '/',
           query: { message: message, status: status },
         },
-        '/gadgets',
+        '/',
       )
       setMessage([])
     }

@@ -65,8 +65,8 @@ describe('Login', () => {
     await waitFor(() => {
       expect(useRouter().push).toHaveBeenCalled()
       expect(useRouter().push).toHaveBeenCalledWith(
-        { pathname: '/gadgets', query: { message: ['successMessage'], status: 'success' } },
-        '/gadgets',
+        { pathname: '/', query: { message: ['successMessage'], status: 'success' } },
+        '/',
       )
     })
   })
