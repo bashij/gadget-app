@@ -181,10 +181,18 @@ export default function GadgetSearch(props) {
               }
               id='sort_condition'
             >
-              <option value='更新が新しい順'>更新が新しい順</option>
-              <option value='更新が古い順'>更新が古い順</option>
-              <option value='価格が安い順'>価格が安い順</option>
-              <option value='価格が高い順'>価格が高い順</option>
+              {props.filterName === 'recommendedGadgetFilters' ? (
+                <>
+                  <option value='おすすめ順'>おすすめ順</option>
+                </>
+              ) : (
+                <>
+                  <option value='更新が新しい順'>更新が新しい順</option>
+                  <option value='更新が古い順'>更新が古い順</option>
+                  <option value='価格が安い順'>価格が安い順</option>
+                  <option value='価格が高い順'>価格が高い順</option>
+                </>
+              )}
             </select>
           </div>
           <span className='search-icon trash' onClick={handleClear}>

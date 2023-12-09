@@ -78,6 +78,14 @@ Metrics/AbcSize:
     - "app/controllers/api/v1/*"
     - "app/models/gadget.rb"
 
+# 一部複雑度の高いmodelを例外として許可
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - "app/models/gadget.rb"
+Metrics/PerceivedComplexity:
+  Exclude:
+    - "app/models/gadget.rb"
+
 # bullet設定のため行数制限の対象外とする（デフォルト制限行数：25行/ブロック）
 # テストは行数規定を除外
 Metrics/BlockLength:
@@ -99,6 +107,7 @@ Metrics/ClassLength:
   Exclude:
     - "app/controllers/api/v1/users_controller.rb"
     - "app/models/user.rb"
+    - "app/models/gadget.rb"
 
 # テスト用自動生成ファイルを除外
 Style/ExpandPathArguments:
@@ -143,6 +152,7 @@ RSpec/ContextWording:
 RSpec/MultipleMemoizedHelpers:
   Exclude:
     - "spec/requests/comments_spec.rb"
+    - "spec/requests/gadgets_recommend_spec.rb"
 
 # request specは複数のexpectationsを許可する
 RSpec/MultipleExpectations:

@@ -59,6 +59,20 @@ module Api
                include: %i[user gadget_likes gadget_bookmarks review_requests]
       end
 
+      def recommend
+        # ログインユーザーへのおすすめガジェット情報(検索条件があれば一致するもののみ)
+        @gadgets = Gadget.recommend_gadgets(User.find(params[:id])).filter_by(params)
+
+        # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
+        paged = params[:paged]
+        per = params[:per].presence || 2
+        @gadgets_paginated = @gadgets.page(paged).per(per)
+        @pagination = pagination(@gadgets_paginated)
+
+        render json: { gadgets: @gadgets_paginated, pagination: @pagination, searchResultCount: @gadgets.count },
+               include: %i[user gadget_likes gadget_bookmarks review_requests]
+      end
+
       def show
         # 表示対象ガジェット
         @gadget = Gadget.find(params[:id])

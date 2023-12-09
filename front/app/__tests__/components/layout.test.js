@@ -87,7 +87,7 @@ describe('Layout', () => {
 
     // サイドメニュー
     expect(screen.getByRole('link', { name: 'GadgetLink' })).toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: 'HOME' })).not.toBeInTheDocument() //非表示を確認
+    expect(screen.queryByRole('link', { name: 'HOME' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'GADGET' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'TWEET' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'COMMUNITY' })).toBeInTheDocument()

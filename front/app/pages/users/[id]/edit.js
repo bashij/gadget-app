@@ -76,6 +76,7 @@ export default function Edit(props) {
     if (status === 'success') {
       // ユーザー削除時はHOMEへ遷移
       if (isPageDeleted) {
+        localStorage.clear()
         router.push(
           {
             pathname: `/`,

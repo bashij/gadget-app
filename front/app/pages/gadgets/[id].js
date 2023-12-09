@@ -59,7 +59,7 @@ export default function Gadget(props) {
       if (isPageDeleted) {
         router.push(
           {
-            pathname: `/gadgets`,
+            pathname: '/gadgets',
             query: { message: message, status: status },
           },
           `/gadgets/`,

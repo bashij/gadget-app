@@ -28,6 +28,7 @@ export default function Layout(props) {
   useEffect(() => {
     // ログアウトが成功した時はHOMEに遷移する
     if (status === 'justLoggedOut') {
+      localStorage.clear()
       router.push(
         {
           pathname: '/',
@@ -64,16 +65,13 @@ export default function Layout(props) {
             <Link href='/gadgets' className='logo nav-link'>
               GadgetLink
             </Link>
-            {/* ログイン時はHOMEへのリンクを非表示 */}
-            {props.user ? null : (
-              <Link
-                href='/'
-                className={`nav-link ${props.pageName === 'home' ? 'active' : ''}`}
-                id='home'
-              >
-                HOME
-              </Link>
-            )}
+            <Link
+              href='/'
+              className={`nav-link ${props.pageName === 'home' ? 'active' : ''}`}
+              id='home'
+            >
+              HOME
+            </Link>
             <Link
               href='/gadgets'
               className={`nav-link ${props.pageName === 'gadget' ? 'active' : ''}`}
