@@ -171,8 +171,9 @@ class User < ApplicationRecord
     relation_scores = calculate_related_users_scores(most_interested_user_id, user)
 
     # スコア順にユーザーIDをソート
-    interested_user_ids = user.active_relationships.pluck(:followed_id) # 既にフォロー済みのユーザーID
-    sorted_user_ids = sort_user_ids_by_scores(relation_scores, most_interested_user_id, interested_user_ids)
+    ignored_user_ids = user.active_relationships.pluck(:followed_id) # 既にフォロー済みのユーザーID
+    ignored_user_ids.push(user.id) # ログインユーザー自身のIDを追加
+    sorted_user_ids = sort_user_ids_by_scores(relation_scores, most_interested_user_id, ignored_user_ids)
 
     User.where(id: sorted_user_ids).order(Arel.sql("FIELD(id, #{sorted_user_ids.join(',')})"))
   end
@@ -207,9 +208,9 @@ class User < ApplicationRecord
   end
 
   # スコア順にユーザーIDをソート
-  def self.sort_user_ids_by_scores(relation_scores, most_interested_user_id, interested_user_ids)
+  def self.sort_user_ids_by_scores(relation_scores, most_interested_user_id, ignored_user_ids)
     sorted_user_ids = relation_scores.keys.sort_by { |id| -relation_scores[id] }
     sorted_user_ids.unshift(most_interested_user_id) # 最も関心のあるユーザーを先頭に追加
-    sorted_user_ids - interested_user_ids # 既にフォロー中のユーザーはおすすめ対象から除外
+    sorted_user_ids - ignored_user_ids # 既にフォロー中のユーザーと自身はおすすめ対象から除外
   end
 end
