@@ -16,6 +16,7 @@ Rails.application.routes.draw do
           get 'user_bookmark_gadgets', to: 'gadgets#user_bookmark_gadgets'
           get 'following_users_gadgets', to: 'gadgets#following_users_gadgets'
           get 'recommended_gadgets', to: 'gadgets#recommend'
+          get 'recommended_users', to: 'users#recommend'
         end
       end
       resources :relationships, only: %i[create destroy]

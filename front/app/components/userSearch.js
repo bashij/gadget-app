@@ -92,8 +92,16 @@ export default function UserSearch(props) {
               }
               id='sort_condition'
             >
-              <option value='更新が新しい順'>更新が新しい順</option>
-              <option value='更新が古い順'>更新が古い順</option>
+              {props.filterName === 'recommendedUserFilters' ? (
+                <>
+                  <option value='おすすめ順'>おすすめ順</option>
+                </>
+              ) : (
+                <>
+                  <option value='更新が新しい順'>更新が新しい順</option>
+                  <option value='更新が古い順'>更新が古い順</option>
+                </>
+              )}
             </select>
           </div>
           <span className='search-icon trash' onClick={handleClear}>

@@ -85,6 +85,19 @@ module Api
         render json: { users: @users_paginated, pagination: @pagination, searchResultCount: @users.count }
       end
 
+      def recommend
+        # ログインユーザーへのおすすめユーザー情報(検索条件があれば一致するもののみ)
+        @users = User.recommend_users(User.find(params[:id])).filter_by(params)
+
+        # ユーザーのページネーション情報（デフォルトは5件ずつの表示とする）
+        paged = params[:paged]
+        per = params[:per].presence || 2
+        @users_paginated = @users.page(paged).per(per)
+        @pagination = pagination(@users_paginated)
+
+        render json: { users: @users_paginated, pagination: @pagination, searchResultCount: @users.count }
+      end
+
       private
 
         def user_params
