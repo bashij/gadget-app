@@ -4,7 +4,8 @@ import { enableFetchMocks } from 'jest-fetch-mock'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import Home from '../pages/index'
-import { DUMMY_DATA_INDEX } from './gadgets/dummyData'
+import { DUMMY_DATA_INDEX as GADGETS_DUMMY_DATA_INDEX } from './gadgets/dummyData'
+import { DUMMY_DATA_INDEX_RECOMMEND as USERS_DUMMY_DATA_INDEX } from './users/dummyData'
 
 // ログインユーザー情報
 const props = {
@@ -29,7 +30,13 @@ const handlers = [
   rest.get(
     `${process.env.NEXT_PUBLIC_API_ENDPOINT_USERS}/${props.user.id}/recommended_gadgets`,
     (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(DUMMY_DATA_INDEX))
+      return res(ctx.status(200), ctx.json(GADGETS_DUMMY_DATA_INDEX))
+    },
+  ),
+  rest.get(
+    `${process.env.NEXT_PUBLIC_API_ENDPOINT_USERS}/${props.user.id}/recommended_users`,
+    (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json(USERS_DUMMY_DATA_INDEX))
     },
   ),
 ]
@@ -67,20 +74,22 @@ describe('Home', () => {
     expect(button1).toBeInTheDocument()
   })
 
-  test('おすすめガジェット一覧が正常に表示される（ログイン時）', async () => {
+  test('おすすめガジェットとおすすめユーザーの一覧が正常に表示される（ログイン時）', async () => {
     render(<Home {...props} />)
 
     // ヘッダーとリンクの表示を確認
     expect(screen.getByText('あなたにおすすめのガジェット')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'すべてのガジェットを見る' })).toBeInTheDocument()
+    expect(screen.getByText('あなたにおすすめのユーザー')).toBeInTheDocument()
+    expect(screen.getAllByRole('link', { name: 'すべてのガジェットを見る' })).toHaveLength(2)
 
     // 検索アイコンの表示を確認
     expect(screen.getByText('ガジェット検索')).toBeInTheDocument()
-    expect(screen.getByText('検索条件をクリア')).toBeInTheDocument()
+    expect(screen.getByText('ユーザー検索')).toBeInTheDocument()
+    expect(screen.getAllByText('検索条件をクリア')).toHaveLength(2)
 
     await waitFor(() => {
       // 検索結果の件数が正常に表示されていることを確認
-      expect(screen.getByText('該当件数 5件')).toBeInTheDocument()
+      expect(screen.getAllByText('該当件数 5件')).toHaveLength(2)
 
       // ガジェット一覧が正常に表示されていることを確認 ヘッダー
       expect(screen.getAllByText('ガジェット名')).toHaveLength(6)
@@ -111,6 +120,13 @@ describe('Home', () => {
       expect(screen.getByText('other_info_test5')).toBeInTheDocument()
       expect(screen.getByText('user_name_test4')).toBeInTheDocument()
       expect(screen.getByText('2023/02/28 16:00')).toBeInTheDocument()
+
+      // ユーザー一覧が正常に表示されていることを確認
+      expect(screen.getByText('recommended_user_name_test1')).toBeInTheDocument()
+      expect(screen.getByText('recommended_user_name_test2')).toBeInTheDocument()
+      expect(screen.getByText('recommended_user_name_test3')).toBeInTheDocument()
+      expect(screen.getByText('recommended_user_name_test4')).toBeInTheDocument()
+      expect(screen.getByText('recommended_user_name_test5')).toBeInTheDocument()
     })
   })
 })

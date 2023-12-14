@@ -11,6 +11,7 @@ import { toast, ToastContainer } from 'react-toastify'
 import GuestLogin from '@/components/guestLogin'
 import Layout, { siteTitle } from '@/components/layout'
 import RecommendedGadgets from '@/components/recommendedGadgets'
+import RecommendedUsers from '@/components/recommendedUsers'
 import apiClient from '@/utils/apiClient'
 
 import 'react-toastify/dist/ReactToastify.css'
@@ -63,7 +64,10 @@ export default function Home(props) {
       </Head>
       <ToastContainer />
       {props.user ? (
-        <RecommendedGadgets user={props.user} />
+        <>
+          <RecommendedGadgets user={props.user} />
+          <RecommendedUsers user={props.user} />
+        </>
       ) : (
         // 非ログイン時のみ表示
         <div className='col-12'>

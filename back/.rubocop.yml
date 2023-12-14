@@ -153,6 +153,7 @@ RSpec/MultipleMemoizedHelpers:
   Exclude:
     - "spec/requests/comments_spec.rb"
     - "spec/requests/gadgets_recommend_spec.rb"
+    - "spec/requests/users_recommend_spec.rb"
 
 # request specは複数のexpectationsを許可する
 RSpec/MultipleExpectations:

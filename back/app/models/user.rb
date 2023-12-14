@@ -155,4 +155,61 @@ class User < ApplicationRecord
       [nil, nil]
     end
   end
+
+  # おすすめユーザー情報を返す
+  def self.recommend_users(user)
+    # ユーザーが最も関心のあるガジェットを特定
+    most_interested_gadget_id = Gadget.determine_most_interested_gadget(user)
+
+    # 対象ガジェットが存在しない場合は空データを返して処理を終了する
+    return User.where(id: most_interested_gadget_id) if most_interested_gadget_id.nil?
+
+    # 最も関心のあるガジェットを投稿したユーザーを、最も関心のあるユーザーとして設定
+    most_interested_user_id = Gadget.find(most_interested_gadget_id)[:user_id]
+
+    # 関連ユーザーのスコアを計算
+    relation_scores = calculate_related_users_scores(most_interested_user_id, user)
+
+    # スコア順にユーザーIDをソート
+    interested_user_ids = user.active_relationships.pluck(:followed_id) # 既にフォロー済みのユーザーID
+    sorted_user_ids = sort_user_ids_by_scores(relation_scores, most_interested_user_id, interested_user_ids)
+
+    User.where(id: sorted_user_ids).order(Arel.sql("FIELD(id, #{sorted_user_ids.join(',')})"))
+  end
+
+  # 関連ユーザーのスコアを計算
+  def self.calculate_related_users_scores(most_interested_user_id, user)
+    # スコアを計算
+    related_users_count = calculate_related_user_count(most_interested_user_id, user)
+
+    # 全フォロー数の合計値
+    total_count = related_users_count.values.sum
+    # 各ユーザーへのフォロー数が、全体のフォロー数に占める割合を、おすすめユーザーの関連度スコアとする
+    relation_scores = related_users_count.transform_values { |count| (count.to_f / total_count * 100).round(2) }
+    relation_scores
+  end
+
+  # 対象ユーザーをフォローしているユーザーが、別にフォローしているユーザーを集計する
+  def self.calculate_related_user_count(most_interested_user_id, user)
+    # 対象ユーザーをフォローしているユーザーIDを配列で取得
+    users_ids = Relationship.where(followed_id: most_interested_user_id)
+                            .where.not(follower_id: user)
+                            .pluck(:follower_id)
+
+    # 対象ユーザーをフォローしているユーザーが、他にフォローしている全てのユーザーをIDごとに集計
+    related_users_count = Relationship.where(follower_id: users_ids)
+                                      .reorder(nil) # デフォルトのソートを解除
+                                      .group(:followed_id)
+                                      .count
+    # 対象ユーザーは集計から除外
+    related_users_count.delete(most_interested_user_id)
+    related_users_count
+  end
+
+  # スコア順にユーザーIDをソート
+  def self.sort_user_ids_by_scores(relation_scores, most_interested_user_id, interested_user_ids)
+    sorted_user_ids = relation_scores.keys.sort_by { |id| -relation_scores[id] }
+    sorted_user_ids.unshift(most_interested_user_id) # 最も関心のあるユーザーを先頭に追加
+    sorted_user_ids - interested_user_ids # 既にフォロー中のユーザーはおすすめ対象から除外
+  end
 end
