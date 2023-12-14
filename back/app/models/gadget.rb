@@ -102,9 +102,6 @@ class Gadget < ApplicationRecord
 
   # おすすめガジェット情報を返す
   def self.recommend_gadgets(user)
-    # ユーザーがアクションを取ったガジェットIDの取得
-    interested_gadget_ids = fetch_interested_gadget_ids(user)
-
     # ユーザーが最も関心のあるガジェットを特定
     most_interested_gadget_id = determine_most_interested_gadget(user)
 
@@ -115,15 +112,9 @@ class Gadget < ApplicationRecord
     relation_scores = calculate_related_gadgets_scores(most_interested_gadget_id, user)
 
     # スコア順にガジェットIDをソート
-    sorted_gadget_ids = sort_gadget_ids_by_scores(relation_scores, interested_gadget_ids)
+    sorted_gadget_ids = sort_gadget_ids_by_scores(relation_scores, user)
 
     Gadget.where(id: sorted_gadget_ids).order(Arel.sql("FIELD(id, #{sorted_gadget_ids.join(',')})"))
-  end
-
-  # ユーザーがアクションを取ったガジェットIDの取得
-  def self.fetch_interested_gadget_ids(user)
-    actions_arrays = fetch_actions_arrays(user)
-    actions_arrays.flatten(1).map { |item| item[0] }.uniq
   end
 
   # ユーザーがアクションを取ったガジェットIDと日時を取得
@@ -219,8 +210,21 @@ class Gadget < ApplicationRecord
   end
 
   # スコア順にガジェットIDをソート
-  def self.sort_gadget_ids_by_scores(relation_scores, interested_gadget_ids)
+  def self.sort_gadget_ids_by_scores(relation_scores, user)
+    # スコア順にガジェットIDをソート
     sorted_gadget_ids = relation_scores.keys.sort_by { |id| -relation_scores[id] }
-    sorted_gadget_ids - interested_gadget_ids # 既に関心のあるガジェットはおすすめ対象から除外
+
+    # おすすめする必要のないガジェットIDを特定
+    ignored_gadget_ids = fetch_interested_gadget_ids(user) # 既にアクション済みのガジェットID
+    ignored_gadget_ids.concat(Gadget.where(user_id: user.id).pluck(:id)) # ログインユーザー自身のガジェットIDを追加
+
+    # 既に関心のあるガジェットと自分のガジェットはおすすめ対象から除外
+    sorted_gadget_ids - ignored_gadget_ids.uniq
+  end
+
+  # ユーザーがアクションを取ったガジェットIDの取得
+  def self.fetch_interested_gadget_ids(user)
+    actions_arrays = fetch_actions_arrays(user)
+    actions_arrays.flatten(1).map { |item| item[0] }.uniq
   end
 end
