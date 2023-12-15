@@ -142,6 +142,8 @@ RSpec/ExampleLength:
     - "spec/requests/relationships_spec.rb"
     - "spec/requests/sessions_spec.rb"
     - "spec/requests/tweets_spec.rb"
+    - "spec/requests/users_filter_spec.rb"
+    - "spec/requests/gadgets_filter_spec.rb"
 
 # テスト文言は日本語とするため除外
 RSpec/ContextWording:
