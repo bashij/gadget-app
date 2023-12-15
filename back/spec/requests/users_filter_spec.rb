@@ -55,6 +55,55 @@ RSpec.describe 'UsersFilter', type: :request do
     end
   end
 
+  describe 'GET #index 検索条件:並び替え' do
+    before do
+      # 3件のuserを新規作成
+      @user1 = create(:user, name: 'ユーザーA')
+      @user2 = create(:user, name: 'ユーザーB')
+      @user3 = create(:user, name: 'ユーザーC')
+    end
+
+    context '更新が新しい順' do
+      # 並び順を設定
+      encoded_sort_condition = URI.encode_www_form_component('更新が新しい順')
+
+      specify 'リクエストが成功する' do
+        get "/api/v1/users?sort_condition=#{encoded_sort_condition}"
+        expect(response).to have_http_status :ok
+      end
+
+      specify '要求通りの情報を返す' do
+        get "/api/v1/users?sort_condition=#{encoded_sort_condition}"
+        json = JSON.parse(response.body)
+
+        expect(json['users'][0]['name']).to eq('ユーザーC')
+        expect(json['users'][1]['name']).to eq('ユーザーB')
+        expect(json['users'][2]['name']).to eq('ユーザーA')
+        expect(json['searchResultCount']).to eq(3)
+      end
+    end
+
+    context '更新が古い順' do
+      # 並び順を設定
+      encoded_sort_condition = URI.encode_www_form_component('更新が古い順')
+
+      specify 'リクエストが成功する' do
+        get "/api/v1/users?sort_condition=#{encoded_sort_condition}"
+        expect(response).to have_http_status :ok
+      end
+
+      specify '要求通りの情報を返す' do
+        get "/api/v1/users?sort_condition=#{encoded_sort_condition}"
+        json = JSON.parse(response.body)
+
+        expect(json['users'][0]['name']).to eq('ユーザーA')
+        expect(json['users'][1]['name']).to eq('ユーザーB')
+        expect(json['users'][2]['name']).to eq('ユーザーC')
+        expect(json['searchResultCount']).to eq(3)
+      end
+    end
+  end
+
   describe 'GET #following 検索条件:ユーザー名' do
     before do
       # ログイン
@@ -114,6 +163,61 @@ RSpec.describe 'UsersFilter', type: :request do
 
       expect(json['users'].length).to eq(2)
       expect(json['searchResultCount']).to eq(2)
+    end
+  end
+
+  describe 'GET #following 検索条件:並び替え' do
+    before do
+      # ログイン
+      session_params = { email: user.email, password: user.password, remember_me: 0 }
+      post '/api/v1/login', params: { session: session_params }
+      # ログインユーザーで別のユーザーをフォロー
+      @other_user1 = create(:user, name: 'ユーザーA')
+      @other_user2 = create(:user, name: 'ユーザーB')
+      @other_user3 = create(:user, name: 'ユーザーC')
+      post '/api/v1/relationships', params: { followed_id: @other_user1.id }
+      post '/api/v1/relationships', params: { followed_id: @other_user2.id }
+      post '/api/v1/relationships', params: { followed_id: @other_user3.id }
+    end
+
+    context '更新が新しい順' do
+      # 並び順を設定
+      encoded_sort_condition = URI.encode_www_form_component('更新が新しい順')
+
+      specify 'リクエストが成功する' do
+        get "/api/v1/users/#{user.id}/following?sort_condition=#{encoded_sort_condition}"
+        expect(response).to have_http_status :ok
+      end
+
+      specify '要求通りの情報を返す' do
+        get "/api/v1/users/#{user.id}/following?sort_condition=#{encoded_sort_condition}"
+        json = JSON.parse(response.body)
+
+        expect(json['users'][0]['name']).to eq('ユーザーC')
+        expect(json['users'][1]['name']).to eq('ユーザーB')
+        expect(json['users'][2]['name']).to eq('ユーザーA')
+        expect(json['searchResultCount']).to eq(3)
+      end
+    end
+
+    context '更新が古い順' do
+      # 並び順を設定
+      encoded_sort_condition = URI.encode_www_form_component('更新が古い順')
+
+      specify 'リクエストが成功する' do
+        get "/api/v1/users/#{user.id}/following?sort_condition=#{encoded_sort_condition}"
+        expect(response).to have_http_status :ok
+      end
+
+      specify '要求通りの情報を返す' do
+        get "/api/v1/users/#{user.id}/following?sort_condition=#{encoded_sort_condition}"
+        json = JSON.parse(response.body)
+
+        expect(json['users'][0]['name']).to eq('ユーザーA')
+        expect(json['users'][1]['name']).to eq('ユーザーB')
+        expect(json['users'][2]['name']).to eq('ユーザーC')
+        expect(json['searchResultCount']).to eq(3)
+      end
     end
   end
 
@@ -188,6 +292,67 @@ RSpec.describe 'UsersFilter', type: :request do
 
       expect(json['users'].length).to eq(2)
       expect(json['searchResultCount']).to eq(2)
+    end
+  end
+
+  describe 'GET #followers 検索条件:並び替え' do
+    before do
+      # 3件のuserを新規作成
+      @user1 = create(:user, name: 'ユーザーA')
+      @user2 = create(:user, name: 'ユーザーB')
+      @user3 = create(:user, name: 'ユーザーC')
+      # user1でログインし、other_userをフォロー
+      session_params = { email: @user1.email, password: @user1.password, remember_me: 0 }
+      post '/api/v1/login', params: { session: session_params }
+      post '/api/v1/relationships', params: { followed_id: other_user.id }
+      # user2でログインし、other_userをフォロー
+      session_params = { email: @user2.email, password: @user2.password, remember_me: 0 }
+      post '/api/v1/login', params: { session: session_params }
+      post '/api/v1/relationships', params: { followed_id: other_user.id }
+      # user3でログインし、other_userをフォロー
+      session_params = { email: @user3.email, password: @user3.password, remember_me: 0 }
+      post '/api/v1/login', params: { session: session_params }
+      post '/api/v1/relationships', params: { followed_id: other_user.id }
+    end
+
+    context '更新が新しい順' do
+      # 並び順を設定
+      encoded_sort_condition = URI.encode_www_form_component('更新が新しい順')
+
+      specify 'リクエストが成功する' do
+        get "/api/v1/users/#{other_user.id}/followers?sort_condition=#{encoded_sort_condition}"
+        expect(response).to have_http_status :ok
+      end
+
+      specify '要求通りの情報を返す' do
+        get "/api/v1/users/#{other_user.id}/followers?sort_condition=#{encoded_sort_condition}"
+        json = JSON.parse(response.body)
+
+        expect(json['users'][0]['name']).to eq('ユーザーC')
+        expect(json['users'][1]['name']).to eq('ユーザーB')
+        expect(json['users'][2]['name']).to eq('ユーザーA')
+        expect(json['searchResultCount']).to eq(3)
+      end
+    end
+
+    context '更新が古い順' do
+      # 並び順を設定
+      encoded_sort_condition = URI.encode_www_form_component('更新が古い順')
+
+      specify 'リクエストが成功する' do
+        get "/api/v1/users/#{other_user.id}/followers?sort_condition=#{encoded_sort_condition}"
+        expect(response).to have_http_status :ok
+      end
+
+      specify '要求通りの情報を返す' do
+        get "/api/v1/users/#{other_user.id}/followers?sort_condition=#{encoded_sort_condition}"
+        json = JSON.parse(response.body)
+
+        expect(json['users'][0]['name']).to eq('ユーザーA')
+        expect(json['users'][1]['name']).to eq('ユーザーB')
+        expect(json['users'][2]['name']).to eq('ユーザーC')
+        expect(json['searchResultCount']).to eq(3)
+      end
     end
   end
 end

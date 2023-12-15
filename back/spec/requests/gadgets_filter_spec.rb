@@ -162,7 +162,7 @@ RSpec.describe 'GadgetsFilter', type: :request do
       @gadget1 = create(:gadget, price: 100)
       @gadget2 = create(:gadget, price: 200)
       @gadget3 = create(:gadget, price: 300)
-      @gadget3 = create(:gadget, price: 400)
+      @gadget4 = create(:gadget, price: 400)
     end
 
     # 検索ワードを設定
@@ -181,6 +181,100 @@ RSpec.describe 'GadgetsFilter', type: :request do
 
       expect(json['gadgets'].length).to eq(2)
       expect(json['searchResultCount']).to eq(2)
+    end
+  end
+
+  describe 'GET #index 検索条件:並び替え' do
+    before do
+      # 4件のgadgetを新規作成
+      @gadget1 = create(:gadget, price: 100)
+      @gadget2 = create(:gadget, price: 200)
+      @gadget3 = create(:gadget, price: 300)
+      @gadget4 = create(:gadget, price: 400)
+    end
+
+    context '更新が新しい順' do
+      # 並び順を設定
+      encoded_sort_condition = URI.encode_www_form_component('更新が新しい順')
+
+      specify 'リクエストが成功する' do
+        get "/api/v1/gadgets/?sort_condition=#{encoded_sort_condition}"
+        expect(response).to have_http_status :ok
+      end
+
+      specify '要求通りの情報を返す' do
+        get "/api/v1/gadgets/?sort_condition=#{encoded_sort_condition}"
+        json = JSON.parse(response.body)
+
+        expect(json['gadgets'][0]['price']).to eq(400)
+        expect(json['gadgets'][1]['price']).to eq(300)
+        expect(json['gadgets'][2]['price']).to eq(200)
+        expect(json['gadgets'][3]['price']).to eq(100)
+        expect(json['searchResultCount']).to eq(4)
+      end
+    end
+
+    context '更新が古い順' do
+      # 並び順を設定
+      encoded_sort_condition = URI.encode_www_form_component('更新が古い順')
+
+      specify 'リクエストが成功する' do
+        get "/api/v1/gadgets/?sort_condition=#{encoded_sort_condition}"
+        expect(response).to have_http_status :ok
+      end
+
+      specify '要求通りの情報を返す' do
+        get "/api/v1/gadgets/?sort_condition=#{encoded_sort_condition}"
+        json = JSON.parse(response.body)
+
+        expect(json['gadgets'][0]['price']).to eq(100)
+        expect(json['gadgets'][1]['price']).to eq(200)
+        expect(json['gadgets'][2]['price']).to eq(300)
+        expect(json['gadgets'][3]['price']).to eq(400)
+        expect(json['searchResultCount']).to eq(4)
+      end
+    end
+
+    context '価格が安い順' do
+      # 並び順を設定
+      encoded_sort_condition = URI.encode_www_form_component('価格が安い順')
+
+      specify 'リクエストが成功する' do
+        get "/api/v1/gadgets/?sort_condition=#{encoded_sort_condition}"
+        expect(response).to have_http_status :ok
+      end
+
+      specify '要求通りの情報を返す' do
+        get "/api/v1/gadgets/?sort_condition=#{encoded_sort_condition}"
+        json = JSON.parse(response.body)
+
+        expect(json['gadgets'][0]['price']).to eq(100)
+        expect(json['gadgets'][1]['price']).to eq(200)
+        expect(json['gadgets'][2]['price']).to eq(300)
+        expect(json['gadgets'][3]['price']).to eq(400)
+        expect(json['searchResultCount']).to eq(4)
+      end
+    end
+
+    context '価格が高い順' do
+      # 並び順を設定
+      encoded_sort_condition = URI.encode_www_form_component('価格が高い順')
+
+      specify 'リクエストが成功する' do
+        get "/api/v1/gadgets/?sort_condition=#{encoded_sort_condition}"
+        expect(response).to have_http_status :ok
+      end
+
+      specify '要求通りの情報を返す' do
+        get "/api/v1/gadgets/?sort_condition=#{encoded_sort_condition}"
+        json = JSON.parse(response.body)
+
+        expect(json['gadgets'][0]['price']).to eq(400)
+        expect(json['gadgets'][1]['price']).to eq(300)
+        expect(json['gadgets'][2]['price']).to eq(200)
+        expect(json['gadgets'][3]['price']).to eq(100)
+        expect(json['searchResultCount']).to eq(4)
+      end
     end
   end
 
@@ -415,6 +509,108 @@ RSpec.describe 'GadgetsFilter', type: :request do
 
       expect(json['gadgets'].length).to eq(2)
       expect(json['searchResultCount']).to eq(2)
+    end
+  end
+
+  describe 'GET #following_users_gadgets 検索条件:並び替え' do
+    before do
+      # ログイン
+      session_params = { email: user.email, password: user.password, remember_me: 0 }
+      post '/api/v1/login', params: { session: session_params }
+      # 別のユーザーで合計4件のgadgetを新規作成
+      @other_user1 = create(:user)
+      @other_user2 = create(:user)
+      @gadget1 = create(:gadget, user: @other_user1, price: 100)
+      @gadget2 = create(:gadget, user: @other_user1, price: 200)
+      @gadget3 = create(:gadget, user: @other_user2, price: 300)
+      @gadget4 = create(:gadget, user: @other_user2, price: 400)
+      # ログインユーザーで別のユーザーをフォロー
+      post '/api/v1/relationships', params: { followed_id: @other_user1.id }
+      post '/api/v1/relationships', params: { followed_id: @other_user2.id }
+    end
+
+    context '更新が新しい順' do
+      # 並び順を設定
+      encoded_sort_condition = URI.encode_www_form_component('更新が新しい順')
+
+      specify 'リクエストが成功する' do
+        get "/api/v1/users/#{user.id}/following_users_gadgets?sort_condition=#{encoded_sort_condition}"
+        expect(response).to have_http_status :ok
+      end
+
+      specify '要求通りの情報を返す' do
+        get "/api/v1/users/#{user.id}/following_users_gadgets?sort_condition=#{encoded_sort_condition}"
+        json = JSON.parse(response.body)
+
+        expect(json['gadgets'][0]['price']).to eq(400)
+        expect(json['gadgets'][1]['price']).to eq(300)
+        expect(json['gadgets'][2]['price']).to eq(200)
+        expect(json['gadgets'][3]['price']).to eq(100)
+        expect(json['searchResultCount']).to eq(4)
+      end
+    end
+
+    context '更新が古い順' do
+      # 並び順を設定
+      encoded_sort_condition = URI.encode_www_form_component('更新が古い順')
+
+      specify 'リクエストが成功する' do
+        get "/api/v1/users/#{user.id}/following_users_gadgets?sort_condition=#{encoded_sort_condition}"
+        expect(response).to have_http_status :ok
+      end
+
+      specify '要求通りの情報を返す' do
+        get "/api/v1/users/#{user.id}/following_users_gadgets?sort_condition=#{encoded_sort_condition}"
+        json = JSON.parse(response.body)
+
+        expect(json['gadgets'][0]['price']).to eq(100)
+        expect(json['gadgets'][1]['price']).to eq(200)
+        expect(json['gadgets'][2]['price']).to eq(300)
+        expect(json['gadgets'][3]['price']).to eq(400)
+        expect(json['searchResultCount']).to eq(4)
+      end
+    end
+
+    context '価格が安い順' do
+      # 並び順を設定
+      encoded_sort_condition = URI.encode_www_form_component('価格が安い順')
+
+      specify 'リクエストが成功する' do
+        get "/api/v1/users/#{user.id}/following_users_gadgets?sort_condition=#{encoded_sort_condition}"
+        expect(response).to have_http_status :ok
+      end
+
+      specify '要求通りの情報を返す' do
+        get "/api/v1/users/#{user.id}/following_users_gadgets?sort_condition=#{encoded_sort_condition}"
+        json = JSON.parse(response.body)
+
+        expect(json['gadgets'][0]['price']).to eq(100)
+        expect(json['gadgets'][1]['price']).to eq(200)
+        expect(json['gadgets'][2]['price']).to eq(300)
+        expect(json['gadgets'][3]['price']).to eq(400)
+        expect(json['searchResultCount']).to eq(4)
+      end
+    end
+
+    context '価格が高い順' do
+      # 並び順を設定
+      encoded_sort_condition = URI.encode_www_form_component('価格が高い順')
+
+      specify 'リクエストが成功する' do
+        get "/api/v1/users/#{user.id}/following_users_gadgets?sort_condition=#{encoded_sort_condition}"
+        expect(response).to have_http_status :ok
+      end
+
+      specify '要求通りの情報を返す' do
+        get "/api/v1/users/#{user.id}/following_users_gadgets?sort_condition=#{encoded_sort_condition}"
+        json = JSON.parse(response.body)
+
+        expect(json['gadgets'][0]['price']).to eq(400)
+        expect(json['gadgets'][1]['price']).to eq(300)
+        expect(json['gadgets'][2]['price']).to eq(200)
+        expect(json['gadgets'][3]['price']).to eq(100)
+        expect(json['searchResultCount']).to eq(4)
+      end
     end
   end
 end
