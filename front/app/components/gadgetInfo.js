@@ -8,7 +8,9 @@ export default function GadgetDetail(props) {
     <table className='table table-sm'>
       <tbody>
         <tr>
-          <th>ガジェット名</th>
+          <th>
+            <span className='gadget-info-header'>ガジェット名</span>
+          </th>
           <td>
             <p className='overflow'>
               <Link href={`/gadgets/${props.gadget.id}`}>{props.gadget.name}</Link>
@@ -16,41 +18,51 @@ export default function GadgetDetail(props) {
           </td>
         </tr>
         <tr>
-          <th>カテゴリ</th>
+          <th>
+            <span className='gadget-info-header'>カテゴリ</span>
+          </th>
           <td>
             <p className='overflow'>{props.gadget.category}</p>
           </td>
         </tr>
         <tr>
-          <th>型番</th>
+          <th>
+            <span className='gadget-info-header'>型番</span>
+          </th>
           <td>
-            <p className='overflow'>{props.gadget.model_number}</p>
+            <p className='overflow'>{props.gadget.model_number || '-'}</p>
           </td>
         </tr>
         <tr>
-          <th>メーカー</th>
+          <th>
+            <span className='gadget-info-header'>メーカー</span>
+          </th>
           <td>
-            <p className='overflow'>{props.gadget.manufacturer}</p>
+            <p className='overflow'>{props.gadget.manufacturer || '-'}</p>
           </td>
         </tr>
         <tr>
-          <th>価格</th>
+          <th>
+            <span className='gadget-info-header'>価格</span>
+          </th>
           <td>
-            {props.gadget.price ? (
-              <p className='overflow'>¥{props.gadget.price.toLocaleString()}</p>
-            ) : (
-              <p className='overflow'></p>
-            )}
+            <p className='overflow'>
+              {props.gadget.price ? `¥${props.gadget.price.toLocaleString()}` : '-'}
+            </p>
           </td>
         </tr>
         <tr>
-          <th>その他スペック</th>
+          <th>
+            <span className='gadget-info-header'>その他スペック</span>
+          </th>
           <td>
-            <p className='overflow'>{props.gadget.other_info}</p>
+            <p className='overflow'>{props.gadget.other_info || '-'}</p>
           </td>
         </tr>
         <tr>
-          <th>投稿者</th>
+          <th>
+            <span className='gadget-info-header'>投稿者</span>
+          </th>
           <td>
             <p className='overflow'>
               <Image
@@ -68,7 +80,9 @@ export default function GadgetDetail(props) {
           </td>
         </tr>
         <tr>
-          <th>最終更新</th>
+          <th>
+            <span className='gadget-info-header'>最終更新</span>
+          </th>
           <td>
             <p className='overflow' suppressHydrationWarning>
               {format(new Date(props.gadget.updated_at), 'yyyy/MM/dd HH:mm')}
