@@ -308,6 +308,7 @@ body {
         -webkit-transform: translateX(-50%);
         transform: translateX(-50%);
         background-color: $color_theme4;
+        border-radius: 10px;
         @media screen and (max-width: 991px) {
           width: 60%;
         }
@@ -377,10 +378,11 @@ body {
     bottom: -10px; /*線の上下位置*/
     display: inline-block;
     width: 60%; /*線の長さ*/
-    height: 3px; /*線の太さ*/
+    height: 2px; /*線の太さ*/
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     background-color: $color_theme5;
+    border-radius: 10px;
   }
 }
 
@@ -995,10 +997,11 @@ body {
     bottom: -10px; /*線の上下位置*/
     display: inline-block;
     width: 60%; /*線の長さ*/
-    height: 3px; /*線の太さ*/
+    height: 2px; /*線の太さ*/
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     background-color: $color_theme5;
+    border-radius: 10px;
   }
   .review-content {
     background-color: $color_theme1;
