@@ -21,7 +21,7 @@ export default function Community(props) {
         alt='community-image'
         className='card-img-top'
       />
-      <div className='card-body text-center'>
+      <div className='text-center'>
         <Link href={`/communities/${props.community.id}`} className='card-title'>
           {props.community.name}
         </Link>
