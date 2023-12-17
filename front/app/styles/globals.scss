@@ -924,10 +924,22 @@ body {
 
 // ユーザー
 .user-feed {
+  width: 190px;
+  padding: 1rem;
+  margin: 0.25rem;
   display: inline-block;
   background-color: $color_theme1;
   border-radius: 10px;
   box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+  .user-info {
+    text-align: center;
+    .overflow {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-top: 0.5rem;
+    }
+  }
 }
 
 .user-profile {
