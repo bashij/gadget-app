@@ -50,9 +50,9 @@ export default function Comment(props) {
               height={150}
               alt='user-image'
             />
-            <div className='user'>
-              <Link href={`/users/${props.comment.user.id}`}>{props.comment.user.name}</Link>
-            </div>
+            <Link href={`/users/${props.comment.user.id}`}>
+              <div className='user overflow'>{props.comment.user.name}</div>
+            </Link>
           </div>
         </div>
         <div className='post-content tweet-section-right'>

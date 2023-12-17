@@ -576,15 +576,22 @@ body {
 }
 
 .tweet-section-left {
-  margin: 0.75rem 0 0rem 0.75rem;
+  margin: 0.75rem;
+  width: 155px;
   .user-info {
     flex-basis: 100px;
     border-radius: 10px;
     text-align: center;
     margin-right: 10px;
     @media screen and (max-width: 480px) {
-      display: inline-block;
-      height: 70px;
+      width: 90px;
+      font-size: 0.75rem;
+    }
+    .overflow {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-left: 0.25rem;
     }
   }
   .user {
@@ -602,6 +609,9 @@ body {
   margin: 0.25rem 0.5rem 0.75rem 0;
   flex-basis: auto;
   width: 100%;
+  @media screen and (max-width: 480px) {
+    font-size: 0.75rem;
+  }
   .tweet-icons {
     text-align: right;
     margin: 0.25rem;
