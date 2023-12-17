@@ -29,10 +29,10 @@ RSpec.describe Gadget, type: :model do
         expect(gadget.errors[:name]).to include('を入力してください')
       end
 
-      specify '51文字以上の場合、無効である' do
-        gadget.name = 'a' * 51
+      specify '21文字以上の場合、無効である' do
+        gadget.name = 'a' * 21
         gadget.valid?
-        expect(gadget.errors[:name]).to include('は50文字以内で入力してください')
+        expect(gadget.errors[:name]).to include('は20文字以内で入力してください')
       end
     end
 
@@ -43,10 +43,10 @@ RSpec.describe Gadget, type: :model do
         expect(gadget.errors[:category]).to include('を入力してください')
       end
 
-      specify '51文字以上の場合、無効である' do
-        gadget.category = 'a' * 51
+      specify '21文字以上の場合、無効である' do
+        gadget.category = 'a' * 21
         gadget.valid?
-        expect(gadget.errors[:category]).to include('は50文字以内で入力してください')
+        expect(gadget.errors[:category]).to include('は20文字以内で入力してください')
       end
 
       specify '規定値(PC本体,モニター,キーボード,マウス,オーディオ,デスク,チェア,その他)以外の場合、無効である' do
@@ -57,18 +57,18 @@ RSpec.describe Gadget, type: :model do
     end
 
     describe 'model_number' do
-      specify '101文字以上の場合、無効である' do
-        gadget.model_number = 'a' * 101
+      specify '21文字以上の場合、無効である' do
+        gadget.model_number = 'a' * 21
         gadget.valid?
-        expect(gadget.errors[:model_number]).to include('は100文字以内で入力してください')
+        expect(gadget.errors[:model_number]).to include('は20文字以内で入力してください')
       end
     end
 
     describe 'manufacturer' do
-      specify '51文字以上の場合、無効である' do
-        gadget.manufacturer = 'a' * 51
+      specify '21文字以上の場合、無効である' do
+        gadget.manufacturer = 'a' * 21
         gadget.valid?
-        expect(gadget.errors[:manufacturer]).to include('は50文字以内で入力してください')
+        expect(gadget.errors[:manufacturer]).to include('は20文字以内で入力してください')
       end
     end
 
@@ -93,10 +93,10 @@ RSpec.describe Gadget, type: :model do
     end
 
     describe 'other_info' do
-      specify '101文字以上の場合、無効である' do
-        gadget.other_info = 'a' * 101
+      specify '21文字以上の場合、無効である' do
+        gadget.other_info = 'a' * 21
         gadget.valid?
-        expect(gadget.errors[:other_info]).to include('は100文字以内で入力してください')
+        expect(gadget.errors[:other_info]).to include('は20文字以内で入力してください')
       end
     end
 

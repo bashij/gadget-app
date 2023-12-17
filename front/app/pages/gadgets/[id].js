@@ -16,7 +16,7 @@ import Comment from '@/components/comment'
 import CommentForm from '@/components/commentForm'
 import GadgetBookmark from '@/components/gadgetBookmark'
 import GadgetDelete from '@/components/gadgetDelete'
-import GadgetDetail from '@/components/gadgetDetail'
+import GadgetInfoDetail from '@/components/gadgetInfoDetail'
 import GadgetLike from '@/components/gadgetLike'
 import Layout, { siteTitle } from '@/components/layout'
 import Pagination from '@/components/pagination'
@@ -193,9 +193,6 @@ export default function Gadget(props) {
                     </span>
                   </span>
                 </div>
-              </div>
-              <div className='gadget-content'>
-                <GadgetDetail gadget={props.gadget} />
                 {props.user && props.gadget.user_id === props.user.id ? (
                   <div className='edit-links'>
                     <div className='link-section'>
@@ -212,6 +209,9 @@ export default function Gadget(props) {
                     />
                   </div>
                 ) : null}
+              </div>
+              <div className='gadget-content'>
+                <GadgetInfoDetail gadget={props.gadget} />
               </div>
             </div>
             <div className='review-header'>

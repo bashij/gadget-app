@@ -6,8 +6,8 @@ export default function UserFeed(props) {
     <>
       {props.data?.users?.map((user) => {
         return (
-          <div key={user.id} className='user-feed p-3 m-1'>
-            <div className='user-info text-center me-2'>
+          <div key={user.id} className='user-feed'>
+            <div className='user-info'>
               <Image
                 src={user.image.url === 'default.jpg' ? '/images/default.jpg' : user.image.url}
                 width={150}
@@ -15,7 +15,7 @@ export default function UserFeed(props) {
                 alt='user-image'
               />
               <Link href={`/users/${user.id}`}>
-                <div className='user mt-2'>{user.name}</div>
+                <div className='user overflow'>{user.name}</div>
               </Link>
             </div>
           </div>

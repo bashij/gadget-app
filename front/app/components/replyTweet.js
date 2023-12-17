@@ -22,9 +22,9 @@ export default function ReplyTweet(props) {
               height={150}
               alt='user-image'
             />
-            <div className='user'>
-              <Link href={`/users/${props.tweet.user.id}`}>{props.tweet.user.name}</Link>
-            </div>
+            <Link href={`/users/${props.tweet.user.id}`}>
+              <div className='user overflow'>{props.tweet.user.name}</div>
+            </Link>
           </div>
         </div>
         <div className='post-content tweet-section-right'>

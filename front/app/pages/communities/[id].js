@@ -125,9 +125,6 @@ export default function Community(props) {
                       className='card-img-top'
                     />
                   </div>
-                </div>
-                <div className='community-content'>
-                  <CommunityDetail community={props.community} membershipCount={membershipCount} />
                   {props.user && props.community.user_id === props.user.id ? (
                     <div className='edit-links'>
                       <div className='link-section'>
@@ -143,6 +140,9 @@ export default function Community(props) {
                       />
                     </div>
                   ) : null}
+                </div>
+                <div className='community-content'>
+                  <CommunityDetail community={props.community} membershipCount={membershipCount} />
                 </div>
               </div>
             </div>

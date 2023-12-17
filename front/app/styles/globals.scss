@@ -308,6 +308,7 @@ body {
         -webkit-transform: translateX(-50%);
         transform: translateX(-50%);
         background-color: $color_theme4;
+        border-radius: 10px;
         @media screen and (max-width: 991px) {
           width: 60%;
         }
@@ -377,10 +378,11 @@ body {
     bottom: -10px; /*線の上下位置*/
     display: inline-block;
     width: 60%; /*線の長さ*/
-    height: 3px; /*線の太さ*/
+    height: 2px; /*線の太さ*/
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     background-color: $color_theme5;
+    border-radius: 10px;
   }
 }
 
@@ -425,6 +427,15 @@ body {
       @media screen and (max-width: 991px) {
         height: 180px;
         width: 180px;
+      }
+    }
+    .edit-links {
+      width: 100%;
+      text-align: center;
+      font-size: 0.92rem;
+      .link-section {
+        padding: 0.75rem 0.75rem 0 0.75rem;
+        display: inline-block;
       }
     }
   }
@@ -477,15 +488,22 @@ body {
         width: 120px;
       }
     }
-    .edit-links {
-      width: 100%;
+    .details {
       text-align: center;
-      display: flex;
-      padding-top: 0.75rem;
-      margin-top: 0.75rem;
-      font-size: 0.92rem;
-      .link-section {
-        width: 50%;
+      .header {
+        border: 1px solid $color_theme4;
+        color: $color_theme8;
+        display: inline-block;
+        padding: 0 0.75rem;
+        margin: auto;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        text-align: center;
+        width: 80%;
+      }
+      .content {
+        padding: 0.5rem 0 0.75rem 0;
+        display: inline-block;
       }
     }
   }
@@ -558,15 +576,22 @@ body {
 }
 
 .tweet-section-left {
-  margin: 0.75rem 0 0rem 0.75rem;
+  margin: 0.75rem;
+  width: 155px;
   .user-info {
     flex-basis: 100px;
     border-radius: 10px;
     text-align: center;
     margin-right: 10px;
     @media screen and (max-width: 480px) {
-      display: inline-block;
-      height: 70px;
+      width: 90px;
+      font-size: 0.75rem;
+    }
+    .overflow {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-left: 0.25rem;
     }
   }
   .user {
@@ -584,6 +609,9 @@ body {
   margin: 0.25rem 0.5rem 0.75rem 0;
   flex-basis: auto;
   width: 100%;
+  @media screen and (max-width: 480px) {
+    font-size: 0.75rem;
+  }
   .tweet-icons {
     text-align: right;
     margin: 0.25rem;
@@ -754,33 +782,53 @@ body {
       }
     }
   }
+  .edit-links {
+    width: 100%;
+    text-align: center;
+    padding-top: 1.75rem;
+    font-size: 0.92rem;
+    .link-section {
+      padding: 0.75rem 0.75rem;
+      display: inline-block;
+    }
+  }
   .gadget-content {
     flex-basis: auto;
     width: 100%;
+    border-radius: 10px;
+    padding: 0.25rem;
     img {
       margin: auto;
       height: 60px;
       width: 60px;
     }
     th {
-      width: 250px;
+      font-size: 0.8rem;
+      width: 200px;
+      border: none;
+      border-radius: 10px;
+      margin: 0.25rem 0 0.25rem 0;
       @media screen and (max-width: 991px) {
         width: 300px;
+      }
+      @media screen and (max-width: 575px) {
+        width: 200px;
       }
       @media screen and (max-width: 480px) {
         width: 150px;
       }
-    }
-    .gadget-table-detail {
-      th {
-        width: 350px;
-        @media screen and (max-width: 991px) {
-          width: 300px;
-        }
-        @media screen and (max-width: 480px) {
-          width: 150px;
+      span {
+        &.gadget-info-header {
+          border: 1px solid $color_theme4;
+          border-radius: 10px;
+          padding: 0 0.75rem;
+          width: 80%;
+          display: inline-block;
         }
       }
+    }
+    td {
+      border: none;
     }
     .overflow {
       overflow: hidden;
@@ -792,19 +840,28 @@ body {
       @media screen and (max-width: 991px) {
         width: 250px;
       }
+      @media screen and (max-width: 767px) {
+        width: 150px;
+      }
       @media screen and (max-width: 480px) {
         width: 120px;
       }
     }
-    .edit-links {
-      width: 100%;
+    .gadget-detail {
       text-align: center;
-      display: flex;
-      padding-top: 0.75rem;
-      margin-top: 0.75rem;
-      font-size: 0.92rem;
-      .link-section {
-        width: 50%;
+      .header {
+        border: 1px solid $color_theme4;
+        color: $color_theme8;
+        display: inline-block;
+        padding: 0 0.75rem;
+        margin: auto;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        text-align: center;
+        width: 80%;
+      }
+      .content {
+        padding: 0.5rem 0 0.75rem 0;
         display: inline-block;
       }
     }
@@ -877,10 +934,22 @@ body {
 
 // ユーザー
 .user-feed {
+  width: 190px;
+  padding: 1rem;
+  margin: 0.25rem;
   display: inline-block;
   background-color: $color_theme1;
   border-radius: 10px;
   box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+  .user-info {
+    text-align: center;
+    .overflow {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-top: 0.5rem;
+    }
+  }
 }
 
 .user-profile {
@@ -995,10 +1064,11 @@ body {
     bottom: -10px; /*線の上下位置*/
     display: inline-block;
     width: 60%; /*線の長さ*/
-    height: 3px; /*線の太さ*/
+    height: 2px; /*線の太さ*/
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     background-color: $color_theme5;
+    border-radius: 10px;
   }
   .review-content {
     background-color: $color_theme1;

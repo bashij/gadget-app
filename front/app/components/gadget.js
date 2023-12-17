@@ -7,7 +7,7 @@ import { faUsers } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import GadgetBookmark from '@/components/gadgetBookmark'
-import GadgetDetail from '@/components/gadgetDetail'
+import GadgetInfo from '@/components/gadgetInfo'
 import GadgetLike from '@/components/gadgetLike'
 import ReviewRequest from '@/components/reviewRequest'
 
@@ -63,7 +63,7 @@ export default function Gadget(props) {
         </div>
       </div>
       <div className='gadget-content'>
-        <GadgetDetail gadget={props.gadget} />
+        <GadgetInfo gadget={props.gadget} />
       </div>
     </div>
   )

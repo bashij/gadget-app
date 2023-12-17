@@ -25,10 +25,10 @@ RSpec.describe Community, type: :model do
         expect(community.errors[:name]).to include('を入力してください')
       end
 
-      specify '51文字以上の場合、無効である' do
-        community.name = 'a' * 51
+      specify '21文字以上の場合、無効である' do
+        community.name = 'a' * 21
         community.valid?
-        expect(community.errors[:name]).to include('は50文字以内で入力してください')
+        expect(community.errors[:name]).to include('は20文字以内で入力してください')
       end
     end
   end
