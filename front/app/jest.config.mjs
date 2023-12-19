@@ -14,7 +14,7 @@ const config = {
   testEnvironment: 'jest-environment-jsdom',
 
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/$1',
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
 
   globalSetup: '<rootDir>/__tests__/setupEnv.js',
