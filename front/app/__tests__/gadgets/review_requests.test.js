@@ -1,6 +1,6 @@
+import RequestUsers from '@/pages/gadgets/[id]/review_requests'
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
-import RequestUsers from '../../pages/gadgets/[id]/review_requests'
 import { DUMMY_DATA_REQUEST_USERS } from '../gadgets/dummyData'
 
 const props = DUMMY_DATA_REQUEST_USERS

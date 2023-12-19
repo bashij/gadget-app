@@ -1,9 +1,9 @@
+import Home from '@/pages/index'
 import '@testing-library/jest-dom'
 import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import { enableFetchMocks } from 'jest-fetch-mock'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import Home from '../pages/index'
 import { DUMMY_DATA_INDEX as GADGETS_DUMMY_DATA_INDEX } from './gadgets/dummyData'
 import { DUMMY_DATA_INDEX_RECOMMEND as USERS_DUMMY_DATA_INDEX } from './users/dummyData'
 

@@ -1,10 +1,10 @@
+import FollowingUsersGadgets from '@/pages/gadgets/followingUsersGadgets'
 import '@testing-library/jest-dom'
 import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import { enableFetchMocks } from 'jest-fetch-mock'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { SWRConfig } from 'swr'
-import FollowingUsersGadgets from '../../pages/gadgets/followingUsersGadgets'
 import { DUMMY_DATA_INDEX, DUMMY_DATA_USER } from './dummyData'
 
 const props = DUMMY_DATA_USER

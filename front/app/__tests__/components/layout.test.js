@@ -1,3 +1,4 @@
+import Layout from '@/components/common/layout'
 import '@testing-library/jest-dom'
 import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -5,7 +6,6 @@ import { enableFetchMocks } from 'jest-fetch-mock'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { useRouter } from 'next/router'
-import Layout from '../../components/layout'
 
 // ログインユーザー情報
 const props = {

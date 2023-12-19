@@ -1,10 +1,10 @@
+import Edit from '@/pages/users/[id]/edit'
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { useRouter } from 'next/router'
-import Edit from '../../pages/users/[id]/edit'
 import { DUMMY_DATA_USER_DETAIL } from '../users/dummyData'
 
 const props = DUMMY_DATA_USER_DETAIL

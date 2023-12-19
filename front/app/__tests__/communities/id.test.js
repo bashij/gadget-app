@@ -1,3 +1,4 @@
+import Community from '@/pages/communities/[id]'
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -5,7 +6,6 @@ import { enableFetchMocks } from 'jest-fetch-mock'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { useRouter } from 'next/router'
-import Community from '../../pages/communities/[id]'
 import { DUMMY_DATA_COMPONENT, DUMMY_DATA_MEMBERSHIPS } from '../communities/dummyData'
 
 const props = DUMMY_DATA_COMPONENT
