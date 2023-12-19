@@ -6,10 +6,10 @@ import Link from 'next/link'
 import { faUsers } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import GadgetBookmark from '@/components/gadgetBookmark'
-import GadgetInfo from '@/components/gadgetInfo'
-import GadgetLike from '@/components/gadgetLike'
-import ReviewRequest from '@/components/reviewRequest'
+import GadgetBookmark from '@/components/gadgets/gadgetBookmark'
+import GadgetInfo from '@/components/gadgets/gadgetInfo'
+import GadgetLike from '@/components/gadgets/gadgetLike'
+import ReviewRequest from '@/components/gadgets/reviewRequest'
 
 export default function Gadget(props) {
   const [reviewRequestCount, setReviewRequestCount] = useState(props.gadget.review_requests.length)

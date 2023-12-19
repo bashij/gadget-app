@@ -9,7 +9,7 @@ import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { toast } from 'react-toastify'
 
-import Logout from '@/components/logout'
+import Logout from '@/components/auth/logout'
 import 'react-toastify/dist/ReactToastify.css'
 
 export const siteTitle = 'GadgetLink'

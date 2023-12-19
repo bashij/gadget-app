@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import CommunityMembership from '@/components/communityMembership'
+import CommunityMembership from '@/components/communities/communityMembership'
 
 export default function Community(props) {
   const [membershipCount, setMembershipCount] = useState(props.community.memberships.length)

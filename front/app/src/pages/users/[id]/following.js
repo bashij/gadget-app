@@ -4,10 +4,10 @@ import Head from 'next/head'
 
 import useSWR from 'swr'
 
-import Layout, { siteTitle } from '@/components/layout'
-import Pagination from '@/components/pagination'
-import UserFeed from '@/components/userFeed'
-import UserSearch from '@/components/userSearch'
+import Layout, { siteTitle } from '@/components/common/layout'
+import Pagination from '@/components/common/pagination'
+import UserFeed from '@/components/users/userFeed'
+import UserSearch from '@/components/users/userSearch'
 import apiClient from '@/utils/apiClient'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())

@@ -1,4 +1,4 @@
-import Gadget from '@/components/gadget'
+import Gadget from '@/components/gadgets/gadget'
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'

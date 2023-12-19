@@ -1,4 +1,4 @@
-import GuestLogin from '@/components/guestLogin'
+import GuestLogin from '@/components/auth/guestLogin'
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'

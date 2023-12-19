@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 
 import { toast, ToastContainer } from 'react-toastify'
 
-import Layout, { siteTitle } from '@/components/layout'
+import Layout, { siteTitle } from '@/components/common/layout'
 import apiClient from '@/utils/apiClient'
 
 import 'react-toastify/dist/ReactToastify.css'

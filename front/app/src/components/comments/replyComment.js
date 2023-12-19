@@ -4,7 +4,7 @@ import Link from 'next/link'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { ja } from 'date-fns/locale'
 
-import CommentDelete from '@/components/commentDelete'
+import CommentDelete from '@/components/comments/commentDelete'
 
 export default function ReplyComment(props) {
   return (

@@ -8,11 +8,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { ja } from 'date-fns/locale'
 
-import ReplyTweet from '@/components/replyTweet'
-import TweetBookmark from '@/components/tweetBookmark'
-import TweetDelete from '@/components/tweetDelete'
-import TweetForm from '@/components/tweetForm'
-import TweetLike from '@/components/tweetLike'
+import ReplyTweet from '@/components/tweets/replyTweet'
+import TweetBookmark from '@/components/tweets/tweetBookmark'
+import TweetDelete from '@/components/tweets/tweetDelete'
+import TweetForm from '@/components/tweets/tweetForm'
+import TweetLike from '@/components/tweets/tweetLike'
 
 export default function Tweet(props) {
   const relatedReplies = props.replies?.filter((reply) => reply.parent_id === props.tweet.id)

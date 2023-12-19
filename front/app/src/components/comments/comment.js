@@ -8,9 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { ja } from 'date-fns/locale'
 
-import CommentDelete from '@/components/commentDelete'
-import CommentForm from '@/components/commentForm'
-import ReplyComment from '@/components/replyComment'
+import CommentDelete from '@/components/comments/commentDelete'
+import CommentForm from '@/components/comments/commentForm'
+import ReplyComment from '@/components/comments/replyComment'
 
 export default function Comment(props) {
   const relatedReplies = props.replies?.filter((reply) => reply.parent_id === props.comment.id)

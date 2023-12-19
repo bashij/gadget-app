@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import Layout, { siteTitle } from '@/components/layout'
+import Layout, { siteTitle } from '@/components/common/layout'
 import apiClient from '@/utils/apiClient'
 
 export default function Help(props) {

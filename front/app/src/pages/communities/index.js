@@ -9,9 +9,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { toast, ToastContainer } from 'react-toastify'
 import useSWR from 'swr'
 
-import Community from '@/components/community'
-import Layout, { siteTitle } from '@/components/layout'
-import Pagination from '@/components/pagination'
+import Layout, { siteTitle } from '@/components/common/layout'
+import Pagination from '@/components/common/pagination'
+import Community from '@/components/communities/community'
 import apiClient from '@/utils/apiClient'
 
 import 'react-toastify/dist/ReactToastify.css'

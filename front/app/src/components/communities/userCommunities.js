@@ -9,8 +9,8 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import useSWR from 'swr'
 
-import Community from '@/components/community'
-import Pagination from '@/components/pagination'
+import Pagination from '@/components/common/pagination'
+import Community from '@/components/communities/community'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 

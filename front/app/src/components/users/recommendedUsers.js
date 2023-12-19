@@ -14,9 +14,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ToastContainer } from 'react-toastify'
 import useSWR from 'swr'
 
-import Pagination from '@/components/pagination'
-import UserFeed from '@/components/userFeed'
-import UserSearch from '@/components/userSearch'
+import Pagination from '@/components/common/pagination'
+import UserFeed from '@/components/users/userFeed'
+import UserSearch from '@/components/users/userSearch'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 

@@ -14,9 +14,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ToastContainer } from 'react-toastify'
 import useSWR from 'swr'
 
-import Gadget from '@/components/gadget'
-import GadgetSearch from '@/components/gadgetSearch'
-import Pagination from '@/components/pagination'
+import Pagination from '@/components/common/pagination'
+import Gadget from '@/components/gadgets/gadget'
+import GadgetSearch from '@/components/gadgets/gadgetSearch'
 
 import 'react-toastify/dist/ReactToastify.css'
 

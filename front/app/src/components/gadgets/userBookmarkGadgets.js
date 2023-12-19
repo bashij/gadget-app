@@ -9,8 +9,8 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import useSWR from 'swr'
 
-import Gadget from '@/components/gadget'
-import Pagination from '@/components/pagination'
+import Pagination from '@/components/common/pagination'
+import Gadget from '@/components/gadgets/gadget'
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 

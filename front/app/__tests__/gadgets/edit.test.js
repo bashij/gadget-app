@@ -17,7 +17,7 @@ jest.mock('next/router', () => ({
 }))
 
 // MarkdownEditorコンポーネントをモック化
-jest.mock('@/components/markdownEditor', () => {
+jest.mock('@/components/gadgets/markdownEditor', () => {
   return function MockedMarkdownEditor(props) {
     return (
       <div>

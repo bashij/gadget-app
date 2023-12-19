@@ -2,9 +2,9 @@ import { useState } from 'react'
 
 import Head from 'next/head'
 
-import Layout, { siteTitle } from '@/components/layout'
-import Pagination from '@/components/pagination'
-import UserFeed from '@/components/userFeed'
+import Layout, { siteTitle } from '@/components/common/layout'
+import Pagination from '@/components/common/pagination'
+import UserFeed from '@/components/users/userFeed'
 import apiClient from '@/utils/apiClient'
 
 export default function RequestUsers(props) {
