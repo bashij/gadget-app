@@ -1,3 +1,4 @@
+import Gadget from '@/pages/gadgets/[id]'
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -7,7 +8,6 @@ import { enableFetchMocks } from 'jest-fetch-mock'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { useRouter } from 'next/router'
-import Gadget from '../../pages/gadgets/[id]'
 import { DUMMY_DATA_COMMENTS, DUMMY_DATA_COMPONENT } from '../gadgets/dummyData'
 
 const props = DUMMY_DATA_COMPONENT

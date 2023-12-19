@@ -1,10 +1,10 @@
+import Login from '@/pages/login'
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { useRouter } from 'next/router'
-import Login from '../pages/login'
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockReturnValue({

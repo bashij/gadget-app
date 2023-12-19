@@ -1,10 +1,10 @@
+import Users from '@/pages/users/index'
 import '@testing-library/jest-dom'
 import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import { enableFetchMocks } from 'jest-fetch-mock'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { SWRConfig } from 'swr'
-import Users from '../../pages/users/index'
 import { DUMMY_DATA_INDEX } from './dummyData'
 
 enableFetchMocks()

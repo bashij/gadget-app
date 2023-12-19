@@ -1,10 +1,10 @@
+import Following from '@/pages/users/[id]/following'
 import '@testing-library/jest-dom'
 import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import { enableFetchMocks } from 'jest-fetch-mock'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { SWRConfig } from 'swr'
-import Following from '../../pages/users/[id]/following'
 import { DUMMY_DATA_RELATIONSHIPS, DUMMY_DATA_USER_DETAIL } from './dummyData'
 
 const props = DUMMY_DATA_USER_DETAIL

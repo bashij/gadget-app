@@ -1,3 +1,4 @@
+import Tweet from '@/components/tweet'
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -6,7 +7,6 @@ import { ja } from 'date-fns/locale'
 import { enableFetchMocks } from 'jest-fetch-mock'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import Tweet from '../../components/tweet'
 import { DUMMY_DATA_COMPONENT } from '../tweets/dummyData'
 
 const props = DUMMY_DATA_COMPONENT

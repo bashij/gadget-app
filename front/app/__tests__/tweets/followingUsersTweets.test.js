@@ -1,3 +1,4 @@
+import FollowingUsersTweets from '@/pages/tweets/followingUsersTweets'
 import '@testing-library/jest-dom'
 import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
@@ -6,7 +7,6 @@ import { enableFetchMocks } from 'jest-fetch-mock'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { SWRConfig } from 'swr'
-import FollowingUsersTweets from '../../pages/tweets/followingUsersTweets'
 import { DUMMY_DATA_INDEX, DUMMY_DATA_USER } from './dummyData'
 
 const props = DUMMY_DATA_USER

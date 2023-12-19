@@ -1,10 +1,10 @@
+import Community from '@/components/community'
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { enableFetchMocks } from 'jest-fetch-mock'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import Community from '../../components/community'
 import { DUMMY_DATA_COMPONENT } from '../communities/dummyData'
 
 const props = DUMMY_DATA_COMPONENT
