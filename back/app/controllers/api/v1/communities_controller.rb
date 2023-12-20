@@ -8,12 +8,10 @@ module Api
         # 全てのコミュニティ情報
         @communities = Community.order(created_at: :desc)
         # コミュニティのページネーション情報（デフォルトは10件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 10
-        @communities_paginated = @communities.page(paged).per(per)
-        @pagination = pagination(@communities_paginated)
+        @paginated_collection = paginated_collection(@communities, 10)
+        @pagination_info = pagination_info(@paginated_collection)
 
-        render json: { communities: @communities_paginated, pagination: @pagination }, include: %i[user memberships]
+        render json: { communities: @paginated_collection, pagination: @pagination_info }, include: %i[user memberships]
       end
 
       def user_communities
@@ -21,12 +19,10 @@ module Api
         user = User.find(params[:id])
         @communities = user.joining_communities_reordered
         # コミュニティのページネーション情報（デフォルトは10件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 10
-        @communities_paginated = @communities.page(paged).per(per)
-        @pagination = pagination(@communities_paginated)
+        @paginated_collection = paginated_collection(@communities, 10)
+        @pagination_info = pagination_info(@paginated_collection)
 
-        render json: { communities: @communities_paginated, pagination: @pagination }, include: %i[user memberships]
+        render json: { communities: @paginated_collection, pagination: @pagination_info }, include: %i[user memberships]
       end
 
       def show

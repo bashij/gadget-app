@@ -9,18 +9,16 @@ module Api
         @gadget = Gadget.find(params[:gadget_id])
         @comments = @gadget.comments.where(parent_id: nil).order(created_at: :desc)
         # ページネーション情報（デフォルトは10件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 10
-        @comments_paginated = @comments.page(paged).per(per)
-        @pagination = pagination(@comments_paginated)
+        @paginated_collection = paginated_collection(@comments, 10)
+        @pagination_info = pagination_info(@paginated_collection)
         # 全コメントのリプライ件数情報
         @reply_counts = Comment.reply_count
-        ids = @comments_paginated.pluck(:id)
+        ids = @paginated_collection.pluck(:id)
         @replies = Comment.where(parent_id: ids)
 
         render json: {
-          comments: @comments_paginated,
-          pagination: @pagination,
+          comments: @paginated_collection,
+          pagination: @pagination_info,
           replies: @replies,
           replyCounts: @reply_counts
         }, include: [:user]

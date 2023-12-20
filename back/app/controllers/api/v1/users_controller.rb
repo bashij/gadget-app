@@ -9,49 +9,41 @@ module Api
         # 全てのユーザー情報(検索条件があれば一致するもののみ)
         @users = User.filter_by(params)
         # ユーザーのページネーション情報（デフォルトは5件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 5
-        @users_paginated = @users.page(paged).per(per)
-        @pagination = pagination(@users_paginated)
+        @paginated_collection = paginated_collection(@users, 5)
+        @pagination_info = pagination_info(@paginated_collection)
 
-        render json: { users: @users_paginated, pagination: @pagination, searchResultCount: @users.count }
+        render json: { users: @paginated_collection, pagination: @pagination_info, searchResultCount: @users.count }
       end
 
       def following
         # 詳細ページのユーザーがフォローしている全てのユーザー情報(検索条件があれば一致するもののみ)
         @users = User.find(params[:id]).following.filter_by(params)
         # ユーザーのページネーション情報（デフォルトは5件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 5
-        @users_paginated = @users.page(paged).per(per)
-        @pagination = pagination(@users_paginated)
+        @paginated_collection = paginated_collection(@users, 5)
+        @pagination_info = pagination_info(@paginated_collection)
 
-        render json: { users: @users_paginated, pagination: @pagination, searchResultCount: @users.count }
+        render json: { users: @paginated_collection, pagination: @pagination_info, searchResultCount: @users.count }
       end
 
       def followers
         # 詳細ページのユーザーがフォローされている全てのユーザー情報(検索条件があれば一致するもののみ)
         @users = User.find(params[:id]).followers.filter_by(params)
         # ユーザーのページネーション情報（デフォルトは5件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 5
-        @users_paginated = @users.page(paged).per(per)
-        @pagination = pagination(@users_paginated)
+        @paginated_collection = paginated_collection(@users, 5)
+        @pagination_info = pagination_info(@paginated_collection)
 
-        render json: { users: @users_paginated, pagination: @pagination, searchResultCount: @users.count }
+        render json: { users: @paginated_collection, pagination: @pagination_info, searchResultCount: @users.count }
       end
 
       def recommend
         # ログインユーザーへのおすすめユーザー情報(検索条件があれば一致するもののみ)
         @users = User.recommend_users(User.find(params[:id])).filter_by(params)
 
-        # ユーザーのページネーション情報（デフォルトは5件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 2
-        @users_paginated = @users.page(paged).per(per)
-        @pagination = pagination(@users_paginated)
+        # ユーザーのページネーション情報（デフォルトは2件ずつの表示とする）
+        @paginated_collection = paginated_collection(@users, 2)
+        @pagination_info = pagination_info(@paginated_collection)
 
-        render json: { users: @users_paginated, pagination: @pagination, searchResultCount: @users.count }
+        render json: { users: @paginated_collection, pagination: @pagination_info, searchResultCount: @users.count }
       end
 
       def show

@@ -9,12 +9,10 @@ module Api
         @gadget = Gadget.find(params[:gadget_id])
         @users = @gadget.requesting_users
         # ページネーション情報（デフォルトは10件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 10
-        @users_paginated = @users.page(paged).per(per)
-        @pagination = pagination(@users_paginated)
+        @paginated_collection = paginated_collection(@users, 10)
+        @pagination_info = pagination_info(@paginated_collection)
 
-        render json: { users: @users_paginated, pagination: @pagination }
+        render json: { users: @paginated_collection, pagination: @pagination_info }
       end
 
       def create

@@ -9,12 +9,10 @@ module Api
         @community = Community.find(params[:community_id])
         @members = @community.joined_members
         # ページネーション情報（デフォルトは10件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 10
-        @members_paginated = @members.page(paged).per(per)
-        @pagination = pagination(@members_paginated)
+        @paginated_collection = paginated_collection(@members, 10)
+        @pagination_info = pagination_info(@paginated_collection)
 
-        render json: { users: @members_paginated, pagination: @pagination }
+        render json: { users: @paginated_collection, pagination: @pagination_info }
       end
 
       def create

@@ -8,10 +8,8 @@ module Api
         # 全てのガジェット情報(検索条件があれば一致するもののみ)
         @gadgets = Gadget.filter_by(params)
         # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 5
-        @gadgets_paginated = @gadgets.page(paged).per(per)
-        @pagination = pagination(@gadgets_paginated)
+        @paginated_collection = paginated_collection(@gadgets, 5)
+        @pagination_info = pagination_info(@paginated_collection)
 
         render json: { gadgets: @gadgets_paginated, pagination: @pagination, searchResultCount: @gadgets.count },
                include: %i[user gadget_likes gadget_bookmarks review_requests]
@@ -22,10 +20,8 @@ module Api
         user = User.find(params[:id])
         @gadgets = user.gadgets.order(created_at: :desc)
         # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 5
-        @gadgets_paginated = @gadgets.page(paged).per(per)
-        @pagination = pagination(@gadgets_paginated)
+        @paginated_collection = paginated_collection(@gadgets, 5)
+        @pagination_info = pagination_info(@paginated_collection)
 
         render json: { gadgets: @gadgets_paginated, pagination: @pagination },
                include: %i[user gadget_likes gadget_bookmarks review_requests]
@@ -36,10 +32,8 @@ module Api
         user = User.find(params[:id])
         @gadgets = user.bookmarked_gadgets_reordered
         # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 5
-        @gadgets_paginated = @gadgets.page(paged).per(per)
-        @pagination = pagination(@gadgets_paginated)
+        @paginated_collection = paginated_collection(@gadgets, 5)
+        @pagination_info = pagination_info(@paginated_collection)
 
         render json: { gadgets: @gadgets_paginated, pagination: @pagination },
                include: %i[user gadget_likes gadget_bookmarks review_requests]
@@ -50,10 +44,8 @@ module Api
         user = User.find(params[:id])
         @gadgets = user.following_users_gadgets(params)
         # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 5
-        @gadgets_paginated = @gadgets.page(paged).per(per)
-        @pagination = pagination(@gadgets_paginated)
+        @paginated_collection = paginated_collection(@gadgets, 5)
+        @pagination_info = pagination_info(@paginated_collection)
 
         render json: { gadgets: @gadgets_paginated, pagination: @pagination, searchResultCount: @gadgets.count },
                include: %i[user gadget_likes gadget_bookmarks review_requests]
@@ -62,6 +54,9 @@ module Api
       def recommend
         # ログインユーザーへのおすすめガジェット情報(検索条件があれば一致するもののみ)
         @gadgets = Gadget.recommend_gadgets(User.find(params[:id])).filter_by(params)
+        # ガジェットのページネーション情報（デフォルトは2件ずつの表示とする）
+        @paginated_collection = paginated_collection(@gadgets, 2)
+        @pagination_info = pagination_info(@paginated_collection)
 
         # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
         paged = params[:paged]
