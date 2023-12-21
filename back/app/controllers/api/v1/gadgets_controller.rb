@@ -7,74 +7,42 @@ module Api
       def index
         # 全てのガジェット情報(検索条件があれば一致するもののみ)
         @gadgets = Gadget.filter_by(params)
-        # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 5
-        @gadgets_paginated = @gadgets.page(paged).per(per)
-        @pagination = pagination(@gadgets_paginated)
 
-        render json: { gadgets: @gadgets_paginated, pagination: @pagination, searchResultCount: @gadgets.count },
-               include: %i[user gadget_likes gadget_bookmarks review_requests]
+        render_gadgets_json
       end
 
       def user_gadgets
         # 特定のユーザーが登録しているガジェット情報
         user = User.find(params[:id])
         @gadgets = user.gadgets.order(created_at: :desc)
-        # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 5
-        @gadgets_paginated = @gadgets.page(paged).per(per)
-        @pagination = pagination(@gadgets_paginated)
 
-        render json: { gadgets: @gadgets_paginated, pagination: @pagination },
-               include: %i[user gadget_likes gadget_bookmarks review_requests]
+        render_gadgets_json(include_search_result_count: false)
       end
 
       def user_bookmark_gadgets
         # 特定のユーザーがブックマークしているガジェット情報
         user = User.find(params[:id])
         @gadgets = user.bookmarked_gadgets_reordered
-        # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 5
-        @gadgets_paginated = @gadgets.page(paged).per(per)
-        @pagination = pagination(@gadgets_paginated)
 
-        render json: { gadgets: @gadgets_paginated, pagination: @pagination },
-               include: %i[user gadget_likes gadget_bookmarks review_requests]
+        render_gadgets_json(include_search_result_count: false)
       end
 
       def following_users_gadgets
         # ログインユーザーがフォローしているユーザーのガジェット情報(検索条件があれば一致するもののみ)
         user = User.find(params[:id])
         @gadgets = user.following_users_gadgets(params)
-        # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 5
-        @gadgets_paginated = @gadgets.page(paged).per(per)
-        @pagination = pagination(@gadgets_paginated)
 
-        render json: { gadgets: @gadgets_paginated, pagination: @pagination, searchResultCount: @gadgets.count },
-               include: %i[user gadget_likes gadget_bookmarks review_requests]
+        render_gadgets_json
       end
 
       def recommend
         # ログインユーザーへのおすすめガジェット情報(検索条件があれば一致するもののみ)
         @gadgets = Gadget.recommend_gadgets(User.find(params[:id])).filter_by(params)
 
-        # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 2
-        @gadgets_paginated = @gadgets.page(paged).per(per)
-        @pagination = pagination(@gadgets_paginated)
-
-        render json: { gadgets: @gadgets_paginated, pagination: @pagination, searchResultCount: @gadgets.count },
-               include: %i[user gadget_likes gadget_bookmarks review_requests]
+        render_gadgets_json(limit_value: 2)
       end
 
       def show
-        # 表示対象ガジェット
         @gadget = Gadget.find(params[:id])
         render json: { gadget: @gadget },
                include: %i[user comments review_requests gadget_likes gadget_bookmarks]
@@ -117,6 +85,26 @@ module Api
         def correct_user
           @gadget = current_user.gadgets.find_by(id: params[:id])
           render json: { status: 'failure', message: [I18n.t('common.correct_user')] } if @gadget.nil?
+        end
+
+        def render_gadgets_json(include_search_result_count: true, limit_value: 5)
+          paginate_gadgets(limit_value)
+
+          response_data = {
+            gadgets: @paginated_collection,
+            pagination: @pagination_info
+          }
+
+          response_data[:searchResultCount] = @gadgets.count if include_search_result_count
+
+          render json: response_data,
+                 include: %i[user gadget_likes gadget_bookmarks review_requests]
+        end
+
+        # ガジェットのページネーション情報（デフォルトは5件ずつの表示とする）
+        def paginate_gadgets(limit_value)
+          @paginated_collection = paginated_collection(@gadgets, limit_value)
+          @pagination_info = pagination_info(@paginated_collection)
         end
     end
   end

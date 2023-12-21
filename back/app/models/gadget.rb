@@ -45,18 +45,6 @@ class Gadget < ApplicationRecord
     review_requests.pluck(:user_id).include?(user.id)
   end
 
-  # ガジェットに紐づく親コメントを返す
-  def parent_comments
-    comments.where(parent_id: nil).includes(:user)
-  end
-
-  # 特定ユーザーのガジェットを整形して返す
-  def self.own_gadget(user, paginate)
-    Gadget.includes(:user, :gadget_likes, :gadget_bookmarks, :review_requests)
-          .where(user_id: user)
-          .page(paginate)
-  end
-
   # 指定の値を部分一致で検索
   def self.like_scope(attribute, value)
     if value.present?

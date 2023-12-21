@@ -8,22 +8,8 @@ module Api
         # ガジェットへの全てのコメント情報
         @gadget = Gadget.find(params[:gadget_id])
         @comments = @gadget.comments.where(parent_id: nil).order(created_at: :desc)
-        # ページネーション情報（デフォルトは10件ずつの表示とする）
-        paged = params[:paged]
-        per = params[:per].presence || 10
-        @comments_paginated = @comments.page(paged).per(per)
-        @pagination = pagination(@comments_paginated)
-        # 全コメントのリプライ件数情報
-        @reply_counts = Comment.reply_count
-        ids = @comments_paginated.pluck(:id)
-        @replies = Comment.where(parent_id: ids)
 
-        render json: {
-          comments: @comments_paginated,
-          pagination: @pagination,
-          replies: @replies,
-          replyCounts: @reply_counts
-        }, include: [:user]
+        render_comments_json
       end
 
       def create
@@ -60,6 +46,33 @@ module Api
         def correct_user
           @comment = current_user.comments.find_by(id: params[:id])
           render json: { status: 'failure', message: [I18n.t('common.correct_user')] } if @comment.nil?
+        end
+
+        def render_comments_json
+          paginate_comments
+          fetch_replies_info
+
+          render json: {
+            comments: @paginated_collection,
+            pagination: @pagination_info,
+            replies: @replies,
+            replyCounts: @reply_counts
+          }, include: [:user]
+        end
+
+        # コメントのページネーション情報を取得（デフォルトは10件ずつの表示とする）
+        def paginate_comments(limit_value = 10)
+          @paginated_collection = paginated_collection(@comments, limit_value)
+          @pagination_info = pagination_info(@paginated_collection)
+        end
+
+        # リプライ関連情報を取得
+        def fetch_replies_info
+          # 全コメントのリプライ件数
+          @reply_counts = Comment.reply_count
+          # 一覧コメントへのリプライ
+          ids = @paginated_collection.pluck(:id)
+          @replies = Comment.where(parent_id: ids)
         end
     end
   end
