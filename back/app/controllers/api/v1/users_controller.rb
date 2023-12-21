@@ -99,7 +99,7 @@ module Api
 
         def render_users_json(limit_value: 5)
           paginate_users(limit_value)
-          
+
           response_data = {
             users: @paginated_collection,
             pagination: @pagination_info,

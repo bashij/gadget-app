@@ -70,7 +70,7 @@ module Api
             pagination: @pagination_info
           }, include: %i[user memberships]
         end
-  
+
         # コミュニティのページネーション情報を取得（デフォルトは10件ずつの表示とする）
         def paginate_communities(limit_value = 10)
           @paginated_collection = paginated_collection(@communities, limit_value)

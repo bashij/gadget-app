@@ -59,13 +59,13 @@ module Api
             replyCounts: @reply_counts
           }, include: [:user]
         end
-  
+
         # コメントのページネーション情報を取得（デフォルトは10件ずつの表示とする）
         def paginate_comments(limit_value = 10)
           @paginated_collection = paginated_collection(@comments, limit_value)
           @pagination_info = pagination_info(@paginated_collection)
         end
-  
+
         # リプライ関連情報を取得
         def fetch_replies_info
           # 全コメントのリプライ件数

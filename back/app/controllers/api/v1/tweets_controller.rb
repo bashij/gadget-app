@@ -80,13 +80,13 @@ module Api
             replyCounts: @reply_counts
           }, include: %i[user tweet_likes tweet_bookmarks]
         end
-  
+
         # ツイートのページネーション情報を取得（デフォルトは5件ずつの表示とする）
         def paginate_tweets(limit_value = 5)
           @paginated_collection = paginated_collection(@tweets, limit_value)
           @pagination_info = pagination_info(@paginated_collection)
         end
-  
+
         # リプライ関連情報を取得
         def fetch_replies_info
           # 全ツイートのリプライ件数
