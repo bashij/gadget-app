@@ -7,22 +7,16 @@ module Api
       def index
         # 全てのコミュニティ情報
         @communities = Community.order(created_at: :desc)
-        # コミュニティのページネーション情報（デフォルトは10件ずつの表示とする）
-        @paginated_collection = paginated_collection(@communities, 10)
-        @pagination_info = pagination_info(@paginated_collection)
 
-        render json: { communities: @paginated_collection, pagination: @pagination_info }, include: %i[user memberships]
+        render_communities_json
       end
 
       def user_communities
         # 特定のユーザーが参加しているコミュニティ情報
         user = User.find(params[:id])
         @communities = user.joining_communities_reordered
-        # コミュニティのページネーション情報（デフォルトは10件ずつの表示とする）
-        @paginated_collection = paginated_collection(@communities, 10)
-        @pagination_info = pagination_info(@paginated_collection)
 
-        render json: { communities: @paginated_collection, pagination: @pagination_info }, include: %i[user memberships]
+        render_communities_json
       end
 
       def show
@@ -66,6 +60,21 @@ module Api
         def correct_user
           @community = current_user.communities.find_by(id: params[:id])
           render json: { status: 'failure', message: [I18n.t('common.correct_user')] } if @community.nil?
+        end
+
+        def render_communities_json
+          paginate_communities
+
+          render json: {
+            communities: @paginated_collection,
+            pagination: @pagination_info
+          }, include: %i[user memberships]
+        end
+  
+        # コミュニティのページネーション情報を取得（デフォルトは10件ずつの表示とする）
+        def paginate_communities(limit_value = 10)
+          @paginated_collection = paginated_collection(@communities, limit_value)
+          @pagination_info = pagination_info(@paginated_collection)
         end
     end
   end

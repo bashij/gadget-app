@@ -8,11 +8,8 @@ module Api
         # 全てのレビューリクエストしているユーザー情報
         @gadget = Gadget.find(params[:gadget_id])
         @users = @gadget.requesting_users
-        # ページネーション情報（デフォルトは10件ずつの表示とする）
-        @paginated_collection = paginated_collection(@users, 10)
-        @pagination_info = pagination_info(@paginated_collection)
 
-        render json: { users: @paginated_collection, pagination: @pagination_info }
+        render_users_json
       end
 
       def create
@@ -37,6 +34,18 @@ module Api
         def correct_user
           @review_request = current_user.review_requests.find_by(gadget_id: params[:gadget_id])
           render json: { status: 'failure', message: [I18n.t('common.correct_user')] } if @review_request.nil?
+        end
+
+        def render_users_json
+          paginate_users
+
+          render json: { users: @paginated_collection, pagination: @pagination_info }
+        end
+
+        # レビューリクエストユーザーのページネーション情報を取得（デフォルトは10件ずつの表示とする）
+        def paginate_users(limit_value = 10)
+          @paginated_collection = paginated_collection(@users, limit_value)
+          @pagination_info = pagination_info(@paginated_collection)
         end
     end
   end

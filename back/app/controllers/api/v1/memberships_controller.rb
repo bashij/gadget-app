@@ -7,12 +7,9 @@ module Api
       def show
         # 全てのコミュニティ参加者情報
         @community = Community.find(params[:community_id])
-        @members = @community.joined_members
-        # ページネーション情報（デフォルトは10件ずつの表示とする）
-        @paginated_collection = paginated_collection(@members, 10)
-        @pagination_info = pagination_info(@paginated_collection)
+        @users = @community.joined_members
 
-        render json: { users: @paginated_collection, pagination: @pagination_info }
+        render_users_json
       end
 
       def create
@@ -37,6 +34,18 @@ module Api
         def correct_user
           @membership = current_user.memberships.find_by(community_id: params[:community_id])
           render json: { status: 'failure', message: [I18n.t('common.correct_user')] } if @membership.nil?
+        end
+
+        def render_users_json
+          paginate_users
+
+          render json: { users: @paginated_collection, pagination: @pagination_info }
+        end
+
+        # 参加ユーザーのページネーション情報を取得（デフォルトは10件ずつの表示とする）
+        def paginate_users(limit_value = 10)
+          @paginated_collection = paginated_collection(@users, limit_value)
+          @pagination_info = pagination_info(@paginated_collection)
         end
     end
   end
