@@ -19,6 +19,7 @@ ja:
         name: ユーザー名
         email: メールアドレス
         job: 職業
+        introduction: プロフィール
         image: ユーザー画像
         password: パスワード
         password_confirmation: パスワード（確認）

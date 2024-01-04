@@ -80,7 +80,7 @@ module Api
       private
 
         def user_params
-          params.require(:user).permit(:name, :email, :job, :image, :password, :password_confirmation)
+          params.require(:user).permit(:name, :email, :job, :introduction, :image, :password, :password_confirmation)
         end
 
         # 正しいユーザーかどうか確認
