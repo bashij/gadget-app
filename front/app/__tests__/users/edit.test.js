@@ -69,11 +69,14 @@ describe('Edit', () => {
     expect(displayedValue2).toBeInTheDocument()
     const displayedValue3 = await screen.findByDisplayValue(props.pageUser.job)
     expect(displayedValue3).toBeInTheDocument()
+    const displayedValue4 = await screen.findByDisplayValue(props.pageUser.introduction)
+    expect(displayedValue4).toBeInTheDocument()
 
     // 更新後の情報
     const nameValue = `${props.pageUser.name}_updated`
     const emailValue = `${props.pageUser.email}updated`
     const jobValue = '学生'
+    const introductionValue = `${props.pageUser.introduction}_updated`
     const passwordValue = 'password_updated'
     // ダミーの画像ファイルを作成
     const dummyImageData = new Uint8Array([0x89, 0x50, 0x4e, 0x47])
@@ -83,6 +86,7 @@ describe('Edit', () => {
     const nameInputElement = screen.getByLabelText('ユーザー名')
     const emailInputElement = screen.getByLabelText('メールアドレス')
     const jobInputElement = screen.getByLabelText('職業')
+    const introductionInputElement = screen.getByLabelText('プロフィール')
     const imageInputElement = screen.getByLabelText('ユーザー画像')
     const passwordInputElement = screen.getByLabelText('パスワード')
     const passwordConfirmationInputElement = screen.getByLabelText('パスワード（確認）')
@@ -95,6 +99,7 @@ describe('Edit', () => {
     await userEvent.type(nameInputElement, nameValue)
     await userEvent.type(emailInputElement, emailValue)
     await userEvent.selectOptions(jobInputElement, [jobValue])
+    await userEvent.type(introductionInputElement, introductionValue)
     await userEvent.upload(imageInputElement, dummyImageFile)
     await userEvent.type(passwordInputElement, passwordValue)
     await userEvent.type(passwordConfirmationInputElement, passwordValue)

@@ -118,6 +118,7 @@ describe('User', () => {
     // propsとして渡した値が表示されていることを確認
     expect(screen.getAllByText('user_name_test1')).toHaveLength(2)
     expect(screen.getByText('IT系')).toBeInTheDocument()
+    expect(screen.getByText('introduction_test1')).toBeInTheDocument()
     expect(screen.getByText('2フォロー中')).toBeInTheDocument()
     expect(screen.getByText('3フォロワー')).toBeInTheDocument()
 
