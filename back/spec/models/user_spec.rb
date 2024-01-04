@@ -7,6 +7,7 @@ RSpec.describe User, type: :model do
   describe 'validation' do
     specify 'name,email,job,passwordがある場合、有効である' do
       user.image = ''
+      user.introduction = ''
       expect(user).to be_valid
     end
 
@@ -71,6 +72,14 @@ RSpec.describe User, type: :model do
         user.job = '営業'
         user.valid?
         expect(user.errors[:job]).to include('は一覧にありません')
+      end
+    end
+
+    describe 'introduction' do
+      specify '141文字以上の場合、無効である' do
+        user.introduction = 'a' * 141
+        user.valid?
+        expect(user.errors[:introduction]).to include('は140文字以内で入力してください')
       end
     end
 
