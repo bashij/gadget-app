@@ -186,6 +186,9 @@ export default function User(props) {
               />
               <div className='user-name'>{props.pageUser.name}</div>
               <div className='user-job'>{props.pageUser.job}</div>
+              {props.pageUser.introduction && (
+                <div className='user-introduction'>{props.pageUser.introduction}</div>
+              )}
               <div className='user-relationships'>
                 <Link href={`/users/${props.pageUser.id}/following`}>
                   {props.pageUser.following.length}フォロー中

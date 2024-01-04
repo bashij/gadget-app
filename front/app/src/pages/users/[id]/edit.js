@@ -20,6 +20,7 @@ export default function Edit(props) {
     name: `${props.pageUser?.name}`,
     email: `${props.pageUser?.email}`,
     job: `${props.pageUser?.job}`,
+    introduction: `${props.pageUser?.introduction}`,
     password: '',
     password_confirmation: '',
   })
@@ -196,6 +197,19 @@ export default function Edit(props) {
                   <option value='YouTuber/ブロガー'>YouTuber/ブロガー</option>
                   <option value='その他'>その他</option>
                 </select>
+              </div>
+              <div className='mb-3'>
+                <label className='form-label' htmlFor='introduction'>
+                  プロフィール
+                </label>
+                <textarea
+                  type='text'
+                  className='form-control'
+                  name='introduction'
+                  onChange={handleChange}
+                  value={formData.introduction}
+                  id='introduction'
+                />
               </div>
               <div className='mb-3'>
                 <label className='form-label' htmlFor='image'>

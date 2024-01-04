@@ -77,6 +77,7 @@ export const DUMMY_DATA_USER_DETAIL = {
     name: 'user_name_test1',
     email: 'email_test1@gmail.com',
     job: 'IT系',
+    introduction: 'introduction_test1',
     image: { url: 'default.jpg' },
     created_at: '2023-01-01T00:00:00.000+09:00',
     updated_at: '2023-01-01T00:00:00.000+09:00',

@@ -20,6 +20,7 @@ export default function Signup() {
     name: '',
     email: '',
     job: '',
+    introduction: '',
     image: '',
     password: '',
     password_confirmation: '',
@@ -166,6 +167,19 @@ export default function Signup() {
                 <option value='YouTuber/ブロガー'>YouTuber/ブロガー</option>
                 <option value='その他'>その他</option>
               </select>
+            </div>
+            <div className='mb-3'>
+              <label className='form-label' htmlFor='introduction'>
+                プロフィール
+              </label>
+              <textarea
+                type='text'
+                className='form-control'
+                name='introduction'
+                onChange={handleChange}
+                value={formData.introduction}
+                id='introduction'
+              />
             </div>
             <div className='mb-3'>
               <label className='form-label' htmlFor='image'>

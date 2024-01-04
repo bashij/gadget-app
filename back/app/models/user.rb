@@ -35,6 +35,7 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   validates :job, presence: true, length: { maximum: 20 },
                   inclusion: { in: %w[IT系 非IT系 学生 YouTuber/ブロガー その他] }
+  validates :introduction, length: { maximum: 140 }
   mount_uploader :image, UserImageUploader
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
