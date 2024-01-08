@@ -68,7 +68,6 @@ describe('Layout', () => {
     expect(screen.getByRole('link', { name: 'GADGET' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'TWEET' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'COMMUNITY' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'HELP' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'USERS' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'LOGIN' })).toBeInTheDocument()
 
@@ -91,7 +90,6 @@ describe('Layout', () => {
     expect(screen.getByRole('link', { name: 'GADGET' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'TWEET' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'COMMUNITY' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'HELP' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'USERS' })).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'LOGIN' })).not.toBeInTheDocument() //非表示を確認
 

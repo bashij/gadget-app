@@ -94,13 +94,6 @@ export default function Layout(props) {
               COMMUNITY
             </Link>
             <Link
-              href='/help'
-              className={`nav-link ${props.pageName === 'help' ? 'active' : ''}`}
-              id='help'
-            >
-              HELP
-            </Link>
-            <Link
               href='/users'
               className={`nav-link ${props.pageName === 'users' ? 'active' : ''}`}
               id='users'
