@@ -62,7 +62,7 @@ export default function Layout(props) {
       <div className='container'>
         <div className='row'>
           <div className={`col-sm-3 side-menu ${openMenu ? 'open' : ''}`}>
-            <Link href='/gadgets' className='logo nav-link'>
+            <Link href='/' className='logo nav-link'>
               GadgetLink
             </Link>
             <Link
@@ -92,13 +92,6 @@ export default function Layout(props) {
               id='community'
             >
               COMMUNITY
-            </Link>
-            <Link
-              href='/help'
-              className={`nav-link ${props.pageName === 'help' ? 'active' : ''}`}
-              id='help'
-            >
-              HELP
             </Link>
             <Link
               href='/users'
