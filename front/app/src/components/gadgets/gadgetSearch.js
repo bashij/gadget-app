@@ -6,6 +6,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function GadgetSearch(props) {
+  const categories = [
+    '',
+    'PC本体',
+    'オーディオ',
+    'キーボード',
+    'スマートウォッチ',
+    'スマートフォン',
+    'スマート家電',
+    'タブレット',
+    'チェア',
+    'デスク',
+    'ノートパソコン',
+    'マウス',
+    'モニター',
+    '充電器',
+    'その他',
+  ]
+
   const [showSearchArea, setShowSearchArea] = useState(false)
 
   useEffect(() => {
@@ -76,15 +94,11 @@ export default function GadgetSearch(props) {
               onChange={(e) => props.setFilters({ ...props.filters, category: e.target.value })}
               id='category'
             >
-              <option value=''>選択してください</option>
-              <option value='PC本体'>PC本体</option>
-              <option value='モニター'>モニター</option>
-              <option value='キーボード'>キーボード</option>
-              <option value='マウス'>マウス</option>
-              <option value='オーディオ'>オーディオ</option>
-              <option value='デスク'>デスク</option>
-              <option value='チェア'>チェア</option>
-              <option value='その他'>その他</option>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category === '' ? '選択してください' : category}
+                </option>
+              ))}
             </select>
           </div>
           <div className='mb-3'>
