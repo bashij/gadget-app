@@ -607,6 +607,7 @@ body {
 }
 
 .tweet-section-right {
+  white-space: pre-wrap;
   margin: 0.25rem 0.5rem 0.75rem 0;
   flex-basis: auto;
   width: 100%;
@@ -972,6 +973,7 @@ body {
     font-size: 1.125rem;
   }
   .user-introduction {
+    white-space: pre-wrap;
     font-size: 0.9rem;
     margin: 0.25rem 0.75rem 0.25rem 0.75rem;
   }
@@ -1084,8 +1086,10 @@ body {
       padding: 1rem 0.5rem 0.5rem 0.5rem;
       border-bottom: 1px solid $color_theme4;
       display: inline-block;
-      width: 50%;
       text-align: left;
+    }
+    h3 {
+      margin-top: 1rem;
     }
     ul {
       li {
@@ -1151,8 +1155,10 @@ body {
       padding: 1rem 0.5rem 0.5rem 0.5rem;
       border-bottom: 1px solid $color_theme4;
       display: inline-block;
-      width: 50%;
       text-align: left;
+    }
+    h3 {
+      margin-top: 1rem;
     }
     ul {
       li {
