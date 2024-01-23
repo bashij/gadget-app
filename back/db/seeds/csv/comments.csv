@@ -1,0 +1,136 @@
+id,gadget_id,gadget_user_id,gadget_user_email,gadget_name,user_id,user_email,content,parent_id
+1,1,1,sample1@example.com,MacBook Pro 2017,,,,
+2,2,1,sample1@example.com,HHKB ,2,sample2@example.com,"自分も気になってます。
+外で使う時にもパームレストがいるのかと考えると悩みます、、",
+3,2,1,sample1@example.com,HHKB ,1,sample1@example.com,"＞かき@Apple信者さん
+比較的短時間ならなしでも全然使えますよ！
+長時間なら、やっぱりあった方が自分はおすすめですねー。",2
+4,2,1,sample1@example.com,HHKB ,6,sample6@example.com,"昔チャレンジしたんですが、ミニマルすぎて自分には合わなかったです、、、
+やっぱりテンキーとか欲しかった。",
+5,2,1,sample1@example.com,HHKB ,1,sample1@example.com,"＞ぎり@DTMerさん
+用途によってはたしかに全然足りないというか、Fnキーとの同時押しがまどろっこしい時はありますね！
+",4
+6,3,1,sample1@example.com,Kensington ExpertMouse,6,sample6@example.com,自分も使ってます！もう普通のマウスには戻れないです。,
+7,3,1,sample1@example.com,Kensington ExpertMouse,1,sample1@example.com,"＞ぎり@DTMerさん
+疲れが偏らないようにサブとして普通のマウスを併用してますが、意外とおすすめです！",6
+8,3,1,sample1@example.com,Kensington ExpertMouse,4,sample4@example.com,デザイン的に気になってます！,
+9,4,1,sample1@example.com,Magic Trackpad2,7,sample7@example.com,充電もちます？,
+10,4,1,sample1@example.com,Magic Trackpad2,1,sample1@example.com,"＞まー@理系大学生さん
+基本気にせず使えるので、たまに切れちゃってから気づく感じですね。
+Lightningケーブルが必要なので、iPhoneの種類によってはここはデメリットかと。",9
+11,5,1,sample1@example.com,Bauhutte PCデスク 昇降式 ,5,sample5@example.com,"バウヒュッテいいですよね！！
+ゲーミングシリーズ集めたいです。",
+12,5,1,sample1@example.com,Bauhutte PCデスク 昇降式 ,1,sample1@example.com,"＞みつ@ゲーマーさん
+ラインナップ多いし組み合わせ自在だしめっちゃ増やしたくなりますよね、、、",11
+13,6,1,sample1@example.com,アーロンチェア　リマスタード,5,sample5@example.com,エンボディチェアもいいですよ。,
+14,6,1,sample1@example.com,アーロンチェア　リマスタード,1,sample1@example.com,"＞みつ@ゲーマーさん
+実はそっちも試しに行きました！
+逆に落ち着けすぎるかなと思ってこっちにしました。笑",13
+15,6,1,sample1@example.com,アーロンチェア　リマスタード,7,sample7@example.com,ずっと憧れありますが高すぎて躊躇してます、、、,
+16,6,1,sample1@example.com,アーロンチェア　リマスタード,8,sample8@example.com,"＞まー@理系大学生さん
+同じく。就職したら買うつもりです！！",15
+17,7,1,sample1@example.com,4Kモニター 42.5インチ,5,sample5@example.com,"このサイズをデスクに置くのは英断。
+32インチ使ってる人も多いみたいですけどあえての43ですか？",
+18,7,1,sample1@example.com,4Kモニター 42.5インチ,1,sample1@example.com,"＞みつ@ゲーマーさん
+たしかに32インチ悩んだんですが、フルHD4枚分を100%サイズで表示できる、っていうところで決めちゃいました。
+正直、奥行き60cmのデスクだと全体見えにくいので、ちょっと離れて使ってます。",17
+19,8,1,sample1@example.com,iPhone 12 mini,7,sample7@example.com,13使ってますが、シネマティックモードけっこういいですよ！,
+20,9,1,sample1@example.com,Apple Watch 7,8,sample8@example.com,SEも気になってますがどうなんですかね。,
+21,9,1,sample1@example.com,Apple Watch 7,1,sample1@example.com,"＞はぎ@文系大学生さん
+SEは常時点灯ができないはずなのでそこが許容できるならアリじゃないでしょうか！",20
+22,10,1,sample1@example.com,iPad Pro 12.9,7,sample7@example.com,今は無印iPad使ってますがそのうちProもと思ってます。,
+23,10,1,sample1@example.com,iPad Pro 12.9,1,sample1@example.com,"＞まー@理系大学生さん
+正直初iPadがProはやり過ぎだったかもしれないです。笑",22
+24,11,1,sample1@example.com,Apple Pencil,,,,
+25,12,1,sample1@example.com,エルゴトロン MX デスク モニターアーム ,,,,
+26,13,1,sample1@example.com,Fire 7 タブレット,,,,
+27,14,1,sample1@example.com,フットレスト,,,,
+28,15,2,sample2@example.com,iPhone 15 Pro Max,1,sample1@example.com,"12mini使ってますが、ハイスペックなiPhoneも気になってます。
+サイズ大きくて持ち運び疲れませんか？",
+29,15,2,sample2@example.com,iPhone 15 Pro Max,2,sample2@example.com,"＞bashi@開発者さん
+慣れたら気になりません！",28
+30,16,2,sample2@example.com,MacBook Pro 2023,,,,
+31,17,2,sample2@example.com,AirPods Pro,7,sample7@example.com,"Jabraと迷って結局買いませんでしたが、やっぱりApple製品との連携考えたらAirPodsもアリだったなと思ったりしてます。
+通話性能どうですか？",
+32,17,2,sample2@example.com,AirPods Pro,2,sample2@example.com,"＞まー@理系大学生さん
+通話で支障が出たことないので、結構良さそうですよ！",31
+33,18,2,sample2@example.com,Apple Watch Ultra2,1,sample1@example.com,充電もつのめっちゃいいですね！！,
+34,19,2,sample2@example.com,iPad mini 6,1,sample1@example.com,iPadを買った人はいずれ、大きめサイズ+miniの２台持ちに行き着くという噂は本当なのでしょうか,
+35,19,2,sample2@example.com,iPad mini 6,8,sample8@example.com,"＞bashi@開発者さん
+最近、２台持ちが正解なのかなという実感が湧いてきております、、、",34
+36,19,2,sample2@example.com,iPad mini 6,7,sample7@example.com,"＞はぎ@文系大学生さん
+おなじくです、、、miniいいですよね、、、",34
+37,20,3,sample3@example.com,Surface Pro 9,,,,
+38,21,3,sample3@example.com,LG ゲーミング モニター UltraGear  ,5,sample5@example.com,"湾曲モニター憧れてます。
+ゲーム以外でも使えるんですね！",
+39,21,3,sample3@example.com,LG ゲーミング モニター UltraGear  ,3,sample3@example.com,"＞みつ@ゲーマーさん
+画面端と目との距離が近くなるので、同サイズモニターに比べて視認性が上がるらしいですよ！",38
+40,22,3,sample3@example.com,Galaxy Z Flip5,4,sample4@example.com,折りたたみスマホ気になってます。,
+41,22,3,sample3@example.com,Galaxy Z Flip5,3,sample3@example.com,"＞てい@スマートホームさん
+これは縦タイプなのでガラケーみもあって良いですよ！",40
+42,23,3,sample3@example.com,MX MASTER 3S,1,sample1@example.com,サブマウスとして検討してます！かっこいいですよね。,
+43,23,3,sample3@example.com,MX MASTER 3S,3,sample3@example.com,"＞bashi@開発者さん
+使ったらメインになるかもです！ぜひどうぞ！",42
+44,24,3,sample3@example.com,JBL TOUR PRO+ TWS,6,sample6@example.com,JBLはロゴもいい。,
+45,24,3,sample3@example.com,JBL TOUR PRO+ TWS,3,sample3@example.com,わかります！ケースも本体もロゴがいいかんじ。,44
+46,25,4,sample4@example.com,SwitchBot カーテン,2,sample2@example.com,これ一個で使えますか？,
+47,25,4,sample4@example.com,SwitchBot カーテン,4,sample4@example.com,"＞かき@Apple信者さん
+片開きなら使えますよ！両開きにするなら２個いりますね。",46
+48,25,4,sample4@example.com,SwitchBot カーテン,1,sample1@example.com,最近ブラックがあるのを知りました。,
+49,25,4,sample4@example.com,SwitchBot カーテン,4,sample4@example.com,"＞bashi@開発者さん
+スイッチとかスマートロックもブラックはあるみたいですね！",48
+50,26,4,sample4@example.com,SwitchBot スイッチ ,,,,
+51,27,4,sample4@example.com,SwitchBot Hub Mini,1,sample1@example.com,温度と湿度も測れるやつ検討してます！,
+52,27,4,sample4@example.com,SwitchBot Hub Mini,,,"＞bashi@開発者さん
+2の方ですね！私も買い替え検討してます。
+温度に応じてエアコン操作とかもできるみたいなのでいいですよね。",51
+53,28,4,sample4@example.com,Echo Pop,8,sample8@example.com,めちゃくちゃ安くていいな！！と思ったらセール価格ですね！,
+54,28,4,sample4@example.com,Echo Pop,4,sample4@example.com,"＞はぎ@文系大学生さん
+そうなんです。ブラックフライデー最高です。",53
+55,29,4,sample4@example.com,Echo Show 5 ,7,sample7@example.com,Type-C+ワイヤレス化するスタンド売ってるみたいですね！,
+56,29,4,sample4@example.com,Echo Show 5 ,4,sample4@example.com,あれめっちゃいいですよね！でも価格的にもう一台買えちゃうくらいだったので諦めました、、、,55
+57,30,5,sample5@example.com,GALLERIA,,,,
+58,31,5,sample5@example.com,ロジクール　G502 HERO,,,,
+59,32,5,sample5@example.com,ロジクール　PRO キーボード,6,sample6@example.com,光るのかっこいい。,
+60,32,5,sample5@example.com,ロジクール　PRO キーボード,5,sample5@example.com,"＞ぎり@DTMerさん
+光るのかっこいいんです。",59
+61,33,5,sample5@example.com,エンボディゲーミングチェア,2,sample2@example.com,めっちゃ良さそうですねこれ、、、ゲーミングモデルの方が性能いいのかな？,
+62,33,5,sample5@example.com,エンボディゲーミングチェア,5,sample5@example.com,"＞かき@Apple信者さん
+正直細かい違いはよくわかってないですが、座り心地はいいですし何よりデザインが最高です。",61
+63,34,5,sample5@example.com,ロジクール　ゲーミングヘッドセット,4,sample4@example.com,PCでの会議とかにも使えるんですかね？,
+64,34,5,sample5@example.com,ロジクール　ゲーミングヘッドセット,,,"＞てい@スマートホームさん
+使えると思いますよ！通話品質いいのでおすすめです。",63
+65,35,6,sample6@example.com,Mac Studio,7,sample7@example.com,ミニマルな感じで高性能なのロマンあります。,
+66,35,6,sample6@example.com,Mac Studio,6,sample6@example.com,"＞まー@理系大学生さん
+それ！あります。",65
+67,36,6,sample6@example.com,Ableton Live,1,sample1@example.com,Cubaseで挫折した者です。,
+68,36,6,sample6@example.com,Ableton Live,6,sample6@example.com,"＞bashi@開発者さん
+ちょっと触ってみるにはこっちもおすすめ！",67
+69,37,6,sample6@example.com,ソニー　MDR-CD900ST,7,sample7@example.com,ファーストテイクのやつだ,
+70,37,6,sample6@example.com,ソニー　MDR-CD900ST,8,sample8@example.com,ファーストテイクのやつ,69
+71,37,6,sample6@example.com,ソニー　MDR-CD900ST,6,sample6@example.com,ファーストテイクのやつです。,69
+72,38,6,sample6@example.com,Akai MPK mini,1,sample1@example.com,オールブラックいいですね！赤のイメージでした。,
+73,38,6,sample6@example.com,Akai MPK mini,6,sample6@example.com,"＞bashi@開発者さん
+ですよね！
+店頭在庫にはあまり無いかもですが、自分はネットで買えました。
+この色にしてよかったです！",72
+74,39,6,sample6@example.com,Steinberg オーディオインターフェース,,,,
+75,40,7,sample7@example.com,MacBook Pro 15インチ,,,,
+76,41,7,sample7@example.com,iPad,4,sample4@example.com,フルラミネーションディスプレイ非対応って気になりますか？,
+77,41,7,sample7@example.com,iPad,7,sample7@example.com,"＞てい@スマートホームさん
+主にブラウジングに使ってますが、自分は全然気になりませんね！",76
+78,42,7,sample7@example.com,Jabra Elite 85t,3,sample3@example.com,通話性能いいって評判ですが、どんな感じですか？,
+79,42,7,sample7@example.com,Jabra Elite 85t,7,sample7@example.com,"品質的には良さそうなんですが、耳が密閉されるので自分の声には違和感出ると思います。
+外音取り込み機能使っても自分的には通話はイマイチでした。",78
+80,43,7,sample7@example.com,Anker 623 Magnetic Wireless Charger ,,,,
+81,44,7,sample7@example.com,iPhone 13,,,,
+82,45,8,sample8@example.com,MacBook Air,,,,
+83,46,8,sample8@example.com,iPad Air 5,2,sample2@example.com,mini使ってますが、11インチもいいですよねー,
+84,46,8,sample8@example.com,iPad Air 5,8,sample8@example.com,"＞かき@Apple信者さん
+逆にminiも気になってます。笑",83
+85,47,8,sample8@example.com,iPhone SE2,1,sample1@example.com,ワイヤレス充電いけるんですね！知らなかった。,
+86,47,8,sample8@example.com,iPhone SE2,8,sample8@example.com,"＞bashi@開発者さん
+本体にはマグネット付いてないですけどね。便利ですね！",85
+87,48,8,sample8@example.com,Anker PowerCore 10000 PD Redux 25W,2,sample2@example.com,ちょうどよいモバイルバッテリー探してるんですが、iPhoneProMaxも充電できますかね？,
+88,48,8,sample8@example.com,Anker PowerCore 10000 PD Redux 25W,8,sample8@example.com,"＞かき@Apple信者さん
+PC・タブレットでも使えるので行けそうな感じはしますね！",87

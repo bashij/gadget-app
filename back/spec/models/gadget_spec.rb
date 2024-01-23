@@ -29,10 +29,10 @@ RSpec.describe Gadget, type: :model do
         expect(gadget.errors[:name]).to include('を入力してください')
       end
 
-      specify '21文字以上の場合、無効である' do
-        gadget.name = 'a' * 21
+      specify '41文字以上の場合、無効である' do
+        gadget.name = 'a' * 41
         gadget.valid?
-        expect(gadget.errors[:name]).to include('は20文字以内で入力してください')
+        expect(gadget.errors[:name]).to include('は40文字以内で入力してください')
       end
     end
 
@@ -57,18 +57,18 @@ RSpec.describe Gadget, type: :model do
     end
 
     describe 'model_number' do
-      specify '21文字以上の場合、無効である' do
-        gadget.model_number = 'a' * 21
+      specify '41文字以上の場合、無効である' do
+        gadget.model_number = 'a' * 41
         gadget.valid?
-        expect(gadget.errors[:model_number]).to include('は20文字以内で入力してください')
+        expect(gadget.errors[:model_number]).to include('は40文字以内で入力してください')
       end
     end
 
     describe 'manufacturer' do
-      specify '21文字以上の場合、無効である' do
-        gadget.manufacturer = 'a' * 21
+      specify '41文字以上の場合、無効である' do
+        gadget.manufacturer = 'a' * 41
         gadget.valid?
-        expect(gadget.errors[:manufacturer]).to include('は20文字以内で入力してください')
+        expect(gadget.errors[:manufacturer]).to include('は40文字以内で入力してください')
       end
     end
 
@@ -93,10 +93,10 @@ RSpec.describe Gadget, type: :model do
     end
 
     describe 'other_info' do
-      specify '21文字以上の場合、無効である' do
-        gadget.other_info = 'a' * 21
+      specify '41文字以上の場合、無効である' do
+        gadget.other_info = 'a' * 41
         gadget.valid?
-        expect(gadget.errors[:other_info]).to include('は20文字以内で入力してください')
+        expect(gadget.errors[:other_info]).to include('は40文字以内で入力してください')
       end
     end
 

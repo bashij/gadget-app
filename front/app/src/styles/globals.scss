@@ -47,6 +47,7 @@ body {
   }
   img {
     border-radius: 10px;
+    object-fit: contain;
   }
 }
 
@@ -56,6 +57,7 @@ body {
   margin: 30px;
   button {
     color: $color_theme8;
+    background-color: $color_theme2;
     border: none;
     padding: 0 0.5rem 0 0.5rem;
     margin: 0 0.15rem 0 0.15rem;
@@ -606,6 +608,7 @@ body {
 }
 
 .tweet-section-right {
+  white-space: pre-wrap;
   margin: 0.25rem 0.5rem 0.75rem 0;
   flex-basis: auto;
   width: 100%;
@@ -799,8 +802,6 @@ body {
     padding: 0.25rem;
     img {
       margin: auto;
-      height: 60px;
-      width: 60px;
     }
     th {
       font-size: 0.8rem;
@@ -962,10 +963,6 @@ body {
   margin: auto;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  img {
-    width: 300px;
-    height: 300px;
-  }
   div {
     padding: 0.125rem;
   }
@@ -977,6 +974,7 @@ body {
     font-size: 1.125rem;
   }
   .user-introduction {
+    white-space: pre-wrap;
     font-size: 0.9rem;
     margin: 0.25rem 0.75rem 0.25rem 0.75rem;
   }
@@ -1089,8 +1087,10 @@ body {
       padding: 1rem 0.5rem 0.5rem 0.5rem;
       border-bottom: 1px solid $color_theme4;
       display: inline-block;
-      width: 50%;
       text-align: left;
+    }
+    h3 {
+      margin-top: 1rem;
     }
     ul {
       li {
@@ -1156,8 +1156,10 @@ body {
       padding: 1rem 0.5rem 0.5rem 0.5rem;
       border-bottom: 1px solid $color_theme4;
       display: inline-block;
-      width: 50%;
       text-align: left;
+    }
+    h3 {
+      margin-top: 1rem;
     }
     ul {
       li {

@@ -72,7 +72,7 @@ module Api
           @reply_counts = Comment.reply_count
           # 一覧コメントへのリプライ
           ids = @paginated_collection.pluck(:id)
-          @replies = Comment.where(parent_id: ids)
+          @replies = Comment.where(parent_id: ids).reorder(created_at: :asc)
         end
     end
   end

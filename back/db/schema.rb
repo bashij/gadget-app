@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_03_075411) do
+ActiveRecord::Schema.define(version: 2024_01_16_125554) do
 
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -93,12 +93,12 @@ ActiveRecord::Schema.define(version: 2024_01_03_075411) do
 
   create_table "gadgets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "name", limit: 20, null: false
+    t.string "name", limit: 40, null: false
     t.string "category", limit: 20, null: false
-    t.string "model_number", limit: 20
-    t.string "manufacturer", limit: 20
+    t.string "model_number", limit: 40
+    t.string "manufacturer", limit: 40
     t.bigint "price", unsigned: true
-    t.string "other_info", limit: 20
+    t.string "other_info", limit: 40
     t.string "image"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

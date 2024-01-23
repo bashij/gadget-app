@@ -16,6 +16,24 @@ const pageTitle = 'ガジェット登録'
 export default function New(props) {
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT_GADGETS
 
+  const categories = [
+    '',
+    'PC本体',
+    'オーディオ',
+    'キーボード',
+    'スマートウォッチ',
+    'スマートフォン',
+    'スマート家電',
+    'タブレット',
+    'チェア',
+    'デスク',
+    'ノートパソコン',
+    'マウス',
+    'モニター',
+    '充電器',
+    'その他',
+  ]
+
   const [formData, setFormData] = useState({
     name: '',
     category: '',
@@ -155,15 +173,11 @@ export default function New(props) {
                     required
                     id='category'
                   >
-                    <option value=''>選択してください</option>
-                    <option value='PC本体'>PC本体</option>
-                    <option value='モニター'>モニター</option>
-                    <option value='キーボード'>キーボード</option>
-                    <option value='マウス'>マウス</option>
-                    <option value='オーディオ'>オーディオ</option>
-                    <option value='デスク'>デスク</option>
-                    <option value='チェア'>チェア</option>
-                    <option value='その他'>その他</option>
+                    {categories.map((category) => (
+                      <option key={category} value={category}>
+                        {category === '' ? '選択してください' : category}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className='mb-3'>

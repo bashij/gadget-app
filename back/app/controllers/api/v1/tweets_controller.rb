@@ -93,7 +93,7 @@ module Api
           @reply_counts = Tweet.reply_count
           # 一覧ツイートへのリプライ
           ids = @paginated_collection.pluck(:id)
-          @replies = Tweet.where(parent_id: ids)
+          @replies = Tweet.where(parent_id: ids).reorder(created_at: :asc)
         end
     end
   end

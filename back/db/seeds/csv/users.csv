@@ -1,0 +1,15 @@
+id,name,email,job,introduction,password,password_confirmation
+1,bashi@開発者,sample1@example.com,IT系,"ガジェット好きのシステムエンジニア。
+理想の作業環境を追い求めて散財する日々。",password,password
+2,かき@Apple信者,sample2@example.com,IT系,"Apple製品が大好きなITコンサルタント。
+MacBookは16インチが至高。",password,password
+3,わか@Microsoft派,sample3@example.com,IT系,Microsoft製品が好きなエンジニア。,password,password
+4,てい@スマートホーム,sample4@example.com,非IT系,家のスマートホーム化に取り憑かれたサラリーマン,password,password
+5,みつ@ゲーマー,sample5@example.com,非IT系,"ゲーマー。
+PCでゲームばっかしてます。
+VALORANTフレンドも募集中。",password,password
+6,ぎり@DTMer,sample6@example.com,非IT系,趣味で音楽を作ってます。仕事は音響屋。,password,password
+7,まー@理系大学生,sample7@example.com,学生,"統計学専攻のガジェット好き大学生。
+学業でも日常生活でもガジェットフル活用中。",password,password
+8,はぎ@文系大学生,sample8@example.com,学生,"iPad好き。
+大学の講義や英語学習でフル活用してます。",password,password
