@@ -1,0 +1,55 @@
+id,user_id,user_email,content,parent_id
+41,8,sample8@example.com,Ankerのモバイルバッテリー便利すぎる。iPhoneSE2なら余裕でフル充電できる。とはいえSE2もそろそろ変えたいところ、、、,
+42,1,sample1@example.com,SE4の噂ありますよね！,41
+43,8,sample8@example.com,"＞bashi@開発者さん
+あれ気になりますよねーーーとはいえ2025年3～4月なら先すぎるかなあ、、、とか思ってます。",41
+10,1,sample1@example.com,MacBookの容量、128GBHDDでなんとかやってきたけど、流石に限界を感じてる。,
+34,7,sample7@example.com,本はiPadで読んでたけど、Kindle paperwhiteめちゃくちゃ軽いな、、、ありだな、、、,
+35,2,sample2@example.com,そんなあなたにiPad mini。めちゃくちゃ軽いしiPadです。,34
+36,7,sample7@example.com,"＞かき@Apple信者さん
+たしかにめちゃくちゃあり、、、新型出たらその分6安くならないですかね。",34
+31,6,sample6@example.com,Mac Studioで作業快適だけど、そろそろ良い椅子もほしい。,
+32,1,sample1@example.com,アーロンチェアにしましょう。今ニューイヤーセールやってます。,31
+33,6,sample6@example.com,"＞bashi@開発者さん
+さすがに予算オーバーなので無し！と思ったけど15%オフか、、、15%オフか、、、",31
+38,2,sample2@example.com,Jabra Elite 85tアプリのフィッティングの時の音めちゃくちゃかっこいいからみんな聴いてほしい。,
+29,5,sample5@example.com,エンボディゲーミングチェアのせいで永遠にゲームができる。誰か助けてください。,
+30,1,sample1@example.com,アーロンチェアにしましょう。,29
+7,1,sample1@example.com,HHKBを大掃除。埃がすごい。ピカピカで気持ちいい。それでも消せないHHKB Studioへの興味。,
+8,3,sample3@example.com,私も気になってます。今度試しに行きます。,7
+9,1,sample1@example.com,"＞わか@Microsoft派さん
+いいですね！ぜひ感想教えてください。",7
+14,2,sample2@example.com,Apple Watch Ultra2、バッテリー持ちが良すぎて最高。,
+19,3,sample3@example.com,Galaxy Z Flip5ずっとパカパカしてられる,
+28,5,sample5@example.com,モンハン新作が待ち切れない。今のうちにデカイ4Kモニター新調すべきか？？？,
+23,4,sample4@example.com,最近Alexaの感度が悪い、、、再起動しても変わらない。なぜ。,
+20,3,sample3@example.com,Snapdragon X Eliteヤバイ。Windowsの時代がくるぞ。,
+21,4,sample4@example.com,めちゃくちゃすごいらしいですね！！,20
+22,3,sample3@example.com,"＞てい@スマートホームさん
+製品発売が待ちきれません！！",20
+11,1,sample1@example.com,"次に買うMacBookのサイズは小さい方か大きい方か悩むな、、、
+作業領域は確保したいけど、小さくてどこでも作業できる方が強いかな？？",
+12,2,sample2@example.com,デカくても意外とどこでもできますよ！,11
+13,8,sample8@example.com,都内のカフェとかだとやっぱり小さい方が便利かもしれません。,11
+39,8,sample8@example.com,近所のマックはWi-Fiも電源もある上に広いので朝活に最高だしモバイルアプリのクーポンでコーヒーMが130円はすごい。,
+15,2,sample2@example.com,自宅用にデスクトップMac検討中。どれがいいのかな。,
+16,6,sample6@example.com,Mac Studioいいですよ！スペース取らずにハイパフォーマンス！,15
+17,2,sample2@example.com,"＞ぎり@DTMerさん
+それ気になってました。デザインも好きだしありだな、、、",15
+18,2,sample2@example.com,3月のApple新製品発表イベント楽しみ　今回はiPad miniの新しいの来るか？？,
+26,4,sample4@example.com,正直たまの充電くらいで事足りてるんだけど、SwitchBot カーテンにつけるソーラー充電器ってどうなんだろ。,
+40,8,sample8@example.com,iPad Air新型、12.9インチ来るのか？？？実際大きいのどうなんだろ。,
+27,5,sample5@example.com,そろそろ本格的な自作PCにも挑戦したい。ゲームで忙しいけど。,
+1,1,sample1@example.com,初売りでついにiPad購入！三種の神器が揃ってしまった。,
+24,4,sample4@example.com,IFTTTのAlexaサービスが終了してしまったのは悲しい限り、、、,
+25,1,sample1@example.com,最近Alexaデビューしたのですが、IFFFT登録してみてから知りました。残念ですよね。,24
+37,2,sample2@example.com,古いMacのバッテリー交換するくらいなら、そのお金でAnkerのでかいモバイルバッテリーを買えば良いのでは、、、？？？,
+2,1,sample1@example.com,"iPad買ったは良いものの、初タブレットだしまだまだ使いこなせてる気がしない。
+iPadの手書きアプリでおすすめがある人教えてください。",
+3,8,sample8@example.com,"有名どころですが、GoodNotesがおすすめです！
+自分は5を使ってますが、最新版は6で、AI機能もあるみたいです！",2
+4,1,sample1@example.com,"＞はぎ@文系大学生さん
+AI機能は気になりますね！ありがとうございます！調べてみます！",2
+5,2,sample2@example.com,純正メモアプリこそ至高,2
+6,1,sample1@example.com,"＞かき@Apple信者さん
+やっぱり連携とかなんやかんやを考えると、純正がいい気もしますね。。。",2
