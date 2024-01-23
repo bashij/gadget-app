@@ -14,7 +14,7 @@ module Api
       def user_gadgets
         # 特定のユーザーが登録しているガジェット情報
         user = User.find(params[:id])
-        @gadgets = user.gadgets.order(created_at: :desc)
+        @gadgets = user.gadgets.order(updated_at: :desc)
 
         render_gadgets_json(include_search_result_count: false)
       end
