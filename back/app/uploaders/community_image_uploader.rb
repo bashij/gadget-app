@@ -1,10 +1,6 @@
 class CommunityImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
-  if Rails.env.production?
-    storage :fog
-  else
-    storage :file
-  end
+  storage :fog
 
   # 画像の登録がない場合はデフォルトを表示
   def default_url(*_args)
@@ -28,13 +24,7 @@ class CommunityImageUploader < CarrierWave::Uploader::Base
   end
 
   def url
-    if path.present?
-      # 保存先がローカルの場合
-      return "#{super}?updatedAt=#{model.updated_at.to_i}" if Rails.env.development? || Rails.env.test?
-
-      # 保存先がS3の場合
-      return "#{asset_host}/#{store_dir}/#{identifier}?updatedAt=#{model.updated_at.to_i}"
-    end
+    return "#{asset_host}/#{store_dir}/#{identifier}?updatedAt=#{model.updated_at.to_i}" if path.present?
 
     super
   end
