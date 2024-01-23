@@ -179,8 +179,8 @@ export default function User(props) {
                     ? '/images/default.jpg'
                     : props.pageUser.image.url
                 }
-                width={150}
-                height={150}
+                width={300}
+                height={300}
                 alt='user-image'
                 className='p-1 m-1'
               />

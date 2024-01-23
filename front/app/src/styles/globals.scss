@@ -47,6 +47,7 @@ body {
   }
   img {
     border-radius: 10px;
+    object-fit: contain;
   }
 }
 
@@ -799,8 +800,6 @@ body {
     padding: 0.25rem;
     img {
       margin: auto;
-      height: 60px;
-      width: 60px;
     }
     th {
       font-size: 0.8rem;
@@ -962,10 +961,6 @@ body {
   margin: auto;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  img {
-    width: 300px;
-    height: 300px;
-  }
   div {
     padding: 0.125rem;
   }

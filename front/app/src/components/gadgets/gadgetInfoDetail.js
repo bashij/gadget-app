@@ -55,8 +55,8 @@ export default function GadgetInfoDetail(props) {
                     ? '/images/default.jpg'
                     : props.gadget.user.image.url
                 }
-                width={50}
-                height={50}
+                width={60}
+                height={60}
                 alt='user-image'
               />
               <Link href={`/users/${props.gadget.user.id}`}>{props.gadget.user.name}</Link>
