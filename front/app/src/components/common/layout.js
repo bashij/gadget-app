@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { toast } from 'react-toastify'
 
@@ -72,13 +72,21 @@ export default function Layout(props) {
             >
               HOME
             </Link>
-            <Link
-              href='/gadgets'
-              className={`nav-link ${props.pageName === 'gadget' ? 'active' : ''}`}
-              id='gadget'
-            >
-              GADGET
-            </Link>
+            <span className='side-menu-with-icon'>
+              <Link
+                href='/gadgets'
+                className={`nav-link ${props.pageName === 'gadget' ? 'active' : ''}`}
+                id='gadget'
+              >
+                GADGET
+              </Link>
+              <Link
+                href='/gadgets/new'
+                className={`icon ${props.pageName === 'gadget' ? 'active' : ''}`}
+              >
+                <FontAwesomeIcon icon={faPlus} />
+              </Link>
+            </span>
             <Link
               href='/tweets'
               className={`nav-link ${props.pageName === 'tweet' ? 'active' : ''}`}
@@ -86,13 +94,21 @@ export default function Layout(props) {
             >
               TWEET
             </Link>
-            <Link
-              href='/communities'
-              className={`nav-link ${props.pageName === 'community' ? 'active' : ''}`}
-              id='community'
-            >
-              COMMUNITY
-            </Link>
+            <span className='side-menu-with-icon'>
+              <Link
+                href='/communities'
+                className={`nav-link ${props.pageName === 'community' ? 'active' : ''}`}
+                id='community'
+              >
+                COMMUNITY
+              </Link>
+              <Link
+                href='/communities/new'
+                className={`icon ${props.pageName === 'community' ? 'active' : ''}`}
+              >
+                <FontAwesomeIcon icon={faPlus} />
+              </Link>
+            </span>
             <Link
               href='/users'
               className={`nav-link ${props.pageName === 'users' ? 'active' : ''}`}
