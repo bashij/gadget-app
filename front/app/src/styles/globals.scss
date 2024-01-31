@@ -150,6 +150,47 @@ body {
       border-radius: 5px;
     }
   }
+  .side-menu-with-icon {
+    display: flex;
+    .nav-link {
+      flex: 1;
+      color: $color_theme1;
+      text-align: center;
+      padding-left: 2.5rem;
+      padding-top: 0.55rem;
+      @media screen and (max-width: 959px) {
+        padding-left: 2.1rem;
+      }
+      @media screen and (max-width: 672px) {
+        padding-left: 1rem;
+        padding-right: 0.5rem;
+      }
+      &.active {
+        background-color: $color_theme6;
+        border-radius: 5px 0 0 5px;
+      }
+    }
+    .icon {
+      padding: 0.95rem 0.5rem 0.95rem 0;
+      font-size: 1.25rem;
+      &.active {
+        background-color: $color_theme6;
+        border-radius: 0 5px 5px 0;
+      }
+      .fa-plus {
+        color: $color_theme1;
+        &:hover {
+          color: $color_theme4;
+        }
+      }
+      @media screen and (max-width: 959px) {
+        font-size: 0.75rem;
+      }
+      @media screen and (max-width: 672px) {
+        padding: 0.95rem 0;
+      }
+    }
+  }
   .logo {
     font-family: 'Avenir Next Condensed Heavy', 'Avenir Next Condensed Bold';
     font-size: 2.25rem;
