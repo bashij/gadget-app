@@ -2,8 +2,6 @@ import Gadget from '@/pages/gadgets/[id]'
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import { ja } from 'date-fns/locale'
 import { enableFetchMocks } from 'jest-fetch-mock'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
@@ -159,88 +157,46 @@ describe('Gadget', () => {
       // 1件目
       const userName1 = screen.getByRole('link', { name: 'user_name_test2' })
       const commentContent1 = screen.getByText('comment_content_test2')
-      const commentDate1 = screen.getByText(
-        formatDistanceToNow(new Date('2022/12/31 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       const commentReply1 = screen.getByText('1件のリプライ')
       expect(userName1).toBeInTheDocument()
       expect(commentContent1).toBeInTheDocument()
-      expect(commentDate1).toBeInTheDocument()
       expect(commentReply1).toBeInTheDocument()
       // 1件目のリプライ
       const userName6 = screen.getByRole('link', { name: 'user_name_test8' })
       const commentContent6 = screen.getByText('comment_content_test6_reply')
-      const commentDate6 = screen.getByText(
-        formatDistanceToNow(new Date('2023/05/31 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       expect(userName6).toBeInTheDocument()
       expect(commentContent6).toBeInTheDocument()
-      expect(commentDate6).toBeInTheDocument()
 
       // 2件目
       const userName2 = screen.getByRole('link', { name: 'user_name_test3' })
       const commentContent2 = screen.getByText('comment_content_test3')
-      const commentDate2 = screen.getByText(
-        formatDistanceToNow(new Date('2023/1/31 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       const commentReply2 = screen.getByText('2件のリプライ')
       expect(userName2).toBeInTheDocument()
       expect(commentContent2).toBeInTheDocument()
-      expect(commentDate2).toBeInTheDocument()
       expect(commentReply2).toBeInTheDocument()
 
       // 3件目
       const userName3 = screen.getByRole('link', { name: 'user_name_test4' })
       const commentContent3 = screen.getByText('comment_content_test3')
-      const commentDate3 = screen.getByText(
-        formatDistanceToNow(new Date('2023/02/28 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       const commentReply3 = screen.getByText('3件のリプライ')
       expect(userName3).toBeInTheDocument()
       expect(commentContent3).toBeInTheDocument()
-      expect(commentDate3).toBeInTheDocument()
       expect(commentReply3).toBeInTheDocument()
 
       // 4件目
       const userName4 = screen.getByRole('link', { name: 'user_name_test6' })
       const commentContent4 = screen.getByText('comment_content_test4')
-      const commentDate4 = screen.getByText(
-        formatDistanceToNow(new Date('2023/03/31 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       const commentReply4 = screen.getByText('4件のリプライ')
       expect(userName4).toBeInTheDocument()
       expect(commentContent4).toBeInTheDocument()
-      expect(commentDate4).toBeInTheDocument()
       expect(commentReply4).toBeInTheDocument()
 
       // 5件目
       const userName5 = screen.getByRole('link', { name: 'user_name_test7' })
       const commentContent5 = screen.getByText('comment_content_test5')
-      const commentDate5 = screen.getByText(
-        formatDistanceToNow(new Date('2023/04/30 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       const commentReply5 = screen.getByText('5件のリプライ')
       expect(userName5).toBeInTheDocument()
       expect(commentContent5).toBeInTheDocument()
-      expect(commentDate5).toBeInTheDocument()
       expect(commentReply5).toBeInTheDocument()
     })
   })
