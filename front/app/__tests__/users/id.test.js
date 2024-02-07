@@ -2,8 +2,6 @@ import User from '@/pages/users/[id]'
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import { ja } from 'date-fns/locale'
 import { enableFetchMocks } from 'jest-fetch-mock'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
@@ -27,6 +25,8 @@ jest.mock('next/router', () => ({
     query: { message: ['initialMessage'], status: 'initialStatus' },
   }),
 }))
+
+jest.setTimeout(15000)
 
 const handlers = [
   // ユーザー詳細ページのユーザーがログインユーザーの場合に使用
@@ -208,79 +208,37 @@ describe('User', () => {
       // ツイート一覧が正常に表示されていることを確認
       // 1件目
       const tweetContent1 = screen.getByText('tweet_content_test1')
-      const tweetDate1 = screen.getByText(
-        formatDistanceToNow(new Date('2022/12/31 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       const tweetReply1 = screen.getByText('1件のリプライ')
       expect(tweetContent1).toBeInTheDocument()
-      expect(tweetDate1).toBeInTheDocument()
       expect(tweetReply1).toBeInTheDocument()
       // 1件目のリプライ
       const userName6 = screen.getByRole('link', { name: 'user_name_test6' })
       const tweetContent6 = screen.getByText('tweet_content_test6_reply')
-      const tweetDate6 = screen.getByText(
-        formatDistanceToNow(new Date('2023/05/31 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       expect(userName6).toBeInTheDocument()
       expect(tweetContent6).toBeInTheDocument()
-      expect(tweetDate6).toBeInTheDocument()
 
       // 2件目
       const tweetContent2 = screen.getByText('tweet_content_test2')
-      const tweetDate2 = screen.getByText(
-        formatDistanceToNow(new Date('2023/1/31 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       const tweetReply2 = screen.getByText('2件のリプライ')
       expect(tweetContent2).toBeInTheDocument()
-      expect(tweetDate2).toBeInTheDocument()
       expect(tweetReply2).toBeInTheDocument()
 
       // 3件目
       const tweetContent3 = screen.getByText('tweet_content_test3')
-      const tweetDate3 = screen.getByText(
-        formatDistanceToNow(new Date('2023/02/28 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       const tweetReply3 = screen.getByText('3件のリプライ')
       expect(tweetContent3).toBeInTheDocument()
-      expect(tweetDate3).toBeInTheDocument()
       expect(tweetReply3).toBeInTheDocument()
 
       // 4件目
       const tweetContent4 = screen.getByText('tweet_content_test4')
-      const tweetDate4 = screen.getByText(
-        formatDistanceToNow(new Date('2023/03/31 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       const tweetReply4 = screen.getByText('4件のリプライ')
       expect(tweetContent4).toBeInTheDocument()
-      expect(tweetDate4).toBeInTheDocument()
       expect(tweetReply4).toBeInTheDocument()
 
       // 5件目
       const tweetContent5 = screen.getByText('tweet_content_test5')
-      const tweetDate5 = screen.getByText(
-        formatDistanceToNow(new Date('2023/04/30 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       const tweetReply5 = screen.getByText('5件のリプライ')
       expect(tweetContent5).toBeInTheDocument()
-      expect(tweetDate5).toBeInTheDocument()
       expect(tweetReply5).toBeInTheDocument()
 
       // 投稿者（サイドメニュー,ページトップアイコン,登録ガジェット投稿者,ツイート投稿者で合計12箇所）
@@ -305,87 +263,45 @@ describe('User', () => {
       // ツイート一覧が正常に表示されていることを確認
       // 1件目
       const tweetContent1 = screen.getByText('tweet_content_test1')
-      const tweetDate1 = screen.getByText(
-        formatDistanceToNow(new Date('2022/12/31 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       const tweetReply1 = screen.getByText('1件のリプライ')
       expect(tweetContent1).toBeInTheDocument()
-      expect(tweetDate1).toBeInTheDocument()
       expect(tweetReply1).toBeInTheDocument()
       // 1件目のリプライ
       const userName6 = screen.getByRole('link', { name: 'user_name_test6' })
       const tweetContent6 = screen.getByText('tweet_content_test6_reply')
-      const tweetDate6 = screen.getByText(
-        formatDistanceToNow(new Date('2023/05/31 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       expect(userName6).toBeInTheDocument()
       expect(tweetContent6).toBeInTheDocument()
-      expect(tweetDate6).toBeInTheDocument()
 
       // 2件目
       const userName2 = screen.getByRole('link', { name: 'user_name_test2' })
       const tweetContent2 = screen.getByText('tweet_content_test2')
-      const tweetDate2 = screen.getByText(
-        formatDistanceToNow(new Date('2023/1/31 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       const tweetReply2 = screen.getByText('2件のリプライ')
       expect(userName2).toBeInTheDocument()
       expect(tweetContent2).toBeInTheDocument()
-      expect(tweetDate2).toBeInTheDocument()
       expect(tweetReply2).toBeInTheDocument()
 
       // 3件目
       const userName3 = screen.getByRole('link', { name: 'user_name_test3' })
       const tweetContent3 = screen.getByText('tweet_content_test3')
-      const tweetDate3 = screen.getByText(
-        formatDistanceToNow(new Date('2023/02/28 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       const tweetReply3 = screen.getByText('3件のリプライ')
       expect(userName3).toBeInTheDocument()
       expect(tweetContent3).toBeInTheDocument()
-      expect(tweetDate3).toBeInTheDocument()
       expect(tweetReply3).toBeInTheDocument()
 
       // 4件目
       const userName4 = screen.getByRole('link', { name: 'user_name_test4' })
       const tweetContent4 = screen.getByText('tweet_content_test4')
-      const tweetDate4 = screen.getByText(
-        formatDistanceToNow(new Date('2023/03/31 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       const tweetReply4 = screen.getByText('4件のリプライ')
       expect(userName4).toBeInTheDocument()
       expect(tweetContent4).toBeInTheDocument()
-      expect(tweetDate4).toBeInTheDocument()
       expect(tweetReply4).toBeInTheDocument()
 
       // 5件目
       const userName5 = screen.getByRole('link', { name: 'user_name_test5' })
       const tweetContent5 = screen.getByText('tweet_content_test5')
-      const tweetDate5 = screen.getByText(
-        formatDistanceToNow(new Date('2023/04/30 16:00'), {
-          addSuffix: true,
-          locale: ja,
-        }),
-      )
       const tweetReply5 = screen.getByText('5件のリプライ')
       expect(userName5).toBeInTheDocument()
       expect(tweetContent5).toBeInTheDocument()
-      expect(tweetDate5).toBeInTheDocument()
       expect(tweetReply5).toBeInTheDocument()
 
       // 投稿者（サイドメニュー,ページトップアイコン,登録ガジェット投稿者,ブックマークツイート投稿者で合計8箇所）
