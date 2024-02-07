@@ -26,21 +26,36 @@ GadgetLink は、ガジェット好きが集まる新たなプラットフォー
 
 - 好きなガジェットを見つけ、レビューをチェック。投稿者や同じ趣味のユーザーと、コメント機能で交流も。
 
+![README_gadget_1](https://github.com/jibirian999/gadget-app/assets/89582121/5f77b52e-a713-4ea0-909c-f017087085a9)
+
+
 - 気に入ったガジェットへのアクション（いいね/ブックマーク/コメント/レビューリクエスト）に応じて、新しいガジェット・ユーザーをレコメンド。
 
+![README_gadget_2](https://github.com/jibirian999/gadget-app/assets/89582121/7001dac3-353f-43e3-9962-109a964ee1dc)
+
+
 - お気に入りのガジェットを手軽にシェア。こだわりのレビューはマークダウンで投稿。
+
+![README_gadget_3](https://github.com/jibirian999/gadget-app/assets/89582121/abf1c1ca-c8f4-49ad-a39e-7d777dc7dd27)
+
 
 ### ツイート
 
 - レビュー以外の気軽な発信はこちら。リプライ機能で他のユーザーと自由に交流。
 
+![README_tweet_1](https://github.com/jibirian999/gadget-app/assets/89582121/57d445cf-953e-489f-9a94-1c50247d10c6)
+
 ### コミュニティ
 
 - コミュニティへの参加で、自分の好きをアピール・同じ趣味の仲間を発見。
 
+![README_community_1](https://github.com/jibirian999/gadget-app/assets/89582121/cbdfa689-9a03-476f-b7ca-cc3dacf832d2)
+
 ### マイページ
 
 - 気になるユーザーは詳細ページにて、登録ガジェットから参加しているコミュニティ、ブックマークしているガジェットまでチェック。
+
+![README_mypage_1](https://github.com/jibirian999/gadget-app/assets/89582121/918c5314-2ce7-47da-bd0e-d4fd8f4456c1)
 
 ## 一覧
 
@@ -127,12 +142,14 @@ GadgetLink は、ガジェット好きが集まる新たなプラットフォー
 # 設計資料
 
 ## インフラ構成図
+![README_インフラ構成図](https://github.com/jibirian999/gadget-app/assets/89582121/2b35e95a-8c47-45ab-8b61-30a4bb49f6a0)
 
 ## ネットワーク設計図
 
 [Google スプレッドシート](https://docs.google.com/spreadsheets/d/1y96oFIz4EQbUeZX9CRFvJbG6yzi0EjMhevj2q_trkBI/edit?usp=sharing)に掲載
 
 ## ER 図
+![README_ER図 drawio](https://github.com/jibirian999/gadget-app/assets/89582121/b8f69366-3dc9-4e95-8acb-82e3b4a85786)
 
 ## テーブル定義書
 
