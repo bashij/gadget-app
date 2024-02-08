@@ -40,7 +40,7 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   scope :name_like, ->(name) { like_scope('name', name) }
-  scope :job_like, ->(job) { like_scope('job', job) }
+  scope :with_job, ->(job) { where(job: job) if job.present? }
 
   # 渡された文字列のハッシュ値を返す
   def self.digest(string)
@@ -141,7 +141,7 @@ class User < ApplicationRecord
 
     # 検索条件がある場合は絞り込み
     users = users.name_like(params[:name])
-    users = users.job_like(params[:job])
+    users = users.with_job(params[:job])
 
     users
   end
