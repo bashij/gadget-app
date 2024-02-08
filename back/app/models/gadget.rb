@@ -17,7 +17,7 @@ class Gadget < ApplicationRecord
   validates :review, length: { maximum: 5000 }
   mount_uploader :image, GadgetImageUploader
   scope :name_like, ->(name) { like_scope('name', name) }
-  scope :category_like, ->(category) { like_scope('category', category) }
+  scope :with_category, ->(category) { where(category: category) if category.present? }
   scope :model_number_like, ->(model_number) { like_scope('model_number', model_number) }
   scope :manufacturer_like, ->(manufacturer) { like_scope('manufacturer', manufacturer) }
   scope :other_info_like, ->(other_info) { like_scope('other_info', other_info) }
@@ -63,7 +63,7 @@ class Gadget < ApplicationRecord
 
     # 検索条件がある場合は絞り込み
     gadgets = gadgets.name_like(params[:name])
-    gadgets = gadgets.category_like(params[:category])
+    gadgets = gadgets.with_category(params[:category])
     gadgets = gadgets.model_number_like(params[:model_number])
     gadgets = gadgets.manufacturer_like(params[:manufacturer])
     gadgets = gadgets.price_more_than(params[:price_minimum])
