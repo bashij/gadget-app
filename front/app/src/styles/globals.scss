@@ -121,7 +121,8 @@ body {
   top: 0;
   left: 0;
   background-color: $color_theme8;
-  font-family: 'Avenir Next Condensed Medium', 'Avenir Next Condensed Heavy';
+  font-family: 'Avenir Next Condensed', 'Avenir Next Condensed Medium',
+    'Avenir Next Condensed Heavy';
   color: $color_theme1;
   display: inline-block;
   border-radius: 10px;
@@ -192,7 +193,8 @@ body {
     }
   }
   .logo {
-    font-family: 'Avenir Next Condensed Heavy', 'Avenir Next Condensed Bold';
+    font-family: 'Avenir Next Condensed', 'Avenir Next Condensed Heavy',
+      'Avenir Next Condensed Bold';
     font-size: 2.25rem;
     text-decoration: none;
     margin-bottom: 0.25rem;
@@ -302,7 +304,8 @@ body {
   border-radius: 10px;
   height: 100%;
   .app-name {
-    font-family: 'Avenir Next Condensed Bold', 'Avenir Next Condensed Heavy';
+    font-family: 'Avenir Next Condensed', 'Avenir Next Condensed Bold',
+      'Avenir Next Condensed Heavy';
   }
   h1 {
     font-size: 4.5rem;
