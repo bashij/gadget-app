@@ -320,11 +320,11 @@ body {
     .lead {
       margin: 50px 0 50px 0;
       font-size: 1.3rem;
-      letter-spacing: 1.4rem;
+      letter-spacing: 0.25rem;
       @media screen and (max-width: 480px) {
         margin: 30px 0 30px 0;
         font-size: 0.9rem;
-        letter-spacing: 0.8rem;
+        letter-spacing: 0.4rem;
       }
     }
     .explanation-detail {
