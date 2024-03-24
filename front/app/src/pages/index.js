@@ -75,27 +75,27 @@ export default function Home(props) {
             <div className='top-content'>
               <h1 className='app-name'>GadgetLink</h1>
               <div className='content-explanation'>
-                <p className='lead'>ガジェットで繋がるSNS</p>
+                <p className='lead'>あなたにマッチしたガジェットと出会えるSNS</p>
                 <div className='explanation-detail'>
-                  <h2>こだわりのガジェットをシェア</h2>
+                  <h2>ガジェットを通じた交流</h2>
                   <p>
                     <FontAwesomeIcon icon={faCheck} />
-                    独自の活用法やカスタマイズ情報を交換
+                    こだわりのガジェットレビューをシェア
                   </p>
                   <p>
                     <FontAwesomeIcon icon={faCheck} />
-                    同じガジェットのファンと交流
+                    ツイートやコミュニティで好きをアピール
                   </p>
                 </div>
                 <div className='explanation-detail'>
-                  <h2>気になるガジェット情報を収集</h2>
+                  <h2>情報収集をサポート</h2>
                   <p>
                     <FontAwesomeIcon icon={faCheck} />
-                    自分と似たユーザーのガジェットを参考に
+                    関心に応じてガジェットを自動レコメンド
                   </p>
                   <p>
                     <FontAwesomeIcon icon={faCheck} />
-                    リアルなユーザーの声をチェック
+                    自分と似たユーザーのレビューも参考に
                   </p>
                 </div>
               </div>
